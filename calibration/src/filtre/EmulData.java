@@ -14,6 +14,7 @@ class EmulData {
 		else return instance;
 	}
 	
+	/**simulates the call to filter and the storage*/
 	protected void store(int toStore){
 		System.out.println(toStore);
 	}
