@@ -18,5 +18,8 @@ public class Test {
 		for (int i = 0; i < 10; i++) {
 			aleat.store();
 		}
+		//print result
+		EmulData db = EmulData.CreateStorage();
+		System.out.println(db);
 	}
 }
