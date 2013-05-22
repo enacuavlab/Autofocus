@@ -54,22 +54,22 @@ public class Application {
 	fl_Zone_Btn.spacing = 20;
 	Zone_Btn.setLayout(fl_Zone_Btn);
 	
-	Button BtnAccéléro = new Button(Zone_Btn, SWT.NONE);
-	BtnAccéléro.addSelectionListener(new SelectionAdapter() {
+	Button BtnAccelero = new Button(Zone_Btn, SWT.NONE);
+	BtnAccelero.addSelectionListener(new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
 			Titre.setText("Calibration des accéléromètres");
 		}
 	});
-	BtnAccéléro.setText("Accéléromètres");
+	BtnAccelero.setText("Accéléromètres");
 	
-	Button BtnMagnéto = new Button(Zone_Btn, SWT.NONE);
-	BtnMagnéto.addSelectionListener(new SelectionAdapter() {
+	Button BtnMagneto = new Button(Zone_Btn, SWT.NONE);
+	BtnMagneto.addSelectionListener(new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
 			Titre.setText("Calibration des magnétomètres");		}
 	});
-	BtnMagnéto.setText("Magnétomètres");
+	BtnMagneto.setText("Magnétomètres");
 	
 	Button BtnGyro = new Button(Zone_Btn, SWT.NONE);
 	BtnGyro.addSelectionListener(new SelectionAdapter() {

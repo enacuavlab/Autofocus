@@ -1,5 +1,7 @@
 package imu;
 import fr.dgac.ivy.* ;
+import common.TypeCalibration;
+
 /**
  * This is the class that links the calibrating program to the IVY bus
  * in order to get the RAW_DATA messages. 
