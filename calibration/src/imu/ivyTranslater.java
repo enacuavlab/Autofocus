@@ -1,3 +1,4 @@
+package imu;
 /**
  * Yet another Ivy java program example
  *

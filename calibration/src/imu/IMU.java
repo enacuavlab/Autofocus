@@ -1,3 +1,4 @@
+package imu;
 import fr.dgac.ivy.* ;
 /**
  * This is the class that links the calibrating program to the IVY bus
