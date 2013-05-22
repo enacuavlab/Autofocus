@@ -1,6 +1,5 @@
 package common;
 
 public enum TypeCalibration {
-	ACCELEROMETER,
-	MAGNETOMETER;
+	ACCELEROMETER, MAGNETOMETER;
 }
