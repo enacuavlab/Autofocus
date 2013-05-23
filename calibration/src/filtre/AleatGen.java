@@ -8,14 +8,16 @@ class AleatGen {
 	private int value = 100;
 	private int noise = 20;
 	private Random rd = new Random();
+	private EmulData data;
 
 	/**
 	 * generate generator able to give number around value impacted with a noise
 	 * of noise
 	 */
-	protected AleatGen(int value, int noise) {
+	protected AleatGen(int value, int noise, EmulData data) {
 		this.value = value;
 		this.noise = noise;
+		this.data = data;
 	}
 
 	/** gives the next noisy value */
@@ -28,6 +30,6 @@ class AleatGen {
 
 	/**orders the value to be stored in the storage class*/
 	protected void store() {
-		(EmulData.CreateStorage()).store(this.next());
+		data.store(this.next());
 	}
 }

@@ -1,12 +1,13 @@
 package filtre;
 
-public class Vecteur implements filtrable<Integer> {
+public class Vecteur implements Filtrable<Integer> {
 
 	private int value;
 	private boolean correct;
 
-	public float away(Vecteur test) {
-		return ((value - test.getValue()) > 0 ? (value - test.getValue()) : (test.getValue() - value));
+	public float away(Filtrable<Integer> test) {
+		float res = (value - test.getObject()) > 0 ? (value - test.getObject()) : (test.getObject() - value);
+		return (res);
 	}
 
 	protected Vecteur(int x) {
@@ -14,14 +15,14 @@ public class Vecteur implements filtrable<Integer> {
 		correct = false;
 	}
 
+	public Integer getObject() {
+		return value;
+	}
 	public void set(Integer x) {
 		value = x;
 		correct = false;
 	}
 
-	protected Integer getValue() {
-		return value;
-	}
 
 	public boolean isCorrect() {
 		return correct;
@@ -39,11 +40,9 @@ public class Vecteur implements filtrable<Integer> {
 		return ("" + value + " " + correct);
 	}
 
-
 	@Override
-	public float away(filtrable<Integer> test) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean equals(Filtrable<Integer> test) {
+		return (this.away(test)==0);
 	}
 
 }

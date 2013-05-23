@@ -5,20 +5,11 @@ import java.util.*;
 class EmulData {
 
 	List<Vecteur> db = new ArrayList<Vecteur>();
-
-	// pattern singleton
-	static EmulData instance;
-
-	private EmulData() {
-	}
+	Filter<Vecteur> filtre;
 
 	/** creates a new Data */
-	static protected EmulData CreateStorage() {
-		if (instance == null) {
-			instance = new EmulData();
-			return instance;
-		} else
-			return instance;
+	protected EmulData(Filter<Vecteur> filtre) {
+		this.filtre = filtre;
 	}
 
 	/**
@@ -28,14 +19,18 @@ class EmulData {
 	 *            to store
 	 */
 	protected void store(int toStore) {
-		db.add(new Vecteur(toStore));
+		Vecteur v = new Vecteur(toStore);
+		db.add(v);
+		filtre.add(v);
 	}
 
 	public String toString() {
 		Iterator<Vecteur> iter = db.iterator();
 		String res = null;
+		int i = 1;
 		while (iter.hasNext()) {
-			res = res + "\n" + iter.next();
+			res = res + "\n" + i + " " + iter.next();
+			i++;
 		}
 		return res;
 	}
