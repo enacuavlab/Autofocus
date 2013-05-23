@@ -19,6 +19,8 @@ import org.eclipse.swt.events.KeyEvent;
 
 
 public class Application {
+	private static Text text;
+	private static Text text_1;
 
 	public static void main(String[] args) {
 	Display display = new Display();
@@ -80,69 +82,26 @@ public class Application {
 	});
 	BtnGyro.setText("Gyromètres");
 	
-	Composite composite_1 = new Composite(Fenetre, SWT.NONE);
-	composite_1.setLayoutData(BorderLayout.CENTER);
-	composite_1.setLayout(new BorderLayout(0, 0));
+	Composite composite = new Composite(Fenetre, SWT.NONE);
+	composite.setLayoutData(BorderLayout.CENTER);
+	composite.setLayout(new FormLayout());
 	
-	Label lblExplication = new Label(composite_1, SWT.CENTER);
-	lblExplication.setFont(SWTResourceManager.getFont("Cantarell", 12, SWT.NORMAL));
-	lblExplication.setAlignment(SWT.CENTER);
-	lblExplication.setLayoutData(BorderLayout.NORTH);
-	lblExplication.setText("Explication générale\n");
+	text_1 = new Text(composite, SWT.BORDER);
+	FormData fd_text_1 = new FormData();
+	fd_text_1.top = new FormAttachment(0, 27);
+	fd_text_1.right = new FormAttachment(55, -90);
+	text_1.setLayoutData(fd_text_1);
 	
-	Composite composite_2 = new Composite(composite_1, SWT.NONE);
-	composite_2.setLayoutData(BorderLayout.EAST);
-	composite_2.setLayout(new FillLayout(SWT.VERTICAL));
+	Label lblEntrerLeNumro = new Label(composite, SWT.NONE);
+	lblEntrerLeNumro.setFont(SWTResourceManager.getFont("Cantarell", 9, SWT.NORMAL));
+	FormData fd_lblEntrerLeNumro = new FormData();
+	fd_lblEntrerLeNumro.top = new FormAttachment(text_1, 0, SWT.TOP);
+	fd_lblEntrerLeNumro.right = new FormAttachment(text_1, -6);
+	lblEntrerLeNumro.setLayoutData(fd_lblEntrerLeNumro);
+	lblEntrerLeNumro.setText("Entrer le numéro\nde votre drone\n");
+
 	
-	Label lblExplicationDtaille = new Label(composite_2, SWT.NONE);
-	lblExplicationDtaille.setText("Titre explication");
 	
-	Label lblExplication_1 = new Label(composite_2, SWT.NONE);
-	lblExplication_1.setText("Explication");
-	
-	Composite composite = new Composite(composite_1, SWT.NONE);
-	composite.setLayoutData(BorderLayout.SOUTH);
-	GridLayout gl_composite = new GridLayout(3, true);
-	gl_composite.verticalSpacing = 0;
-	composite.setLayout(gl_composite);
-	
-	Button btnNewButton = new Button(composite, SWT.NONE);
-	btnNewButton.setText("New Button");
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
 	
 	Fenetre.open(); 
 	

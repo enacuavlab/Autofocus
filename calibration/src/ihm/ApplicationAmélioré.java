@@ -50,6 +50,7 @@ public class ApplicationAmélioré {
 		titre.setFont(SWTResourceManager.getFont("Cantarell", 16, SWT.BOLD));
 		titre.setAlignment(SWT.CENTER);
 		
+		
 		//Ensemble qui va contenir les différentes options de calibration pour les choisir 
 		Group options = new Group(fenetre, SWT.NONE);
 		options.setText("Type de Calibration");
@@ -79,31 +80,58 @@ public class ApplicationAmélioré {
 		//Bouton accéléromètres
 		btnAccéléro = new Button(zone_btn, SWT.NONE);
 		btnAccéléro.setText("Accéléromètres");
+		btnAccéléro.setEnabled(false);
 		btnAccéléro.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				titre.setText("Calibration des accéléromètres");
+				btnMagnéto.setEnabled(false);
+				btnGyro.setEnabled(false);
 			}
 		});
 		
 		//Bouton magnétomètres 
 		btnMagnéto = new Button(zone_btn,SWT.NONE);
 		btnMagnéto.setText("Magnétomètres");
+		btnMagnéto.setEnabled(false);
 		btnMagnéto.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				titre.setText("Calibration des magnétomètres");		}
+				titre.setText("Calibration des magnétomètres");
+				btnAccéléro.setEnabled(false);
+				btnGyro.setEnabled(false);
+			}
 		});
 		
 		//Bouton gyromètres
 		btnGyro = new Button(zone_btn,SWT.NONE);
 		btnGyro.setText("Gyromètres");
+		btnGyro.setEnabled(false);
 		btnGyro.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				titre.setText("Calibration des gyromètres");
+				btnAccéléro.setEnabled(false);
+				btnMagnéto.setEnabled(false);
 			}
 		});
+		Composite zone_id = new Composite(fenetre, SWT.NONE);
+		zone_id.setLayoutData(BorderLayout.CENTER);
+		zone_id.setLayout(new FormLayout());
+		
+		Text text_id = new Text(zone_id, SWT.BORDER);
+		FormData fd_text_id = new FormData();
+		fd_text_id.top = new FormAttachment(0, 27);
+		fd_text_id.right = new FormAttachment(55, -90);
+		text_id.setLayoutData(fd_text_id);
+		
+		Label indic_id = new Label(zone_id, SWT.NONE);
+		indic_id.setFont(SWTResourceManager.getFont("Cantarell", 9, SWT.NORMAL));
+		FormData fd_indic_id = new FormData();
+		fd_indic_id.top = new FormAttachment(text_id, 0, SWT.TOP);
+		fd_indic_id.right = new FormAttachment(text_id, -6);
+		indic_id.setLayoutData(fd_indic_id);
+		indic_id.setText("Entrer le numéro\nde votre drone\n");
 				
 	}
 	
