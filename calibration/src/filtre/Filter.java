@@ -22,7 +22,6 @@ public class Filter<E extends Filtrable> {
 			res = res + this.mediumDistance(i);
 		}
 		res = res / (values.size());
-		System.out.println("moyenne " + res);
 		return res;
 	}
 
@@ -42,7 +41,7 @@ public class Filter<E extends Filtrable> {
 
 	public void add(E element) {
 		values.add(element);
-		if (mediumDistance(element) > (mediumDistance() + difference()) ){
+		if (mediumDistance(element) > (mediumDistance() + difference()/2) ){
 			element.setFalse();
 		}
 		else element.setTrue();
