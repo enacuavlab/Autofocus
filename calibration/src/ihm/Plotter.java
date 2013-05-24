@@ -22,6 +22,8 @@ public class Plotter {
 	private Shell fenetre;
 	private Canvas canvas;
 	GC gc1;
+	Display d = new Display();
+
 	public Plotter(){
 		
 	display= new Display();
@@ -31,10 +33,11 @@ public class Plotter {
 	canvas = new Canvas(fenetre, SWT.NONE); 
 	canvas.setSize(200,200);
 	canvas.setLayoutData(BorderLayout.CENTER);
-	gc1 = new GC(canvas);
+	gc1 = new GC(canvas);	
 	}
 	
 	public void drawPoint(int x, int y){
+		gc1.setForeground(d.getSystemColor(SWT.COLOR_BLUE));
 		gc1.drawPoint(x,y);
 	}
 	public void execute() {
