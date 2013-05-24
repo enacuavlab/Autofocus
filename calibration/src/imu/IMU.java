@@ -49,12 +49,5 @@ public class IMU implements IvyMessageListener {
 		System.out.println(args[0] + " " + args[1] + " " + args[2]);
 	}
 
-	public void transferData() {
-		// TODO
-	}
 
-	public static void main(String args[]) throws IvyException {
-		TypeCalibration t = TypeCalibration.ACCELEROMETER;
-		new IMU(t);
-	}
 }
