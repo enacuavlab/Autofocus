@@ -126,24 +126,23 @@ public class ApplicationAmélioré {
 		Combo combo_id = new Combo(zone_id, SWT.BORDER);
 		FormData fd_text_id = new FormData();
 		fd_text_id.top = new FormAttachment(0, 27);
-		fd_text_id.right = new FormAttachment(70, -90);
+		fd_text_id.right = new FormAttachment(62, -90);
 		combo_id.setLayoutData(fd_text_id);
 		combo_id.add("Test");
 		
 		//Image
 		CLabel label = new CLabel(zone_id, SWT.NONE);
-		label.setImage(SWTResourceManager.getImage("check.jpeg"));
+		label.setImage(new Image(display,"Image/croix_rouge.gif"));
 		FormData fd_label = new FormData();
-		fd_label.top = new FormAttachment(combo_id, -2, SWT.TOP);
+		fd_label.top = new FormAttachment(combo_id, 0, SWT.TOP);
 		fd_label.left = new FormAttachment(combo_id, 15);
 		label.setLayoutData(fd_label);
 		label.setText("");
-		label.getImage().dispose();
+		//label.getImage().dispose();
 		combo_id.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				System.out.println(""+ (((Combo)e.widget).getText()));
-				//label.setImage(new Image(display,"check.jpeg"));
-				
+				//label.setImage(new Image(display,"check.jpeg"));	
 			}
 		});
 		
@@ -160,6 +159,7 @@ public class ApplicationAmélioré {
 	private void change_mod(){
 	
 	}
+	
 	public void execute(){
 		fenetre.open(); 
 		while (!fenetre.isDisposed()) {
