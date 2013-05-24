@@ -4,12 +4,16 @@ import java.util.*;
 import common.TypeCalibration;
 import java.lang.*;
 import javax.vecmath.*;
+import filtre.Filtrable;
 
 
-public class Vecteur extends Vector3d{
+
+public class Vecteur extends Vector3d implements Filtrable<Vector3d> {
 	
-private boolean state;
-private boolean accel;
+private boolean state = false;
+
+private TypeCalibration type;
+
 
 //public Vecteur(double x, double y, double z){}	
 
@@ -21,8 +25,33 @@ public boolean getState(){
 	return state;
 }
 
-public boolean setType(TypeCalibration type){
-	return accel;
+public void setType(TypeCalibration t){
+	this.type = t;
+}
+
+public TypeCalibration getType(){
+	return type;
+}
+
+public <E> getObject(){
+	return ;
+}
+public boolean equals(Filtrable<Vector3d>){
+	
+}
+public float away(Filtrable<E>){
+	
+}
+public boolean isCorrect(){
+	
+}
+public void setFalse(){
+	
+}
+public void setTrue(){
+	
+}
+public String toString(){
 	
 }
 

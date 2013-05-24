@@ -18,13 +18,11 @@ public class Testtruc {
 		double x = generator.nextDouble();
 		double y = generator.nextDouble();
 		double z = generator.nextDouble();
+		
 		//System.out.println(x);
 		dt.store(x,y,z);
-		
-		dt.montre();
-		
-		
+					
 		}
-		
+		dt.montre();
 	}
 }
