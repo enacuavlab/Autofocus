@@ -30,9 +30,9 @@ public class Test {
 		//print result
 		int i = 1;
 		plot.execute();
-		for(Vecteur e : db){
-			plot.drawPoint(i,e.getObject());
-		}
+		//for(Vecteur e : db){
+			//plot.drawPoint(i,e.getObject());
+		//}
 		System.out.println(db);
 		
 	}
