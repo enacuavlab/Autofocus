@@ -3,7 +3,7 @@ package filtre;
 public class Test {
 	
 	public static void main(String[] args) {
-		Filter<Vecteur> filtre = new Filter<Vecteur>();
+		/*Filter<Vecteur> filtre = new Filter<Vecteur>();
 		EmulData db = new EmulData(filtre);
 		ihm.PlotterV2 plot = new ihm.PlotterV2();
 		
@@ -35,6 +35,7 @@ public class Test {
 			plot.getCanvas().redraw();
 		}
 		System.out.println(db);
-		
+		*/
+		System.out.println("ok");
 	}
 }
