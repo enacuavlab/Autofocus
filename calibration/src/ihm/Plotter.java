@@ -22,14 +22,15 @@ public class Plotter {
 	private Shell fenetre;
 	private Canvas canvas;
 	GC gc1;
-	Display d = new Display();
 
 	public Plotter(){
 		
 	display= new Display();
 	fenetre = new Shell(display, SWT.SHELL_TRIM);
+	fenetre.setSize(240,240);
 	fenetre.setText("Pour Canvas");
 	fenetre.setLayout(new BorderLayout(0, 0));
+	
 	canvas = new Canvas(fenetre, SWT.NONE); 
 	canvas.setSize(200,200);
 	canvas.setLayoutData(BorderLayout.CENTER);
@@ -37,13 +38,16 @@ public class Plotter {
 	}
 	
 	public void drawPoint(int x, int y){
-		gc1.setForeground(d.getSystemColor(SWT.COLOR_BLUE));
+		gc1.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
 		gc1.drawPoint(x,y);
 		gc1.dispose();
 	}
 	
 	public void execute() {
-		fenetre.open(); 
+		fenetre.open();
+		gc1.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
+		gc1.drawPoint(100,100);
+		gc1.dispose();
 		while (!fenetre.isDisposed()) {
 			if (!display.readAndDispatch()){
 				display.sleep();

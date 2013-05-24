@@ -28,8 +28,8 @@ public class Test {
 			aleat.store();
 		}
 		//print result
-		plot.execute();
 		int i = 1;
+		plot.execute();
 		for(Vecteur e : db){
 			plot.drawPoint(i,e.getObject());
 		}
