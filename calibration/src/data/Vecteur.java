@@ -10,16 +10,18 @@ import filtre.Filtrable;
 
 public class Vecteur extends Vector3d implements Filtrable<Vector3d> {
 	
+	
+	//state: etat du vecteur apres filtrage
 private boolean state = false;
+
+//type de calibration(ACCELEROMETER, MAGNETOMETER)
 
 private TypeCalibration type;
 
 
-//public Vecteur(double x, double y, double z){}	
-
-public void setState(boolean etat){
-	this.state = etat;
-}
+public Vecteur(double x, double y, double z){
+	super(x,y,z);
+}	
 
 public boolean getState(){
 	return state;
@@ -33,25 +35,30 @@ public TypeCalibration getType(){
 	return type;
 }
 
-public <E> getObject(){
-	return ;
+
+public Vector3d getObject(){
+	return new Vector3d(x,y,z);
 }
-public boolean equals(Filtrable<Vector3d>){
-	
+public boolean equals(Filtrable<Vector3d> test){
+	return super.equals(test.getObject());
 }
-public float away(Filtrable<E>){
-	
+public float away(Filtrable<Vector3d> test){
+	return 0;
+		
 }
 public boolean isCorrect(){
+	return true;
 	
 }
 public void setFalse(){
+	this.state = false;
 	
 }
 public void setTrue(){
-	
+	this.state = true;
 }
 public String toString(){
+	return super.toString();//"" + "state"+ " type" +"");
 	
 }
 

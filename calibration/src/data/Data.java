@@ -15,6 +15,8 @@ public class Data {
 	
 	HashMap hm = new HashMap();
 	
+	private Vecteur vec;
+	
 
 public Data(TypeCalibration calibration){	
 	this.calib = calibration;
@@ -23,11 +25,12 @@ public Data(TypeCalibration calibration){
 
 public void store(double x_raw, double y_raw, double z_raw){
 	
-	Vector3d v1 = new Vector3d(x_raw,y_raw, z_raw);
+	this.vec = new Vecteur(x_raw,y_raw, z_raw);
+	vec.setType(calib);
+	hm.put(vec.hashCode(), vec);
 	
-	hm.put(v1.hashCode(), v1);
-}
-	
+	}
+
 
 
 
