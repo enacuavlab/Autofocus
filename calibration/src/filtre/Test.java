@@ -7,10 +7,10 @@ public class Test {
 		EmulData db = new EmulData(filtre);
 		ihm.PlotterV2 plot = new ihm.PlotterV2();
 		
-		/*Vecteur v1 = new Vecteur(1);
-		Vecteur v2 = new Vecteur(2);
-		System.out.println(v1.equals(v2));
-		*/
+		//Vecteur v1 = new Vecteur(1);
+		//Vecteur v2 = new Vecteur(2);
+		//System.out.println(v1.equals(v2));
+		
 		
 		AleatGen aleat = new AleatGen(20,10,db);
 		//first loop for initial value
