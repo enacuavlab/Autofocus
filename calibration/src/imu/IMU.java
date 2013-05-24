@@ -22,7 +22,7 @@ import common.TypeCalibration;
 				// initialization, name and ready message
 				bus = new Ivy("IMU","IMU Ready",null);
 				// get back of the RAW_DATA messages needed depending on the calibration
-				bus.bindMsg("^(.*)",this);
+				bus.bindMsg("^([A-Za-z0-9]+) IMU_ACCEL_RAW(.*)",this);
 				// starts the bus on the default domain
 				bus.start(null);
 			}
