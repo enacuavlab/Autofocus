@@ -5,6 +5,7 @@ public class Test {
 	public static void main(String[] args) {
 		Filter<Vecteur> filtre = new Filter<Vecteur>();
 		EmulData db = new EmulData(filtre);
+		ihm.Plotter plot = new ihm.Plotter();
 		
 		/*Vecteur v1 = new Vecteur(1);
 		Vecteur v2 = new Vecteur(2);
@@ -27,6 +28,11 @@ public class Test {
 			aleat.store();
 		}
 		//print result
+		plot.execute();
+		int i = 1;
+		for(Vecteur e : db){
+			plot.drawPoint(i,e.getObject());
+		}
 		System.out.println(db);
 		
 	}

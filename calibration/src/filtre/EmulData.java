@@ -2,7 +2,7 @@ package filtre;
 
 import java.util.*;
 
-class EmulData {
+class EmulData implements Iterable<Vecteur> {
 
 	List<Vecteur> db = new ArrayList<Vecteur>();
 	Filter<Vecteur> filtre;
@@ -24,6 +24,10 @@ class EmulData {
 		filtre.add(v);
 	}
 
+	public Iterator<Vecteur> iterator(){
+		return db.iterator();
+	}
+	
 	public String toString() {
 		Iterator<Vecteur> iter = db.iterator();
 		String res = null;

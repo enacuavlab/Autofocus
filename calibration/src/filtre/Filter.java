@@ -6,6 +6,8 @@ public class Filter<E extends Filtrable> {
 
 	private SlidingWindow<E> values = new SlidingWindow<E>(4);
 	
+	private float tolerance = 2;
+	
 	private float mediumDistance(E element) {
 		float res = 0;
 		for (E i : values) {
@@ -41,7 +43,8 @@ public class Filter<E extends Filtrable> {
 
 	public void add(E element) {
 		values.add(element);
-		if (mediumDistance(element) > (mediumDistance() + difference()/2) ){
+		if (mediumDistance(element) > (mediumDistance() + difference()/tolerance) 
+				|| mediumDistance(element) < (mediumDistance() - difference()/tolerance) ){
 			element.setFalse();
 		}
 		else element.setTrue();

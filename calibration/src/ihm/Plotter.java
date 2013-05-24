@@ -17,13 +17,11 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 
-
 public class Plotter {
 	private Display display;
 	private Shell fenetre;
 	private Canvas canvas;
-	
-	
+	GC gc1;
 	public Plotter(){
 		
 	display= new Display();
@@ -33,10 +31,12 @@ public class Plotter {
 	canvas = new Canvas(fenetre, SWT.NONE); 
 	canvas.setSize(200,200);
 	canvas.setLayoutData(BorderLayout.CENTER);
-	
-	
+	gc1 = new GC(canvas);
 	}
 	
+	public void drawPoint(int x, int y){
+		gc1.drawPoint(x,y);
+	}
 	public void execute() {
 		fenetre.open(); 
 		while (!fenetre.isDisposed()) {
@@ -46,4 +46,5 @@ public class Plotter {
 		}
 		display.dispose();
 	}
+	
 }
