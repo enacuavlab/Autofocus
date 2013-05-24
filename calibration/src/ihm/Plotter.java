@@ -30,6 +30,11 @@ public class Plotter {
 	fenetre.setSize(240,240);
 	fenetre.setText("Pour Canvas");
 	fenetre.setLayout(new BorderLayout(0, 0));
+	
+	canvas = new Canvas(fenetre, SWT.NONE); 
+	canvas.setSize(200,200);
+	canvas.setLayoutData(BorderLayout.CENTER);
+	fenetre.pack();
 	}
 	
 	public void drawPoint(int x, int y){
@@ -40,11 +45,7 @@ public class Plotter {
 	
 	public void execute() {
 		fenetre.open();
-		canvas = new Canvas(fenetre, SWT.NONE); 
-		canvas.setSize(200,200);
-		canvas.setLayoutData(BorderLayout.CENTER);
 		gc1 = new GC(canvas);
-		
 		gc1.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
 		gc1.drawOval(100,100,20,20);
 		gc1.dispose();
