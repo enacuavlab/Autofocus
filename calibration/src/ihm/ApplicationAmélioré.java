@@ -13,6 +13,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import swing2swt.layout.FlowLayout;
 import swing2swt.layout.BorderLayout;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.dnd.DropTarget;
@@ -119,22 +121,45 @@ public class ApplicationAmélioré {
 		zone_id.setLayoutData(BorderLayout.CENTER);
 		zone_id.setLayout(new FormLayout());
 		
-		Text text_id = new Text(zone_id, SWT.BORDER);
+		
+		//Pour avoir l'id du drone 
+		Combo combo_id = new Combo(zone_id, SWT.BORDER);
 		FormData fd_text_id = new FormData();
 		fd_text_id.top = new FormAttachment(0, 27);
-		fd_text_id.right = new FormAttachment(55, -90);
-		text_id.setLayoutData(fd_text_id);
+		fd_text_id.right = new FormAttachment(70, -90);
+		combo_id.setLayoutData(fd_text_id);
+		combo_id.add("Test");
+		
+		//Image
+		CLabel label = new CLabel(zone_id, SWT.NONE);
+		label.setImage(SWTResourceManager.getImage("check.jpeg"));
+		FormData fd_label = new FormData();
+		fd_label.top = new FormAttachment(combo_id, -2, SWT.TOP);
+		fd_label.left = new FormAttachment(combo_id, 15);
+		label.setLayoutData(fd_label);
+		label.setText("");
+		label.getImage().dispose();
+		combo_id.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				System.out.println(""+ (((Combo)e.widget).getText()));
+				//label.setImage(new Image(display,"check.jpeg"));
+				
+			}
+		});
 		
 		Label indic_id = new Label(zone_id, SWT.NONE);
 		indic_id.setFont(SWTResourceManager.getFont("Cantarell", 9, SWT.NORMAL));
 		FormData fd_indic_id = new FormData();
-		fd_indic_id.top = new FormAttachment(text_id, 0, SWT.TOP);
-		fd_indic_id.right = new FormAttachment(text_id, -6);
+		fd_indic_id.top = new FormAttachment(combo_id, 0, SWT.TOP);
+		fd_indic_id.right = new FormAttachment(combo_id, -6);
 		indic_id.setLayoutData(fd_indic_id);
 		indic_id.setText("Entrer le numéro\nde votre drone\n");
 				
 	}
 	
+	private void change_mod(){
+	
+	}
 	public void execute(){
 		fenetre.open(); 
 		while (!fenetre.isDisposed()) {

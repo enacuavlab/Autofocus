@@ -110,6 +110,15 @@ public class Application {
 	fd_lblEntrerLeNumro.right = new FormAttachment(text_1, -6);
 	lblEntrerLeNumro.setLayoutData(fd_lblEntrerLeNumro);
 	lblEntrerLeNumro.setText("Entrer le numéro\nde votre drone\n");
+	
+	Image image=new Image(display,"check.jpg");
+	CLabel label = new CLabel(composite, SWT.NONE);
+	label.setImage(image);
+	FormData fd_label = new FormData();
+	fd_label.top = new FormAttachment(text_1, -2, SWT.TOP);
+	fd_label.left = new FormAttachment(text_1, 15);
+	label.setLayoutData(fd_label);
+	label.setText("");
 
 	
 	
