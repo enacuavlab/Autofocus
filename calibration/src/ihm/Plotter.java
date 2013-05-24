@@ -1,35 +1,39 @@
 package ihm;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class Plotter {
 
-	public static void execute() {
-		final Display display = new Display();
-		final Shell shell = new Shell(display);
-		shell.setSize(420, 420);
+	  public static void execute() {
+		    Display display = new Display();
+		    Shell shell = new Shell(display);
+		    shell.setText("Canvas Example");
+		    shell.setLayout(new FillLayout());
 
-		Canvas canvas = new Canvas(shell, SWT.NONE);
-		canvas.setSize(200, 200);
-		canvas.setLocation(10, 10);
-		shell.pack();
-		shell.open();
+		    Canvas canvas = new Canvas(shell, SWT.NONE);
 
-		GC gc = new GC(canvas);
-		gc.drawText("Bonjour", 20, 20);
-		gc.drawLine(10, 10, 10, 100);
-		gc.setForeground(display.getSystemColor(SWT.COLOR_RED));
-		gc.drawOval(60, 60, 60, 60);
-		gc.dispose();
+		    canvas.addPaintListener(new PaintListener() {
+		      public void paintControl(PaintEvent e) {
+		        e.gc.drawRoundRectangle(10, 10, 200, 200, 30, 30);
+		      }
+		    });
 
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+		    
+		    canvas.redraw();
+		    
+		    
+		    shell.open();
+		    while (!shell.isDisposed()) {
+		      if (!display.readAndDispatch()) {
+		        display.sleep();
+		      }
+		    }
+		    display.dispose();
+		  }
 }
