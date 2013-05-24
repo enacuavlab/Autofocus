@@ -36,6 +36,5 @@ public class Test {
 		}
 		System.out.println(db);
 		
-		System.out.println("ok");
 	}
 }
