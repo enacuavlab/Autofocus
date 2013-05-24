@@ -7,8 +7,6 @@ package iddrone;
  */
 import java.util.ArrayList;
 import java.util.List;
-
-
 import fr.dgac.ivy.*;
 
 public class IvyIdListener implements IvyMessageListener {
