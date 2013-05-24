@@ -16,6 +16,10 @@ import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 
 
 public class Application {
@@ -56,7 +60,7 @@ public class Application {
 	fl_Zone_Btn.spacing = 20;
 	Zone_Btn.setLayout(fl_Zone_Btn);
 	
-	Button BtnAccelero = new Button(Zone_Btn, SWT.NONE);
+	final Button BtnAccelero = new Button(Zone_Btn, SWT.NONE);
 	BtnAccelero.addSelectionListener(new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
@@ -65,7 +69,7 @@ public class Application {
 	});
 	BtnAccelero.setText("Accéléromètres");
 	
-	Button BtnMagneto = new Button(Zone_Btn, SWT.NONE);
+	final Button BtnMagneto = new Button(Zone_Btn, SWT.NONE);
 	BtnMagneto.addSelectionListener(new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
@@ -87,6 +91,13 @@ public class Application {
 	composite.setLayout(new FormLayout());
 	
 	text_1 = new Text(composite, SWT.BORDER);
+	text_1.setText("youhou");
+	text_1.addModifyListener(new ModifyListener() {
+		public void modifyText(ModifyEvent e) {
+			System.out.println("nouvelle valeur = " + (text_1).getText());
+		}
+	});
+	
 	FormData fd_text_1 = new FormData();
 	fd_text_1.top = new FormAttachment(0, 27);
 	fd_text_1.right = new FormAttachment(55, -90);
