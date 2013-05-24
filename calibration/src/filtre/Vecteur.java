@@ -18,6 +18,7 @@ public class Vecteur implements Filtrable<Integer> {
 	public Integer getObject() {
 		return value;
 	}
+	
 	public void set(Integer x) {
 		value = x;
 		correct = false;
