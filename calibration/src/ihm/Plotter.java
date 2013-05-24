@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class Plotter {
 
-	  public static void execute() {
+	  public static void main(String args[]) {
 		    Display display = new Display();
 		    Shell shell = new Shell(display);
 		    shell.setText("Canvas Example");
@@ -23,11 +23,9 @@ public class Plotter {
 		        e.gc.drawRoundRectangle(10, 10, 200, 200, 30, 30);
 		      }
 		    });
-
-		    
+	    
 		    canvas.redraw();
-		    
-		    
+	
 		    shell.open();
 		    while (!shell.isDisposed()) {
 		      if (!display.readAndDispatch()) {
