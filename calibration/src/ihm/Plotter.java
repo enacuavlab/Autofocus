@@ -39,7 +39,9 @@ public class Plotter {
 	public void drawPoint(int x, int y){
 		gc1.setForeground(d.getSystemColor(SWT.COLOR_BLUE));
 		gc1.drawPoint(x,y);
+		gc1.dispose();
 	}
+	
 	public void execute() {
 		fenetre.open(); 
 		while (!fenetre.isDisposed()) {
