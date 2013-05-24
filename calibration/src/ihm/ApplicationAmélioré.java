@@ -3,6 +3,8 @@
  */
 package ihm;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
@@ -22,7 +24,9 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 
-
+import fr.dgac.ivy.IvyException;
+import iddrone.*
+;
 
 public class ApplicationAmélioré {
 	private Display display;
@@ -31,11 +35,13 @@ public class ApplicationAmélioré {
 	private Button btnAccéléro,btnMagnéto,btnGyro;
 	private Composite zone_btn;
 	
+
 	
 	/**Constructeur qui va initialiser la forme globale de la fenètre 
+	 * @throws IvyException 
 	 * 
 	 */
-	public ApplicationAmélioré() {
+	public ApplicationAmélioré() throws IvyException {
 		display = new Display();
 		//La fenetre 
 		fenetre = new Shell(display, SWT.SHELL_TRIM);
@@ -74,9 +80,10 @@ public class ApplicationAmélioré {
 		initialise();
 	}
 	/**Fonction qui réinitialise au début lors d'un quitter de l'utilisateur ou pour le lancement de l'application
+	 * @throws IvyException 
 	 * 
 	 */
-	private void initialise(){
+	private void initialise() throws IvyException{
 		titre.setText("Veuillez choisir le type de la calibration");
 		
 		//Bouton accéléromètres
@@ -123,26 +130,37 @@ public class ApplicationAmélioré {
 		
 		
 		//Pour avoir l'id du drone 
-		Combo combo_id = new Combo(zone_id, SWT.BORDER);
+		Combo combo_id = new Combo(zone_id, SWT.BORDER | SWT.READ_ONLY);
 		FormData fd_text_id = new FormData();
 		fd_text_id.top = new FormAttachment(0, 27);
 		fd_text_id.right = new FormAttachment(62, -90);
 		combo_id.setLayoutData(fd_text_id);
-		combo_id.add("Test");
 		
 		//Image
-		CLabel label = new CLabel(zone_id, SWT.NONE);
+		final CLabel label = new CLabel(zone_id, SWT.NONE);
 		label.setImage(new Image(display,"Image/croix_rouge.gif"));
 		FormData fd_label = new FormData();
-		fd_label.top = new FormAttachment(combo_id, 0, SWT.TOP);
-		fd_label.left = new FormAttachment(combo_id, 15);
+		fd_label.top = new FormAttachment(combo_id, 3, SWT.TOP);
+		fd_label.left = new FormAttachment(combo_id, 9);
 		label.setLayoutData(fd_label);
 		label.setText("");
+		final IvyIdListener ivyid= new IvyIdListener();
+		ArrayList<Integer> l=(ArrayList<Integer>) ivyid.getList();
+		if (!l.isEmpty()){
+			for (Integer i : ivyid.getList()){
+				combo_id.add(i.toString());
+			}
+		}
 		//label.getImage().dispose();
 		combo_id.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				System.out.println(""+ (((Combo)e.widget).getText()));
-				//label.setImage(new Image(display,"check.jpeg"));	
+				label.getImage().dispose();
+				try{
+					ivyid.stop();
+				}catch(IvyException excep){
+					excep.printStackTrace();
+				}
 			}
 		});
 		
@@ -157,7 +175,7 @@ public class ApplicationAmélioré {
 	}
 	
 	private void change_mod(){
-	
+		
 	}
 	
 	public void execute(){
