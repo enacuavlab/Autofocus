@@ -1,6 +1,7 @@
 package filtre;
 
 import java.util.*;
+import data.*;
 
 class EmulData implements Iterable<Vecteur> {
 
@@ -18,8 +19,8 @@ class EmulData implements Iterable<Vecteur> {
 	 * @param data
 	 *            to store
 	 */
-	protected void store(int toStore) {
-		Vecteur v = new Vecteur(toStore);
+	protected void store(int x) {
+		Vecteur v = new Vecteur(x,0,0);
 		db.add(v);
 	}
 

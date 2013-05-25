@@ -1,4 +1,5 @@
 package filtre;
+import data.*;
 
 public class Test {
 	

@@ -22,6 +22,7 @@ public class IvyIdListener implements IvyMessageListener {
 		listeId=new ArrayList();
 		bus = new Ivy("IvyIdListener", "IvyIdListener Ready", null);
 		bus.bindMsg("^([0-9]+) [A-Za-z0-9]", this);
+		//bus.bindMsg("^(.*)",this);
 		bus.start(null);
 	}
 	@Override
