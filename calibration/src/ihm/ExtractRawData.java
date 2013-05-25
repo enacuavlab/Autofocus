@@ -16,9 +16,11 @@ public class ExtractRawData {
 		SAXBuilder sxb = new SAXBuilder();
 		try {
 			// On crée un nouveau document JDOM avec en argument le fichier XML
-			// Le parsing est terminé ;)
-			document = sxb.build(new File(toParse));
+			// Le parsing est terminé ;
+			File doc = new File(toParse);
+			document = sxb.build(doc);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		// On initialise un nouvel élément racine avec l'élément racine du
@@ -60,6 +62,9 @@ public class ExtractRawData {
 		//on recupere la chaine qui va bien
 		
 
-	public void static main(String args[]){
-		
+	public static void main(String args[]){
+		ExtractRawData d = new ExtractRawData();
+		d.parse("C:\\Users\\Alinoé\\Desktop");
+		System.out.println(d.infoNoeud(""));
 	}
+}
