@@ -58,6 +58,7 @@ public void setTrue(){
 	this.state = true;
 }
 public String toString(){
+	
 	return super.toString()+"sate"+this.state+System.getProperty("line.separator");//"" + "state"+ " type" +"");
 	
 }
