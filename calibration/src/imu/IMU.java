@@ -32,7 +32,9 @@ public class IMU implements IvyMessageListener {
 						public void receive(IvyClient arg0, String[] args) {
 							System.out.println(args[0] + " " + args[1] + " "
 									+ args[2]);
-							data.store(Integer.valueOf(args[0]),Integer.valueOf(args[1]),Integer.valueOf(args[2]));
+							data.store(Integer.valueOf(args[0]),
+									Integer.valueOf(args[1]),
+									Integer.valueOf(args[2]));
 						}
 					});
 			// starts the bus on the default domain
@@ -45,12 +47,21 @@ public class IMU implements IvyMessageListener {
 			// calibration
 			bus.bindMsg(
 					"^[A-Za-z0-9]+ IMU_MAG_RAW ([/-]*[0-9]+) ([/-]*[0-9]+) ([/-]*[0-9]+)",
-					this);
+					new IvyMessageListener() {
+						public void receive(IvyClient arg0, String[] args) {
+							System.out.println(args[0] + " " + args[1] + " "
+									+ args[2]);
+							data.store(Integer.valueOf(args[0]),
+									Integer.valueOf(args[1]),
+									Integer.valueOf(args[2]));
+						}
+					});
 			// starts the bus on the default domain
 			bus.start(null);
 		}
 	}
-	public void stop(){
+
+	public void stop() {
 		bus.stop();
 	}
 
@@ -58,5 +69,4 @@ public class IMU implements IvyMessageListener {
 	public void receive(IvyClient arg0, String[] args) {
 		System.out.println(args[0] + " " + args[1] + " " + args[2]);
 	}
-
 }
