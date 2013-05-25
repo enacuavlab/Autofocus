@@ -12,8 +12,9 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
+import data.Vecteur;
+
 import filtre.Test;
-import filtre.Vecteur;
 
 public class PlotterV2 {
 	private static Display display;
@@ -51,7 +52,7 @@ public class PlotterV2 {
 		for (Vecteur e : db) {
 			i= i+ 20;
 			System.out.println("Boucle");
-			setPoint(i, e.getObject());
+			setPoint(i, (int)e.toArray()[0]);
 			canvas.redraw();
 			canvas.update();
 		}
