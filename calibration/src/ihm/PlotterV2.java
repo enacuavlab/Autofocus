@@ -10,8 +10,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 
-
-
 public class PlotterV2 {
 	private Display display;
 	private Shell shell;
@@ -35,7 +33,7 @@ public class PlotterV2 {
 	    
 	    canvas.addPaintListener(new PaintListener() {
 	      public void paintControl(PaintEvent e) {
-	        e.gc.drawPoint(point.x,point.y);
+	        e.gc.drawRoundRectangle(point.x,point.y,point.x+10,point.y+10,10,10);
 	      }
 	    });
 	}
@@ -44,6 +42,7 @@ public class PlotterV2 {
 		point.x=x;
 		point.y=y;
 	}
+	
 	public Shell getShell(){
 		return shell;
 	}
