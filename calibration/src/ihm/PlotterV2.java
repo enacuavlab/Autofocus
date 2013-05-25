@@ -8,6 +8,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import filtre.Test;
@@ -31,13 +33,13 @@ public class PlotterV2 {
 		shell.setText("Canvas Example");
 		shell.setLayout(new FillLayout());
 		Canvas canvas = new Canvas(shell, SWT.NONE);
+		GC gc= new GC(canvas);
 		point = new Point(0,0); //sera modifier juste apres
-
 		//ajout d'un evenement sur le canvas pour rafraichir l'affichage
-		canvas.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-				e.gc.drawRoundRectangle(point.x, point.y, point.x + 190,
-						point.y + 190, 30, 30);
+		canvas.addListener(SWT.Paint,new Listener() {
+			public void handleEvent(Event e) {
+				System.out.println("Redraw ok");
+				e.gc.drawLine(point.x, point.y, point.x+50, point.y+50);
 			}
 		});
 		
@@ -45,14 +47,18 @@ public class PlotterV2 {
 		Iterable<Vecteur> db = (new Test()).test();
 		//ajout des points sur le canvas
 		int i = 0;
+		shell.open();
 		for (Vecteur e : db) {
 			i= i+ 20;
+			System.out.println("Boucle");
 			setPoint(i, e.getObject());
 			canvas.redraw();
+			canvas.update();
 		}
+		gc.dispose();
 		
 		//ouverture et affichage de la fenetre
-		shell.open();
+		
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
