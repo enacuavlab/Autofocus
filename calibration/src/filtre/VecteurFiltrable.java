@@ -5,7 +5,7 @@ import java.util.Collection;
 public interface VecteurFiltrable<E> {
 	
 	/**transforms the vector in an array*/
-	public Collection<E> toArray();
+	public Collection<E> setArray();
 	
 	/**return the boolean stating if the object is valid or not*/
 	public boolean isCorrect();
