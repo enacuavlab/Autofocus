@@ -7,10 +7,11 @@ public class Filter {
 
 	private Collection<DescriptiveStatistics> variables = null;
 	private int windowSize;
-	private SlidingWindow<VecteurFiltrable<Double>> window = new SlidingWindow<VecteurFiltrable<Double>>(windowSize);
+	private SlidingWindow<VecteurFiltrable<Double>> window; 
 	
 	public Filter(int windowSize){
 		this.windowSize=windowSize;
+		window = new SlidingWindow<VecteurFiltrable<Double>>(windowSize);
 	}
 	
 	public Filter() {
