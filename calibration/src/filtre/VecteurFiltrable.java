@@ -1,12 +1,11 @@
 package filtre;
 
-public interface Filtrable<E> {
+import java.lang.reflect.Array;
+
+public interface VecteurFiltrable<E> {
 	
-	/**gives the attached object*/
-	public E getObject();
-	
-	/**gives the distance between to filtering object*/
-	public float away(Filtrable<E> test);
+	/**transforms the vector in an array*/
+	public Array toArray();
 	
 	/**return the boolean stating if the object is valid or not*/
 	public boolean isCorrect();
@@ -20,7 +19,5 @@ public interface Filtrable<E> {
 	/**return the value of the object with its correctness*/
 	public String toString();
 	
-	/**return true if test equals the calling Filtrable<E>*/
-	public boolean equals(Filtrable<E> test);
 
 }
