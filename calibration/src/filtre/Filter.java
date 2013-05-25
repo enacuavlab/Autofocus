@@ -27,8 +27,8 @@ public class Filter {
 	public void add(VecteurFiltrable<Double> v){
 		Collection<Double> toAdd = v.setArray();
 		Iterator<Double> a = toAdd.iterator();
-		Iterator<DescriptiveStatistics> d = variables.iterator();
 		if (variables != null) {
+			Iterator<DescriptiveStatistics> d = variables.iterator();
 			while(a.hasNext()){
 				d.next().addValue(a.next());
 			}
