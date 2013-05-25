@@ -46,7 +46,7 @@ public class PlotterV2 {
 		//ajout des points sur le canvas
 		int i = 0;
 		for (Vecteur e : db) {
-			i++;
+			i= i+ 20;
 			setPoint(i, e.getObject());
 			canvas.redraw();
 		}
