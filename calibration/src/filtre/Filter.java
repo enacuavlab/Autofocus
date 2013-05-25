@@ -23,7 +23,7 @@ public class Filter {
 	private void update(VecteurFiltrable<Double> v) {
 		boolean valable = true;
 		for (DescriptiveStatistics e : variables) {
-			valable = (e.getStandardDeviation() < 3) && valable;
+			valable = (e.getStandardDeviation() < noiseThreshold) && valable;
 		}
 		if (valable) v.setTrue(); else v.setFalse();   
 	}
