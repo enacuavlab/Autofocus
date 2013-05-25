@@ -5,7 +5,6 @@
 	<classpathentry kind="lib" path="swing2swt.jar"/>
 	<classpathentry kind="lib" path="org.eclipse.swt_3.8.0.jar"/>
 	<classpathentry kind="lib" path="ivy-java.jar"/>
-	<classpathentry kind="lib" path="javax.vecmath_1.5.0.jar"/>
 	<classpathentry kind="lib" path="jdom-2.0.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

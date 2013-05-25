@@ -9,7 +9,8 @@ public class Filter<E extends Filtrable> {
 	private float tolerance = 2;
 	private float md;
 	private float diff;
-
+	private float noiseThreshold = 1000;
+	
 	private float mediumDistance(E element) {
 		float res = 0;
 		for (E i : values) {
@@ -48,12 +49,14 @@ public class Filter<E extends Filtrable> {
 		md = mediumDistance();
 		diff = difference();
 		float mde;
+		int i = 0;
 		for (E elem : values) {
 			mde = mediumDistance(elem);
+			i++;
 			if (mde > (md + diff / tolerance) || mde < (md - diff / tolerance)) {
-				element.setFalse();
+				if (i<values.getCapacity()/2) {element.setFalse();}
 			} else
-				element.setTrue();
+				if (i<values.getCapacity()/2) {element.setTrue();}
 		}
 	}
 }
