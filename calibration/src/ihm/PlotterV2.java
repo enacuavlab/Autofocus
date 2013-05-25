@@ -31,6 +31,7 @@ public class PlotterV2 {
 		shell.setText("Canvas Example");
 		shell.setLayout(new FillLayout());
 		Canvas canvas = new Canvas(shell, SWT.NONE);
+		point = new Point(0,0); //sera modifier juste apres
 
 		//ajout d'un evenement sur le canvas pour rafraichir l'affichage
 		canvas.addPaintListener(new PaintListener() {
