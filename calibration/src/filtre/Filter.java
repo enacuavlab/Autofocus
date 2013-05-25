@@ -1,9 +1,26 @@
 package filtre;
 
-import java.util.Iterator;
+import java.lang.reflect.Array;
+import java.util.*;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+public class Filter<E> {
 
-public class Filter {
+	private Collection<DescriptiveStatistics> variables = null;
+	private int windowSize;
+	
+	public Filter(int windowSize){
+		this.windowSize=windowSize;
+	}
+	
+	public Filter() {
+		this.windowSize = 40;
+	}
 
+	
+	public void add(VecteurFiltrable<E> test){
+		Collection<E> toAdd = test.toArray();
+		if (variables != null) {}	
+	}
 }
 
 	
