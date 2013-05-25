@@ -8,10 +8,10 @@ import filtre.Filter;
 public class Data {
 
 	private TypeCalibration calib;
-	private Filter<Vecteur> filtre;
+	private Filter<Double> filtre;
 	List<Vecteur> list = new LinkedList<Vecteur>();
 	
-	public Data(TypeCalibration calibration,Filter<Vecteur> filtre) {
+	public Data(TypeCalibration calibration,Filter<Double> filtre) {
 		this.calib = calibration;
 		this.filtre = filtre;
 	}

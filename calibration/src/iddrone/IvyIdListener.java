@@ -19,7 +19,7 @@ public class IvyIdListener implements IvyMessageListener {
 	 * @throws InterruptedException
 	 */
 	public IvyIdListener() throws IvyException {
-		listeId=new ArrayList();
+		listeId=new ArrayList<Integer>();
 		bus = new Ivy("IvyIdListener", "IvyIdListener Ready", null);
 		bus.bindMsg("^([0-9]+) [A-Za-z0-9]", this);
 		//bus.bindMsg("^(.*)",this);
