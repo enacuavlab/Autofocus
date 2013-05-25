@@ -4,20 +4,22 @@ import java.util.Iterator;
 
 public class Filter<E extends Filtrable> {
 
-	private SlidingWindow<E> values = new SlidingWindow<E>(4);
-	
+	private SlidingWindow<E> values = new SlidingWindow<E>(40);
+
 	private float tolerance = 2;
-	
+	private float md;
+	private float diff;
+
 	private float mediumDistance(E element) {
 		float res = 0;
 		for (E i : values) {
 			if (!i.equals(element)) {
-			res = res + i.away(element);
+				res = res + i.away(element);
 			}
 		}
-		return (res/values.size());
+		return (res / values.size());
 	}
-	
+
 	private float mediumDistance() {
 		float res = 0;
 		for (E i : values) {
@@ -27,13 +29,13 @@ public class Filter<E extends Filtrable> {
 		return res;
 	}
 
-	private float difference(){
+	private float difference() {
 		float med = this.mediumDistance();
 		float res = 0;
-		for(E i : values){
-			for(E j : values){
+		for (E i : values) {
+			for (E j : values) {
 				if (!i.equals(j)) {
-				res = (i.away(j) - med)*(i.away(j) - med);
+					res = (i.away(j) - med) * (i.away(j) - med);
 				}
 			}
 		}
@@ -43,11 +45,15 @@ public class Filter<E extends Filtrable> {
 
 	public void add(E element) {
 		values.add(element);
-		if (mediumDistance(element) > (mediumDistance() + difference()/tolerance) 
-				|| mediumDistance(element) < (mediumDistance() - difference()/tolerance) ){
-			element.setFalse();
+		md = mediumDistance();
+		diff = difference();
+		float mde;
+		for (E elem : values) {
+			mde = mediumDistance(elem);
+			if (mde > (md + diff / tolerance) || mde < (md - diff / tolerance)) {
+				element.setFalse();
+			} else
+				element.setTrue();
 		}
-		else element.setTrue();
 	}
-
 }
