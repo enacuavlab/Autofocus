@@ -3,7 +3,7 @@ package filtre;
 public class Test {
 	
 	public Iterable<Vecteur> test() {
-		Filter<Vecteur> filtre = new Filter<Vecteur>();
+		Filter filtre = new Filter();
 		EmulData db = new EmulData(filtre);
 		
 		//Vecteur v1 = new Vecteur(1);

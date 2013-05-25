@@ -11,6 +11,9 @@ public class SlidingWindow<E> extends ArrayBlockingQueue<E> {
 	/**add the element at the end of the queue
 	 * return always true
 	 */
+	public int getCapacity() {
+		return super.size();
+	}
 	
 	public boolean add(E element){
 		if (!super.offer(element)){
