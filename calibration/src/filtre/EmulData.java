@@ -6,10 +6,10 @@ import data.*;
 class EmulData implements Iterable<Vecteur> {
 
 	List<Vecteur> db = new ArrayList<Vecteur>();
-	Filter<Double> filtre;
+	Filter filtre;
 
 	/** creates a new Data */
-	protected EmulData(Filter<Double> filtre) {
+	protected EmulData(Filter filtre) {
 		this.filtre = filtre;
 	}
 
