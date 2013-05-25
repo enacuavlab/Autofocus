@@ -17,8 +17,8 @@ public class Filter<E> {
 	}
 
 	
-	public void add(VecteurFiltrable<E> test){
-		Collection<E> toAdd = test.toArray();
+	public void add(VecteurFiltrable<E> v){
+		Collection<E> toAdd = v.setArray();
 		if (variables != null) {}	
 	}
 }

@@ -5,10 +5,10 @@ import java.util.*;
 class EmulData implements Iterable<Vecteur> {
 
 	List<Vecteur> db = new ArrayList<Vecteur>();
-	Filter<Vecteur> filtre;
+	Filter<Double> filtre;
 
 	/** creates a new Data */
-	protected EmulData(Filter<Vecteur> filtre) {
+	protected EmulData(Filter<Double> filtre) {
 		this.filtre = filtre;
 	}
 
@@ -21,7 +21,6 @@ class EmulData implements Iterable<Vecteur> {
 	protected void store(int toStore) {
 		Vecteur v = new Vecteur(toStore);
 		db.add(v);
-		filtre.add(v);
 	}
 
 	public Iterator<Vecteur> iterator(){
