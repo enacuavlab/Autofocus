@@ -24,7 +24,7 @@ public class PlotterV2 {
 		point.y = y;
 	}
 	
-	public static void main() {
+	public static void main(String args[]) {
 		//Initialisation des attributs
 		display = new Display();
 		shell = new Shell(display, SWT.SHELL_TRIM);
