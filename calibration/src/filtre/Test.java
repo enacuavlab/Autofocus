@@ -4,7 +4,7 @@ import data.*;
 public class Test {
 	
 	public Iterable<Vecteur> test() {
-		Filter filtre = new Filter();
+		Filter<Double> filtre = new Filter<Double>();
 		EmulData db = new EmulData(filtre);
 		
 		//Vecteur v1 = new Vecteur(1);
