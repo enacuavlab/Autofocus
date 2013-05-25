@@ -41,10 +41,6 @@ public class PlotterV2 {
 			}
 		});
 		
-		setPoint(10,10);
-		canvas.redraw();
-		
-		/*
 		//creation des points a afficher
 		Iterable<Vecteur> db = (new Test()).test();
 		//ajout des points sur le canvas
@@ -54,7 +50,6 @@ public class PlotterV2 {
 			setPoint(i, e.getObject());
 			canvas.redraw();
 		}
-		*/
 		
 		//ouverture et affichage de la fenetre
 		shell.open();
