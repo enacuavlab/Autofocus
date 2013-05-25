@@ -35,11 +35,15 @@ public class PlotterV2 {
 		//ajout d'un evenement sur le canvas pour rafraichir l'affichage
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
-				e.gc.drawRoundRectangle(point.x, point.y, point.x + 10,
-						point.y + 10, 10, 10);
+				e.gc.drawRoundRectangle(point.x, point.y, point.x + 190,
+						point.y + 190, 30, 30);
 			}
 		});
 		
+		setPoint(10,10);
+		canvas.redraw();
+		
+		/*
 		//creation des points a afficher
 		Iterable<Vecteur> db = (new Test()).test();
 		//ajout des points sur le canvas
@@ -49,6 +53,7 @@ public class PlotterV2 {
 			setPoint(i, e.getObject());
 			canvas.redraw();
 		}
+		*/
 		
 		//ouverture et affichage de la fenetre
 		shell.open();
