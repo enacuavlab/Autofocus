@@ -1,11 +1,11 @@
 package filtre;
 
-import java.lang.reflect.Array;
+import java.util.Collection;
 
 public interface VecteurFiltrable<E> {
 	
 	/**transforms the vector in an array*/
-	public Array toArray();
+	public Collection<E> toArray();
 	
 	/**return the boolean stating if the object is valid or not*/
 	public boolean isCorrect();
