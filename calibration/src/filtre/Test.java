@@ -2,15 +2,13 @@ package filtre;
 
 public class Test {
 	
-	public static void main(String[] args) {
+	public Iterable<Vecteur> test() {
 		Filter<Vecteur> filtre = new Filter<Vecteur>();
 		EmulData db = new EmulData(filtre);
-		ihm.PlotterV2 plot = new ihm.PlotterV2();
 		
 		//Vecteur v1 = new Vecteur(1);
 		//Vecteur v2 = new Vecteur(2);
 		//System.out.println(v1.equals(v2));
-		
 		
 		AleatGen aleat = new AleatGen(20,10,db);
 		//first loop for initial value
@@ -28,14 +26,7 @@ public class Test {
 			aleat.store();
 		}
 		//print result
-		int i = 1;
-		plot.getShell().open();
-		System.out.println("ici");
-		for(Vecteur e : db){
-			plot.setPoint(i,e.getObject());
-			(plot.getCanvas()).redraw();
-		}
-		System.out.println(db);
+		return db;
 		
 	}
 }
