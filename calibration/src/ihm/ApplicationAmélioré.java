@@ -137,8 +137,9 @@ public class ApplicationAmélioré {
 		combo_id.setLayoutData(fd_text_id);
 		
 		//Image
+		Image image = new Image(display,"Image/croix_rouge.gif");
 		final CLabel label = new CLabel(zone_id, SWT.NONE);
-		label.setImage(new Image(display,"Image/croix_rouge.gif"));
+		label.setImage(image);
 		FormData fd_label = new FormData();
 		fd_label.top = new FormAttachment(combo_id, 3, SWT.TOP);
 		fd_label.left = new FormAttachment(combo_id, 9);
@@ -146,6 +147,7 @@ public class ApplicationAmélioré {
 		label.setText("");
 		final IvyIdListener ivyid= new IvyIdListener();
 		ArrayList<Integer> l=(ArrayList<Integer>) ivyid.getList();
+		combo_id.add("Test");
 		if (!l.isEmpty()){
 			for (Integer i : ivyid.getList()){
 				combo_id.add(i.toString());
@@ -155,7 +157,7 @@ public class ApplicationAmélioré {
 		combo_id.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				System.out.println(""+ (((Combo)e.widget).getText()));
-				label.getImage().dispose();
+				label.dispose();
 				try{
 					ivyid.stop();
 				}catch(IvyException excep){

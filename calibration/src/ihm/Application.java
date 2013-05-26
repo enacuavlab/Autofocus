@@ -4,6 +4,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.*;
+
 import swing2swt.layout.BoxLayout;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -24,7 +25,6 @@ import org.eclipse.swt.events.ModifyEvent;
 
 public class Application {
 	private static Text text;
-	private static Text text_1;
 
 	public static void main(String[] args) {
 	Display display = new Display();
@@ -88,37 +88,24 @@ public class Application {
 	
 	Composite composite = new Composite(Fenetre, SWT.NONE);
 	composite.setLayoutData(BorderLayout.CENTER);
-	composite.setLayout(new FormLayout());
+	composite.setLayout(new FillLayout(SWT.VERTICAL));
 	
-	text_1 = new Text(composite, SWT.BORDER);
-	text_1.setText("youhou");
-	text_1.addModifyListener(new ModifyListener() {
-		public void modifyText(ModifyEvent e) {
-			System.out.println("nouvelle valeur = " + (text_1).getText());
-		}
-	});
+	Composite composite_1 = new Composite(composite, SWT.NONE);
+	composite_1.setLayout(new FormLayout());
+	FormData formdata=new FormData();
+	formdata.height=20;
+	formdata.width=100;
+	formdata.left=new FormAttachment(25);
+	//formdata.right=new FormAttachment(100,-250);
+	formdata.top=new FormAttachment(20);
+	//formdata.bottom=new FormAttachment(100,-500);
+	Combo combo = new Combo(composite_1, SWT.READ_ONLY);
+	combo.setText("Choissisez l'id de votre drone");
+	combo.setLayoutData(formdata);
 	
-	FormData fd_text_1 = new FormData();
-	fd_text_1.top = new FormAttachment(0, 27);
-	fd_text_1.right = new FormAttachment(55, -90);
-	text_1.setLayoutData(fd_text_1);
+	Composite composite_2 = new Composite(composite, SWT.NONE);
 	
-	Label lblEntrerLeNumro = new Label(composite, SWT.NONE);
-	lblEntrerLeNumro.setFont(SWTResourceManager.getFont("Cantarell", 9, SWT.NORMAL));
-	FormData fd_lblEntrerLeNumro = new FormData();
-	fd_lblEntrerLeNumro.top = new FormAttachment(text_1, 0, SWT.TOP);
-	fd_lblEntrerLeNumro.right = new FormAttachment(text_1, -6);
-	lblEntrerLeNumro.setLayoutData(fd_lblEntrerLeNumro);
-	lblEntrerLeNumro.setText("Entrer le numéro\nde votre drone\n");
-	
-	Image image=new Image(display,"check.jpg");
-	CLabel label = new CLabel(composite, SWT.NONE);
-	label.setImage(image);
-	FormData fd_label = new FormData();
-	fd_label.top = new FormAttachment(text_1, -2, SWT.TOP);
-	fd_label.left = new FormAttachment(text_1, 15);
-	label.setLayoutData(fd_label);
-	label.setText("");
+	Composite composite_3 = new Composite(composite, SWT.NONE);
 
 	
 	
