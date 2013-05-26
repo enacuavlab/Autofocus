@@ -12,9 +12,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-import data.Vecteur;
-
 import filtre.Test;
+import data.Vecteur;
 
 public class PlotterV2 {
 	private static Display display;
@@ -37,13 +36,21 @@ public class PlotterV2 {
 		GC gc= new GC(canvas);
 		point = new Point(0,0); //sera modifier juste apres
 		//ajout d'un evenement sur le canvas pour rafraichir l'affichage
-		canvas.addListener(SWT.Paint,new Listener() {
+		/*canvas.addListener(SWT.Paint,new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("Redraw ok");
 				e.gc.drawLine(point.x, point.y, point.x+50, point.y+50);
 			}
-		});
+		});*/
 		
+		class dessin_canvas implements PaintListener {
+	 
+	          public void paintControl(PaintEvent e) {
+	                GC monGC=e.gc;
+	                monGC.drawLine(point.x,point.y,point.x+10,point.y+10);		
+	          }
+		}
+		canvas.addPaintListener(new dessin_canvas());
 		//creation des points a afficher
 		Iterable<Vecteur> db = (new Test()).test();
 		//ajout des points sur le canvas
@@ -52,7 +59,7 @@ public class PlotterV2 {
 		for (Vecteur e : db) {
 			i= i+ 20;
 			System.out.println("Boucle");
-			setPoint(i, (int)e.toArray()[0]);
+			setPoint(i, ((Double)((e.setArray()).toArray()[0])).intValue());
 			canvas.redraw();
 			canvas.update();
 		}
