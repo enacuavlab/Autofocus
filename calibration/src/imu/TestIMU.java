@@ -1,5 +1,7 @@
 package imu;
 
+import ihm.FilterPlot;
+import ihm.Plotter;
 import common.TypeCalibration;
 import data.Data;
 
@@ -10,7 +12,8 @@ public class TestIMU {
 	public static void main(String args[]) throws IvyException, InterruptedException {
 		
 		TypeCalibration t = TypeCalibration.MAGNETOMETER;
-		Filter filtre = new Filter(40,t);
+		Plotter plot = new Plotter();
+		Filter filtre = new FilterPlot(plot);
 		Data data = new Data(t,filtre);
 		IMU imu =new IMU(t,data);
 		Thread.sleep(150000);

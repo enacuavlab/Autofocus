@@ -19,9 +19,9 @@ public class Plotter extends JPanel {
 		super.paintComponents(g);
 		int i = 1;
 		for(VecteurFiltrable<Double> v : points){
-			g.drawLine((int)v.getX(), i, (int)v.getX()+1, i);
+			g.drawLine(i,(int)v.getX(), i,(int)v.getX()+1);
 			//cast explicite de double avec des 0 après la virgule en int
-			i = i+10;
+			i++;
 		}
 	}
 	
