@@ -12,6 +12,11 @@ public class Filter {
 	private SlidingWindow<VecteurFiltrable<Double>> window;
 	private int noiseThreshold;
 
+	/**Creates a filter with fixed window size which filter the
+	 * type of calibration given in parameter
+	 * @param windowSize
+	 * @param t
+	 */
 	public Filter(int windowSize,TypeCalibration t) {
 		if (t.equals(TypeCalibration.ACCELEROMETER)){
 			noiseThreshold = 3;
@@ -25,10 +30,16 @@ public class Filter {
 		variables = null;
 	}
 
+	/** creates a default filter without type and a window size of 40
+	 */
 	public Filter() {
 		this.windowSize = 40;
 	}
 
+	/**updates the window of the filter with the new vector given as argument
+	 * not public use add instead
+	 * @param v
+	 */
 	private void update(VecteurFiltrable<Double> v) {
 		boolean valable = true;
 		for (DescriptiveStatistics e : variables) {
@@ -38,6 +49,10 @@ public class Filter {
 		if (valable) v.setTrue(); else v.setFalse();   
 	}
 
+	/**add the vector building the correct window if not already built and
+	 * updates the window
+	 * @param v
+	 */
 	public void add(VecteurFiltrable<Double> v) {
 		Collection<Double> toAdd = v.setArray();
 		Iterator<Double> a = toAdd.iterator();

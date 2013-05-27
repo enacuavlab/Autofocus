@@ -4,6 +4,15 @@ import java.util.Collection;
 
 public interface VecteurFiltrable<E> {
 	
+	/**getter for coordinates*/
+	public double getX();
+	
+	/**getter for coordinates*/
+	public double getY();
+	
+	/**getter for coordinates*/
+	public double getZ();
+	
 	/**transforms the vector in an array*/
 	public Collection<E> setArray();
 	
