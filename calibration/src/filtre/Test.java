@@ -1,12 +1,14 @@
 package filtre;
-import data.*;
 
 public class Test {
 	
-	public Iterable<Vecteur> test() {
-		Filter filtre = new Filter();
-		EmulData db = new EmulData(filtre);
-		
+	EmulData db;
+	
+	public void test(EmulData edata) {
+		db = edata;
+	}
+	
+	public void run() {
 		//Vecteur v1 = new Vecteur(1);
 		//Vecteur v2 = new Vecteur(2);
 		//System.out.println(v1.equals(v2));
@@ -26,8 +28,5 @@ public class Test {
 		for (int i = 0; i < 10; i++) {
 			aleat.store();
 		}
-		//print result
-		return db;
-		
 	}
 }
