@@ -14,7 +14,7 @@ public class FilterPlot extends Filter{
 	
 	@Override
 	public void add(VecteurFiltrable<Double> v){
-		super.add(v);
+
 		plot.add(v);
 	}
 
