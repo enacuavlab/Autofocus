@@ -4,7 +4,7 @@ public class Test {
 	
 	EmulData db;
 	
-	public void test(EmulData edata) {
+	public Test(EmulData edata) {
 		db = edata;
 	}
 	

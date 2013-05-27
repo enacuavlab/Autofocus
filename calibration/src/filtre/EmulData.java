@@ -3,13 +3,13 @@ package filtre;
 import java.util.*;
 import data.*;
 
-class EmulData implements Iterable<Vecteur> {
+public class EmulData implements Iterable<Vecteur> {
 
 	List<Vecteur> db = new ArrayList<Vecteur>();
 	Filter filtre;
 
 	/** creates a new Data */
-	protected EmulData(Filter filtre) {
+	public EmulData(Filter filtre) {
 		this.filtre = filtre;
 	}
 
@@ -22,6 +22,7 @@ class EmulData implements Iterable<Vecteur> {
 	protected void store(int x) {
 		Vecteur v = new Vecteur(x,0,0);
 		db.add(v);
+		filtre.add(v);
 	}
 
 	public Iterator<Vecteur> iterator(){
