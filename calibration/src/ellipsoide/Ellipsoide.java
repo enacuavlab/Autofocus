@@ -1,14 +1,22 @@
 package ellipsoide;
+import java.util.Iterator;
+import java.util.List;
 
 import Jama.Matrix;
-
+import data.*;
 public class Ellipsoide {
-	public static void main(String args[]) {
-		double[][] vals = { { 1., 2., 3 }, { 4., 5., 6. }, { 7., 8., 10. } };
-		Matrix A = new Matrix(vals);
-		Matrix b = Matrix.random(3, 1);
-		Matrix x = A.solve(b);
-		Matrix r = A.times(x).minus(b);
-		//double rnorm = r.normInf();
+	private Data data;
+	private Matrix coefficientEllipsoide;
+	Ellipsoide(Data data){
+		this.data=data;
+	}
+	public void ajouter(){
+		Matrix A=
+		List<Vecteur> list = data.getVecteur();
+		Iterator i = list.iterator();
+		while(i.hasNext()){
+			
+		}
+
 	}
 }

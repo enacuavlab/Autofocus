@@ -9,7 +9,7 @@ public class Data {
 
 	private TypeCalibration calib;
 	private Filter filtre;
-	List<Vecteur> list = new LinkedList<Vecteur>();
+	private List<Vecteur> list = new LinkedList<Vecteur>();
 	
 	public Data(TypeCalibration calibration,Filter filtre) {
 		this.calib = calibration;
@@ -22,7 +22,9 @@ public class Data {
 		list.add(vec);
 		filtre.add(vec);
 	}
-
+	public List<Vecteur> getVecteur(){
+		return list;
+	}
 	public String toString() {
 		return list.toString();
 	}
