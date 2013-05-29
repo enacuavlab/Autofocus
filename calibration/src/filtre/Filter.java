@@ -2,8 +2,10 @@ package filtre;
 
 import java.util.*;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import ellipsoide.Ellipsoide;
 
 import common.TypeCalibration;
+import data.Vecteur;
 
 public class Filter {
 
@@ -11,6 +13,7 @@ public class Filter {
 	private int windowSize;
 	private SlidingWindow<VecteurFiltrable<Double>> window;
 	private int noiseThreshold;
+	private Ellipsoide ellipse = new Ellipsoide();
 
 	/**Creates a filter with fixed window size which filter the
 	 * type of calibration given in parameter
@@ -22,7 +25,7 @@ public class Filter {
 			noiseThreshold = 3;
 		}
 		if(t.equals(TypeCalibration.MAGNETOMETER)){
-			noiseThreshold = 3;
+			noiseThreshold = 5;
 		}
 		
 		this.windowSize = windowSize;
@@ -64,6 +67,12 @@ public class Filter {
 				//System.out.println("ajoute les donnees");
 			}
 			window.add(v);
+			Vecteur[] b = new Vecteur[window.size()];
+			b = window.toArray(b);
+			if(b[window.size()/2].getState()) {
+				ellipse.add(b[window.size()/2]);
+			}
+			ellipse.print();
 			update(v);
 		} else {
 			//System.out.println("cree variabless");

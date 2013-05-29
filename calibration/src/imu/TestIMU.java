@@ -13,7 +13,7 @@ public class TestIMU {
 		
 		TypeCalibration t = TypeCalibration.MAGNETOMETER;
 		Plotter plot = new Plotter();
-		Filter filtre = new FilterPlot(plot);
+		Filter filtre = new Filter(10,TypeCalibration.MAGNETOMETER);
 		Data data = new Data(t,filtre);
 		IMU imu =new IMU(t,data);
 		Thread.sleep(150000);

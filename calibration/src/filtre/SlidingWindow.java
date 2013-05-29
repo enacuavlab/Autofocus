@@ -12,6 +12,7 @@ public class SlidingWindow<E> extends ArrayBlockingQueue<E> {
 	 * return always true
 	 */
 	
+	
 	public boolean add(E element){
 		if (!super.offer(element)){
 			super.poll();
@@ -20,6 +21,10 @@ public class SlidingWindow<E> extends ArrayBlockingQueue<E> {
 		return true;
 	}
 	
+	@Override
+	public <T> T[] toArray(T[] a) { 
+		return super.toArray(a);
+	}
 	/**
 	 * Added by default to allow serializable 
 	 */
