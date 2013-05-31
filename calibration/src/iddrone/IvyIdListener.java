@@ -31,6 +31,7 @@ public class IvyIdListener implements IvyMessageListener {
 			listeId.add(Integer.valueOf(args[0]));
 		}
 	}
+	
 	/**
 	 * Find the number of the IMU in the list
 	 * @param i input IMU number

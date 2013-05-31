@@ -1,7 +1,5 @@
 package rawmode;
 
-import common.TypeCalibration;
-
 import fr.dgac.ivy.IvyException;
 
 public class TestRawListener {
