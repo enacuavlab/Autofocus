@@ -5,6 +5,7 @@ import java.util.*;
 import common.TypeCalibration;
 import filtre.Filter;
 
+
 public class Data {
 
 	private TypeCalibration calib;
@@ -21,12 +22,14 @@ public class Data {
 		vec.setType(calib);
 		list.add(vec);
 		filtre.add(vec);
-	}
+	
+			}
 	public List<Vecteur> getVecteur(){
 		return list;
 	}
 	public String toString() {
 		return list.toString();
 	}
+	
 
 }
