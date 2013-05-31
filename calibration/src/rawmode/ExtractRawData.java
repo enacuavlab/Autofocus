@@ -11,8 +11,11 @@ public class ExtractRawData {
 
 	private org.jdom2.Document document;
 	private Element racine;
+	// permet de sotcker l'index de la telemetry
+	private int indexTelemetry = 0;
 
-	/**Used to create the tree of the xml document given in input
+	/**
+	 * Used to create the tree of the xml document given in input
 	 * 
 	 * @param toParse
 	 */
@@ -32,58 +35,74 @@ public class ExtractRawData {
 		// document.
 		racine = document.getRootElement();
 	}
-	
-	/**test function returning the root of the xml document stored in the object
+
+	/**
+	 * test function returning the root of the xml document stored in the object
 	 * 
 	 */
-	public void test(){
+	public void test() {
 		System.out.println(racine);
 	}
-	
-	/**used to create the information about the DL_SETTING node named telemetry
+
+	/**
+	 * used to create the information about the DL_SETTING node named telemetry
 	 * 
 	 * @return the var field of the node
 	 */
-	private String infoNoeud(){
-	//On saute systematiquement le premier noeud du fichier
-		List<Element> listdl_settings = racine.getChildren("dl_settings");
-		listdl_settings = listdl_settings.get(0).getChildren("dl_settings");
-		String buf = null;
-		Iterator<Element> i = listdl_settings.iterator();
-		String test = null;
-		Element elem = null;
+	private String infoNoeud() {
 		try {
+			// On saute systematiquement le premier noeud du fichier
+			List<Element> listdl_settings = racine.getChildren("dl_settings");
+			indexTelemetry++;
+			listdl_settings = listdl_settings.get(0).getChildren("dl_settings");
+			indexTelemetry++;
+			// On arrive dans la liste des dl_settings avec attributs var
+			// dont on recherche la valeur var
+			Iterator<Element> i = listdl_settings.iterator();
+			String test = null;
+			Element elem = null;
 			do {
 				elem = i.next();
-				test = elem.getAttribute("var").getName();
-			} while(i.hasNext() && !test.equals("telemetry_mode_Main"));
-		} catch (Exception e){
+				test = elem.getAttribute("NAME").getValue();
+				// On lit un dl_setting à chaque itération
+				indexTelemetry++;
+			} while (i.hasNext() && !test.equals("Misc"));
+			// On lit un nouveau dl_Setting
+			i = elem.getChildren().iterator();
+			// On entre dans le noeud misc et on cherche le noeud
+			// telemetry_mode_main
+			do {
+				elem = i.next();
+				test = elem.getAttribute("var").getValue();
+			} while (i.hasNext() && !test.equals("telemetry_mode_Main"));
+			return elem.getAttribute("values").getValue();
+		} catch (Exception e) {
 			System.out.println("Fichier probablement vide");
 			e.printStackTrace();
+			return "";
 		}
-		Iterator<Element> j = i.next().getChildren().iterator();
-		buf = j.next().getAttributeValue("values").toString();
-		return buf;
-		}
-		
-		//on tient donc i au noeud dlSettings contenant les modes de telemetry
-		//on recupere la chaine qui va bien
-	
-	/**used to transform the node in a list of choice
+	}
+
+	// on tient donc i au noeud dlSettings contenant les modes de telemetry
+	// on recupere la chaine qui va bien
+
+	/**
+	 * used to transform the node in a list of choice
 	 * 
 	 * @param toParse
 	 * @return list of the possible modes
 	 */
-	private static List<String> parseChoice(String toParse){
+	private static List<String> parseChoice(String toParse) {
 		List<String> res = new LinkedList<String>();
 		String[] temp = toParse.split("\\|");
-		for(int i = 0; i<temp.length; i++){
+		for (int i = 0; i < temp.length; i++) {
 			res.add(temp[i]);
 		}
 		return res;
 	}
-	
-	/**main fonction return the possible telemetry modes
+
+	/**
+	 * main fonction return the possible telemetry modes
 	 * 
 	 * @param toParse
 	 * @return the list of the telemetry modes
@@ -93,10 +112,19 @@ public class ExtractRawData {
 		return parseChoice(this.infoNoeud());
 	}
 	
-	public static void main(String args[]){
+	/**
+	 * function use to get the number of the node named telemetry_mode_Main
+	 * 
+	 * @return number of the node Telemetry_Mode_MAIN;
+	 */
+	public int getIndex() {
+		return indexTelemetry;
+	}
+
+	public static void main(String args[]) {
 		ExtractRawData d = new ExtractRawData();
 		d.parse("C:\\Users\\Alinoé\\Desktop\\settings_booz2.xml");
-		d.test();
 		System.out.println(parseChoice(d.infoNoeud()));
+		System.out.println(d.getIndex());
 	}
 }
