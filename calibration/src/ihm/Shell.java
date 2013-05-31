@@ -12,7 +12,10 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,7 +25,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import rawmode.ExtractRawData;
+
 import fr.dgac.ivy.IvyException;
+import javax.swing.JTextField;
 
 
 
@@ -31,6 +37,9 @@ public class Shell extends JFrame {
 		private JLabel titre;
 		private Plotter plot;
 		private JButton btnQuitter,btnStop;
+		private JTextField textField;
+		private int id;
+		private String name;
 		
 		public Shell(Plotter plot){
 			super();
@@ -121,72 +130,44 @@ public class Shell extends JFrame {
 			gbl_panel_north_center.rowWeights = new double[]{0.0, 0.0};
 			panel_north_center.setLayout(gbl_panel_north_center);
 			
-			JLabel label_id= new JLabel("Choissisez l'id de votre drone");
-			GridBagConstraints gbc_label_id = new GridBagConstraints();
-			gbc_label_id.insets = new Insets(0, 0, 5, 5);
-			gbc_label_id.anchor = GridBagConstraints.EAST;
-			gbc_label_id.gridx = 1;
-			gbc_label_id.gridy = 1;
-			panel_north_center.add(label_id, gbc_label_id);
 			
-			
-			final JComboBox combo_id=new JComboBox();
-			GridBagConstraints gbc_comboBox = new GridBagConstraints();
-			gbc_comboBox.anchor = GridBagConstraints.WEST;
-			gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-			gbc_comboBox.gridx = 2;
-			gbc_comboBox.gridy = 1;
-			panel_north_center.add(combo_id, gbc_comboBox);
 			
 		
-			JPanel panel_center_center = new JPanel();
+			final JPanel panel_center_center = new JPanel();
 			panel_center.add(panel_center_center, BorderLayout.CENTER);
 			panel_center_center.setLayout(null);
 			
-			final JPanel panel_mod = new JPanel();
-			Border border_mod=BorderFactory.createRaisedBevelBorder();
-			panel_mod.setBackground(Color.ORANGE);
-			panel_mod.setForeground(Color.BLACK);
-			panel_mod.setBounds(282, 68, 508, 289);
-			panel_mod.setBorder(border_mod);
-			panel_center_center.add(panel_mod);
-			panel_mod.setLayout(null);
 			
-			final JLabel label_mod = new JLabel();
-			label_mod.setBounds(105, 45, 340, 42);
-			panel_mod.add(label_mod);
-			JComboBox comboBox = new JComboBox();
-			comboBox.setBounds(105, 124, 284, 24);
-			panel_mod.add(comboBox);
-			panel_mod.setVisible(false);
+			//Panel_name with a textfield and a label
+			JPanel panel_name = new JPanel();
+			Border border_name=BorderFactory.createRaisedBevelBorder();
+			panel_name.setBorder(border_name);
+			panel_name.setBackground(Color.MAGENTA);
+			panel_name.setBounds(282, 38, 508, 99);
+			panel_center_center.add(panel_name);
+			panel_name.setLayout(null);
+			panel_name.setVisible(false);
 			
-			//Add drone id 
-			combo_id.addItem(" ");
-			try {
-				final IvyIdListener ivyid= new IvyIdListener();
-				ArrayList<Integer> l=(ArrayList<Integer>) ivyid.getList();
-				if (!l.isEmpty()){
-					for (Integer i : ivyid.getList()){
-						combo_id.addItem(i.toString());
-					}
+			final JLabel label_name = new JLabel();
+			label_name.setBounds(106, 12, 138, 60);
+			panel_name.add(label_name);
+			
+			textField = new JTextField();
+			textField.setBounds(273, 35, 114, 29);
+			panel_name.add(textField);
+			textField.setColumns(10);
+			textField.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					name=textField.getText();
+					add_combo_mod(panel_center_center);
 				}
-			}catch (IvyException e){
-				e.printStackTrace();
-			}
-			combo_id.addItem("Test");
-			combo_id.addItem("Test2");
-			combo_id.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e) {
-				  if (combo_id.getSelectedItem().toString()==" "){
-					  panel_mod.setVisible(false);
-				  }
-				  else {
-					  label_mod.setText("Choissisez le mode du drone d'id " + combo_id.getSelectedItem().toString()+ " :");
-					  panel_mod.setVisible(true);
-				  }
-				    }  
 			});
-		
+			
+			
+			
+			addcombo_id(panel_north_center,panel_name,label_name);
+			
+			
 			
 			JPanel panel_south_center = new JPanel();
 			panel_center.add(panel_south_center, BorderLayout.SOUTH);
@@ -222,4 +203,86 @@ public class Shell extends JFrame {
 	
 			
 		}
+		
+		private void addcombo_id(JPanel panel_north_center,final JPanel panel,final JLabel label){
+			JLabel label_id= new JLabel("Choissisez l'id de votre drone");
+			GridBagConstraints gbc_label_id = new GridBagConstraints();
+			gbc_label_id.insets = new Insets(0, 0, 5, 5);
+			gbc_label_id.anchor = GridBagConstraints.EAST;
+			gbc_label_id.gridx = 1;
+			gbc_label_id.gridy = 1;
+			panel_north_center.add(label_id, gbc_label_id);
+			final JComboBox combo=new JComboBox();
+			GridBagConstraints gbc_comboBox = new GridBagConstraints();
+			gbc_comboBox.anchor = GridBagConstraints.WEST;
+			gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+			gbc_comboBox.gridx = 2;
+			gbc_comboBox.gridy = 1;
+			panel_north_center.add(combo, gbc_comboBox);
+			
+			
+			
+			//Add drone id 
+			combo.addItem(" ");
+			try {
+				final IvyIdListener ivyid= new IvyIdListener();
+				ArrayList<Integer> l=(ArrayList<Integer>) ivyid.getList();
+				if (!l.isEmpty()){
+					for (Integer i : ivyid.getList()){
+						combo.addItem(i.toString());
+					}
+				}
+			}catch (IvyException e){
+				e.printStackTrace();
+			}
+			combo.addItem("1");
+			combo.addItem("2");
+			combo.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+				  if (combo.getSelectedItem().toString()==" "){
+					  panel.setVisible(false);
+				  }
+				  else {
+					  id = Integer.parseInt(combo.getSelectedItem().toString());
+					  label.setText("<html>Veuillez entrer le<br>nom de votre drone d'id " + combo.getSelectedItem().toString()+ " :</html>");
+					  panel.setVisible(true);
+				  }
+				    }  
+			});
+		}
+		private void add_combo_mod(JPanel panel){
+			final JPanel panel_mod = new JPanel();
+			Border border_mod=BorderFactory.createRaisedBevelBorder();
+			panel_mod.setBackground(Color.ORANGE);
+			panel_mod.setForeground(Color.BLACK);
+			panel_mod.setBounds(282, 213, 508, 177);
+			panel_mod.setBorder(border_mod);
+			panel.add(panel_mod);
+			panel_mod.setLayout(null);
+			
+			final JLabel label_mod = new JLabel("Veuillez choisir le mode de votre drone de nom "+name+" :");
+			label_mod.setBounds(105, 45, 340, 42);
+			panel_mod.add(label_mod);
+			final JComboBox combo_mod = new JComboBox();
+			combo_mod.setBounds(105, 124, 284, 24);
+			panel_mod.add(combo_mod);
+			panel_mod.setVisible(false);
+			ExtractRawData d = new ExtractRawData(System.getenv("paparazzi_home")+"/var/"+ name + "/settings.xml");
+			List <String> list_mod=d.extract();
+			if (!list_mod.isEmpty()){
+				for (String i : list_mod){
+					combo_mod.addItem(i.toString());
+				}
+			}
+			combo_mod.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					if (combo_mod.getSelectedItem().toString()!=" "){
+						
+						//("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");
+						
+					}
+				}
+			});
+		}
+		
 }

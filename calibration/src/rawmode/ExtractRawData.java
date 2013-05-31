@@ -14,24 +14,28 @@ public class ExtractRawData {
 	// permet de sotcker l'index de la telemetry
 	private int indexTelemetry = 0;
 
+	
+	public ExtractRawData(String name){
+		parse(name);
+	}
 	/**
 	 * Used to create the tree of the xml document given in input
 	 * 
 	 * @param toParse
 	 */
 	private void parse(String toParse) {
-		// On crée une instance de SAXBuilder
+		// On crï¿½e une instance de SAXBuilder
 		SAXBuilder sxb = new SAXBuilder();
 		try {
-			// On crée un nouveau document JDOM avec en argument le fichier XML
-			// Le parsing est terminé ;
+			// On crï¿½e un nouveau document JDOM avec en argument le fichier XML
+			// Le parsing est terminï¿½ ;
 			File doc = new File(toParse);
 			document = sxb.build(doc);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		// On initialise un nouvel élément racine avec l'élément racine du
+		// On initialise un nouvel ï¿½lï¿½ment racine avec l'ï¿½lï¿½ment racine du
 		// document.
 		racine = document.getRootElement();
 	}
@@ -64,7 +68,7 @@ public class ExtractRawData {
 			do {
 				elem = i.next();
 				test = elem.getAttribute("NAME").getValue();
-				// On lit un dl_setting à chaque itération
+				// On lit un dl_setting ï¿½ chaque itï¿½ration
 				indexTelemetry++;
 			} while (i.hasNext() && !test.equals("Misc"));
 			// On lit un nouveau dl_Setting
@@ -107,8 +111,7 @@ public class ExtractRawData {
 	 * @param toParse
 	 * @return the list of the telemetry modes
 	 */
-	public List<String> extract(String toParse) {
-		this.parse(toParse);
+	public List<String> extract() {
 		return parseChoice(this.infoNoeud());
 	}
 	
@@ -123,7 +126,7 @@ public class ExtractRawData {
 
 	public static void main(String args[]) {
 		ExtractRawData d = new ExtractRawData();
-		d.parse("C:\\Users\\Alinoé\\Desktop\\settings_booz2.xml");
+		d.parse("C:\\Users\\Alinoï¿½\\Desktop\\settings_booz2.xml");
 		System.out.println(parseChoice(d.infoNoeud()));
 		System.out.println(d.getIndex());
 	}
