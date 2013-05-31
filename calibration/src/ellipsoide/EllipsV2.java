@@ -37,7 +37,7 @@ public class EllipsV2 {
 	 * 
 	 * @author Kaleb
 	 * @version 1.0
-	 * @see http
+	 * @see http 
 	 *      ://www.mathworks.com/matlabcentral/fileexchange/24693-ellipsoid-fit
 	 * 
 	 */
@@ -269,16 +269,19 @@ public class EllipsV2 {
 	}
 
 	public void printLog() {
-		System.out.println("");
+		if(points.size()>10)
+		{
+			System.out.println("");
 
-		for (int i = 0; i < evals.length; i++) {
-			System.out.println(Arrays.toString(evals));
+			for (int i = 0; i < evals.length; i++) {
+				System.out.println(Arrays.toString(evals));
+			}
+			System.out.println(evecs.toString());
+			System.out.println(evecs1.toString());
+			System.out.println(evecs2.toString());
+
+			System.out.print("Center: " + center.toString());
+			System.out.print(" Radii: " + radii.toString());
 		}
-		System.out.println(evecs.toString());
-		System.out.println(evecs1.toString());
-		System.out.println(evecs2.toString());
-
-		System.out.print("Center: " + center.toString());
-		System.out.print(" Radii: " + radii.toString());
 	}
 }
