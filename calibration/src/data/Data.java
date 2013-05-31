@@ -4,12 +4,13 @@ import java.util.*;
 
 import common.TypeCalibration;
 import filtre.Filter;
+import ellipsoide.ellipsV2;
 
 public class Data {
 
 	private TypeCalibration calib;
 	private Filter filtre;
-	private List<Vecteur> list = new LinkedList<Vecteur>();
+	private ArrayList<Vecteur> list = new ArrayList<Vecteur>();
 	
 	public Data(TypeCalibration calibration,Filter filtre) {
 		this.calib = calibration;
@@ -21,12 +22,15 @@ public class Data {
 		vec.setType(calib);
 		list.add(vec);
 		filtre.add(vec);
-	}
+		ellipsV2 el = new ellipsV2();
+		el.fitEllipsoid(list);
+			}
 	public List<Vecteur> getVecteur(){
 		return list;
 	}
 	public String toString() {
 		return list.toString();
 	}
+	
 
 }
