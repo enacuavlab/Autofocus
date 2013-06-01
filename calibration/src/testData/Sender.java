@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import fr.dgac.ivy.*;
 
-public class Sender implements IvyMessageListener {
+public class Sender extends Thread implements IvyMessageListener {
 	private DataReader dr;
 	private Ivy bus;
 
@@ -32,12 +32,12 @@ public class Sender implements IvyMessageListener {
 			temp = i.next();
 			System.out.println(temp);
 			bus.sendMsg(temp);
-			Thread.sleep(20);
+			Thread.sleep(200);
 		}
 
 	}
 
-	public void stop() throws IvyException {
+	public void arret() throws IvyException {
 		bus.stop();
 	}
 
@@ -54,5 +54,15 @@ public class Sender implements IvyMessageListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void run() {
+		try {
+			this.sendRawMessage();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
 	}
 }
