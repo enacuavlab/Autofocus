@@ -1,13 +1,8 @@
 package rawmode;
 
-
-
-import java.util.List;
-
 import fr.dgac.ivy.*;
 
 public class IvyRawListener implements IvyMessageListener{
-	private boolean raw_data_available= false;
 	private String telemetry_mode;
 	private Ivy bus;
 
@@ -51,6 +46,11 @@ public class IvyRawListener implements IvyMessageListener{
 	}
 	public double getTelemetrymode(){
 		return Double.valueOf(telemetry_mode);
-		
+	}
+	
+	/**fonction de test de la classe*/
+	public static void main(String args[]) throws IvyException, InterruptedException {
+		//class never used because all the opertations are done in the builder
+		IvyRawListener irl = new IvyRawListener(6,2);
 	}
 }

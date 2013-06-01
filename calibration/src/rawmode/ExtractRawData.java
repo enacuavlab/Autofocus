@@ -24,18 +24,18 @@ public class ExtractRawData {
 	 * @param toParse
 	 */
 	private void parse(String toParse) {
-		// On cr�e une instance de SAXBuilder
+		// On cree une instance de SAXBuilder
 		SAXBuilder sxb = new SAXBuilder();
 		try {
-			// On cr�e un nouveau document JDOM avec en argument le fichier XML
-			// Le parsing est termin� ;
+			// On creee un nouveau document JDOM avec en argument le fichier XML
+			// Le parsing est termine ;
 			File doc = new File(toParse);
 			document = sxb.build(doc);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		// On initialise un nouvel �l�ment racine avec l'�l�ment racine du
+		// On initialise un nouvel element racine avec l'element racine du
 		// document.
 		racine = document.getRootElement();
 	}
@@ -68,7 +68,7 @@ public class ExtractRawData {
 			do {
 				elem = i.next();
 				test = elem.getAttribute("NAME").getValue();
-				// On lit un dl_setting � chaque it�ration
+				// On lit un dl_setting a chaque iteration
 				indexTelemetry++;
 			} while (i.hasNext() && !test.equals("Misc"));
 			// On lit un nouveau dl_Setting
@@ -125,8 +125,7 @@ public class ExtractRawData {
 	}
 
 	public static void main(String args[]) {
-		ExtractRawData d = new ExtractRawData();
-		d.parse("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");
+		ExtractRawData d = new ExtractRawData("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");
 		System.out.println(parseChoice(d.infoNoeud()));
 		System.out.println(d.getIndex());
 	}
