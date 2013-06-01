@@ -1,6 +1,6 @@
 package filtre;
 
-public class Test {
+public class Test extends Thread {
 	
 	EmulData db;
 	
@@ -8,6 +8,7 @@ public class Test {
 		db = edata;
 	}
 	
+	@Override
 	public void run() {
 		//Vecteur v1 = new Vecteur(1);
 		//Vecteur v2 = new Vecteur(2);

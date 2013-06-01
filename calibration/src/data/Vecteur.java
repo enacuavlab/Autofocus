@@ -34,7 +34,7 @@ public class Vecteur extends Vector3D implements VecteurFiltrable<Double> {
 	}
 
 	public boolean isCorrect() {
-		return true;
+		return state;
 
 	}
 
