@@ -1,6 +1,7 @@
 package rawmode;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
@@ -14,27 +15,26 @@ public class ExtractRawData {
 	// permet de sotcker l'index de la telemetry
 	private int indexTelemetry = 0;
 
-	
-	public ExtractRawData(String name){
+	public ExtractRawData(String name) throws IOException {
 		parse(name);
 	}
+
 	/**
 	 * Used to create the tree of the xml document given in input
 	 * 
 	 * @param toParse
 	 */
-	private void parse(String toParse) {
+	private void parse(String toParse) throws IOException {
 		// On cree une instance de SAXBuilder
-		SAXBuilder sxb = new SAXBuilder();
 		try {
+			SAXBuilder sxb = new SAXBuilder();
 			// On creee un nouveau document JDOM avec en argument le fichier XML
 			// Le parsing est termine ;
 			File doc = new File(toParse);
 			document = sxb.build(doc);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (JDOMException e) {
+			System.out.println("Fichier xml non valide");
 		}
-
 		// On initialise un nouvel element racine avec l'element racine du
 		// document.
 		racine = document.getRootElement();
@@ -53,7 +53,7 @@ public class ExtractRawData {
 	 * 
 	 * @return the var field of the node
 	 */
-	private String infoNoeud() {
+	private String infoNoeud() throws IncorrectXmlException{
 		try {
 			// On saute systematiquement le premier noeud du fichier
 			List<Element> listdl_settings = racine.getChildren("dl_settings");
@@ -81,10 +81,11 @@ public class ExtractRawData {
 			} while (i.hasNext() && !test.equals("telemetry_mode_Main"));
 			return elem.getAttribute("values").getValue();
 		} catch (Exception e) {
-			System.out.println("Fichier probablement vide");
-			e.printStackTrace();
-			return "";
+			// System.out
+			// .println("Fichier xml incorrect, pas de noeud Telemetry_Mode_MAIN trouve");
+			new IncorrectXmlException("Xml incorrect", e);
 		}
+		return("");
 	}
 
 	// on tient donc i au noeud dlSettings contenant les modes de telemetry
@@ -111,10 +112,10 @@ public class ExtractRawData {
 	 * @param toParse
 	 * @return the list of the telemetry modes
 	 */
-	public List<String> extract() {
+	public List<String> extract() throws IncorrectXmlException {
 		return parseChoice(this.infoNoeud());
 	}
-	
+
 	/**
 	 * function use to get the number of the node named telemetry_mode_Main
 	 * 
@@ -125,8 +126,13 @@ public class ExtractRawData {
 	}
 
 	public static void main(String args[]) {
-		ExtractRawData d = new ExtractRawData("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");
+		try {
+			ExtractRawData d = new ExtractRawData(
+				"C:\\Users\\Alinoe\\Desktop\\settings_booz2.xml");
 		System.out.println(parseChoice(d.infoNoeud()));
 		System.out.println(d.getIndex());
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 }
