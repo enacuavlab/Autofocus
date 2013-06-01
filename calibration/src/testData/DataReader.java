@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class DataReader implements Iterable {
+public class DataReader implements Iterable<String> {
 	
 	ArrayList<String> lignes = new ArrayList<String>();
 	

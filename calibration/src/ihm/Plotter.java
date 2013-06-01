@@ -1,5 +1,6 @@
 package ihm;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,8 +8,6 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import filtre.VecteurFiltrable;
-
-
 
 public class Plotter extends JPanel {
 	
@@ -19,7 +18,11 @@ public class Plotter extends JPanel {
 		super.paintComponents(g);
 		int i = 1;
 		for(VecteurFiltrable<Double> v : points){
-			g.drawLine(i,(int)v.getX(), i,(int)v.getX()+1);
+		/*	if (v.isCorrect()) {
+				g.setColor(Color.blue);
+			}
+			else g.setColor(Color.red);
+			*/g.drawLine(i,(int)v.getX(), i+20,(int)v.getX()+20);
 			//cast explicite de double avec des 0 après la virgule en int
 			i++;
 		}

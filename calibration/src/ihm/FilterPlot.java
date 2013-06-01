@@ -1,5 +1,7 @@
 package ihm;
 
+
+
 import filtre.Filter;
 import filtre.VecteurFiltrable;
 
@@ -7,8 +9,8 @@ public class FilterPlot extends Filter{
 	
 	Plotter plot;
 	
-	public FilterPlot(Plotter plot){
-		super();
+	public FilterPlot(Plotter plot, int windowSize, common.TypeCalibration t){
+		super(windowSize,t);
 		this.plot = plot;
 	}
 	
@@ -17,5 +19,5 @@ public class FilterPlot extends Filter{
 		super.add(v);
 		plot.add(v);
 	}
-
+	
 }
