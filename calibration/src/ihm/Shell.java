@@ -14,14 +14,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -159,10 +162,9 @@ public class Shell extends JFrame {
 			textField.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					name=textField.getText();
-					add_combo_mod(panel_center_center);
+					addcombo_mod(panel_center_center,textField);
 				}
 			});
-			
 			
 			
 			addcombo_id(panel_north_center,panel_name,label_name);
@@ -244,13 +246,13 @@ public class Shell extends JFrame {
 				  }
 				  else {
 					  id = Integer.parseInt(combo.getSelectedItem().toString());
-					  label.setText("<html>Veuillez entrer le<br>nom de votre drone d'id " + combo.getSelectedItem().toString()+ " :</html>");
+					  label.setText("<html>Veuillez entrer le<br>nom de votre drone d'id "+Integer.toString(id) +" :</html>");
 					  panel.setVisible(true);
 				  }
 				    }  
 			});
 		}
-		private void add_combo_mod(JPanel panel){
+		private void addcombo_mod(JPanel panel,JTextField text){
 			final JPanel panel_mod = new JPanel();
 			Border border_mod=BorderFactory.createRaisedBevelBorder();
 			panel_mod.setBackground(Color.ORANGE);
@@ -267,22 +269,30 @@ public class Shell extends JFrame {
 			combo_mod.setBounds(105, 124, 284, 24);
 			panel_mod.add(combo_mod);
 			panel_mod.setVisible(false);
-			ExtractRawData d = new ExtractRawData(System.getenv("paparazzi_home")+"/var/"+ name + "/settings.xml");
-			List <String> list_mod=d.extract();
-			if (!list_mod.isEmpty()){
-				for (String i : list_mod){
-					combo_mod.addItem(i.toString());
-				}
-			}
-			combo_mod.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e) {
-					if (combo_mod.getSelectedItem().toString()!=" "){
-						
-						//("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");
-						
+			try{
+				ExtractRawData d = new ExtractRawData(System.getenv("HOME")+"/paparazzi/var/"+ name + "/settings.xml");
+				List <String> list_mod=d.extract();
+				panel_mod.setVisible(true);
+				if (!list_mod.isEmpty()){
+					for (String i : list_mod){
+						combo_mod.addItem(i.toString());
 					}
 				}
-			});
+				combo_mod.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e) {
+						if (combo_mod.getSelectedItem().toString()!=" "){
+						//("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");
+						
+						}
+					}
+					});
+			}catch (Exception e){
+				 JOptionPane jopt=new JOptionPane();
+				 jopt.showMessageDialog(null, "Nom de drone inconnu : "+ name , "Erreur", JOptionPane.ERROR_MESSAGE);
+				 text.setText("");
+			}	 
+				 
 		}
+		
 		
 }
