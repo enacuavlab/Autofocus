@@ -19,7 +19,7 @@ public class DataReader implements Iterable<String> {
 			BufferedReader br = new BufferedReader(ipsr);
 			String ligne;
 			while ((ligne = br.readLine()) != null) {
-				lignes.add(ligne);
+				lignes.add(ligne.substring(7));
 			}
 			br.close();
 		} catch (Exception e) {

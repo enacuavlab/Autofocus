@@ -25,7 +25,7 @@ public class Filter {
 			noiseThreshold = 3;
 		}
 		if(t.equals(TypeCalibration.MAGNETOMETER)){
-			noiseThreshold = 10;
+			noiseThreshold = 1000;
 		}
 		
 		this.windowSize = windowSize;
