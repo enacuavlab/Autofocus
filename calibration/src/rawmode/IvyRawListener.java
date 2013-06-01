@@ -11,7 +11,7 @@ public class IvyRawListener implements IvyMessageListener{
 
 	IvyRawListener() throws IvyException {
 		bus = new Ivy("IvyRawListener", "IvyRawListener Ready", null);
-		bus.bindMsg("^[A-Za-z0-9]+ RAW (.*)",new IvyMessageListener(){
+		bus.bindMsg("^[A-Za-z0-9]+ [A-Za-z0-9_]+RAW(.*)",new IvyMessageListener(){
 			public void receive(IvyClient arg0, String[] args) {
 				rawOnBus = true;
 			}
