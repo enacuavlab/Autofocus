@@ -60,8 +60,8 @@ public class IMU implements IvyMessageListener {
 			System.out.println(test);
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0,final String args[]) {
-					 System.out.println("IMU : " + "x:" + args[0] + " y:" +
-					 args[1] + " z:" + args[2]);
+					 //System.out.println("IMU : " + "x:" + args[0] + " y:" +
+					 //args[1] + " z:" + args[2]);
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							data.store(Integer.valueOf(args[0]),

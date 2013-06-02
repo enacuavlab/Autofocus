@@ -25,7 +25,7 @@ public class Filter {
 			noiseThreshold = 3;
 		}
 		if(t.equals(TypeCalibration.MAGNETOMETER)){
-			noiseThreshold = 10;
+			noiseThreshold = 50;
 		}
 		
 		this.windowSize = windowSize;
@@ -46,7 +46,7 @@ public class Filter {
 	private void update(VecteurFiltrable<Double> v) {
 		boolean valable = true;
 		for (DescriptiveStatistics e : variables) {
-			//System.out.println("std : " + e.getStandardDeviation());
+			System.out.println("std : " + e.getStandardDeviation());
 			valable = (e.getStandardDeviation() < noiseThreshold) && valable;
 		}
 		if (valable) v.setTrue(); else v.setFalse();   
