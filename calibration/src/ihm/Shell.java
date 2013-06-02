@@ -1,7 +1,6 @@
 package ihm;
 
 import iddrone.IvyIdListener;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +29,8 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import rawmode.ExtractRawData;
+import rawmode.IncorrectXmlException;
+import rawmode.IvyRawListener;
 
 import fr.dgac.ivy.IvyException;
 import javax.swing.JTextField;
@@ -146,7 +148,7 @@ public class Shell extends JFrame {
 			Border border_name=BorderFactory.createRaisedBevelBorder();
 			panel_name.setBorder(border_name);
 			panel_name.setBackground(Color.MAGENTA);
-			panel_name.setBounds(282, 38, 508, 99);
+			panel_name.setBounds(275, 38, 508, 99);
 			panel_center_center.add(panel_name);
 			panel_name.setLayout(null);
 			panel_name.setVisible(false);
@@ -162,7 +164,7 @@ public class Shell extends JFrame {
 			textField.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					name=textField.getText();
-					addcombo_mod(panel_center_center,textField);
+					addcombo_mod(panel_center_center);
 				}
 			});
 			
@@ -205,7 +207,12 @@ public class Shell extends JFrame {
 	
 			
 		}
-		
+		/**
+		 * Function to add some elements in order to obtain id+name of the drone
+		 * @param panel_north_center
+		 * @param panel
+		 * @param label
+		 */
 		private void addcombo_id(JPanel panel_north_center,final JPanel panel,final JLabel label){
 			JLabel label_id= new JLabel("Choissisez l'id de votre drone");
 			GridBagConstraints gbc_label_id = new GridBagConstraints();
@@ -224,13 +231,13 @@ public class Shell extends JFrame {
 			
 			
 			
-			//Add drone id 
+			//Add drone id detected
 			combo.addItem(" ");
 			try {
 				final IvyIdListener ivyid= new IvyIdListener();
 				ArrayList<Integer> l=(ArrayList<Integer>) ivyid.getList();
 				if (!l.isEmpty()){
-					for (Integer i : ivyid.getList()){
+					for (Integer i : l){
 						combo.addItem(i.toString());
 					}
 				}
@@ -252,18 +259,24 @@ public class Shell extends JFrame {
 				    }  
 			});
 		}
-		private void addcombo_mod(JPanel panel,JTextField text){
+		
+		
+		/**
+		 * Function to add some elements in order to change drone mod
+		 * @param panel
+		 */
+		private void addcombo_mod(JPanel panel){
 			final JPanel panel_mod = new JPanel();
 			Border border_mod=BorderFactory.createRaisedBevelBorder();
 			panel_mod.setBackground(Color.ORANGE);
 			panel_mod.setForeground(Color.BLACK);
-			panel_mod.setBounds(282, 213, 508, 177);
+			panel_mod.setBounds(275, 213, 508, 177);
 			panel_mod.setBorder(border_mod);
 			panel.add(panel_mod);
 			panel_mod.setLayout(null);
 			
-			final JLabel label_mod = new JLabel("Veuillez choisir le mode de votre drone de nom "+name+" :");
-			label_mod.setBounds(105, 45, 340, 42);
+			final JLabel label_mod = new JLabel("Veuillez choisir le mode de votre drone "+name+" :");
+			label_mod.setBounds(80, 45, 360, 42);
 			panel_mod.add(label_mod);
 			final JComboBox combo_mod = new JComboBox();
 			combo_mod.setBounds(105, 124, 284, 24);
@@ -278,19 +291,33 @@ public class Shell extends JFrame {
 						combo_mod.addItem(i.toString());
 					}
 				}
-				combo_mod.addActionListener(new ActionListener(){
-					public void actionPerformed(ActionEvent e) {
-						if (combo_mod.getSelectedItem().toString()!=" "){
+			}catch (IOException e){
+				 JOptionPane jopt=new JOptionPane();
+				 jopt.showMessageDialog(null, "Drone's name unknown : "+ name , "Error name", JOptionPane.ERROR_MESSAGE);
+				 panel_mod.setVisible(false);
+			}catch (IncorrectXmlException e){
+				JOptionPane jopt=new JOptionPane();
+				jopt.showMessageDialog(null, "Incorrect file : "+ name +"/settings.xml" , "File error", JOptionPane.ERROR_MESSAGE);
+				panel_mod.setVisible(false);
+			}
+			combo_mod.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					if (combo_mod.getSelectedItem().toString()!=" "){
 						//("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");
-						
+						try {
+							
+							IvyRawListener ivyraw = new IvyRawListener();
+							if (ivyraw.isRawOnBus()){
+								btn_accelero.setEnabled(true);
+								btn_magneto.setEnabled(true);
+							}
+						}catch(IvyException e_ivy){
+							e_ivy.printStackTrace();
 						}
 					}
-					});
-			}catch (Exception e){
-				 JOptionPane jopt=new JOptionPane();
-				 jopt.showMessageDialog(null, "Nom de drone inconnu : "+ name , "Erreur", JOptionPane.ERROR_MESSAGE);
-				 text.setText("");
-			}	 
+				}
+			});
+			
 				 
 		}
 		
