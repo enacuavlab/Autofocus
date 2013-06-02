@@ -8,7 +8,7 @@ import fr.dgac.ivy.IvyMessageListener;
 public class IvyRawListener extends Thread implements IvyMessageListener {
 	private Boolean rawOnBus = false;
 	private Ivy bus;
-	private String telemetryMode;
+	private String telemetryMode=null;
 
 	public IvyRawListener(final int idDrone, final int indexTelemetry) throws IvyException {
 		bus = new Ivy("IvyRawListener", "IvyRawListener Ready", null);
@@ -39,7 +39,9 @@ public class IvyRawListener extends Thread implements IvyMessageListener {
 	}
 
 	public int getTelemetryMode() {
-		return Integer.valueOf(telemetryMode);
+		if (telemetryMode != null){
+			return Integer.valueOf(telemetryMode);
+		} else return 0;
 	}
 	
 	public void sendMode(int id,double numbermode) throws IvyException{

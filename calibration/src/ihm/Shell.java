@@ -31,6 +31,7 @@ import javax.swing.border.Border;
 import rawmode.ExtractRawData;
 import rawmode.IncorrectXmlException;
 import rawmode.IvyRawListener;
+import testData.Sender;
 
 import fr.dgac.ivy.IvyException;
 import javax.swing.JTextField;
@@ -45,6 +46,7 @@ public class Shell extends JFrame {
 		private JTextField textField;
 		private int id;
 		private String name;
+		private JPanel panel_center;
 		
 		public Shell(Plotter plot){
 			super();
@@ -78,24 +80,24 @@ public class Shell extends JFrame {
 			gd_options.setVgap(30);
 			panel_options.setLayout(gd_options);
 			
+			//Panel center
+			panel_center = new JPanel();
+			getContentPane().add(panel_center, BorderLayout.CENTER);
+			panel_center.setLayout(new BorderLayout(0, 0));
 			
 			//Button
 			btn_accelero=new JButton("Accelerometers");
 			btn_accelero.setEnabled(true);
 			btn_accelero.addActionListener(new ActionListener(){
 				  public void actionPerformed(ActionEvent event){
-					  btn_magneto.setEnabled(false);
-					  btn_gyro.setEnabled(false);
-					  titre.setText("<html><br>Calibration des Accéléromètre</html>");
+					  mod_accelero();
 				  }
 				});
 			btn_magneto=new JButton("Magnetometers");
 			btn_magneto.setEnabled(true);
 			btn_magneto.addActionListener(new ActionListener(){
 				  public void actionPerformed(ActionEvent event){
-					  btn_accelero.setEnabled(false);
-					  btn_gyro.setEnabled(false);
-					  titre.setText("<html><br>Calibration des Magnétomètres</html>");
+					  mod_magneto();
 				  }
 				});
 			btn_gyro=new JButton("Gyrometers");
@@ -121,9 +123,7 @@ public class Shell extends JFrame {
 			panel_options.add(btn_gyro);
 			
 			
-			JPanel panel_center = new JPanel();
-			getContentPane().add(panel_center, BorderLayout.CENTER);
-			panel_center.setLayout(new BorderLayout(0, 0));
+			
 			
 			JPanel panel_north_center = new JPanel();
 			panel_center.add(panel_north_center, BorderLayout.NORTH);
@@ -283,14 +283,38 @@ public class Shell extends JFrame {
 			panel_mod.add(combo_mod);
 			panel_mod.setVisible(false);
 			try{
-				ExtractRawData d = new ExtractRawData(System.getenv("HOME")+"/paparazzi/var/"+ name + "/settings.xml");
+				final ExtractRawData d = new ExtractRawData(System.getenv("HOME")+"/paparazzi/var/"+ name + "/settings.xml");
 				List <String> list_mod=d.extract();
 				panel_mod.setVisible(true);
 				if (!list_mod.isEmpty()){
 					for (String i : list_mod){
+						System.out.println("add");
 						combo_mod.addItem(i.toString());
 					}
 				}
+				final IvyRawListener ivyraw = new IvyRawListener(id,d.getIndex());
+				int mode_actuel=ivyraw.getTelemetryMode();
+				combo_mod.setSelectedIndex(mode_actuel);
+				combo_mod.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e) {
+						if (combo_mod.getSelectedItem().toString()!=" "){
+							//("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");		
+							try {
+								Integer mod=new Integer(combo_mod.getSelectedIndex());
+								ivyraw.sendMode(id,mod.doubleValue());
+							} catch (IvyException e1) {
+								e1.printStackTrace();
+							}
+							if (ivyraw.isRawOnBus()){
+								btn_accelero.setEnabled(true);
+								btn_magneto.setEnabled(true);
+							}
+							
+						}
+					}
+				});
+				
+				
 			}catch (IOException e){
 				 JOptionPane jopt=new JOptionPane();
 				 jopt.showMessageDialog(null, "Drone's name unknown : "+ name , "Error name", JOptionPane.ERROR_MESSAGE);
@@ -299,27 +323,27 @@ public class Shell extends JFrame {
 				JOptionPane jopt=new JOptionPane();
 				jopt.showMessageDialog(null, "Incorrect file : "+ name +"/settings.xml" , "File error", JOptionPane.ERROR_MESSAGE);
 				panel_mod.setVisible(false);
+			}catch (IvyException e){
+				e.printStackTrace();
 			}
-			combo_mod.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e) {
-					if (combo_mod.getSelectedItem().toString()!=" "){
-						//("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");
-						try {
-							
-							IvyRawListener ivyraw = new IvyRawListener();
-							if (ivyraw.isRawOnBus()){
-								btn_accelero.setEnabled(true);
-								btn_magneto.setEnabled(true);
-							}
-						}catch(IvyException e_ivy){
-							e_ivy.printStackTrace();
-						}
-					}
-				}
-			});
+			
 			
 				 
 		}
 		
 		
+		
+		
+		private void mod_accelero(){
+			btn_magneto.setEnabled(false);
+			btn_gyro.setEnabled(false);
+			titre.setText("<html><br>Calibration des Accéléromètre</html>");
+		}
+		
+		private void mod_magneto(){
+			 btn_accelero.setEnabled(false);
+			 btn_gyro.setEnabled(false);
+			 titre.setText("<html><br>Calibration des Magnétomètres</html>");
+			  
+		}
 }
