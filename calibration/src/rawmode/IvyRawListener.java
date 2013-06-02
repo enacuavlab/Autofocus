@@ -12,20 +12,17 @@ public class IvyRawListener extends Thread implements IvyMessageListener {
 
 	public IvyRawListener(final int idDrone, final int indexTelemetry) throws IvyException {
 		bus = new Ivy("IvyRawListener", "IvyRawListener Ready", null);
-		bus.bindMsg("^[A-Za-z0-9]+ [A-Za-z0-9_]+RAW(.*)",
+		bus.bindMsg("^" + idDrone +" [A-Za-z0-9_]+RAW(.*)",
 				new IvyMessageListener() {
 					public void receive(IvyClient arg0, String[] args) {
 						rawOnBus = true;
 					}
 				});
-		bus.bindMsg("^[A-Za-z0-9]+ DL_VALUES ([0-9]+) (.*)",
+		bus.bindMsg("^" + idDrone + " DL_VALUES ([0-9]+) (.*)",
 				new IvyMessageListener() {
-					private int idDrone;
-					private int indexTelemetry;
-
 					public void receive(IvyClient arg0, String[] args) {
 						if (Integer.valueOf(args[0]).equals(
-								Integer.valueOf(this.idDrone)))
+								Integer.valueOf(idDrone)))
 							telemetryMode = args[1].split(",")[indexTelemetry];
 					}
 				});
@@ -45,6 +42,11 @@ public class IvyRawListener extends Thread implements IvyMessageListener {
 		return Integer.valueOf(telemetryMode);
 	}
 	
+	public void sendMode(int id,double numbermode) throws IvyException{
+		bus.sendMsg("calibrate DL_SETTING "+id+" 0 "+numbermode);
+	}
+	
+	
 	/** fonction de test de la classe */
 	public static void main(String args[]) throws IvyException,
 			InterruptedException {
@@ -56,18 +58,7 @@ public class IvyRawListener extends Thread implements IvyMessageListener {
 		System.out.println("There's raw on bus!!!!!!!!!!!!!");
 	}
 
-	@Override
-	public void run() {
-		try {
-			while (!this.isRawOnBus()) {
-				Thread.sleep(200);
-				System.out.println("No raw data");
-			}
-			System.out.println("There's raw on bus!!!!!!!!!!!!!");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	@Override
 	public void receive(IvyClient arg0, String[] arg1) {
