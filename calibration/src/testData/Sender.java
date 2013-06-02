@@ -10,8 +10,9 @@ public class Sender extends Thread implements IvyMessageListener {
 
 	public Sender(String arg) throws IvyException, InterruptedException {
 		dr = new DataReader(arg);
-		bus = new Ivy("IvyRawListener", "IvyRawListener Ready", null);
+		bus = new Ivy("Sender", "Sender Ready", null);
 		bus.start(null);
+		bus.sendToSelf(true);
 	}
 
 	/**
@@ -26,15 +27,15 @@ public class Sender extends Thread implements IvyMessageListener {
 	 * @throws InterruptedException
 	 */
 	public void sendRawMessage() throws IvyException, InterruptedException {
+		System.out.println("Debut sender");
 		Iterator<String> i = dr.iterator();
 		String temp = new String();
 		while (i.hasNext()) {
 			temp = i.next();
-			System.out.println(temp);
+			//System.out.println("Sender : " + temp);
 			bus.sendMsg(temp);
-			Thread.sleep(200);
+			Thread.sleep(20);
 		}
-
 	}
 
 	public void arret() throws IvyException {

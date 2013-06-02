@@ -13,6 +13,11 @@ public class FilterPlot extends Filter{
 		plot = new Plotter();
 	}
 	
+	public FilterPlot(Plotter plot, int windowSize, TypeCalibration type) {
+		super(windowSize,type);
+		this.plot = plot;
+	}
+	
 	public FilterPlot(Plotter plot) {
 		this(10,TypeCalibration.MAGNETOMETER);
 		this.plot = plot;

@@ -68,12 +68,13 @@ public class Filter {
 			}
 			window.add(v);
 			Vecteur[] b = new Vecteur[window.size()];
+			update(v);
+			//System.out.println("ajout d'un vecteur");
 			b = window.toArray(b);
 			if(b[window.size()/2].getState()) {
 				ellipse.fitEllipsoid(b[window.size()/2]);
 			}
 			ellipse.printLog();
-			update(v);
 		} else {
 			//System.out.println("cree variabless");
 			this.variables = new ArrayList<DescriptiveStatistics>(toAdd.size());
