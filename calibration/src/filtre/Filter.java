@@ -25,7 +25,7 @@ public class Filter {
 			noiseThreshold = 3;
 		}
 		if(t.equals(TypeCalibration.MAGNETOMETER)){
-			noiseThreshold = 1000;
+			noiseThreshold = 10;
 		}
 		
 		this.windowSize = windowSize;
@@ -67,14 +67,14 @@ public class Filter {
 				//System.out.println("ajoute les donnees");
 			}
 			window.add(v);
-			Vecteur[] b = new Vecteur[window.size()];
 			update(v);
+			/*Vecteur[] b = new Vecteur[window.size()];
 			//System.out.println("ajout d'un vecteur");
 			b = window.toArray(b);
 			if(b[window.size()/2].getState()) {
 				ellipse.fitEllipsoid(b[window.size()/2]);
 			}
-			ellipse.printLog();
+			ellipse.printLog();*/
 		} else {
 			//System.out.println("cree variabless");
 			this.variables = new ArrayList<DescriptiveStatistics>(toAdd.size());

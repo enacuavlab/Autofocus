@@ -1,5 +1,7 @@
 package filtre;
 
+import javax.swing.SwingUtilities;
+
 import common.TypeCalibration;
 import ihm.GUIHelper;
 import ihm.Plotter;
