@@ -44,9 +44,7 @@ public class Shell extends JFrame {
 		private JLabel titre;
 		private Plotter plot;
 		private JButton btnQuitter,btnStop;
-		private JTextField textField;
 		private int id;
-		private String name;
 		private JPanel panel_home,panel_accl,panel_gyro,panel_mag,content;
 		private String[] listContent = {"HOME", "ACCL", "MAG","GYRO"};
 		private CardLayout cl;
@@ -127,14 +125,14 @@ public class Shell extends JFrame {
 			label_name.setBounds(106, 12, 138, 60);
 			panel_name.add(label_name);
 			
-			textField = new JTextField();
-			textField.setBounds(273, 35, 114, 29);
-			panel_name.add(textField);
-			textField.setColumns(10);
-			
+			JLabel dronesName = new JLabel();
+			dronesName.setBounds(273, 35, 114, 29);
+			panel_name.add(dronesName);
+			dronesName.setBackground(Color.WHITE);
+			dronesName.setText("blender");	
 			//Panel_mod
 			Border border_mod=BorderFactory.createRaisedBevelBorder();
-			final JPanel panel_mod = new JPanel();
+			JPanel panel_mod = new JPanel();
 			panel_mod.setBackground(Color.ORANGE);
 			panel_mod.setForeground(Color.BLACK);
 			panel_mod.setBounds(275, 213, 508, 177);
@@ -143,16 +141,16 @@ public class Shell extends JFrame {
 			panel_mod.setVisible(false);
 			panel_mod.setLayout(null);
 			
-			textField.addActionListener(new ActionListener(){
+			/*textField.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					name=textField.getText();
 					addcombo_mod(panel_mod);
 				}
-			});
+			});*/
 			
 			
 			addcombo_id(panel_north_center,panel_name,label_name,panel_mod);
-	
+			
 			
 		}
 		/**
@@ -252,8 +250,9 @@ public class Shell extends JFrame {
 				  }
 				  else {
 					  id = Integer.parseInt(combo.getSelectedItem().toString());
-					  label.setText("<html>Veuillez entrer le<br>nom de votre drone d'id "+Integer.toString(id) +" :</html>");
+					  label.setText("<html>Le nom de votre drone d'id "+Integer.toString(id) +" est :</html>");
 					  panel.setVisible(true);
+					  addcombo_mod(panel_mod,"blender");
 				  }
 				    }  
 			});
@@ -264,7 +263,7 @@ public class Shell extends JFrame {
 		 * Function to add some elements in order to change drone mod
 		 * @param panel
 		 */
-		private void addcombo_mod(JPanel panel_mod){
+		private void addcombo_mod(JPanel panel_mod,String name){
 			
 			final JLabel label_mod = new JLabel("Veuillez choisir le mode de votre drone "+name+" :");
 			label_mod.setBounds(80, 45, 360, 42);
@@ -326,6 +325,7 @@ public class Shell extends JFrame {
 		 * Function to add some elements in order to make accelerometers calibration
 		 */
 		private void modAccelero(){
+			//btn_accelero.removeActionListener();
 			cl.show(content, listContent[1]);
 			btn_magneto.setEnabled(false);
 			btn_gyro.setEnabled(false);
