@@ -1,34 +1,48 @@
 package calibTest;
 
+import org.ddogleg.optimization.functions.FunctionNtoM;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
+import common.TypeCalibration;
 
-class Fonction {
+class Fonction{
 	
 	//DenseMatrix64F x;
 	
 	
 
-	DenseMatrix64F points;
-	DenseMatrix64F sm;
-	DenseMatrix64F param = new DenseMatrix64F(6,1);
-	DenseMatrix64F x; 
-	DenseMatrix64F y;
-	DenseMatrix64F z;
-	DenseMatrix64F err;
-	
+	private DenseMatrix64F points;
+	private DenseMatrix64F sm;
+	public DenseMatrix64F param = new DenseMatrix64F(6,1);
+	private DenseMatrix64F x; 
+	private DenseMatrix64F y;
+	private DenseMatrix64F z;
+	private DenseMatrix64F err;
+	public DenseMatrix64F out;
+	private TypeCalibration calib;
 	
 	//ArrayList points = new ArrayList();
-	double sf = 9.81;
+	private double sf;
 	
-	double smx;
-	double smy;
-	double smz;
+	private double smx;
+	private double smy;
+	private double smz;
 	
 	public Fonction(DenseMatrix64F data){
 		
+		if (calib.equals(TypeCalibration.ACCELEROMETER)){
+			this.sf = 9.81;
+		}
+		else{this.sf = 1;	
+		}
+		
+		
 		this.points = new DenseMatrix64F(data.getNumRows(),data.getNumCols());
 		this.sm = new DenseMatrix64F(data.getNumRows(),1);
+		
+		this.out = new DenseMatrix64F(data.getNumRows(),1);
+		this.out.set(0,out.getNumRows(),sf);
+		
 		this.err = new DenseMatrix64F(data.getNumRows(),1);
 		
 		this.x = new DenseMatrix64F(points.getNumRows(),1);
@@ -42,7 +56,6 @@ class Fonction {
 		
 	}
 	
-
 	
 	public DenseMatrix64F initialPar(){
 				
@@ -53,6 +66,7 @@ class Fonction {
 		this.param.set(3,0,2*sf/(CommonOps.elementMax(x)-CommonOps.elementMin(x)));
 		this.param.set(4,0,2*sf/(CommonOps.elementMax(y)-CommonOps.elementMin(y)));
 		this.param.set(5,0,2*sf/(CommonOps.elementMax(z)-CommonOps.elementMin(z)));
+		
 		
 		System.out.println("initial ok");
 		return param;

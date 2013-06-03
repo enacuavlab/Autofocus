@@ -1,8 +1,14 @@
 package calibTest;
 
 import org.ejml.data.DenseMatrix64F;
+import common.TypeCalibration;
 import org.ejml.ops.*;
-import org.ddogleg.optimization.*;
+import org.apache.commons.math3.optimization.general.*;
+import org.ddogleg.*;
+import org.ddogleg.optimization.FactoryOptimization;
+import org.ddogleg.optimization.UnconstrainedLeastSquares;
+import org.ddogleg.optimization.functions.FunctionNtoM;
+import org.ddogleg.optimization.impl.LevenbergDenseBase;
 
 class TestFunc {
 	
@@ -38,16 +44,22 @@ public static void main(String []args){
 	for (i = 0; i < numbers.getNumRows(); i++){
 	numbers.add(i,j,i);
 	}}
+	
 	Fonction awesome = new Fonction(numbers);
 	//tt.hallo();
 	
 	
-	DenseMatrix64F init = new DenseMatrix64F(awesome.initialPar());
-	awesome.compute(numbers, init, numbers);
+	DenseMatrix64F init = new DenseMatrix64F();
+
+	awesome.compute( init,numbers, numbers);
 	
-	
-	
-	
+    // Define the function being optimized and create the optimizer
+    FunctionNtoM func = new FoncDeux();
+    
+    UnconstrainedLeastSquares optimizer = FactoryOptimization.leastSquaresLM(1e-3, true);
+
+    // if no jacobian is specified it will be computed numerically
+    optimizer.setFunction(func,null);
 }	
 }
 	
