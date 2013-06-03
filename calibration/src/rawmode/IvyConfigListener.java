@@ -20,12 +20,19 @@ public class IvyConfigListener {
 						System.out.println(args[0] + " CONFIG " + args[1]);
 					}
 				});
+		bus.bindMsg("^([A-Za-z0-9]+) CONFIG_REQ (.*)",
+				new IvyMessageListener() {
+					public void receive(IvyClient arg0, String[] args) {
+						System.out.println(args[0] + " CONFIG_REQ " + args[1]);
+					}
+				});
 		// bus.bindMsg("(.*)", this);
 		bus.start(null);
+		bus.sendToSelf(true);
 	}
 	
 	public void sendRequest() throws IvyException {
-		System.out.println("calibrate CONFIG_REQ " + id);
+		//System.out.println("calibrate CONFIG_REQ " + id);
 		bus.sendMsg("calibrate CONFIG_REQ " + id);
 	}
 	
@@ -33,7 +40,7 @@ public class IvyConfigListener {
 		try {
 			IvyConfigListener listen = new IvyConfigListener(5);
 			for(int i = 0; i<10;i++){
-			listen.sendRequest();
+				listen.sendRequest();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
