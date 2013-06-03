@@ -20,9 +20,7 @@ public class Plotter extends JPanel {
 	private int minY = 0;
 	private int maxZ = 0;
 	private int minZ = 0;
-	private int xAxis = 0;
-	private int yAxis = 0;
-	private VecteurFiltrable<Double> center = new Vecteur(0, 0, 0);
+	private int rayon = 0;
 	private List<VecteurFiltrable<Double>> points = new LinkedList<VecteurFiltrable<Double>>();
 
 	@Override
@@ -37,10 +35,10 @@ public class Plotter extends JPanel {
 			g.drawOval((int) v.getX() / 2 + 200, (int) v.getY() / 2 + 600, 5, 5);
 			g.setColor(Color.green);
 			g.drawOval((int) (maxX + minX) / 4 + 200,
-					(int) (maxY + minY) / 4 + 600, 10, 10);
-			g.drawOval((int) (maxX + minX) / 4 + 200 - (maxX - minX) / 4,
-					(int) (maxY + minY) / 4 + 600 - (maxY - minY) / 4,
-					(maxX - minX) / 2, (maxY - minY) / 2);
+					(int) (maxY + minY) / 4 + 600, 5, 5);
+			g.drawOval((int) (maxX + minX) / 4 + 200 - rayon / 4,
+					(int) (maxY + minY) / 4 + 600 - rayon / 4,
+					rayon / 2, rayon / 2);
 			// cast explicite de double avec des 0 après la virgule en int
 		}
 	}
@@ -61,13 +59,10 @@ public class Plotter extends JPanel {
 			if (v.getZ() < minZ)
 				minZ = (int) v.getZ();
 		}
+		rayon = (maxX - minX > maxY - minY ? (maxX - minX > maxZ - minZ ? maxX
+				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
+				- minY : maxZ - minZ));
 		this.repaint();
-	}
-
-	public void add(int x, int y, VecteurFiltrable<Double> v) {
-		center = v;
-		xAxis = x;
-		yAxis = y;
 	}
 
 	public Plotter() {
