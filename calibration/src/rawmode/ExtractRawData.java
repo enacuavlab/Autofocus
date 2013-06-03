@@ -53,37 +53,21 @@ public class ExtractRawData {
 	 * 
 	 * @return the var field of the node
 	 */
-	private String infoNoeud() throws IncorrectXmlException{
-		try {
-			// On saute systematiquement le premier noeud du fichier
-			List<Element> listdl_settings = racine.getChildren("dl_settings");
-			indexTelemetry++;
-			Iterator<Element> i = listdl_settings.iterator();
-			String test = null;
-			Element elem = null;
-			do {
-				elem = i.next();
-				test = elem.getAttribute("NAME").getValue();
-				// On lit un dl_setting a chaque iteration
-				indexTelemetry++;
-			} while (i.hasNext() && !test.equals("Telemetry"));
-			if (!elem.getAttribute("NAME").getValue().equals("Telemetry")) {
-				throw new IncorrectXmlException();
+	private String infoNoeud() throws IncorrectXmlException {
+		Iterator<Element> i = racine.getChildren("dl_settings").iterator();
+		indexTelemetry++;
+		i = i.next().getChildren("dl_settings").iterator();
+		indexTelemetry++;
+		Element temp = i.next();
+		String res = "";
+		if (temp.getAttribute("name").getValue().equals("Telemetry")) {
+			i = temp.getChildren("dl_setting").iterator();
+			while(i.hasNext()){
+				res = res + i.next().getAttribute("values").getValue();
 			}
-			listdl_settings = listdl_settings.get(0).getChildren("dl_settings");
-			indexTelemetry++;
-			String temp = "";
-			do {
-				elem = i.next();
-				temp = temp + elem.getAttribute("var").getValue();
-			} while (i.hasNext());
-			return temp;
-		} catch (Exception e) {
-			// System.out
-			// .println("Fichier xml incorrect, pas de noeud Telemetry_Mode_MAIN trouve");
-			new IncorrectXmlException("Xml incorrect", e);
 		}
-		return("");
+		return res;
+		
 	}
 
 	// on tient donc i au noeud dlSettings contenant les modes de telemetry
@@ -125,11 +109,13 @@ public class ExtractRawData {
 
 	public static void main(String args[]) {
 		try {
+
 			ExtractRawData d = new ExtractRawData(
-				"C:\\Users\\Alinoe\\Desktop\\settings_booz2.xml");
-		System.out.println(parseChoice(d.infoNoeud()));
-		System.out.println(d.getIndex());
-		} catch (Exception e){
+					"C:\\Users\\Alinoé\\Desktop\\settings.xml");
+			//System.out.println(d.racine);
+			System.out.println(parseChoice(d.infoNoeud()));
+			System.out.println(d.getIndex());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
