@@ -28,6 +28,13 @@ public class IvyIdListener implements IvyMessageListener {
 	@Override
 	public void receive(IvyClient arg0, String[] args) {
 		if (!listeId.contains(Integer.valueOf(args[0]))) {
+			listeId.clear();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			listeId.add(Integer.valueOf(args[0]));
 		}
 	}
