@@ -54,7 +54,8 @@ public class ExtractRawData {
 	 * @return the var field of the node
 	 */
 	private String infoNoeud() throws IncorrectXmlException {
-		Iterator<Element> i = racine.getChildren("dl_settings").iterator();
+		try {
+			Iterator<Element> i = racine.getChildren("dl_settings").iterator();
 		indexTelemetry++;
 		i = i.next().getChildren("dl_settings").iterator();
 		indexTelemetry++;
@@ -67,6 +68,9 @@ public class ExtractRawData {
 			}
 		}
 		return res;
+		} catch (Exception e) {
+			throw new IncorrectXmlException("lecture du fichier", e);
+		}
 		
 	}
 
@@ -112,7 +116,7 @@ public class ExtractRawData {
 
 			ExtractRawData d = new ExtractRawData(
 					"C:\\Users\\Alinoé\\Desktop\\settings.xml");
-			//System.out.println(d.racine);
+			// System.out.println(d.racine);
 			System.out.println(parseChoice(d.infoNoeud()));
 			System.out.println(d.getIndex());
 		} catch (Exception e) {
