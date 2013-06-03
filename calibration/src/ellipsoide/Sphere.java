@@ -3,7 +3,6 @@ package ellipsoide;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-
 import data.Vecteur;
 
 public class Sphere {
@@ -11,13 +10,13 @@ public class Sphere {
 	private double latitude;
 	private double radius;
 	private Vecteur center;
-	private List<Vecteur> lvecteur;
+	private List<Vecteur> lvector;
 	protected List<Zone> lzone;
 
 	public Sphere(double longitude, double latitude) {
 		this.longitude = longitude;
 		this.latitude = latitude;
-		lvecteur = new ArrayList<Vecteur>();
+		lvector = new ArrayList<Vecteur>();
 		lzone = new ArrayList<Zone>();
 		create_zone();
 	}
@@ -25,7 +24,7 @@ public class Sphere {
 	public void update(double radius, Vecteur center, Vecteur v) {
 		this.radius = radius;
 		this.center = center;
-		lvecteur.add(v);
+		lvector.add(v);
 		update_zone();
 	}
 
@@ -54,16 +53,15 @@ public class Sphere {
 
 	protected void update_zone() {
 		Zone ztemp;
-		Vecteur vtemp;
-		ListIterator<Zone> j;
-		ListIterator<Vecteur> i = lvecteur.listIterator();
-		while (i.hasNext()) {
-			vtemp=i.next();
-			j = lzone.listIterator();
-			while(j.hasNext()){
-				ztemp =j.next();
-				ztemp.reset();
-				ztemp.is_in(vtemp, center);
+		ListIterator<Zone> j= lzone.listIterator();
+		ListIterator<Vecteur> i ;
+
+		while (j.hasNext()) {
+			ztemp = j.next();
+			ztemp.reset();
+			i = lvector.listIterator();
+			while (i.hasNext()){
+				ztemp.is_in(i.next(), center);
 			}
 
 		}

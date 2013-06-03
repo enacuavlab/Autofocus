@@ -28,12 +28,13 @@ public class Zone {
 	 * @param long_angle_end
 	 *            maximum longitude delimiting the zone
 	 */
-	public Zone(double lat_angle_high, double lat_angle_low,
+	public Zone(double lat_angle_low,double lat_angle_high, 
 			double long_angle_begin, double long_angle_end) {
-		this.lat_angle_low = lat_angle_low;
-		this.lat_angle_high = lat_angle_high;
-		this.long_angle_begin = long_angle_begin;
-		this.long_angle_end = long_angle_end;
+		this.lat_angle_low = lat_angle_low; 
+		this.lat_angle_high = lat_angle_high; 
+		this.long_angle_begin = long_angle_begin; 
+		this.long_angle_end = long_angle_end; 
+		System.out.println(this.lat_angle_low+" "+this.lat_angle_high+" "+this.long_angle_begin+" "+this.long_angle_end);
 		nb_points = 0;
 	}
 
@@ -43,7 +44,9 @@ public class Zone {
 	public void reset() {
 		nb_points = 0;
 	}
-
+	public int getNbPoints(){
+		return nb_points;
+	}
 	/**
 	 * this method return a boolean : true means that the point is in the area
 	 * 
@@ -86,7 +89,7 @@ public class Zone {
 		if (den1 != 0) {
 			if (xc_x >= 0 && yc_y >= 0) {
 				alpha = Math.asin(xc_x / den1);
-				System.out.println(alpha + "number 1");
+				//System.out.println(alpha + "number 1");
 				if (alpha >= long_angle_begin && alpha <= long_angle_end) {
 					System.out.println(alpha + "number 1");
 					return true;
@@ -96,7 +99,6 @@ public class Zone {
 			}
 			if (xc_x <= 0 && yc_y >= 0) {
 				alpha = Math.asin(-xc_x / den1) + (Math.PI / 2);
-				System.out.println(alpha + "number 2");
 				if (alpha >= long_angle_begin && alpha <= long_angle_end) {
 					System.out.println(alpha + "number 2");
 					return true;
@@ -107,7 +109,6 @@ public class Zone {
 
 			if (xc_x >= 0 && yc_y <= 0) {
 				alpha = Math.asin(xc_x / den1) - (Math.PI / 2);
-				System.out.println(alpha + "number 3");
 				if (alpha >= long_angle_begin && alpha <= long_angle_end) {
 					System.out.println(alpha + "number 3");
 					return true;
@@ -117,7 +118,6 @@ public class Zone {
 			}
 			if (xc_x <= 0 && yc_y <= 0) {
 				alpha = Math.asin(-xc_x / den1) - (Math.PI);
-				System.out.println(alpha + "number 4");
 				if (alpha >= long_angle_begin && alpha <= long_angle_end) {
 					System.out.println(alpha + "number 4");
 					return true;
@@ -148,7 +148,7 @@ public class Zone {
 	 *            z center coordinate of the ellipsoids
 	 * @return
 	 */
-	public boolean is_in_lat(double x_coord, double y_coord, double z_coord,
+	protected boolean is_in_lat(double x_coord, double y_coord, double z_coord,
 			double x_center, double y_center, double z_center) {
 		double alpha;
 		double den = Math.sqrt(Math.pow(x_center - x_coord, 2)
