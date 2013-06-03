@@ -2,6 +2,10 @@ package rawmode;
 
 public class IncorrectXmlException extends Exception {
 
+	public IncorrectXmlException() {
+		super();
+	}
+	
 	public IncorrectXmlException(String s, Throwable e) {
 		super(s,e);
 	}

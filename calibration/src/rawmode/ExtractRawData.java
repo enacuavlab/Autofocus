@@ -58,10 +58,6 @@ public class ExtractRawData {
 			// On saute systematiquement le premier noeud du fichier
 			List<Element> listdl_settings = racine.getChildren("dl_settings");
 			indexTelemetry++;
-			listdl_settings = listdl_settings.get(0).getChildren("dl_settings");
-			indexTelemetry++;
-			// On arrive dans la liste des dl_settings avec attributs var
-			// dont on recherche la valeur var
 			Iterator<Element> i = listdl_settings.iterator();
 			String test = null;
 			Element elem = null;
@@ -70,16 +66,18 @@ public class ExtractRawData {
 				test = elem.getAttribute("NAME").getValue();
 				// On lit un dl_setting a chaque iteration
 				indexTelemetry++;
-			} while (i.hasNext() && !test.equals("Misc"));
-			// On lit un nouveau dl_Setting
-			i = elem.getChildren().iterator();
-			// On entre dans le noeud misc et on cherche le noeud
-			// telemetry_mode_main
+			} while (i.hasNext() && !test.equals("Telemetry"));
+			if (!elem.getAttribute("NAME").getValue().equals("Telemetry")) {
+				throw new IncorrectXmlException();
+			}
+			listdl_settings = listdl_settings.get(0).getChildren("dl_settings");
+			indexTelemetry++;
+			String temp = "";
 			do {
 				elem = i.next();
-				test = elem.getAttribute("var").getValue();
-			} while (i.hasNext() && !test.equals("telemetry_mode_Main"));
-			return elem.getAttribute("values").getValue();
+				temp = temp + elem.getAttribute("var").getValue();
+			} while (i.hasNext());
+			return temp;
 		} catch (Exception e) {
 			// System.out
 			// .println("Fichier xml incorrect, pas de noeud Telemetry_Mode_MAIN trouve");
