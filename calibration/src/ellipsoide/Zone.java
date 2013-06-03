@@ -10,7 +10,7 @@ import data.Vecteur;
  * @author GERVAIS florent
  */
 public class Zone {
-	private double lat_angle_high;
+	private double lat_angle_high;//varie entre -PI/2 et + PI/2
 	private double lat_angle_low;
 	private double long_angle_begin;// varie entre -PI et +PI
 	private double long_angle_end;
@@ -141,11 +141,11 @@ public class Zone {
 	 * @param z_coord
 	 *            z vector coordinate
 	 * @param x_center
-	 *            x center coordinate of the ellipsoi
+	 *            x center coordinate of the ellipsoid
 	 * @param y_center
-	 *            y center coordinate of the ellipsoi
+	 *            y center coordinate of the ellipsoid
 	 * @param z_center
-	 *            z center coordinate of the ellipsoi
+	 *            z center coordinate of the ellipsoids
 	 * @return
 	 */
 	public boolean is_in_lat(double x_coord, double y_coord, double z_coord,
