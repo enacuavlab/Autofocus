@@ -72,6 +72,7 @@ public class IMU implements IvyMessageListener {
 			});
 			bus.start(null);
 		} catch (Exception e) {
+			System.out.println("Erreur d'initialisation d'IMU");
 			e.printStackTrace();
 		}
 	}

@@ -50,7 +50,7 @@ public class EllipsV2 {
 
 	public double[] evals;
 
-	private ArrayList<Vecteur> points = new ArrayList<Vecteur>();
+	private ArrayList<VecteurFiltrable<Double>> points = new ArrayList<VecteurFiltrable<Double>>();
 
 	/**
 	 * Fit points to the polynomial expression Ax^2 + By^2 + Cz^2 + 2Dxy + 2Exz
@@ -60,7 +60,7 @@ public class EllipsV2 {
 	 * @param points
 	 *            the points to be fit to the ellipsoid.
 	 */
-	public void fitEllipsoid(Vecteur vec) {
+	public void fitEllipsoid(VecteurFiltrable<Double> vec) {
 
 		points.add(vec);
 		// Fit the points to Ax^2 + By^2 + Cz^2 + 2Dxy + 2Exz
@@ -103,13 +103,13 @@ public class EllipsV2 {
 	 * Solve the polynomial expression Ax^2 + By^2 + Cz^2 + 2Dxy + 2Exz + 2Fyz +
 	 * 2Gx + 2Hy + 2Iz from the provided points.
 	 * 
-	 * @param points
+	 * @param points2
 	 *            the points that will be fit to the polynomial expression.
 	 * @return the solution vector to the polynomial expression.
 	 */
-	private RealVector solveSystem(ArrayList<Vecteur> points) {
+	private RealVector solveSystem(ArrayList<VecteurFiltrable<Double>> points2) {
 		// determine the number of points
-		int numPoints = points.size();
+		int numPoints = points2.size();
 
 		// the design matrix
 		// size: numPoints x 9
@@ -118,15 +118,15 @@ public class EllipsV2 {
 		// Fit the ellipsoid in the form of
 		// Ax^2 + By^2 + Cz^2 + 2Dxy + 2Exz + 2Fyz + 2Gx + 2Hy + 2Iz
 		for (int i = 0; i < d.getRowDimension(); i++) {
-			double xx = Math.pow(points.get(i).getX(), 2);
-			double yy = Math.pow(points.get(i).getY(), 2);
-			double zz = Math.pow(points.get(i).getZ(), 2);
-			double xy = 2 * (points.get(i).getX() * points.get(i).getY());
-			double xz = 2 * (points.get(i).getX() * points.get(i).getZ());
-			double yz = 2 * (points.get(i).getY() * points.get(i).getZ());
-			double x = 2 * points.get(i).getX();
-			double y = 2 * points.get(i).getY();
-			double z = 2 * points.get(i).getZ();
+			double xx = Math.pow(points2.get(i).getX(), 2);
+			double yy = Math.pow(points2.get(i).getY(), 2);
+			double zz = Math.pow(points2.get(i).getZ(), 2);
+			double xy = 2 * (points2.get(i).getX() * points2.get(i).getY());
+			double xz = 2 * (points2.get(i).getX() * points2.get(i).getZ());
+			double yz = 2 * (points2.get(i).getY() * points2.get(i).getZ());
+			double x = 2 * points2.get(i).getX();
+			double y = 2 * points2.get(i).getY();
+			double z = 2 * points2.get(i).getZ();
 
 			d.setEntry(i, 0, xx);
 			d.setEntry(i, 1, yy);
@@ -284,4 +284,26 @@ public class EllipsV2 {
 			System.out.print(" Radii: " + radii.toString());
 		}
 	}
+	
+	public int getXrad() {
+		double ea[] = evecs.toArray();
+		double ea1[] = evecs1.toArray();
+		double ea2[] = evecs2.toArray();
+		double rad[] = radii.toArray();
+		return (int)(ea[0]*rad[0] + ea1[0]*rad[1] + ea2[0]*rad[2]);
+	}
+	
+	public int getYrad() {
+		double ea[] = evecs.toArray();
+		double ea1[] = evecs1.toArray();
+		double ea2[] = evecs2.toArray();
+		double rad[] = radii.toArray();
+		return (int)(ea[1]*rad[0] + ea1[1]*rad[1] + ea2[1]*rad[2]);
+	}
+	
+	public Vecteur getCenter() {
+		double c[] = center.toArray();
+		return new Vecteur(c[0],c[1],c[2]);
+	}
+	
 }
