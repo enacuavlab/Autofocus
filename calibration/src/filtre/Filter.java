@@ -2,18 +2,17 @@ package filtre;
 
 import java.util.*;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-import ellipsoide.EllipsV2;
+
 
 import common.TypeCalibration;
-import data.Vecteur;
+
 
 public class Filter {
 
-	private ArrayList<DescriptiveStatistics> variables;
-	private int windowSize;
-	private SlidingWindow<VecteurFiltrable<Double>> window;
+	protected ArrayList<DescriptiveStatistics> variables;
+	protected int windowSize;
+	protected SlidingWindow<VecteurFiltrable<Double>> window;
 	private int noiseThreshold;
-	private EllipsV2 ellipse = new EllipsV2();
 
 	/**Creates a filter with fixed window size which filter the
 	 * type of calibration given in parameter
@@ -25,7 +24,7 @@ public class Filter {
 			noiseThreshold = 3;
 		}
 		if(t.equals(TypeCalibration.MAGNETOMETER)){
-			noiseThreshold = 50;
+			noiseThreshold = 60;
 		}
 		
 		this.windowSize = windowSize;
@@ -43,13 +42,18 @@ public class Filter {
 	 * not public use add instead
 	 * @param v
 	 */
-	private void update(VecteurFiltrable<Double> v) {
-		boolean valable = true;
+	protected boolean update(VecteurFiltrable<Double> v) {
+		boolean validite = true;
 		for (DescriptiveStatistics e : variables) {
-			System.out.println("std : " + e.getStandardDeviation());
-			valable = (e.getStandardDeviation() < noiseThreshold) && valable;
+			//System.out.println("std : " + e.getStandardDeviation());
+			validite = (e.getStandardDeviation() < noiseThreshold) && validite;
 		}
-		if (valable) v.setTrue(); else v.setFalse();   
+		if (validite != v.isCorrect()) {
+			if (validite) v.setTrue();
+			else v.setFalse();
+			return true;
+		}
+		else return false;
 	}
 
 	/**add the vector building the correct window if not already built and
@@ -67,14 +71,10 @@ public class Filter {
 				//System.out.println("ajoute les donnees");
 			}
 			window.add(v);
-			update(v);
-			/*Vecteur[] b = new Vecteur[window.size()];
-			//System.out.println("ajout d'un vecteur");
-			b = window.toArray(b);
-			if(b[window.size()/2].getState()) {
-				ellipse.fitEllipsoid(b[window.size()/2]);
+			for (VecteurFiltrable<Double> vec : window){
+				update(vec);
 			}
-			ellipse.printLog();*/
+			//System.out.println("ajout d'un vecteur");
 		} else {
 			//System.out.println("cree variabless");
 			this.variables = new ArrayList<DescriptiveStatistics>(toAdd.size());

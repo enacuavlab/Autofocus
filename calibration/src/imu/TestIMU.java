@@ -18,7 +18,7 @@ public class TestIMU {
 		Data data = new Data(t,filtre);
 		GUIHelper.showOnFrame(plot, "test");
 		//Sender s = new Sender("C:\\Users\\Alino�\\Desktop\\13_05_29__10_15_23.data");
-		Sender s = new Sender(System.getenv("HOME")+"/Téléchargements/13_05_29__10_15_23.data");
+		Sender s = new Sender("C:\\Users\\Alino�\\Desktop\\13_05_29__10_15_23.data");
 		IMU imu =new IMU(t,17,data);
 		s.start();
 		s.join();

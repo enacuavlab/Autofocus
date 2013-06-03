@@ -14,24 +14,60 @@ import filtre.VecteurFiltrable;
 
 public class Plotter extends JPanel {
 
+	private int maxX = 0;
+	private int minX = 0;
+	private int maxY = 0;
+	private int minY = 0;
+	private int maxZ = 0;
+	private int minZ = 0;
+	private int xAxis = 0;
+	private int yAxis = 0;
+	private VecteurFiltrable<Double> center = new Vecteur(0, 0, 0);
 	private List<VecteurFiltrable<Double>> points = new LinkedList<VecteurFiltrable<Double>>();
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
+		g.clearRect(0, 0, 800, 800);
 		for (VecteurFiltrable<Double> v : points) {
 			if (v.isCorrect()) {
 				g.setColor(Color.blue);
 			} else
 				g.setColor(Color.red);
 			g.drawOval((int) v.getX() / 2 + 200, (int) v.getY() / 2 + 600, 5, 5);
+			g.setColor(Color.green);
+			g.drawOval((int) (maxX + minX) / 4 + 200,
+					(int) (maxY + minY) / 4 + 600, 10, 10);
+			g.drawOval((int) (maxX + minX) / 4 + 200 - (maxX - minX) / 4,
+					(int) (maxY + minY) / 4 + 600 - (maxY - minY) / 4,
+					(maxX - minX) / 2, (maxY - minY) / 2);
 			// cast explicite de double avec des 0 après la virgule en int
 		}
 	}
 
 	public void add(VecteurFiltrable<Double> v) {
 		points.add(v);
+		if (v.isCorrect()) {
+			if (v.getX() > maxX)
+				maxX = (int) v.getX();
+			if (v.getY() > maxY)
+				maxY = (int) v.getY();
+			if (v.getZ() > maxZ)
+				maxZ = (int) v.getZ();
+			if (v.getX() < minX)
+				minX = (int) v.getX();
+			if (v.getY() < minY)
+				minY = (int) v.getY();
+			if (v.getZ() < minZ)
+				minZ = (int) v.getZ();
+		}
 		this.repaint();
+	}
+
+	public void add(int x, int y, VecteurFiltrable<Double> v) {
+		center = v;
+		xAxis = x;
+		yAxis = y;
 	}
 
 	public Plotter() {
@@ -43,6 +79,13 @@ public class Plotter extends JPanel {
 	 * Added for serialization
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public void printMinMax() {
+		System.out.println("");
+		System.out.println("X min " + minX + " max " + maxX);
+		System.out.println("Y min " + minY + " max " + maxY);
+		System.out.println("Z min " + minZ + " max " + maxZ);
+	}
 
 	public static void main(String args[]) {
 		Plotter plot = new Plotter();
