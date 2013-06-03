@@ -2,6 +2,7 @@ package ihm;
 
 import iddrone.IvyIdListener;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -46,24 +47,44 @@ public class Shell extends JFrame {
 		private JTextField textField;
 		private int id;
 		private String name;
-		private JPanel panel_center;
+		private JPanel panel_home,panel_accl,panel_gyro,panel_mag,content;
+		private String[] listContent = {"HOME", "ACCL", "MAG","GYRO"};
+		private CardLayout cl;
 		
 		public Shell(Plotter plot){
 			super();
 			this.plot=plot;
-			initialise();//On initialise notre fenêtre
-			
-		}
-	 
-		private void initialise(){
-			//Fenetre
+			//Shell
 			setTitle("Autofocus"); //On donne un titre à l'application
 			setSize(1600,800); //On donne une taille à notre fenêtre
 			setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
 			setResizable(true); //On autorise le redimensionnement de la fenêtre
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //On dit à l'application de se fermer lors du clic sur la croix
 			getContentPane().setLayout(new BorderLayout());
+			cl =new CardLayout();
+			content = new JPanel();
+			content.setLayout(cl);
+			panel_home = new JPanel();
+			panel_accl = new JPanel();
+			panel_mag = new JPanel();
+			panel_gyro = new JPanel();
+			panel_home.setLayout(new BorderLayout());
+			panel_accl.setLayout(new BorderLayout());
+			panel_mag.setLayout(new BorderLayout());
+			panel_gyro.setLayout(new BorderLayout());
+			content.add(panel_home, listContent[0]);
+		    content.add(panel_accl, listContent[1]);
+		    content.add(panel_mag, listContent[2]);
+		    content.add(panel_gyro, listContent[3]);
+		    getContentPane().add(content, BorderLayout.CENTER);
+			initialise();//On initialise notre fenêtre
+			
+		}
+	 
+		private void initialise(){
+			
 			//Panel titre
+			
 			JPanel panel_titre= new JPanel();
 			panel_titre.setBackground(Color.blue);
 			panel_titre.setPreferredSize(new Dimension(1600,100));
@@ -80,33 +101,27 @@ public class Shell extends JFrame {
 			gd_options.setVgap(30);
 			panel_options.setLayout(gd_options);
 			
-			//Panel center
-			panel_center = new JPanel();
-			getContentPane().add(panel_center, BorderLayout.CENTER);
-			panel_center.setLayout(new BorderLayout(0, 0));
 			
 			//Button
 			btn_accelero=new JButton("Accelerometers");
 			btn_accelero.setEnabled(true);
 			btn_accelero.addActionListener(new ActionListener(){
 				  public void actionPerformed(ActionEvent event){
-					  mod_accelero();
+					  modAccelero();
 				  }
 				});
 			btn_magneto=new JButton("Magnetometers");
 			btn_magneto.setEnabled(true);
 			btn_magneto.addActionListener(new ActionListener(){
 				  public void actionPerformed(ActionEvent event){
-					  mod_magneto();
+					  modMagneto();
 				  }
 				});
 			btn_gyro=new JButton("Gyrometers");
-			btn_gyro.setEnabled(true);
+			btn_gyro.setEnabled(false);
 			btn_gyro.addActionListener(new ActionListener(){
 				  public void actionPerformed(ActionEvent event){
-					  btn_accelero.setEnabled(false);
-					  btn_magneto.setEnabled(false);
-					  titre.setText("<html><br>Calibration des Gyromètres</html>");
+					 modGyro();
 				  }
 				});
 			
@@ -126,7 +141,7 @@ public class Shell extends JFrame {
 			
 			
 			JPanel panel_north_center = new JPanel();
-			panel_center.add(panel_north_center, BorderLayout.NORTH);
+			panel_home.add(panel_north_center, BorderLayout.NORTH);
 			panel_north_center.setPreferredSize(new Dimension(1600,100));
 			GridBagLayout gbl_panel_north_center = new GridBagLayout();
 			gbl_panel_north_center.columnWidths = new int[] {300, 300, 30};
@@ -138,9 +153,9 @@ public class Shell extends JFrame {
 			
 			
 		
-			final JPanel panel_center_center = new JPanel();
-			panel_center.add(panel_center_center, BorderLayout.CENTER);
-			panel_center_center.setLayout(null);
+			final JPanel panel_center = new JPanel();
+			panel_home.add(panel_center, BorderLayout.CENTER);
+			panel_center.setLayout(null);
 			
 			
 			//Panel_name with a textfield and a label
@@ -149,7 +164,7 @@ public class Shell extends JFrame {
 			panel_name.setBorder(border_name);
 			panel_name.setBackground(Color.MAGENTA);
 			panel_name.setBounds(275, 38, 508, 99);
-			panel_center_center.add(panel_name);
+			panel_center.add(panel_name);
 			panel_name.setLayout(null);
 			panel_name.setVisible(false);
 			
@@ -164,46 +179,12 @@ public class Shell extends JFrame {
 			textField.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					name=textField.getText();
-					addcombo_mod(panel_center_center);
+					addcombo_mod(panel_center);
 				}
 			});
 			
 			
 			addcombo_id(panel_north_center,panel_name,label_name);
-			
-			
-			
-			JPanel panel_south_center = new JPanel();
-			panel_center.add(panel_south_center, BorderLayout.SOUTH);
-			panel_south_center.setPreferredSize(new Dimension(1600,50));
-			GridBagLayout gbl_panel_south_center = new GridBagLayout();
-			gbl_panel_south_center.columnWidths = new int[] {300, 300, 300, 30, 100, 50, 100, 100};
-			gbl_panel_south_center.rowHeights = new int[] {0, 25, 25};
-			gbl_panel_south_center.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-			gbl_panel_south_center.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-			panel_south_center.setLayout(gbl_panel_south_center);
-			
-			//Stop Button
-			btnStop = new JButton("STOP");
-			GridBagConstraints gbc_btnStop = new GridBagConstraints();
-			gbc_btnStop.fill = GridBagConstraints.HORIZONTAL;
-			gbc_btnStop.insets = new Insets(0, 0, 0, 5);
-			gbc_btnStop.gridx = 4;
-			gbc_btnStop.gridy = 0;
-			panel_south_center.add(btnStop, gbc_btnStop);
-			btnStop.setVisible(false);
-			
-			//Quit Button
-			btnQuitter = new JButton("Quitter");
-			GridBagConstraints gbc_btnQuitter = new GridBagConstraints();
-			gbc_btnQuitter.fill = GridBagConstraints.HORIZONTAL;
-			gbc_btnQuitter.gridx = 6;
-			gbc_btnQuitter.gridy = 0;
-			panel_south_center.add(btnQuitter, gbc_btnQuitter);
-			btnQuitter.setVisible(false);
-			
-			
-			
 	
 			
 		}
@@ -288,7 +269,6 @@ public class Shell extends JFrame {
 				panel_mod.setVisible(true);
 				if (!list_mod.isEmpty()){
 					for (String i : list_mod){
-						System.out.println("add");
 						combo_mod.addItem(i.toString());
 					}
 				}
@@ -316,12 +296,10 @@ public class Shell extends JFrame {
 				
 				
 			}catch (IOException e){
-				 JOptionPane jopt=new JOptionPane();
-				 jopt.showMessageDialog(null, "Drone's name unknown : "+ name , "Error name", JOptionPane.ERROR_MESSAGE);
+				 JOptionPane.showMessageDialog(null, "Drone's name unknown : "+ name , "Error name", JOptionPane.ERROR_MESSAGE);
 				 panel_mod.setVisible(false);
 			}catch (IncorrectXmlException e){
-				JOptionPane jopt=new JOptionPane();
-				jopt.showMessageDialog(null, "Incorrect file : "+ name +"/settings.xml" , "File error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Incorrect file : "+ name +"/settings.xml" , "File error", JOptionPane.ERROR_MESSAGE);
 				panel_mod.setVisible(false);
 			}catch (IvyException e){
 				e.printStackTrace();
@@ -332,18 +310,122 @@ public class Shell extends JFrame {
 		}
 		
 		
-		
-		
-		private void mod_accelero(){
+		/**
+		 * Function to add some elements in order to make accelerometers calibration
+		 */
+		private void modAccelero(){
+			cl.show(content, listContent[1]);
 			btn_magneto.setEnabled(false);
 			btn_gyro.setEnabled(false);
 			titre.setText("<html><br>Calibration des Accéléromètre</html>");
+			addButton(panel_accl);
+			JPanel panel_north= new JPanel();
+			panel_north.setPreferredSize(new Dimension(1600,75));
+			panel_north.setLayout(null);
+			JLabel inst=new JLabel();
+			inst.setBounds(375,0,500,75);
+			inst.setText("<html>Suivez les instructions écrites à l'écran</html>");
+			panel_north.add(inst);
+			panel_accl.add(panel_north,BorderLayout.NORTH);
+			JPanel panel_center = new JPanel();
+			panel_center.setLayout(null);
+			panel_accl.add(panel_center,BorderLayout.CENTER);
+			JPanel panel_dessin= new JPanel();
+			Border border_mod=BorderFactory.createRaisedBevelBorder();
+			panel_dessin.setBackground(Color.WHITE);
+			panel_dessin.setBounds(50, 0, 625, 425);
+			panel_dessin.setBorder(border_mod);
+			panel_center.add(panel_dessin);
+			JPanel panel_inst = new JPanel();
+			panel_inst.setBounds(825,0,300,425);
+			panel_inst.setBorder(border_mod);
+			panel_inst.setBackground(Color.WHITE);
+			panel_center.add(panel_inst);
 		}
-		
-		private void mod_magneto(){
+		/**
+		 * Function to add some elements in order to make magnetometers calibration
+		 */
+		private void modMagneto(){
+			 cl.show(content, listContent[2]);
 			 btn_accelero.setEnabled(false);
 			 btn_gyro.setEnabled(false);
 			 titre.setText("<html><br>Calibration des Magnétomètres</html>");
-			  
+			 addButton(panel_mag);
+			 JPanel panel_north= new JPanel();
+			 panel_north.setPreferredSize(new Dimension(1600,100));
+			 panel_north.setLayout(null);
+			 JLabel inst=new JLabel();
+			 inst.setBounds(275,15,500,75);
+			 inst.setText("<html><br><br>Tournez le drone dans tous les sens afin de remplir les zones rouges</html>");
+			 panel_north.add(inst);
+			 panel_mag.add(panel_north,BorderLayout.NORTH);
+			 JPanel panel_center = new JPanel();
+			 panel_center.setLayout(null);
+			 panel_mag.add(panel_center,BorderLayout.CENTER);
+			 JPanel panel_dessin= new JPanel();
+			 Border border_mod=BorderFactory.createRaisedBevelBorder();
+			 panel_dessin.setBackground(Color.WHITE);	
+			 panel_dessin.setBounds(125, 0, 775, 425);
+			 panel_dessin.setBorder(border_mod);
+			 panel_center.add(panel_dessin);
+			 
+		}
+		
+		
+		/**
+		 * Function to add some elements in order to make gyrometers calibration
+		 */
+		private void modGyro(){
+			 cl.show(content, listContent[3]);
+			 btn_accelero.setEnabled(false);
+			 btn_magneto.setEnabled(false);
+			 titre.setText("<html><br>Calibration des Gyromètres</html>");
+		}
+		
+		
+		/**
+		 * Funtion to add Quit and Stop button on the panel_center
+		 */
+		private void addButton(final JPanel panel){
+			final JPanel panel_south_center = new JPanel();
+			panel.add(panel_south_center, BorderLayout.SOUTH);
+			panel_south_center.setPreferredSize(new Dimension(1600,50));
+			GridBagLayout gbl_panel_south_center = new GridBagLayout();
+			gbl_panel_south_center.columnWidths = new int[] {300, 300, 300, 30, 100, 50, 100, 100};
+			gbl_panel_south_center.rowHeights = new int[] {0, 25, 25};
+			gbl_panel_south_center.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+			gbl_panel_south_center.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+			panel_south_center.setLayout(gbl_panel_south_center);
+			
+			//Stop Button
+			btnStop = new JButton("STOP");
+			GridBagConstraints gbc_btnStop = new GridBagConstraints();
+			gbc_btnStop.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnStop.insets = new Insets(0, 0, 0, 5);
+			gbc_btnStop.gridx = 4;
+			gbc_btnStop.gridy = 0;
+			panel_south_center.add(btnStop, gbc_btnStop);
+			btnStop.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					
+				}
+			});
+			//Quit Button
+			btnQuitter = new JButton("Quitter");
+			GridBagConstraints gbc_btnQuitter = new GridBagConstraints();
+			gbc_btnQuitter.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnQuitter.gridx = 6;
+			gbc_btnQuitter.gridy = 0;
+			panel_south_center.add(btnQuitter, gbc_btnQuitter);
+			btnQuitter.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					panel.removeAll();
+					panel_home.removeAll();
+					panel_home.repaint();
+					cl.show(content, listContent[0]);
+					initialise();
+					
+				}
+			});
 		}
 }
