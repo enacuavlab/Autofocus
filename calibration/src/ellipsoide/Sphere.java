@@ -34,6 +34,7 @@ public class Sphere {
 				|| (Math.abs(center.getZ() - newcenter.getZ()) > erreur)) {
 			this.radius = radius;
 			this.center = newcenter;
+			System.out.println("maj sphere");
 			update_all_zone();
 		} else
 			update(v);
@@ -66,9 +67,10 @@ public class Sphere {
 		Zone ztemp;
 		ListIterator<Zone> j = lzone.listIterator();
 		ListIterator<VecteurFiltrable<Double>> i;
-
+		
 		while (j.hasNext()) {
 			ztemp = j.next();
+			ztemp.maj_list_contour(center,radius);
 			ztemp.reset();
 			i = lvector.listIterator();
 			while (i.hasNext()) {
