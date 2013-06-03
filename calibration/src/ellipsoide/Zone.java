@@ -89,7 +89,7 @@ public class Zone {
 		if (den1 != 0) {
 			if (xc_x >= 0 && yc_y >= 0) {
 				alpha = Math.asin(xc_x / den1);
-				//System.out.println(alpha + "number 1");
+				System.out.println(alpha + "number 1");
 				if (alpha >= long_angle_begin && alpha <= long_angle_end) {
 					System.out.println(alpha + "number 1");
 					return true;
@@ -157,6 +157,8 @@ public class Zone {
 		if (den != 0) {
 			alpha = Math.atan(zc_z / den);
 			if (alpha <= lat_angle_high && alpha >= lat_angle_low) {
+				System.out.println("1er test passé : alpha = "+alpha +" lat_min: " +
+			lat_angle_low + " lat-max: "+ lat_angle_high);
 				return true;
 			} else {
 				return false;

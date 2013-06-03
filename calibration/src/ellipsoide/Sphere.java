@@ -45,8 +45,8 @@ public class Sphere {
 			for (int j = 0; j < latitude; j++) {
 				lzone.add(new Zone((Math.PI / latitude) * j - Math.PI / 2,
 						(Math.PI / latitude) * (j + 1) - Math.PI / 2,
-						(Math.PI / longitude) * i - Math.PI,
-						(Math.PI / longitude) * (i + 1) - Math.PI));
+						((2*Math.PI) / longitude) * i - Math.PI,
+						((2*Math.PI) / longitude) * (i + 1) - Math.PI));
 			}
 		}
 	}
