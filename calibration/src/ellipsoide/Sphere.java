@@ -4,24 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import data.Vecteur;
+import filtre.VecteurFiltrable;
 
 public class Sphere {
 	private double longitude;
 	private double latitude;
 	private double radius;
-	private Vecteur center;
-	private List<Vecteur> lvector;
+	private VecteurFiltrable<Double> center;
+	private List<VecteurFiltrable<Double>> lvector;
 	protected List<Zone> lzone;
 
 	public Sphere(double longitude, double latitude) {
 		this.longitude = longitude;
 		this.latitude = latitude;
-		lvector = new ArrayList<Vecteur>();
+		lvector = new ArrayList<VecteurFiltrable<Double>>();
 		lzone = new ArrayList<Zone>();
 		create_zone();
 	}
 
-	public void update(double radius, Vecteur center, Vecteur v) {
+	public void update(double radius, VecteurFiltrable<Double> center, VecteurFiltrable<Double> v) {
 		this.radius = radius;
 		this.center = center;
 		lvector.add(v);
@@ -32,7 +33,7 @@ public class Sphere {
 		return radius;
 	}
 
-	public Vecteur getcenter() {
+	public VecteurFiltrable<Double> getcenter() {
 		return center;
 	}
 
@@ -54,7 +55,7 @@ public class Sphere {
 	protected void update_zone() {
 		Zone ztemp;
 		ListIterator<Zone> j= lzone.listIterator();
-		ListIterator<Vecteur> i ;
+		ListIterator<VecteurFiltrable<Double>> i ;
 
 		while (j.hasNext()) {
 			ztemp = j.next();

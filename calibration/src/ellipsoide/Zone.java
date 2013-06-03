@@ -1,6 +1,7 @@
 package ellipsoide;
 
 import data.Vecteur;
+import filtre.VecteurFiltrable;
 
 /**
  * class which is counting the number of vectors in the right field of the
@@ -34,7 +35,6 @@ public class Zone {
 		this.lat_angle_high = lat_angle_high; 
 		this.long_angle_begin = long_angle_begin; 
 		this.long_angle_end = long_angle_end; 
-		System.out.println(this.lat_angle_low+" "+this.lat_angle_high+" "+this.long_angle_begin+" "+this.long_angle_end);
 		nb_points = 0;
 	}
 
@@ -56,12 +56,13 @@ public class Zone {
 	 *            center of the ellipsoid
 	 * @return
 	 */
-	public boolean is_in(Vecteur v, Vecteur center) {
+	public boolean is_in(VecteurFiltrable<Double> v, VecteurFiltrable<Double> center) {
 		if (is_in_lat(v.getX(), v.getY(), v.getZ(), center.getX(),
 				center.getY(), center.getZ())
 				&& is_in_long(v.getX(), v.getY(), center.getX(), center.getY())) {
 			nb_points += 1;
-
+			System.out.println("nb = "+ nb_points +" "+ this.lat_angle_low+" "+this.lat_angle_high+" "+this.long_angle_begin+" "+this.long_angle_end);
+			
 			return true;
 		} else
 			return false;
@@ -89,7 +90,6 @@ public class Zone {
 		if (den1 != 0) {
 			if (xc_x >= 0 && yc_y >= 0) {
 				alpha = Math.asin(xc_x / den1);
-				System.out.println(alpha + "number 1");
 				if (alpha >= long_angle_begin && alpha <= long_angle_end) {
 					System.out.println(alpha + "number 1");
 					return true;
@@ -157,8 +157,6 @@ public class Zone {
 		if (den != 0) {
 			alpha = Math.atan(zc_z / den);
 			if (alpha <= lat_angle_high && alpha >= lat_angle_low) {
-				System.out.println("1er test passé : alpha = "+alpha +" lat_min: " +
-			lat_angle_low + " lat-max: "+ lat_angle_high);
 				return true;
 			} else {
 				return false;
