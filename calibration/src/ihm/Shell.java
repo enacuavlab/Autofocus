@@ -77,12 +77,16 @@ public class Shell extends JFrame {
 		    content.add(panel_mag, listContent[2]);
 		    content.add(panel_gyro, listContent[3]);
 		    getContentPane().add(content, BorderLayout.CENTER);
+		    addOptions();
 			initialise();//On initialise notre fenêtre
 			
 		}
 	 
 		private void initialise(){
-			
+			//Pour test 
+			btn_accelero.setEnabled(true);
+			btn_magneto.setEnabled(true);
+		
 			//Panel titre
 			
 			JPanel panel_titre= new JPanel();
@@ -92,53 +96,6 @@ public class Shell extends JFrame {
 			titre= new JLabel("<html><br>Veuillez remplir les champs</html>");
 			titre.setFont(new Font("Calibri",Font.BOLD,28));
 			panel_titre.add(titre);
-
-			//Panel options
-			JPanel panel_options=new JPanel();
-			panel_options.setBackground(Color.red);
-			getContentPane().add(panel_options,"West");
-			GridLayout gd_options=new GridLayout(5,1);
-			gd_options.setVgap(30);
-			panel_options.setLayout(gd_options);
-			
-			
-			//Button
-			btn_accelero=new JButton("Accelerometers");
-			btn_accelero.setEnabled(true);
-			btn_accelero.addActionListener(new ActionListener(){
-				  public void actionPerformed(ActionEvent event){
-					  modAccelero();
-				  }
-				});
-			btn_magneto=new JButton("Magnetometers");
-			btn_magneto.setEnabled(true);
-			btn_magneto.addActionListener(new ActionListener(){
-				  public void actionPerformed(ActionEvent event){
-					  modMagneto();
-				  }
-				});
-			btn_gyro=new JButton("Gyrometers");
-			btn_gyro.setEnabled(false);
-			btn_gyro.addActionListener(new ActionListener(){
-				  public void actionPerformed(ActionEvent event){
-					 modGyro();
-				  }
-				});
-			
-			//Button insertion
-			Border border_type=BorderFactory.createTitledBorder("Type de calibration");
-			panel_options.setBorder(border_type);
-			//JLabel titre_options= new JLabel("Type decalibration");
-			//panel_options.add(titre_options);
-			//panel_options.add(new JLabel());
-			panel_options.add(btn_accelero);
-			//panel_options.add(new JLabel());
-			panel_options.add(btn_magneto);
-			//panel_options.add(new JLabel());
-			panel_options.add(btn_gyro);
-			
-			
-			
 			
 			JPanel panel_north_center = new JPanel();
 			panel_home.add(panel_north_center, BorderLayout.NORTH);
@@ -151,8 +108,6 @@ public class Shell extends JFrame {
 			panel_north_center.setLayout(gbl_panel_north_center);
 			
 			
-			
-		
 			final JPanel panel_center = new JPanel();
 			panel_home.add(panel_center, BorderLayout.CENTER);
 			panel_center.setLayout(null);
@@ -187,6 +142,54 @@ public class Shell extends JFrame {
 			addcombo_id(panel_north_center,panel_name,label_name);
 	
 			
+		}
+		/**
+		 * Function to add a Panel in order to choose the type of the calibration 
+		 */
+		private void addOptions(){
+			//Panel options
+			JPanel panel_options=new JPanel();
+			panel_options.setBackground(Color.red);
+			getContentPane().add(panel_options,"West");
+			GridLayout gd_options=new GridLayout(5,1);
+			gd_options.setVgap(30);
+			panel_options.setLayout(gd_options);
+			
+			
+			//Button
+			btn_accelero=new JButton("Accelerometers");
+			btn_accelero.setEnabled(false);
+			btn_accelero.addActionListener(new ActionListener(){
+				  public void actionPerformed(ActionEvent event){
+					  modAccelero();
+				  }
+				});
+			btn_magneto=new JButton("Magnetometers");
+			btn_magneto.setEnabled(false);
+			btn_magneto.addActionListener(new ActionListener(){
+				  public void actionPerformed(ActionEvent event){
+					  modMagneto();
+				  }
+				});
+			btn_gyro=new JButton("Gyrometers");
+			btn_gyro.setEnabled(false);
+			btn_gyro.addActionListener(new ActionListener(){
+				  public void actionPerformed(ActionEvent event){
+					 modGyro();
+				  }
+				});
+			
+			//Button insertion
+			Border border_type=BorderFactory.createTitledBorder("Type de calibration");
+			panel_options.setBorder(border_type);
+			//JLabel titre_options= new JLabel("Type decalibration");
+			//panel_options.add(titre_options);
+			//panel_options.add(new JLabel());
+			panel_options.add(btn_accelero);
+			//panel_options.add(new JLabel());
+			panel_options.add(btn_magneto);
+			//panel_options.add(new JLabel());
+			panel_options.add(btn_gyro);
 		}
 		/**
 		 * Function to add some elements in order to obtain id+name of the drone
