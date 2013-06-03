@@ -84,8 +84,8 @@ public class Shell extends JFrame {
 	 
 		private void initialise(){
 			//Pour test 
-			btn_accelero.setEnabled(true);
-			btn_magneto.setEnabled(true);
+			btn_accelero.setEnabled(false);
+			btn_magneto.setEnabled(false);
 		
 			//Panel titre
 			
@@ -108,7 +108,7 @@ public class Shell extends JFrame {
 			panel_north_center.setLayout(gbl_panel_north_center);
 			
 			
-			final JPanel panel_center = new JPanel();
+			JPanel panel_center = new JPanel();
 			panel_home.add(panel_center, BorderLayout.CENTER);
 			panel_center.setLayout(null);
 			
@@ -123,7 +123,7 @@ public class Shell extends JFrame {
 			panel_name.setLayout(null);
 			panel_name.setVisible(false);
 			
-			final JLabel label_name = new JLabel();
+			JLabel label_name = new JLabel();
 			label_name.setBounds(106, 12, 138, 60);
 			panel_name.add(label_name);
 			
@@ -131,15 +131,27 @@ public class Shell extends JFrame {
 			textField.setBounds(273, 35, 114, 29);
 			panel_name.add(textField);
 			textField.setColumns(10);
+			
+			//Panel_mod
+			Border border_mod=BorderFactory.createRaisedBevelBorder();
+			final JPanel panel_mod = new JPanel();
+			panel_mod.setBackground(Color.ORANGE);
+			panel_mod.setForeground(Color.BLACK);
+			panel_mod.setBounds(275, 213, 508, 177);
+			panel_mod.setBorder(border_mod);
+			panel_center.add(panel_mod);
+			panel_mod.setVisible(false);
+			panel_mod.setLayout(null);
+			
 			textField.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					name=textField.getText();
-					addcombo_mod(panel_center);
+					addcombo_mod(panel_mod);
 				}
 			});
 			
 			
-			addcombo_id(panel_north_center,panel_name,label_name);
+			addcombo_id(panel_north_center,panel_name,label_name,panel_mod);
 	
 			
 		}
@@ -197,7 +209,7 @@ public class Shell extends JFrame {
 		 * @param panel
 		 * @param label
 		 */
-		private void addcombo_id(JPanel panel_north_center,final JPanel panel,final JLabel label){
+		private void addcombo_id(JPanel panel_north_center,final JPanel panel,final JLabel label,final JPanel panel_mod){
 			JLabel label_id= new JLabel("Choissisez l'id de votre drone");
 			GridBagConstraints gbc_label_id = new GridBagConstraints();
 			gbc_label_id.insets = new Insets(0, 0, 5, 5);
@@ -217,23 +229,26 @@ public class Shell extends JFrame {
 			
 			//Add drone id detected
 			combo.addItem(" ");
+			combo.addItem("1");
 			try {
-				final IvyIdListener ivyid= new IvyIdListener();
+				IvyIdListener ivyid= new IvyIdListener();
 				ArrayList<Integer> l=(ArrayList<Integer>) ivyid.getList();
 				if (!l.isEmpty()){
 					for (Integer i : l){
 						combo.addItem(i.toString());
 					}
 				}
-			}catch (IvyException e){
-				e.printStackTrace();
+			}catch (IvyException eivy){
+				eivy.printStackTrace();
 			}
-			combo.addItem("1");
-			combo.addItem("2");
+			
+			//combo.addItem("1");
+			//combo.addItem("2");
 			combo.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e) {	
 				  if (combo.getSelectedItem().toString()==" "){
-					  panel.setVisible(false);
+					  	panel.setVisible(false);
+					  	panel_mod.setVisible(false);
 				  }
 				  else {
 					  id = Integer.parseInt(combo.getSelectedItem().toString());
@@ -249,15 +264,7 @@ public class Shell extends JFrame {
 		 * Function to add some elements in order to change drone mod
 		 * @param panel
 		 */
-		private void addcombo_mod(JPanel panel){
-			final JPanel panel_mod = new JPanel();
-			Border border_mod=BorderFactory.createRaisedBevelBorder();
-			panel_mod.setBackground(Color.ORANGE);
-			panel_mod.setForeground(Color.BLACK);
-			panel_mod.setBounds(275, 213, 508, 177);
-			panel_mod.setBorder(border_mod);
-			panel.add(panel_mod);
-			panel_mod.setLayout(null);
+		private void addcombo_mod(JPanel panel_mod){
 			
 			final JLabel label_mod = new JLabel("Veuillez choisir le mode de votre drone "+name+" :");
 			label_mod.setBounds(80, 45, 360, 42);
@@ -265,9 +272,8 @@ public class Shell extends JFrame {
 			final JComboBox combo_mod = new JComboBox();
 			combo_mod.setBounds(105, 124, 284, 24);
 			panel_mod.add(combo_mod);
-			panel_mod.setVisible(false);
 			try{
-				final ExtractRawData d = new ExtractRawData(System.getenv("HOME")+"/paparazzi/var/"+ name + "/settings.xml");
+				ExtractRawData d = new ExtractRawData(System.getenv("HOME")+"/paparazzi/var/"+ name + "/settings.xml");
 				List <String> list_mod=d.extract();
 				panel_mod.setVisible(true);
 				if (!list_mod.isEmpty()){
@@ -281,7 +287,7 @@ public class Shell extends JFrame {
 				combo_mod.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e) {
 						if (combo_mod.getSelectedItem().toString()!=" "){
-							//("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");		
+							//("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");
 							try {
 								Integer mod=new Integer(combo_mod.getSelectedIndex());
 								ivyraw.sendMode(id,mod.doubleValue());
@@ -299,11 +305,14 @@ public class Shell extends JFrame {
 				
 				
 			}catch (IOException e){
-				 JOptionPane.showMessageDialog(null, "Drone's name unknown : "+ name , "Error name", JOptionPane.ERROR_MESSAGE);
-				 panel_mod.setVisible(false);
-			}catch (IncorrectXmlException e){
-				JOptionPane.showMessageDialog(null, "Incorrect file : "+ name +"/settings.xml" , "File error", JOptionPane.ERROR_MESSAGE);
 				panel_mod.setVisible(false);
+				label_mod.setText("");
+				JOptionPane.showMessageDialog(null, "Drone's name unknown : "+ name , "Error name", JOptionPane.ERROR_MESSAGE);
+				 
+			}catch (IncorrectXmlException e){
+				panel_mod.setVisible(false);
+				label_mod.setText("");
+				JOptionPane.showMessageDialog(null, "Incorrect file : "+ name +"/settings.xml" , "File error", JOptionPane.ERROR_MESSAGE);
 			}catch (IvyException e){
 				e.printStackTrace();
 			}
