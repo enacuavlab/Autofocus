@@ -48,6 +48,12 @@ public class IvyIdListener implements IvyMessageListener {
 	 * @return
 	 */
 	public List<Integer> getList(){
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			System.out.println("probleme de thread");
+			e.printStackTrace();
+		}
 		return listeId;
 	}
 	/**
