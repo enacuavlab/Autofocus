@@ -32,7 +32,9 @@ public class IvyConfigListener {
 	public static void main(String args[]) {
 		try {
 			IvyConfigListener listen = new IvyConfigListener(5);
+			for(int i = 0; i<10;i++){
 			listen.sendRequest();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
