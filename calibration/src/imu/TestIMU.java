@@ -17,7 +17,7 @@ public class TestIMU {
 		FilterPlot filtre = new FilterPlot(plot,10,TypeCalibration.MAGNETOMETER);
 		Data data = new Data(t,filtre);
 		GUIHelper.showOnFrame(plot, "test");
-		Sender s = new Sender("C:\\Users\\Alinoé\\Desktop\\13_05_29__10_15_23.data");
+		Sender s = new Sender("home/workspace/autofocus#/calibration/13_04_03__13_49_35.data");
 		IMU imu =new IMU(t,17,data);
 		s.start();
 		s.join();
