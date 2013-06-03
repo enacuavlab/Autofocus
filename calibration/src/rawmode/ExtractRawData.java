@@ -111,7 +111,7 @@ public class ExtractRawData {
 		try {
 
 			ExtractRawData d = new ExtractRawData(
-					"C:\\Users\\Alinoé\\Desktop\\settings.xml");
+					"C:\\Users\\Alinoe\\Desktop\\settings.xml");
 			//System.out.println(d.racine);
 			System.out.println(parseChoice(d.infoNoeud()));
 			System.out.println(d.getIndex());

@@ -84,8 +84,8 @@ public class Shell extends JFrame {
 	 
 		private void initialise(){
 			//Pour test 
-			btn_accelero.setEnabled(false);
-			btn_magneto.setEnabled(false);
+			btn_accelero.setEnabled(true);
+			btn_magneto.setEnabled(true);
 		
 			//Panel titre
 			
