@@ -14,7 +14,7 @@ public class IvyConfigListener {
 	public IvyConfigListener(final int idDrone) throws IvyException {
 		id = idDrone;
 		bus = new Ivy("IvyRawListener", "IvyConfigListener Ready", null);
-		bus.bindMsg("(.*) CONFIG (.*)",
+		bus.bindMsg("^[A-Za-z0-9]+ CONFIG (.*)",
 				new IvyMessageListener() {
 					public void receive(IvyClient arg0, String[] args) {
 						System.out.println(args[0] + " CONFIG " + args[1]);
@@ -25,6 +25,7 @@ public class IvyConfigListener {
 	}
 	
 	public void sendRequest() throws IvyException {
+		System.out.println("calibrate CONFIG_REQ " + id);
 		bus.sendMsg("calibrate CONFIG_REQ " + id);
 	}
 	
