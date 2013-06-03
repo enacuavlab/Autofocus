@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import data.Vecteur;
+import ellipsoide.Sphere;
 
 import filtre.VecteurFiltrable;
 
@@ -23,6 +24,8 @@ public class Plotter extends JPanel {
 	private int rayon = 0;
 	private List<VecteurFiltrable<Double>> points = new LinkedList<VecteurFiltrable<Double>>();
 
+	private Sphere s = null;
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
@@ -62,12 +65,19 @@ public class Plotter extends JPanel {
 		rayon = (maxX - minX > maxY - minY ? (maxX - minX > maxZ - minZ ? maxX
 				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
 				- minY : maxZ - minZ));
+		if (s!=null) {
+			s.update(rayon, new Vecteur((minX+maxX)/2, (minY+maxY)/2, (minZ+maxZ)/2),v);
+		}
 		this.repaint();
 	}
 
 	public Plotter() {
 		setPreferredSize(new Dimension(800, 800));
 		setBackground(java.awt.Color.WHITE);
+	}
+	
+	public Plotter(Sphere s) {
+		this.s = s;
 	}
 
 	/**
