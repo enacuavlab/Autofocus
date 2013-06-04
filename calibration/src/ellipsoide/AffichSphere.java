@@ -1,5 +1,6 @@
 package ellipsoide;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.util.List;
@@ -21,6 +22,8 @@ public class AffichSphere extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+		super.paintComponents(g);
+		g.clearRect(0, 0, 800, 800);
 		List<Point2D> points;
 		int n = zones.get(1).getListContour().size();
 		int xPoints[] = new int[n];
@@ -39,6 +42,8 @@ public class AffichSphere extends JPanel {
 	}
 
 	public AffichSphere(Sphere s) {
+		setPreferredSize(new Dimension(800, 800));
+		setBackground(java.awt.Color.WHITE);
 		this.s = s;
 		majZone();
 	}
