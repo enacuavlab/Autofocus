@@ -1,5 +1,8 @@
 package ellipsoide;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import data.Vecteur;
 import filtre.VecteurFiltrable;
 
@@ -13,9 +16,11 @@ import filtre.VecteurFiltrable;
 public class Zone {
 	private double lat_angle_high;//varie entre -PI/2 et + PI/2
 	private double lat_angle_low;
-	private double long_angle_begin;// varie entre -PI et +PI
+	private double longAngleBegin;// varie entre -PI et +PI
 	private double long_angle_end;
 	private int nb_points;
+	private int nb_points_by_line = 4;
+	private List<VecteurFiltrable<Double>> list_contour;
 
 	/**
 	 * this constructor create the zone
@@ -33,8 +38,9 @@ public class Zone {
 			double long_angle_begin, double long_angle_end) {
 		this.lat_angle_low = lat_angle_low; 
 		this.lat_angle_high = lat_angle_high; 
-		this.long_angle_begin = long_angle_begin; 
-		this.long_angle_end = long_angle_end; 
+		this.longAngleBegin = long_angle_begin; 
+		this.long_angle_end = long_angle_end;
+		list_contour = new ArrayList<VecteurFiltrable<Double>>();
 		nb_points = 0;
 	}
 
@@ -61,7 +67,7 @@ public class Zone {
 				center.getY(), center.getZ())
 				&& is_in_long(v.getX(), v.getY(), center.getX(), center.getY())) {
 			nb_points += 1;
-			System.out.println("nb = "+ nb_points +" "+ this.lat_angle_low+" "+this.lat_angle_high+" "+this.long_angle_begin+" "+this.long_angle_end);
+			//System.out.println("nb = "+ nb_points +" "+ this.lat_angle_low+" "+this.lat_angle_high+" "+this.long_angle_begin+" "+this.long_angle_end);
 			
 			return true;
 		} else
@@ -90,8 +96,8 @@ public class Zone {
 		if (den1 != 0) {
 			if (xc_x >= 0 && yc_y >= 0) {
 				alpha = Math.asin(xc_x / den1);
-				if (alpha >= long_angle_begin && alpha <= long_angle_end) {
-					System.out.println(alpha + "number 1");
+				if (alpha >= longAngleBegin && alpha <= long_angle_end) {
+					//System.out.println(alpha + "number 1");
 					return true;
 				} else {
 					return false;
@@ -99,8 +105,8 @@ public class Zone {
 			}
 			if (xc_x <= 0 && yc_y >= 0) {
 				alpha = Math.asin(-xc_x / den1) + (Math.PI / 2);
-				if (alpha >= long_angle_begin && alpha <= long_angle_end) {
-					System.out.println(alpha + "number 2");
+				if (alpha >= longAngleBegin && alpha <= long_angle_end) {
+					//System.out.println(alpha + "number 2");
 					return true;
 				} else {
 					return false;
@@ -109,8 +115,8 @@ public class Zone {
 
 			if (xc_x >= 0 && yc_y <= 0) {
 				alpha = Math.asin(xc_x / den1) - (Math.PI / 2);
-				if (alpha >= long_angle_begin && alpha <= long_angle_end) {
-					System.out.println(alpha + "number 3");
+				if (alpha >= longAngleBegin && alpha <= long_angle_end) {
+					//System.out.println(alpha + "number 3");
 					return true;
 				} else {
 					return false;
@@ -118,8 +124,8 @@ public class Zone {
 			}
 			if (xc_x <= 0 && yc_y <= 0) {
 				alpha = Math.asin(-xc_x / den1) - (Math.PI);
-				if (alpha >= long_angle_begin && alpha <= long_angle_end) {
-					System.out.println(alpha + "number 4");
+				if (alpha >= longAngleBegin && alpha <= long_angle_end) {
+					//System.out.println(alpha + "number 4");
 					return true;
 				} else {
 					return false;
@@ -163,6 +169,13 @@ public class Zone {
 			}
 		} else {
 			return false;
+		}
+	}
+
+	public void maj_list_contour(VecteurFiltrable<Double> center, double radius) {
+		double step_longitude= (longAngleBegin-long_angle_end)/nb_points_by_line ;
+		for (int i=0;i< nb_points_by_line;i++){
+			list_contour.add(new Vecteur(radius*Math.cos(longAngleBegin+i*step_longitude), radius, radius));
 		}
 	}
 }
