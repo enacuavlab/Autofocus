@@ -62,6 +62,7 @@ public class Sender extends Thread implements IvyMessageListener {
 		try {
 			this.sendRawMessage();
 		} catch (Exception e){
+			System.out.println("Sender Error");
 			e.printStackTrace();
 		}
 		
