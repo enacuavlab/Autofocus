@@ -44,6 +44,7 @@ public class ShellV2 extends JFrame {
 	private CardLayout cl;
 	private String mod;//Pour savoir quel bouton activer
 	private Action ac1, ac2, ac3;
+	private Result result;
 /**
  * Constructeur qui initialise la fenetre et met en place le cardLayout
  */
@@ -59,6 +60,7 @@ public class ShellV2 extends JFrame {
 														// fermer lors du clic
 														// sur la croix
 		getContentPane().setLayout(new BorderLayout());
+		result = new Result(this,"Result",true);
 		cl = new CardLayout();
 		content = new JPanel();
 		content.setLayout(cl);
@@ -246,6 +248,7 @@ public class ShellV2 extends JFrame {
 					combo.addItem(i.toString());
 				}
 			}
+			ivyid.stop();
 		} catch (IvyException eivy) {
 			eivy.printStackTrace();
 		}
@@ -336,9 +339,12 @@ public class ShellV2 extends JFrame {
 	 * Function to add some elements in order to make accelerometers calibration
 	 */
 	private void modAccelero() {
+		
 		btn_accelero.removeActionListener(ac1);
 		mod = "Accl";
 		cl.show(content, listContent[1]);
+		result.setResult("vsfsnvksnkvnksdvnkdnvksdvnksdvnksdnvksdnvksdnvksdnvksdvndskvnsdkcsncslnsdkvnsdlkvndslkvnsdlvnsdlvnsdlnvlsdnvdskvnlsdvnsdlknvlsn");
+		result.showResult();
 		btn_magneto.setEnabled(false);
 		btn_gyro.setEnabled(false);
 		titre.setText("<html><br>Calibration des Accéléromètre</html>");
@@ -365,6 +371,7 @@ public class ShellV2 extends JFrame {
 		panel_inst.setBorder(border_mod);
 		panel_inst.setBackground(Color.WHITE);
 		panel_center.add(panel_inst);
+		
 	}
 
 	/**
@@ -458,6 +465,8 @@ public class ShellV2 extends JFrame {
 			}
 		});
 	}
+	
+
 	/**
 	 * Classe qui implément ActionListener pour appliquer un mode suivant l'action réalisé sur un bouton
 	 * @author gui

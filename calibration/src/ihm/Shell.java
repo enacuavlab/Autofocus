@@ -228,10 +228,11 @@ public class Shell extends JFrame {
 					combo.addItem(i.toString());
 				}
 			}
+			ivyid.stop();
 		} catch (IvyException eivy) {
 			eivy.printStackTrace();
 		}
-
+		
 		// combo.addItem("1");
 		// combo.addItem("2");
 		combo.addActionListener(new ActionListener() {
