@@ -15,7 +15,6 @@ public class Density {
 	 */
 	public void updateDensity(double surfaceSphere,double surfaceZone){
 		nb+=1;
-		System.out.print(nb);
 		double temp =(surfaceSphere*nb*255)/(3000*surfaceZone*nbMax);
 		if (temp >255){
 			colorParameter=255;

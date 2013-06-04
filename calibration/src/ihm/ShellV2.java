@@ -29,7 +29,9 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import rawmode.ExtractRawData;
+import rawmode.GetConfigException;
 import rawmode.IncorrectXmlException;
+import rawmode.IvyConfigListener;
 import rawmode.IvyRawListener;
 
 public class ShellV2 extends JFrame {
@@ -38,7 +40,8 @@ public class ShellV2 extends JFrame {
 	private JButton btn_accelero, btn_magneto, btn_gyro;
 	private JLabel titre;
 	private JButton btnQuitter, btnStop;
-	private int id;
+	private int id;//Id du drone
+	private String name,url;//Nom et url du drone 
 	private JPanel panel_home, panel_accl, panel_gyro, panel_mag, content;
 	private String[] listContent = { "HOME", "ACCL", "MAG", "GYRO" };
 	private CardLayout cl;
@@ -134,7 +137,7 @@ public class ShellV2 extends JFrame {
 		dronesName.setBounds(273, 35, 114, 29);
 		panel_name.add(dronesName);
 		dronesName.setBackground(Color.WHITE);
-		dronesName.setText("blender");
+		dronesName.setText(name);
 		// Panel_mod
 		Border border_mod = BorderFactory.createRaisedBevelBorder();
 		JPanel panel_mod = new JPanel();
@@ -262,10 +265,18 @@ public class ShellV2 extends JFrame {
 					panel_mod.setVisible(false);
 				} else {
 					id = Integer.parseInt(combo.getSelectedItem().toString());
+					try{
+						IvyConfigListener ivyConfig=new IvyConfigListener(id);
+						name=ivyConfig.getAcName();
+						url=ivyConfig.getSettingsURL();
+						ivyConfig.finalize();
+					}catch (GetConfigException eConf){
+						JOptionPane.showMessageDialog(null, "Bus problem check if ground station is launched ", "Bus error", JOptionPane.ERROR_MESSAGE);
+					}
 					label.setText("<html>Le nom de votre drone d'id "
-							+ Integer.toString(id) + " est :</html>");
+							+ Integer.toString(id) + " est : </html>");
 					panel.setVisible(true);
-					addcombo_mod(panel_mod, "blender");
+					addcombo_mod(panel_mod);
 				}
 			}
 		});
@@ -276,8 +287,7 @@ public class ShellV2 extends JFrame {
 	 * 
 	 * @param panel
 	 */
-	private void addcombo_mod(JPanel panel_mod, String name) {
-
+	private void addcombo_mod(JPanel panel_mod) {
 		final JLabel label_mod = new JLabel(
 				"Veuillez choisir le mode de votre drone " + name + " :");
 		label_mod.setBounds(80, 45, 360, 42);
@@ -286,8 +296,7 @@ public class ShellV2 extends JFrame {
 		combo_mod.setBounds(105, 124, 284, 24);
 		panel_mod.add(combo_mod);
 		try {
-			ExtractRawData d = new ExtractRawData(System.getenv("HOME")
-					+ "/paparazzi/var/" + name + "/settings.xml");
+			ExtractRawData d = new ExtractRawData(url);
 			List<String> list_mod = d.extract();
 			panel_mod.setVisible(true);
 			if (!list_mod.isEmpty()) {
@@ -317,6 +326,7 @@ public class ShellV2 extends JFrame {
 					}
 				}
 			});
+			ivyraw.finalize();
 
 		} catch (IOException e) {
 			panel_mod.setVisible(false);
