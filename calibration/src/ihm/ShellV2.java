@@ -26,7 +26,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+
+import common.StartUp;
+import common.TypeCalibration;
 
 import rawmode.ExtractRawData;
 import rawmode.GetConfigException;
@@ -42,12 +46,13 @@ public class ShellV2 extends JFrame {
 	private JButton btnQuitter, btnStop;
 	private int id;//Id du drone
 	private String name,url;//Nom et url du drone 
-	private JPanel panel_home, panel_accl, panel_gyro, panel_mag, content;
+	private JPanel panel_home, panel_accl, panel_gyro, panel_mag, content,panel_dessin;
 	private String[] listContent = { "HOME", "ACCL", "MAG", "GYRO" };
 	private CardLayout cl;
 	private String mod;//Pour savoir quel bouton activer
 	private Action ac1, ac2, ac3;
 	private Result result;
+	
 /**
  * Constructeur qui initialise la fenetre et met en place le cardLayout
  */
@@ -416,13 +421,14 @@ public class ShellV2 extends JFrame {
 		JPanel panel_center = new JPanel();
 		panel_center.setLayout(null);
 		panel_mag.add(panel_center, BorderLayout.CENTER);
-		JPanel panel_dessin = new JPanel();
+		panel_dessin = new JPanel();
 		Border border_mod = BorderFactory.createRaisedBevelBorder();
 		panel_dessin.setBackground(Color.WHITE);
 		panel_dessin.setBounds(125, 0, 775, 425);
 		panel_dessin.setBorder(border_mod);
 		panel_center.add(panel_dessin);
 
+		
 	}
 
 	/**
@@ -503,8 +509,20 @@ public class ShellV2 extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (mod.equals("Accl")) {
 				modAccelero();
+			
 			} else if (mod.equals("Mag")) {
 				modMagneto();
+				SwingUtilities.invokeLater(new Runnable(){
+					public void run(){
+						try{
+							StartUp start = new StartUp(TypeCalibration.MAGNETOMETER,panel_dessin);
+						}catch (IvyException eIvy){
+							eIvy.printStackTrace();
+						}catch (InterruptedException eInt){
+							eInt.printStackTrace();
+						}
+					}
+				});
 			} else if (mod.equals("Gyro")) {
 				modGyro();
 			}
