@@ -31,6 +31,7 @@ import rawmode.ExtractRawData;
 import rawmode.IncorrectXmlException;
 import rawmode.IvyRawListener;
 
+
 public class Shell extends JFrame {
 
 	private JButton btn_accelero, btn_magneto, btn_gyro;

@@ -1,14 +1,14 @@
 package imu;
 
 import testData.Sender;
-import ihm.GUIHelper;
-import ihm.Plotter;
 import common.TypeCalibration;
 import data.Data;
 import ellipsoide.Sphere;
 
 
 import filtre.FilterPlot;
+import filtre.GUIHelper;
+import filtre.Plotter;
 import fr.dgac.ivy.IvyException;
 
 public class TestIMU {

@@ -1,4 +1,4 @@
-package ihm;
+package filtre;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

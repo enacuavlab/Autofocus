@@ -1,4 +1,4 @@
-package ihm;
+package filtre;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import data.Vecteur;
 import ellipsoide.Sphere;
 
-import filtre.VecteurFiltrable;
 
 public class Plotter extends JPanel {
 

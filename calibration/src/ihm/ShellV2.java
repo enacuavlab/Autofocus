@@ -1,3 +1,4 @@
+
 package ihm;
 
 import fr.dgac.ivy.IvyException;
@@ -41,9 +42,11 @@ public class ShellV2 extends JFrame {
 	private JPanel panel_home, panel_accl, panel_gyro, panel_mag, content;
 	private String[] listContent = { "HOME", "ACCL", "MAG", "GYRO" };
 	private CardLayout cl;
-	private String mod;
+	private String mod;//Pour savoir quel bouton activer
 	private Action ac1, ac2, ac3;
-
+/**
+ * Constructeur qui initialise la fenetre et met en place le cardLayout
+ */
 	public ShellV2() {
 		super();
 		// Shell
@@ -77,14 +80,16 @@ public class ShellV2 extends JFrame {
 		initialise();// On initialise notre fenêtre
 
 	}
-
+/**
+ * Fonction pour initialiser et réinitialiser l'accueil
+ */
 	private void initialise() {
 		// Pour test
 		btn_accelero.setEnabled(true);
 		btn_magneto.setEnabled(true);
+		//Active les boutons
 		activateButton(mod);
 		// Panel titre
-
 		JPanel panel_titre = new JPanel();
 		panel_titre.setBackground(Color.blue);
 		panel_titre.setPreferredSize(new Dimension(1600, 100));
@@ -93,16 +98,18 @@ public class ShellV2 extends JFrame {
 		titre.setFont(new Font("Calibri", Font.BOLD, 28));
 		panel_titre.add(titre);
 
-		JPanel panel_north_center = new JPanel();
-		panel_home.add(panel_north_center, BorderLayout.NORTH);
-		panel_north_center.setPreferredSize(new Dimension(1600, 100));
-		GridBagLayout gbl_panel_north_center = new GridBagLayout();
-		gbl_panel_north_center.columnWidths = new int[] { 300, 300, 30 };
-		gbl_panel_north_center.rowHeights = new int[] { 40, 40, 40 };
-		gbl_panel_north_center.columnWeights = new double[] { 0.0, 0.0, 1.0 };
-		gbl_panel_north_center.rowWeights = new double[] { 0.0, 0.0 };
-		panel_north_center.setLayout(gbl_panel_north_center);
-
+		//Panel qui va contenir la combobox pour le choix de l'id du drone
+		JPanel panel_north = new JPanel();
+		panel_home.add(panel_north, BorderLayout.NORTH);
+		panel_north.setPreferredSize(new Dimension(1600, 100));
+		GridBagLayout gbl_panel_north = new GridBagLayout();
+		gbl_panel_north.columnWidths = new int[] { 300, 300, 30 };
+		gbl_panel_north.rowHeights = new int[] { 40, 40, 40 };
+		gbl_panel_north.columnWeights = new double[] { 0.0, 0.0, 1.0 };
+		gbl_panel_north.rowWeights = new double[] { 0.0, 0.0 };
+		panel_north.setLayout(gbl_panel_north);
+		
+		//Panel centre qui va contenir les panels mod et name
 		JPanel panel_center = new JPanel();
 		panel_home.add(panel_center, BorderLayout.CENTER);
 		panel_center.setLayout(null);
@@ -116,7 +123,7 @@ public class ShellV2 extends JFrame {
 		panel_center.add(panel_name);
 		panel_name.setLayout(null);
 		panel_name.setVisible(false);
-
+		
 		JLabel label_name = new JLabel();
 		label_name.setBounds(106, 12, 138, 60);
 		panel_name.add(label_name);
@@ -143,7 +150,7 @@ public class ShellV2 extends JFrame {
 		 * addcombo_mod(panel_mod); } });
 		 */
 
-		addcombo_id(panel_north_center, panel_name, label_name, panel_mod);
+		addcombo_id(panel_north, panel_name, label_name, panel_mod);
 
 	}
 
@@ -207,11 +214,11 @@ public class ShellV2 extends JFrame {
 	/**
 	 * Function to add some elements in order to obtain id+name of the drone
 	 * 
-	 * @param panel_north_center
+	 * @param panel_north
 	 * @param panel
 	 * @param label
 	 */
-	private void addcombo_id(JPanel panel_north_center, final JPanel panel,
+	private void addcombo_id(JPanel panel_north, final JPanel panel,
 			final JLabel label, final JPanel panel_mod) {
 		JLabel label_id = new JLabel("Choissisez l'id de votre drone");
 		GridBagConstraints gbc_label_id = new GridBagConstraints();
@@ -219,14 +226,14 @@ public class ShellV2 extends JFrame {
 		gbc_label_id.anchor = GridBagConstraints.EAST;
 		gbc_label_id.gridx = 1;
 		gbc_label_id.gridy = 1;
-		panel_north_center.add(label_id, gbc_label_id);
+		panel_north.add(label_id, gbc_label_id);
 		final JComboBox combo = new JComboBox();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.anchor = GridBagConstraints.WEST;
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.gridx = 2;
 		gbc_comboBox.gridy = 1;
-		panel_north_center.add(combo, gbc_comboBox);
+		panel_north.add(combo, gbc_comboBox);
 
 		// Add drone id detected
 		combo.addItem(" ");
@@ -451,7 +458,11 @@ public class ShellV2 extends JFrame {
 			}
 		});
 	}
-
+	/**
+	 * Classe qui implément ActionListener pour appliquer un mode suivant l'action réalisé sur un bouton
+	 * @author gui
+	 *
+	 */
 	class Action implements ActionListener {
 		private String mod;
 
