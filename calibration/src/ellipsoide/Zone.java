@@ -188,38 +188,39 @@ public class Zone {
 	 * @param radius
 	 *            radius of the sphere needed to represent the 2D points
 	 */
-	public void maj_list_contour(double radius) {
+	public void maj_list_contour(double rad) {
 		listContour.clear();
+		double radius =100;
 		double x;
 		double racineDeux = Math.sqrt(2);
-		double y = Math.sqrt(2) * Math.sin(latAngleLow);
+		double y = radius*Math.sqrt(2) * Math.sin(latAngleLow);
 		double step_longitude = (longAngleEnd - longAngleBegin)
 				/ nbPointsByLine;
 		double step_latitude = (latAngleHigh - latAngleLow) / nbPointsByLine;
 		double temp;
 		for (int i = 0; i < nbPointsByLine; i++) {
-			listContour.add(new Point2D.Double((2 * racineDeux / Math.PI)
+			listContour.add(new Point2D.Double((radius* 2 * racineDeux / Math.PI)
 					* (longAngleBegin + step_longitude * i)
 					* Math.cos(latAngleLow), y));
 		}
-		x = (2 * Math.sqrt(2) / Math.PI) * (longAngleEnd);
+		x = radius * (2 * Math.sqrt(2) / Math.PI) * (longAngleEnd);
 		for (int i = 0; i < nbPointsByLine; i++) {
 			temp = i * step_latitude;
 			listContour.add(new Point2D.Double(
-					x * Math.cos(latAngleLow + temp), racineDeux
+					x * Math.cos(latAngleLow + temp), radius*racineDeux
 							* Math.sin(latAngleLow + temp)));
 		}
-		y = Math.sqrt(2) * Math.sin(latAngleHigh);
+		y = radius * Math.sqrt(2) * Math.sin(latAngleHigh);
 		for (int i = 0; i < nbPointsByLine; i++) {
-			listContour.add(new Point2D.Double((2 * racineDeux / Math.PI)
+			listContour.add(new Point2D.Double((radius * 2 * racineDeux / Math.PI)
 					* (longAngleEnd - step_longitude * i)
 					* Math.cos(latAngleLow), y));
 		}
-		x = (2 * Math.sqrt(2) / Math.PI) * (longAngleBegin);
+		x = radius*(2 * Math.sqrt(2) / Math.PI) * (longAngleBegin);
 		for (int i = 0; i < nbPointsByLine; i++) {
 			temp = i * step_latitude;
 			listContour.add(new Point2D.Double(x
-					* Math.cos(latAngleHigh - temp), racineDeux
+					* Math.cos(latAngleHigh - temp),radius* racineDeux
 					* Math.sin(latAngleHigh - temp)));
 		}
 	}
@@ -227,7 +228,7 @@ public class Zone {
 		ListIterator<Point2D> j= listContour.listIterator();
 		String str="";
 		while (j.hasNext()){
-		 str += " "+ j.hasNext();
+		 str += " "+ j.next();
 		}
 		return str;
 	}
