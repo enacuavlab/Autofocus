@@ -1,6 +1,11 @@
 package calibTest;
 
+import org.ejml.alg.dense.linsol.AdjustableLinearSolver;
+import org.ejml.alg.dense.linsol.LinearSolverAbstract;
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.LinearSolver;
+import org.ejml.factory.LinearSolverFactory;
+
 import common.TypeCalibration;
 import org.ejml.ops.*;
 import org.apache.commons.math3.optimization.general.*;
@@ -12,13 +17,13 @@ import org.ddogleg.optimization.impl.LevenbergDenseBase;
 
 class TestFunc {
 	
-	double sf = 9.81;
+	double sf = 1;
 	
 	//static DenseMatrix64F numbers;
 	
-	/*DenseMatrix64F points;
+DenseMatrix64F points;
 	DenseMatrix64F sm;
-	DenseMatrix64F param = new DenseMatrix64F(6,1);
+
 	DenseMatrix64F x; 
 	DenseMatrix64F y;
 	DenseMatrix64F z;
@@ -27,7 +32,7 @@ class TestFunc {
 	double smy;
 	double smz;
 	int i;
-//	*/
+	
 
 	
 	
@@ -35,31 +40,88 @@ public static void main(String []args){
 	
 		
 	int i,j;
-	int maxElements =10;
+	int maxElements =6;
 	
 	DenseMatrix64F numbers = new DenseMatrix64F(maxElements,3);
+	DenseMatrix64F output = new DenseMatrix64F(maxElements,1);
+	DenseMatrix64F param = new DenseMatrix64F(6,1);
+	
 	//x.add(1,0,5);
 	
-	for (j = 0; j < numbers.getNumCols(); j++){
+	/*for (j = 0; j < numbers.getNumCols(); j++){
 	for (i = 0; i < numbers.getNumRows(); i++){
-	numbers.add(i,j,i);
-	}}
+	numbers.set(i,j,i);
 	
-	Fonction awesome = new Fonction(numbers);
+	if (j == 0){output.set(i,0,1);}
+	}}
+	*/
+	
+	for (i = 0; i < numbers.getNumRows(); i++){
+		output.set(i,0,1);
+	}
+	
+	numbers.set(0,0,5.1);
+	numbers.set(0,1,2);
+	numbers.set(0,2,2);
+	
+	numbers.set(1,0,2);
+	numbers.set(1,1,4.1);
+	numbers.set(1,2,2);
+	
+	numbers.set(2,0,0.1);
+	numbers.set(2,1,2);
+	numbers.set(2,2,2);
+	
+	numbers.set(3,0,2);
+	numbers.set(3,1,0.1);
+	numbers.set(3,2,2);
+	
+	numbers.set(4,0,2);
+	numbers.set(4,1,2);
+	numbers.set(4,2,5.1);
+	
+	numbers.set(5,0,2);
+	numbers.set(5,1,2);
+	numbers.set(5,2,0);
+	
+
+	
+	Fonction ff = new Fonction(numbers);
+	
+	
+	LevenbergMarquardt lm = new LevenbergMarquardt(ff);
+	
+	System.out.println(lm.optimize(param, numbers, output));
+	
+	param.set(lm.getParameters());
+	
+	double r = param.get(1);
+	
+	double a = lm.getInitialCost();
+	
+	System.out.println(lm.getInitialCost());
+	System.out.println(lm.getFinalCost());
+	System.out.println(lm.getParameters());
+	
+	
+	//Fonction awesome = new Fonction(numbers);
 	//tt.hallo();
 	
 	
-	DenseMatrix64F init = new DenseMatrix64F();
-
-	awesome.compute( init,numbers, numbers);
 	
-    // Define the function being optimized and create the optimizer
-    FunctionNtoM func = new FoncDeux();
-    
-    UnconstrainedLeastSquares optimizer = FactoryOptimization.leastSquaresLM(1e-3, true);
+	
+	
 
-    // if no jacobian is specified it will be computed numerically
-    optimizer.setFunction(func,null);
+	//awesome.compute( init,numbers, numbers);
+	/*
+	LinearSolver<DenseMatrix64F> solver;
+	
+	solver = LinearSolverFactory.leastSquares(6,70);
+
+	solver.setA(numbers);
+	solver.solve(output, param);
+	double a = param.get(1);
+	System.out.println(a);*/
 }	
 }
 	

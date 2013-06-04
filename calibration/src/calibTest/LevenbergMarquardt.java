@@ -111,11 +111,23 @@ public class LevenbergMarquardt {
                              DenseMatrix64F X ,
                              DenseMatrix64F Y )
     {
-        configure(initParam,X,Y);
+       // X = scalepoints(X,initParam);
+    	
+    	
+    	
+    	initParam.set(initialPar(X));
+    	
+    	  	
+    	
+    	configure(initParam,X,Y);
+    	
+    	System.out.println(X.getNumCols());
 
         // save the cost of the initial parameters so that it knows if it improves or not
         initialCost = cost(param,X,Y);
-
+        
+        System.out.print(true);
+        
         // iterate until the difference between the costs is insignificant
         // or it iterates too many times
         if( !adjustParam(X, Y, initialCost) ) {
@@ -136,7 +148,8 @@ public class LevenbergMarquardt {
         double lambda = initialLambda;
         // the difference between the current and previous cost
         double difference = 1000;
-
+        
+       
         for( int iter = 0; iter < 20 || difference < 1e-6 ; iter++ ) {
             // compute some variables based on the gradient
             computeDandH(param,X,Y);
@@ -178,14 +191,21 @@ public class LevenbergMarquardt {
      * Performs sanity checks on the input data and reshapes internal matrices.  By reshaping
      * a matrix it will only declare new memory when needed.
      */
-    protected void configure( DenseMatrix64F initParam , DenseMatrix64F X , DenseMatrix64F Y )
+    protected void configure( DenseMatrix64F initParam , DenseMatrix64F Xthree , DenseMatrix64F Y )
     {
+    	
+    	DenseMatrix64F X = new DenseMatrix64F(Xthree.getNumRows(),0);
+    	
+    	//X = scalepoints(Xthree,initParam);
+    	
         if( Y.getNumRows() != X.getNumRows() ) {
             throw new IllegalArgumentException("Different vector lengths");
-        } else if( Y.getNumCols() != 1 || X.getNumCols() != 1 ) {
+        } else if( Y.getNumCols() != 1 /*|| X.getNumCols() != 1 */) {
             throw new IllegalArgumentException("Inputs must be a column vector");
         }
-
+        
+        System.out.println(initParam.getNumRows()+" " + initParam.getNumCols()+"lala");
+        
         int numParam = initParam.getNumElements();
         int numPoints = Y.getNumRows();
 
@@ -198,8 +218,10 @@ public class LevenbergMarquardt {
             this.tempParam.reshape(numParam,1, false);
             this.A.reshape(numParam,numParam, false);
         }
-
-        param.set(initParam);
+        
+       
+        this.param.set(initParam);
+        
 
         // reshaping a matrix means that new memory is only declared when needed
         temp0.reshape(numPoints,1, false);
@@ -216,14 +238,25 @@ public class LevenbergMarquardt {
      */
     private void computeDandH( DenseMatrix64F param , DenseMatrix64F x , DenseMatrix64F y )
     {
+    	
+    	
         func.compute(param,x, tempDH);
         CommonOps.subEquals(tempDH,y);
 
+        for (int o = 0; o<x.getNumRows();o++){
+        	System.out.println(x.get(o)+" " + tempDH.get(o));
+        }
+        
+        System.out.println(x.getNumCols()+"jaco");
+        
         computeNumericalJacobian(param,x,jacobian);
 
+       // x = scalepoints(x,param);
+        
         int numParam = param.getNumElements();
-        int length = x.getNumElements();
-
+        //int length = x.getNumElements();
+        int length = x.getNumRows();
+        
         // d = average{ (f(x_i;p) - y_i) * jacobian(:,i) }
         for( int i = 0; i < numParam; i++ ) {
             double total = 0;
@@ -260,8 +293,16 @@ public class LevenbergMarquardt {
      */
     private double cost( DenseMatrix64F param , DenseMatrix64F X , DenseMatrix64F Y)
     {
+    	
+    	//X = scalepoints(X,param);
+    	
+    	
         func.compute(param,X, temp0);
-
+        
+        for (int i = 0; i < temp0.getNumRows(); i++){
+        	System.out.println(temp0.get(i) +"" + Y.get(i));
+        }
+        
         double error = SpecializedOps.diffNormF(temp0,Y);
 
         return error*error / (double)X.numRows;
@@ -295,6 +336,68 @@ public class LevenbergMarquardt {
             param.data[i] -= DELTA;
         }
     }
+    
+    private DenseMatrix64F scalepoints(DenseMatrix64F points, DenseMatrix64F parameter){
+    	
+    	DenseMatrix64F input = new DenseMatrix64F(points.getNumRows(),1);
+    	
+    	if (parameter.getNumRows()==6){
+			
+			for (int i = 0; i< points.getNumRows();i++){
+
+			double smx = (points.get(i,0) - parameter.get(0))*parameter.get(3);
+			double smy = (points.get(i,1) - parameter.get(1))*parameter.get(4);
+			double smz = (points.get(i,2) - parameter.get(2))*parameter.get(5);
+			
+			
+			input.set(i, 0, Math.sqrt(smx*smx + smy*smy + smz*smz));
+						
+			}
+		}
+		else {System.out.println("param error");}
+		double sr = input.getNumRows();
+		System.out.println("compu ok"+ sr);
+		return input;
+    }
+    
+	public DenseMatrix64F initialPar(DenseMatrix64F points){
+		
+		double sf = 1;
+		
+		System.out.println(points.getNumRows()+" " + points.getNumCols());
+		
+		DenseMatrix64F x = new DenseMatrix64F(points.getNumRows(),1);
+		DenseMatrix64F y = new DenseMatrix64F(points.getNumRows(),1);
+		DenseMatrix64F z = new DenseMatrix64F(points.getNumRows(),1);
+		
+		x = CommonOps.extract(points,0,points.getNumRows(),0,1);
+		y = CommonOps.extract(points,0,points.getNumRows(),1,2);
+		z = CommonOps.extract(points,0,points.getNumRows(),2,3);
+		
+		System.out.println(x.getNumRows()+" " + x.getNumCols());
+		
+		DenseMatrix64F out = new DenseMatrix64F(6,1);
+				
+		out.set(0,0,(CommonOps.elementMax(x)+CommonOps.elementMin(x))/2);
+		out.set(1,0,(CommonOps.elementMax(y)+CommonOps.elementMin(y))/2);
+		out.set(2,0,(CommonOps.elementMax(z)+CommonOps.elementMin(z))/2);
+		
+		out.set(3,0,2*sf/(CommonOps.elementMax(x)-CommonOps.elementMin(x)));
+		out.set(4,0,2*sf/(CommonOps.elementMax(y)-CommonOps.elementMin(y)));
+		out.set(5,0,2*sf/(CommonOps.elementMax(z)-CommonOps.elementMin(z)));
+		
+		System.out.println(out.getNumRows()+" " + out.getNumCols());
+		
+		out.set(0,0,2);
+		out.set(1,0,2);
+		out.set(2,0,2);
+		out.set(3,0,0.5);
+		out.set(4,0,0.55);
+		out.set(5,0,0.5);
+
+		return out;
+	}
+
 
     /**
      * The function that is being optimized.

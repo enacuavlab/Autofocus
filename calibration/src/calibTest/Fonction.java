@@ -2,10 +2,11 @@ package calibTest;
 
 import org.ddogleg.optimization.functions.FunctionNtoM;
 import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.LinearSolverFactory;
 import org.ejml.ops.CommonOps;
 import common.TypeCalibration;
 
-class Fonction{
+class Fonction implements LevenbergMarquardt.Function{
 	
 	//DenseMatrix64F x;
 	
@@ -30,18 +31,15 @@ class Fonction{
 	
 	public Fonction(DenseMatrix64F data){
 		
-		if (calib.equals(TypeCalibration.ACCELEROMETER)){
-			this.sf = 9.81;
-		}
-		else{this.sf = 1;	
-		}
+	
+			this.sf = 1;
 		
-		
+			
 		this.points = new DenseMatrix64F(data.getNumRows(),data.getNumCols());
 		this.sm = new DenseMatrix64F(data.getNumRows(),1);
 		
 		this.out = new DenseMatrix64F(data.getNumRows(),1);
-		this.out.set(0,out.getNumRows(),sf);
+		
 		
 		this.err = new DenseMatrix64F(data.getNumRows(),1);
 		
@@ -54,10 +52,22 @@ class Fonction{
 		this.z = CommonOps.extract(points,0,points.getNumRows(),2,3);
 		System.out.println("start ok");
 		
+
+		
 	}
 	
 	
-	public DenseMatrix64F initialPar(){
+	private void initialPar(DenseMatrix64F points){
+		
+		DenseMatrix64F x = new DenseMatrix64F(points.getNumRows(),1);
+		DenseMatrix64F y = new DenseMatrix64F(points.getNumRows(),1);
+		DenseMatrix64F z = new DenseMatrix64F(points.getNumRows(),1);
+		
+		x = CommonOps.extract(points,0,points.getNumRows(),0,1);
+		y = CommonOps.extract(points,0,points.getNumRows(),1,2);
+		z = CommonOps.extract(points,0,points.getNumRows(),2,3);
+		
+		
 				
 		this.param.set(0,0,(CommonOps.elementMax(x)+CommonOps.elementMin(x))/2);
 		this.param.set(1,0,(CommonOps.elementMax(y)+CommonOps.elementMin(y))/2);
@@ -69,9 +79,10 @@ class Fonction{
 		
 		
 		System.out.println("initial ok");
-		return param;
+		
 	}
 
+	
 	public void scalepoints(){
 		
 		for (int i = 0; i< points.getNumRows();i++){
@@ -87,9 +98,10 @@ class Fonction{
 	}
 	
 	
-	public void compute( DenseMatrix64F parameter , DenseMatrix64F input , DenseMatrix64F output){
-		
-		if (parameter.getNumRows()==6){
+	public void compute( DenseMatrix64F parameter , DenseMatrix64F points , DenseMatrix64F output)
+	{
+					
+		if (points.getNumCols()==3){
 				
 			for (int i = 0; i< points.getNumRows();i++){
 
@@ -97,14 +109,16 @@ class Fonction{
 			smy = (points.get(i,1) - parameter.get(1))*parameter.get(4);
 			smz = (points.get(i,2) - parameter.get(2))*parameter.get(5);
 			
-			input.set(i, 0, Math.sqrt(smx*smx + smy*smy + smz*smz));
-			output.set(i,0, sf - sm.get(i));
-			
+			output.set(i, 0, Math.sqrt(smx*smx + smy*smy + smz*smz));
+						
 			}
 		}
-		else {System.out.println("param error");}
+		else {
+			throw new java.lang.NullPointerException();
+			//System.out.println("points error");
+			}
 		
-		System.out.println("compu ok");
+		System.out.println("compu");
 		
 		
 		//err.add(i, 0, sf-NormOps.normP1(sm));
