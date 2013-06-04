@@ -22,7 +22,7 @@ public class IMU implements IvyMessageListener {
 	 * 
 	 * @throws IvyException
 	 */
-	public IMU(TypeCalibration calibration, int IdDrone, final Data data) {
+	IMU(TypeCalibration calibration, int IdDrone, final Data data) {
 		System.out.println("Debut IMU");
 		try {
 			/*

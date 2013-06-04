@@ -28,9 +28,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import common.StartUp;
-import common.TypeCalibration;
-
 import rawmode.ExtractRawData;
 import rawmode.GetConfigException;
 import rawmode.IncorrectXmlException;
@@ -422,16 +419,9 @@ public class ShellV2 extends JFrame {
 		JPanel panel_dessin = new JPanel();
 		Border border_mod = BorderFactory.createRaisedBevelBorder();
 		panel_dessin.setBackground(Color.WHITE);
-		panel_dessin.setBounds(125, 0, 800, 425);
+		panel_dessin.setBounds(125, 0, 775, 425);
 		panel_dessin.setBorder(border_mod);
 		panel_center.add(panel_dessin);
-		try{
-			StartUp start= new StartUp(TypeCalibration.MAGNETOMETER,panel_dessin);
-		}catch (IvyException eIvy){
-			eIvy.printStackTrace();
-		}catch (InterruptedException eInt){
-			eInt.printStackTrace();
-		}
 
 	}
 
