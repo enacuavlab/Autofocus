@@ -16,24 +16,19 @@ public class IvyConfigListener {
 		id = idDrone;
 		bus = new Ivy("IvyRawListener", "IvyConfigListener Ready", null);
 		bus.start(null);
-		bus.bindMsg("" + reqid + " " + "^[A-Za-z0-9]+ CONFIG (.*)",
-				new IvyMessageListener() {
-					public void receive(IvyClient arg0, String[] args) {
-						System.out.println(args[0] + " CONFIG " + args[1]);
-					}
-				});
-		bus.bindMsg("^([A-Za-z0-9]+) ([A-Za-z0-9]+) CONFIG_REQ (.*)",
-				new IvyMessageListener() {
-					public void receive(IvyClient arg0, String[] args) {
-						System.out.println("Ret: " + args[0] + " " + args[1] + " CONFIG_REQ " + args[2]);
-					}
-				});
 		// bus.bindMsg("(.*)", this);
-		bus.sendToSelf(true);
+		//bus.sendToSelf(true);
 	}
 	
 	public void sendRequest() throws IvyException {
 		//System.out.println("calibrate CONFIG_REQ " + id);
+		bus.bindMsg("" + reqid + " " + "^[A-Za-z0-9]+ CONFIG (.*)",
+				new IvyMessageListener() {
+					public void receive(IvyClient arg0, String[] args) {
+						System.out.println(args[0] + " CONFIG " + args[1]);
+						bus.unBindMsg("" + reqid + " " + "^[A-Za-z0-9]+ CONFIG (.*)");
+					}
+				});
 		bus.sendMsg("calibrate " + reqid + " CONFIG_REQ " + id);
 		reqid++;
 	}
