@@ -1,7 +1,7 @@
 package ellipsoide;
 
 public class Density {
-	int nbMax=3000;
+	int nbMax=1000;
 	int colorParameter; // in [0;255}
 	double nb;
 	public Density(){
@@ -15,13 +15,15 @@ public class Density {
 	 */
 	public void updateDensity(double surfaceSphere,double surfaceZone){
 		nb+=1;
-		double temp =(surfaceSphere*nb*255)/(3000*surfaceZone*nbMax);
+		System.out.print("["+surfaceSphere +surfaceZone+"]");
+		double temp =(surfaceSphere*nb*255)/(surfaceZone*nbMax);
 		if (temp >255){
 			colorParameter=255;
 		}
 		else{
-			colorParameter=(int)temp;
+			colorParameter=(int) temp;
 		}
+		System.out.println(colorParameter);
 	}
 	/**
 	 * reset the counter of the density 
