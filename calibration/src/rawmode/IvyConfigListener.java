@@ -20,6 +20,12 @@ public class IvyConfigListener {
 						System.out.println(args[0] + " CONFIG " + args[1]);
 					}
 				});
+		bus.bindMsg("^[A-Za-z0-9]+ CONFIG_REQ (.*)",
+				new IvyMessageListener() {
+					public void receive(IvyClient arg0, String[] args) {
+						System.out.println(args[0] + " CONFIG " + args[1]);
+					}
+				});
 		// bus.bindMsg("(.*)", this);
 		bus.start(null);
 	}
