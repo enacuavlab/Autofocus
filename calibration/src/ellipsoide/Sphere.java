@@ -126,4 +126,12 @@ public class Sphere {
 			b = j.next().is_in(v, center);
 		}
 	}
+	
+	/**
+	 * Function for display
+	 * @return radius of the sphere
+	 */
+	protected int getRayon(){
+		return (int)radius;
+	}
 }
