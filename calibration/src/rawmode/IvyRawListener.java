@@ -5,6 +5,7 @@ import fr.dgac.ivy.IvyClient;
 import fr.dgac.ivy.IvyException;
 import fr.dgac.ivy.IvyMessageListener;
 
+
 public class IvyRawListener extends Thread implements IvyMessageListener {
 	private Boolean rawOnBus = false;
 	private Ivy bus;

@@ -10,7 +10,7 @@ import filtre.VecteurFiltrable;
 /**
  * this class represent the sphere
  * 
- * @author florent
+ * @author GERVAIS florent
  * 
  */
 public class Sphere {
@@ -41,7 +41,10 @@ public class Sphere {
 		lzone = new ArrayList<Zone>();
 		create_zone();
 	}
-
+	public AffichSphere getAffichage(){
+		return affichage;
+	}
+	
 	/**
 	 * method called each time a new vector is added
 	 * 
