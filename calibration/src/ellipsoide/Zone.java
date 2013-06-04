@@ -58,7 +58,10 @@ public class Zone {
 	public void reset() {
 		density.reset();
 	}
-
+	/**
+	 * return the density
+	 * @return return 
+	 */
 	public Density getDensity() {
 		return density;
 	}
@@ -77,7 +80,7 @@ public class Zone {
 		if (is_in_lat(v.getX(), v.getY(), v.getZ(), center.getX(),
 				center.getY(), center.getZ())
 				&& is_in_long(v.getX(), v.getY(), center.getX(), center.getY())) {
-			density.updateDensity(surface,surfaceSphere);
+			density.updateDensity(surfaceSphere,surface);
 			// System.out.println("nb = "+ nb_points +" "+
 			// this.lat_angle_low+" "+this.lat_angle_high+" "+this.long_angle_begin+" "+this.long_angle_end);
 
@@ -229,9 +232,11 @@ public class Zone {
 					* Math.sin(latAngleHigh - temp)));
 		}
 	}
-	public void calculateSurface(double radius,double surfaceSphere){
-		surface = Math.pow(radius,2)*(latAngleHigh-latAngleLow)*(Math.sin(longAngleEnd)-Math.sin(longAngleEnd));
-		this.surfaceSphere=surfaceSphere;
+	public void calculateSurface(double radius,double surfaceS){
+		surfaceSphere=surfaceS;
+		System.out.println("surfaceSphere "+ surfaceSphere );
+		surface = Math.pow(radius,2)*(latAngleHigh-latAngleLow)*Math.abs(Math.sin(longAngleEnd)-Math.sin(longAngleBegin));
+
 	}
 	
 	public String toString() {
@@ -242,4 +247,85 @@ public class Zone {
 		}
 		return str;
 	}
+	
+	public static void main(String[] args) {
+		// test de l'angle theta du repère sphérique
+		Zone zone1 = new Zone( 0,Math.PI/2, 0, Math.PI / 2);
+		if (zone1.is_in_long(3, 2, 1, 1)) { // doit etre dans la zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		Zone zone2 = new Zone(-Math.PI/2,0, -Math.PI / 2, 0);
+		if (zone1.is_in_long(3, -15, 1, 1)) { // ne doit pas etre dans la
+													// zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		if (zone2.is_in_long(3, -15, 1, 1)) { // doit etre dans la zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		Zone zone3 = new Zone(0,Math.PI /4,  -Math.PI, -Math.PI / 2);
+		if (zone1.is_in_long(-9, -15, 1, 1)) { // ne doit pas etre dans la
+													// zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		if (zone2.is_in_long(-9, -15, 1, 1)) { // ne doit pas etre dans la
+													// zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		if (zone3.is_in_long(-9, -15, 1, 1)) { // doit etre dans la zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		Zone zone4 = new Zone(0,Math.PI /4, Math.PI / 2, Math.PI);
+		if (zone1.is_in_long(-9, 15, 1, 1)) { // ne doit pas etre dans la
+													// zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		if (zone2.is_in_long(-9, 15, 1, 1)) { // ne doit pas etre dans la
+													// zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		if (zone3.is_in_long(-9, 15, 1, 1)) { // ne doit pas etre dans la
+													// zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		if (zone4.is_in_long(-9, 15, 1, 1)) { // doit etre dans la zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		// test de l'angle Phi du repère sphérique
+		if (zone1.is_in_lat(16, 15,12, 1, 1,1)) { // doit etre dans la zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		if (zone1.is_in_lat(16, 15,-12, 1, 1,1)) { // ne doit pas etre dans la zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+		if (zone2.is_in_lat(16, 15,-12, 1, 1,1)) { // ne doit pas etre dans la zone
+			System.out.println("le point est bien dans la zone");
+		} else {
+			System.out.println("le point n'est bizarement pas dans la zone");
+		}
+	}
+
 }

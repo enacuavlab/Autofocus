@@ -133,11 +133,8 @@ public class ShellV2 extends JFrame {
 		label_name.setBounds(106, 12, 138, 60);
 		panel_name.add(label_name);
 
-		JLabel dronesName = new JLabel();
-		dronesName.setBounds(273, 35, 114, 29);
-		panel_name.add(dronesName);
-		dronesName.setBackground(Color.WHITE);
-		dronesName.setText(name);
+		
+		
 		// Panel_mod
 		Border border_mod = BorderFactory.createRaisedBevelBorder();
 		JPanel panel_mod = new JPanel();
@@ -239,10 +236,17 @@ public class ShellV2 extends JFrame {
 		gbc_comboBox.gridx = 2;
 		gbc_comboBox.gridy = 1;
 		panel_north.add(combo, gbc_comboBox);
-
+		
+		//Label with the drone's name
+		final JLabel dronesName = new JLabel();
+		dronesName.setBounds(273, 35, 114, 29);
+		dronesName.setBackground(Color.WHITE);
+		panel.add(dronesName);
+		
+		
 		// Add drone id detected
 		combo.addItem(" ");
-		combo.addItem("1");
+		//combo.addItem("1");
 		try {
 			IvyIdListener ivyid = new IvyIdListener();
 			ArrayList<Integer> l = (ArrayList<Integer>) ivyid.getList();
@@ -270,13 +274,17 @@ public class ShellV2 extends JFrame {
 						name=ivyConfig.getAcName();
 						url=ivyConfig.getSettingsURL();
 						ivyConfig.finalize();
+						label.setText("<html>Le nom de votre drone d'id "
+								+ Integer.toString(id) + " est : </html>");
+						dronesName.setText(name);
+						panel.setVisible(true);
+				
+						addcombo_mod(panel_mod,panel);
 					}catch (GetConfigException eConf){
-						JOptionPane.showMessageDialog(null, "Bus problem check if ground station is launched ", "Bus error", JOptionPane.ERROR_MESSAGE);
+						combo.setSelectedItem(" ");
+						JOptionPane.showMessageDialog(null, "Bus problem, check if ground station is launched ", "Bus error", JOptionPane.ERROR_MESSAGE);
 					}
-					label.setText("<html>Le nom de votre drone d'id "
-							+ Integer.toString(id) + " est : </html>");
-					panel.setVisible(true);
-					addcombo_mod(panel_mod);
+					
 				}
 			}
 		});
@@ -287,7 +295,7 @@ public class ShellV2 extends JFrame {
 	 * 
 	 * @param panel
 	 */
-	private void addcombo_mod(JPanel panel_mod) {
+	private void addcombo_mod(JPanel panel_mod,JPanel panel_name) {
 		final JLabel label_mod = new JLabel(
 				"Veuillez choisir le mode de votre drone " + name + " :");
 		label_mod.setBounds(80, 45, 360, 42);
@@ -331,12 +339,14 @@ public class ShellV2 extends JFrame {
 		} catch (IOException e) {
 			panel_mod.setVisible(false);
 			label_mod.setText("");
-			JOptionPane.showMessageDialog(null, "Drone's name unknown : "
+			panel_name.setVisible(false);
+			JOptionPane.showMessageDialog(null, "Drone's name incorrect : "
 					+ name, "Error name", JOptionPane.ERROR_MESSAGE);
 
 		} catch (IncorrectXmlException e) {
 			panel_mod.setVisible(false);
 			label_mod.setText("");
+			panel_name.setVisible(false);
 			JOptionPane.showMessageDialog(null, "Incorrect file : " + name
 					+ "/settings.xml", "File error", JOptionPane.ERROR_MESSAGE);
 		} catch (IvyException e) {

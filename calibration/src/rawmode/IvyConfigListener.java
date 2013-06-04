@@ -45,7 +45,7 @@ public class IvyConfigListener {
 					public void receive(IvyClient arg0, String[] args) {
 						//System.out.println(args[0]);
 						String temp[] = args[0].split(" ");
-						settings = temp[3];
+						settings = temp[4];
 						acName = temp[6];
 					}
 				});
@@ -73,7 +73,7 @@ public class IvyConfigListener {
 	 */
 	public String getSettingsURL() throws GetConfigException {
 		if (settings == null) throw new GetConfigException();
-		else return settings;
+		else return settings.substring(7);
 	}
 
 	/** Updates the values of the aircraft name and the settings.xml's url
@@ -104,7 +104,7 @@ public class IvyConfigListener {
 	 */
 	public static void main(String args[]) {
 		try {
-			IvyConfigListener listen = new IvyConfigListener(6);
+			IvyConfigListener listen = new IvyConfigListener(5);
 			System.out.println(listen.getAcName());
 			System.out.println(listen.getSettingsURL());
 			listen.finalize();

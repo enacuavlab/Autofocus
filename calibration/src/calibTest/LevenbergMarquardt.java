@@ -152,21 +152,34 @@ public class LevenbergMarquardt {
        
         for( int iter = 0; iter < 20 || difference < 1e-6 ; iter++ ) {
             // compute some variables based on the gradient
-            computeDandH(param,X,Y);
+            
+        	
+        	computeDandH(param,X,Y);
 
             // try various step sizes and see if any of them improve the
             // results over what has already been done
             boolean foundBetter = false;
             for( int i = 0; i < 5; i++ ) {
                 computeA(A,H,lambda);
-
+                
+                System.out.println("hein");
+                
                 if(CommonOps.solve(A,d,negDelta) ) {
+                	System.out.println("quoi");
                     return false;
                 }
                 // compute the candidate parameters
                 CommonOps.sub(param,negDelta,tempParam);
-
+                
+                
+                
+                for(i=0;i<tempParam.getNumRows();i++){
+                System.out.println(tempParam.get(i)+"hallo");
+                }
+                
+                
                 double cost = cost(tempParam,X,Y);
+                System.out.println(cost+""+ prevCost);
                 if( cost < prevCost ) {
                     // the candidate parameters produced better results so use it
                     foundBetter = true;
@@ -204,8 +217,7 @@ public class LevenbergMarquardt {
             throw new IllegalArgumentException("Inputs must be a column vector");
         }
         
-        System.out.println(initParam.getNumRows()+" " + initParam.getNumCols()+"lala");
-        
+               
         int numParam = initParam.getNumElements();
         int numPoints = Y.getNumRows();
 
@@ -241,16 +253,21 @@ public class LevenbergMarquardt {
     	
     	
         func.compute(param,x, tempDH);
+        
         CommonOps.subEquals(tempDH,y);
 
         for (int o = 0; o<x.getNumRows();o++){
         	System.out.println(x.get(o)+" " + tempDH.get(o));
         }
         
-        System.out.println(x.getNumCols()+"jaco");
+        
+        
+        
         
         computeNumericalJacobian(param,x,jacobian);
 
+        
+        
        // x = scalepoints(x,param);
         
         int numParam = param.getNumElements();
@@ -299,10 +316,7 @@ public class LevenbergMarquardt {
     	
         func.compute(param,X, temp0);
         
-        for (int i = 0; i < temp0.getNumRows(); i++){
-        	System.out.println(temp0.get(i) +"" + Y.get(i));
-        }
-        
+            
         double error = SpecializedOps.diffNormF(temp0,Y);
 
         return error*error / (double)X.numRows;
@@ -364,7 +378,7 @@ public class LevenbergMarquardt {
 		
 		double sf = 1;
 		
-		System.out.println(points.getNumRows()+" " + points.getNumCols());
+		
 		
 		DenseMatrix64F x = new DenseMatrix64F(points.getNumRows(),1);
 		DenseMatrix64F y = new DenseMatrix64F(points.getNumRows(),1);
@@ -374,7 +388,7 @@ public class LevenbergMarquardt {
 		y = CommonOps.extract(points,0,points.getNumRows(),1,2);
 		z = CommonOps.extract(points,0,points.getNumRows(),2,3);
 		
-		System.out.println(x.getNumRows()+" " + x.getNumCols());
+	
 		
 		DenseMatrix64F out = new DenseMatrix64F(6,1);
 				
@@ -386,7 +400,7 @@ public class LevenbergMarquardt {
 		out.set(4,0,2*sf/(CommonOps.elementMax(y)-CommonOps.elementMin(y)));
 		out.set(5,0,2*sf/(CommonOps.elementMax(z)-CommonOps.elementMin(z)));
 		
-		System.out.println(out.getNumRows()+" " + out.getNumCols());
+		
 		
 		out.set(0,0,2);
 		out.set(1,0,2);

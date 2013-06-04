@@ -118,7 +118,7 @@ class Fonction implements LevenbergMarquardt.Function{
 			//System.out.println("points error");
 			}
 		
-		System.out.println("compu");
+		//System.out.println("compu");
 		
 		
 		//err.add(i, 0, sf-NormOps.normP1(sm));

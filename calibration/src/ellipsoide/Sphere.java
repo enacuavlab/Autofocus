@@ -19,10 +19,12 @@ public class Sphere {
 	private double radius;
 	private VecteurFiltrable<Double> center;
 	private List<VecteurFiltrable<Double>> lvector;
-	protected List<Zone> lzone;
+	private List<Zone> lzone;
 	final double erreur = 20.0;
 	private AffichSphere affichage;
 	private double surfaceSphere;
+	private Zone zoneCourante;
+	
 
 	/**
 	 * Create the Sphere and define the number of zones
@@ -40,7 +42,9 @@ public class Sphere {
 		surfaceSphere=0;
 		lvector = new ArrayList<VecteurFiltrable<Double>>();
 		lzone = new ArrayList<Zone>();
-		create_zone();
+		createZone();
+		ListIterator<Zone> j=lzone.listIterator();
+		zoneCourante=j.next();
 		affichage = new AffichSphere(this);
 	}
 	public AffichSphere getAffichage(){
@@ -87,7 +91,7 @@ public class Sphere {
 	/**
 	 * method that create all the zones
 	 */
-	private void create_zone() {
+	private void createZone() {
 		for (int i = 0; i < longitude; i++) {
 			for (int j = 0; j < latitude; j++) {
 				lzone.add(new Zone((Math.PI / latitude) * j - Math.PI / 2,
@@ -113,7 +117,9 @@ public class Sphere {
 			ztemp.reset();
 			i = lvector.listIterator();
 			while (i.hasNext()) {
-				ztemp.is_in(i.next(), center);
+				if(ztemp.is_in(i.next(), center)){
+					zoneCourante=ztemp;
+				}
 			}
 
 		}
@@ -137,4 +143,22 @@ public class Sphere {
 	protected int getRayon(){
 		return (int)radius;
 	}
+	
+	/** test fonction of the class*/
+	
+	public static  void main(String[] args){
+		Sphere s = new Sphere(20,10);
+		Vecteur center= new Vecteur(5,10,15);
+		Vecteur v = new Vecteur(8,20,21);
+		s.update(10.5, center, v);
+		ListIterator<Zone> j= s.getZones().listIterator();
+		while (j.hasNext()){
+			if(j.next().getDensity().getColor()>0){
+				System.out.println("point rentré");	
+			}
+			
+		}
+		
+	}
+
 }
