@@ -21,10 +21,11 @@ public class Zone {
 	private int nbPoints;
 	private int nbPointsByLine = 4;
 	private List<Point2D> listContour;
-	
-	public List<Point2D> getListContour(){
+
+	public List<Point2D> getListContour() {
 		return listContour;
 	}
+
 	/**
 	 * this constructor create the zone
 	 * 
@@ -94,7 +95,7 @@ public class Zone {
 	 *            y center coordinate of the ellipsoid
 	 * @return
 	 */
-	protected boolean is_in_long(double x_coord, double y_coord,
+	private boolean is_in_long(double x_coord, double y_coord,
 			double x_center, double y_center) {
 		double alpha;
 		double xc_x = x_coord - x_center;
@@ -161,7 +162,7 @@ public class Zone {
 	 *            z center coordinate of the ellipsoids
 	 * @return
 	 */
-	protected boolean is_in_lat(double x_coord, double y_coord, double z_coord,
+	private boolean is_in_lat(double x_coord, double y_coord, double z_coord,
 			double x_center, double y_center, double z_center) {
 		double alpha;
 		double den = Math.sqrt(Math.pow(x_center - x_coord, 2)
@@ -178,13 +179,18 @@ public class Zone {
 			return false;
 		}
 	}
+
 	/**
-	 * this function convert the 3D coordinate into 2D coordinate agreeing to the Mollweide projection
-	 * @param radius radius of the sphere needed to represent the 2D points
+	 * this function convert the 3D coordinate into 2D coordinate agreeing to
+	 * the Mollweide projection
+	 * 
+	 * @param radius
+	 *            radius of the sphere needed to represent the 2D points
 	 */
 	public void maj_list_contour(double radius) {
+		listContour.clear();
 		double x;
-		double racineDeux=Math.sqrt(2);
+		double racineDeux = Math.sqrt(2);
 		double y = Math.sqrt(2) * Math.sin(latAngleLow);
 		double step_longitude = (longAngleEnd - longAngleBegin)
 				/ nbPointsByLine;
@@ -202,17 +208,17 @@ public class Zone {
 					x * Math.cos(latAngleLow + temp), racineDeux
 							* Math.sin(latAngleLow + temp)));
 		}
-		y=Math.sqrt(2) * Math.sin(latAngleHigh);
+		y = Math.sqrt(2) * Math.sin(latAngleHigh);
 		for (int i = 0; i < nbPointsByLine; i++) {
 			listContour.add(new Point2D.Double((2 * racineDeux / Math.PI)
-					* (longAngleEnd -step_longitude *i)
+					* (longAngleEnd - step_longitude * i)
 					* Math.cos(latAngleLow), y));
 		}
 		x = (2 * Math.sqrt(2) / Math.PI) * (longAngleBegin);
-		for (int i = 0; i<nbPointsByLine;i++){
+		for (int i = 0; i < nbPointsByLine; i++) {
 			temp = i * step_latitude;
-			listContour.add(new Point2D.Double(
-					x * Math.cos(latAngleHigh - temp), racineDeux
+			listContour.add(new Point2D.Double(x
+					* Math.cos(latAngleHigh - temp), racineDeux
 					* Math.sin(latAngleHigh - temp)));
 		}
 	}

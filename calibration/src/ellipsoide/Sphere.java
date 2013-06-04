@@ -7,6 +7,12 @@ import java.util.ListIterator;
 import data.Vecteur;
 import filtre.VecteurFiltrable;
 
+/**
+ * this class represent the sphere
+ * 
+ * @author florent
+ * 
+ */
 public class Sphere {
 	private double longitude;
 	private double latitude;
@@ -17,6 +23,14 @@ public class Sphere {
 	final double erreur = 20.0;
 	private AffichSphere affichage;
 
+	/**
+	 * Create the Sphere and define the number of zones
+	 * 
+	 * @param longitude
+	 *            this is the longitude step of 2PI rad
+	 * @param latitude
+	 *            this is the latitude step of PI rad
+	 */
 	public Sphere(double longitude, double latitude) {
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -28,6 +42,16 @@ public class Sphere {
 		create_zone();
 	}
 
+	/**
+	 * method called each time a new vector is added
+	 * 
+	 * @param radius
+	 *            radius of the sphere
+	 * @param newcenter
+	 *            center of the sphere
+	 * @param v
+	 *            new vector added
+	 */
 	public void update(double radius, VecteurFiltrable<Double> newcenter,
 			VecteurFiltrable<Double> v) {
 		lvector.add(v);
@@ -46,19 +70,19 @@ public class Sphere {
 		}
 	}
 
-	public double getRadius() {
-		return radius;
-	}
-
-	public VecteurFiltrable<Double> getcenter() {
-		return center;
-	}
-
+	/**
+	 * method implemented to get back the list of zones
+	 * 
+	 * @return return the ArrayList of zone
+	 */
 	public List<Zone> getZones() {
 		return lzone;
 	}
 
-	protected void create_zone() {
+	/**
+	 * method that create all the zones
+	 */
+	private void create_zone() {
 		for (int i = 0; i < longitude; i++) {
 			for (int j = 0; j < latitude; j++) {
 				lzone.add(new Zone((Math.PI / latitude) * j - Math.PI / 2,
@@ -69,7 +93,10 @@ public class Sphere {
 		}
 	}
 
-	protected void update_all_zone() {
+	/**
+	 * method that update all the zones with all vectors
+	 */
+	private void update_all_zone() {
 		Zone ztemp;
 		ListIterator<Zone> j = lzone.listIterator();
 		ListIterator<VecteurFiltrable<Double>> i;
@@ -85,7 +112,10 @@ public class Sphere {
 
 		}
 	}
-
+	/**
+	 * method that update the zones with only one vector
+	 * @param v
+	 */
 	protected void update(VecteurFiltrable<Double> v) {
 		boolean b = false;
 		ListIterator<Zone> j = lzone.listIterator();
