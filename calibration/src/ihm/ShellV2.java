@@ -31,8 +31,9 @@ import rawmode.ExtractRawData;
 import rawmode.IncorrectXmlException;
 import rawmode.IvyRawListener;
 
-public class Shell extends JFrame {
+public class ShellV2 extends JFrame {
 
+	
 	private JButton btn_accelero, btn_magneto, btn_gyro;
 	private JLabel titre;
 	private JButton btnQuitter, btnStop;
@@ -40,8 +41,10 @@ public class Shell extends JFrame {
 	private JPanel panel_home, panel_accl, panel_gyro, panel_mag, content;
 	private String[] listContent = { "HOME", "ACCL", "MAG", "GYRO" };
 	private CardLayout cl;
+	private String mod;
+	private Action ac1, ac2, ac3;
 
-	public Shell() {
+	public ShellV2() {
 		super();
 		// Shell
 		setTitle("Autofocus"); // On donne un titre à l'application
@@ -70,6 +73,7 @@ public class Shell extends JFrame {
 		content.add(panel_gyro, listContent[3]);
 		getContentPane().add(content, BorderLayout.CENTER);
 		addOptions();
+		mod = "Home";
 		initialise();// On initialise notre fenêtre
 
 	}
@@ -78,7 +82,7 @@ public class Shell extends JFrame {
 		// Pour test
 		btn_accelero.setEnabled(true);
 		btn_magneto.setEnabled(true);
-
+		activateButton(mod);
 		// Panel titre
 
 		JPanel panel_titre = new JPanel();
@@ -156,27 +160,20 @@ public class Shell extends JFrame {
 		panel_options.setLayout(gd_options);
 
 		// Button
+		// Accelerometers
 		btn_accelero = new JButton("Accelerometers");
 		btn_accelero.setEnabled(false);
-		btn_accelero.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				modAccelero();
-			}
-		});
+		ac1 = new Action("Accl");
+
+		// Magnetometers
 		btn_magneto = new JButton("Magnetometers");
 		btn_magneto.setEnabled(false);
-		btn_magneto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				modMagneto();
-			}
-		});
+		ac2 = new Action("Mag");
+
+		// Gyrometers
 		btn_gyro = new JButton("Gyrometers");
 		btn_gyro.setEnabled(false);
-		btn_gyro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				modGyro();
-			}
-		});
+		ac3 = new Action("Gyro");
 
 		// Button insertion
 		Border border_type = BorderFactory
@@ -190,6 +187,21 @@ public class Shell extends JFrame {
 		panel_options.add(btn_magneto);
 		// panel_options.add(new JLabel());
 		panel_options.add(btn_gyro);
+	}
+
+	private void activateButton(String mod) {
+		if (mod.equals("Home")) {
+			btn_accelero.addActionListener(ac1);
+			btn_magneto.addActionListener(ac2);
+			btn_gyro.addActionListener(ac3);
+		} else if (mod.equals("Accl")) {
+			btn_accelero.addActionListener(ac1);
+		} else if (mod.equals(("Mag"))) {
+			btn_magneto.addActionListener(ac2);
+		} else if (mod.equals(("Gyro"))) {
+			btn_gyro.addActionListener(ac3);
+		}
+
 	}
 
 	/**
@@ -317,7 +329,8 @@ public class Shell extends JFrame {
 	 * Function to add some elements in order to make accelerometers calibration
 	 */
 	private void modAccelero() {
-		// btn_accelero.removeActionListener();
+		btn_accelero.removeActionListener(ac1);
+		mod = "Accl";
 		cl.show(content, listContent[1]);
 		btn_magneto.setEnabled(false);
 		btn_gyro.setEnabled(false);
@@ -351,6 +364,8 @@ public class Shell extends JFrame {
 	 * Function to add some elements in order to make magnetometers calibration
 	 */
 	private void modMagneto() {
+		btn_magneto.removeActionListener(ac2);
+		mod = "Mag";
 		cl.show(content, listContent[2]);
 		btn_accelero.setEnabled(false);
 		btn_gyro.setEnabled(false);
@@ -380,6 +395,8 @@ public class Shell extends JFrame {
 	 * Function to add some elements in order to make gyrometers calibration
 	 */
 	private void modGyro() {
+		btn_gyro.removeActionListener(ac3);
+		mod = "Gyro";
 		cl.show(content, listContent[3]);
 		btn_accelero.setEnabled(false);
 		btn_magneto.setEnabled(false);
@@ -435,9 +452,29 @@ public class Shell extends JFrame {
 		});
 	}
 
+	class Action implements ActionListener {
+		private String mod;
+
+		public Action(String mod) {
+			super();
+			this.mod = mod;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			if (mod.equals("Accl")) {
+				modAccelero();
+			} else if (mod.equals("Mag")) {
+				modMagneto();
+			} else if (mod.equals("Gyro")) {
+				modGyro();
+			}
+		}
+
+	}
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 497574999009605779L;
+	private static final long serialVersionUID = -4329728363330435663L;
 
 }
