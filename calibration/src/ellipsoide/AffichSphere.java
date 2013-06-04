@@ -43,7 +43,7 @@ public class AffichSphere extends JPanel {
 
 	public AffichSphere(Sphere s) {
 		setPreferredSize(new Dimension(800, 800));
-		setBackground(java.awt.Color.WHITE);
+		setBackground(java.awt.Color.RED);
 		this.s = s;
 		majZone();
 	}
