@@ -138,7 +138,7 @@ public class Sphere {
 		return (int)radius;
 	}
 	
-	/** test fonction of the class*/
+	/** test function of the class*/
 	
 	public static  void main(String[] args){
 		Sphere s = new Sphere(20,10);
@@ -150,7 +150,6 @@ public class Sphere {
 			if(j.next().getDensity().getColor()>0){
 				System.out.println("point rentré");	
 			}
-			
 		}
 		
 	}
