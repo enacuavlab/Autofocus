@@ -21,6 +21,11 @@ public class AffichSphere extends JPanel {
 		this.repaint();
 	}
 
+	
+	private int transform(int x) {
+		return (x/s.getRayon() * 300 + 400);
+	}
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
 		g.clearRect(0, 0, 800, 800);
@@ -33,9 +38,9 @@ public class AffichSphere extends JPanel {
 			i = 0;
 			points = z.getListContour();
 			for (Point2D p : points) {
-				xPoints[i] = (int) p.getX();
-				yPoints[i] = (int) p.getY();
-				System.out.println("test : " + z + " -> " + xPoints[i] + " : " + yPoints[i]);
+				xPoints[i] = transform((int)p.getX());
+				yPoints[i] = transform((int)p.getY());
+				//System.out.println("test : " + z + " -> " + xPoints[i] + " : " + yPoints[i]);
 				i++;
 			}
 			g.drawPolygon(xPoints, yPoints, n);
