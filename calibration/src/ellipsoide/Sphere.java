@@ -36,10 +36,10 @@ public class Sphere {
 		this.latitude = latitude;
 		center = new Vecteur(0, 0, 0);
 		radius = 0;
-		affichage = new AffichSphere(this);
 		lvector = new ArrayList<VecteurFiltrable<Double>>();
 		lzone = new ArrayList<Zone>();
 		create_zone();
+		affichage = new AffichSphere(this);
 	}
 	public AffichSphere getAffichage(){
 		return affichage;
