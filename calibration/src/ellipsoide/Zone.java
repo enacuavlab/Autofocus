@@ -58,7 +58,10 @@ public class Zone {
 	public void reset() {
 		density.reset();
 	}
-
+	/**
+	 * return the density
+	 * @return return 
+	 */
 	public Density getDensity() {
 		return density;
 	}
@@ -77,7 +80,7 @@ public class Zone {
 		if (is_in_lat(v.getX(), v.getY(), v.getZ(), center.getX(),
 				center.getY(), center.getZ())
 				&& is_in_long(v.getX(), v.getY(), center.getX(), center.getY())) {
-			density.updateDensity(surface,surfaceSphere);
+			density.updateDensity(surfaceSphere,surface);
 			// System.out.println("nb = "+ nb_points +" "+
 			// this.lat_angle_low+" "+this.lat_angle_high+" "+this.long_angle_begin+" "+this.long_angle_end);
 
@@ -229,9 +232,11 @@ public class Zone {
 					* Math.sin(latAngleHigh - temp)));
 		}
 	}
-	public void calculateSurface(double radius,double surfaceSphere){
-		surface = Math.pow(radius,2)*(latAngleHigh-latAngleLow)*(Math.sin(longAngleEnd)-Math.sin(longAngleEnd));
-		this.surfaceSphere=surfaceSphere;
+	public void calculateSurface(double radius,double surfaceS){
+		surfaceSphere=surfaceS;
+		System.out.println("surfaceSphere "+ surfaceSphere );
+		surface = Math.pow(radius,2)*(latAngleHigh-latAngleLow)*Math.abs(Math.sin(longAngleEnd)-Math.sin(longAngleBegin));
+
 	}
 	
 	public String toString() {
