@@ -2,6 +2,7 @@ package ihm;
 
 import javax.swing.SwingUtilities;
 import filtre.EmulData;
+import filtre.Plotter;
 import filtre.Test;
 
 public class TestShell {

@@ -34,6 +34,7 @@ import rawmode.IncorrectXmlException;
 import rawmode.IvyRawListener;
 import testData.Sender;
 
+import filtre.Plotter;
 import fr.dgac.ivy.IvyException;
 import javax.swing.JTextField;
 

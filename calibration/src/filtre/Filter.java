@@ -33,7 +33,9 @@ public class Filter {
 	}
 
 	/** creates a default filter without type and a window size of 40
+	 * debug only
 	 */
+	@Deprecated
 	public Filter() {
 		this.windowSize = 40;
 	}
