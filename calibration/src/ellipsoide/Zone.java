@@ -22,7 +22,7 @@ public class Zone {
 	private int nbPointsByLine = 4;
 	private List<Point2D> listContour;
 	
-	public List<Point2D> setListContour(){
+	public List<Point2D> getListContour(){
 		return listContour;
 	}
 	/**
