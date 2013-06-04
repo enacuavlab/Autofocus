@@ -5,14 +5,8 @@ import testData.Sender;
 import common.TypeCalibration;
 
 import data.Data;
-
 import ellipsoide.Sphere;
-import filtre.Filter;
 import filtre.FilterSphere;
-import filtre.GUIHelper;
-
-import filtre.Filter;
-
 import fr.dgac.ivy.IvyException;
 
 public class TestIMU {
@@ -20,8 +14,8 @@ public class TestIMU {
 		TypeCalibration t = TypeCalibration.MAGNETOMETER;
 
 		System.out.println("type");
-		//Sphere sp = new Sphere(20,10);
-		Filter filtre = new Filter(10,TypeCalibration.MAGNETOMETER);
+		Sphere sp = new Sphere(20,10);
+		FilterSphere filtre = new FilterSphere(sp,10,TypeCalibration.MAGNETOMETER);
 		System.out.println("filtre");
 
 		Data data = new Data(t,filtre);
