@@ -3,6 +3,7 @@ package ellipsoide;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import filtre.VecteurFiltrable;
 
@@ -221,5 +222,13 @@ public class Zone {
 					* Math.cos(latAngleHigh - temp), racineDeux
 					* Math.sin(latAngleHigh - temp)));
 		}
+	}
+	public String toString(){
+		ListIterator<Point2D> j= listContour.listIterator();
+		String str="";
+		while (j.hasNext()){
+		 str += " "+ j.hasNext();
+		}
+		return str;
 	}
 }
