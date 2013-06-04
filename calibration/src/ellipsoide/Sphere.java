@@ -15,12 +15,14 @@ public class Sphere {
 	private List<VecteurFiltrable<Double>> lvector;
 	protected List<Zone> lzone;
 	final double erreur = 20.0;
+	private AffichSphere affichage;
 
 	public Sphere(double longitude, double latitude) {
 		this.longitude = longitude;
 		this.latitude = latitude;
-		center = new Vecteur(0,0,0);
+		center = new Vecteur(0, 0, 0);
 		radius = 0;
+		affichage = new AffichSphere(this);
 		lvector = new ArrayList<VecteurFiltrable<Double>>();
 		lzone = new ArrayList<Zone>();
 		create_zone();
@@ -36,8 +38,12 @@ public class Sphere {
 			this.center = newcenter;
 			System.out.println("maj sphere");
 			update_all_zone();
-		} else
+			affichage.majZone();
+
+		} else {
 			update(v);
+			affichage.affiche();
+		}
 	}
 
 	public double getRadius() {
@@ -67,10 +73,10 @@ public class Sphere {
 		Zone ztemp;
 		ListIterator<Zone> j = lzone.listIterator();
 		ListIterator<VecteurFiltrable<Double>> i;
-		
+
 		while (j.hasNext()) {
 			ztemp = j.next();
-			ztemp.maj_list_contour(center,radius);
+			ztemp.maj_list_contour(radius);
 			ztemp.reset();
 			i = lvector.listIterator();
 			while (i.hasNext()) {
