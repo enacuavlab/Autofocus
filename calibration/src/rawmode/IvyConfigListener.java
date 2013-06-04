@@ -73,7 +73,7 @@ public class IvyConfigListener {
 	 */
 	public String getSettingsURL() throws GetConfigException {
 		if (settings == null) throw new GetConfigException();
-		else return settings;
+		else return settings.substring(7);
 	}
 
 	/** Updates the values of the aircraft name and the settings.xml's url
