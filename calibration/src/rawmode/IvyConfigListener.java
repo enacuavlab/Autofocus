@@ -58,18 +58,22 @@ public class IvyConfigListener {
 
 	/** Returns the aircraft linked to the id 
 	 * 
+	 * @throws getConfigException
 	 * @return aircraft name
 	 */
-	public String getAcName() {
-		return acName;
+	public String getAcName() throws GetConfigException {
+		if (acName == null) throw new GetConfigException();
+		else return acName;
 	}
 
 	/** Returns the url of the settings.xml file of the aircraft
 	 * 
+	 * @throws GetConfigException
 	 * @return url to settings.xml
 	 */
-	public String getSettingsURL() {
-		return settings;
+	public String getSettingsURL() throws GetConfigException {
+		if (settings == null) throw new GetConfigException();
+		else return settings;
 	}
 
 	/** Updates the values of the aircraft name and the settings.xml's url

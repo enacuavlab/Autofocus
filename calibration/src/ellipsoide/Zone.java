@@ -19,10 +19,11 @@ public class Zone {
 	private double latAngleLow;
 	private double longAngleBegin;// varie entre -PI et +PI
 	private double longAngleEnd;
-	private int nbPoints;
+	private double surface;
 	private int nbPointsByLine = 4;
 	private List<Point2D> listContour;
-
+	private double surfaceSphere;
+	private Density density;
 	public List<Point2D> getListContour() {
 		return listContour;
 	}
@@ -46,18 +47,20 @@ public class Zone {
 		this.longAngleBegin = long_angle_begin;
 		this.longAngleEnd = long_angle_end;
 		listContour = new ArrayList<Point2D>();
-		nbPoints = 0;
+		density=new Density();
+		surface = 1;
+		surfaceSphere=1;
 	}
 
 	/**
 	 * this method reset the zone
 	 */
 	public void reset() {
-		nbPoints = 0;
+		density.reset();
 	}
 
-	public int getNbPoints() {
-		return nbPoints;
+	public Density getDensity() {
+		return density;
 	}
 
 	/**
@@ -74,7 +77,7 @@ public class Zone {
 		if (is_in_lat(v.getX(), v.getY(), v.getZ(), center.getX(),
 				center.getY(), center.getZ())
 				&& is_in_long(v.getX(), v.getY(), center.getX(), center.getY())) {
-			nbPoints += 1;
+			density.updateDensity(surface,surfaceSphere);
 			// System.out.println("nb = "+ nb_points +" "+
 			// this.lat_angle_low+" "+this.lat_angle_high+" "+this.long_angle_begin+" "+this.long_angle_end);
 
@@ -226,7 +229,11 @@ public class Zone {
 					* Math.sin(latAngleHigh - temp)));
 		}
 	}
-
+	public void calculateSurface(double radius,double surfaceSphere){
+		surface = Math.pow(radius,2)*(latAngleHigh-latAngleLow)*(Math.sin(longAngleEnd)-Math.sin(longAngleEnd));
+		this.surfaceSphere=surfaceSphere;
+	}
+	
 	public String toString() {
 		ListIterator<Point2D> j = listContour.listIterator();
 		String str = "";
