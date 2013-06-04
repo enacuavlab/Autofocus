@@ -38,8 +38,12 @@ public class Sender extends Thread implements IvyMessageListener {
 		}
 	}
 
-	public void arret() throws IvyException {
-		bus.stop();
+	public void arret() {
+		try {
+			bus.stop();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
