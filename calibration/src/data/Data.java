@@ -19,6 +19,7 @@ public class Data {
 
 	public void store(double x_raw, double y_raw, double z_raw) {
 		Vecteur vec = new Vecteur(x_raw, y_raw, z_raw);
+		System.out.println(vec);
 		vec.setType(calib);
 		list.add(vec);
 		filtre.add(vec);

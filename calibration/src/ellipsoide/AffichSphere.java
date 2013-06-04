@@ -25,7 +25,7 @@ public class AffichSphere extends JPanel {
 	
 	private int transform(int x) {
 		float res;
-		res = ((float)x/(float)s.getRayon()) * 100 + 400;
+		res = ((float)x/(float)s.getRayon()) * 100 + 200;
 		return (int)res;
 	}
 	
@@ -41,7 +41,7 @@ public class AffichSphere extends JPanel {
 			i = 0;
 			points = z.getListContour();
 			for (Point2D p : points) {
-				xPoints[i] = transform((int)p.getX());
+				xPoints[i] = transform((int)p.getX())+150;
 				yPoints[i] = transform((int)p.getY());
 				//System.out.println("test : " + s.getRayon() + " -> " + xPoints[i] + " : " + yPoints[i]);
 				i++;
@@ -49,6 +49,17 @@ public class AffichSphere extends JPanel {
 			g.setColor(new Color(255-z.getDensity().getColor(),z.getDensity().getColor(),0));
 			g.fillPolygon(xPoints, yPoints, n);
 		}
+		Zone temp = s.getZoneCurrent();
+		i = 0;
+		points = temp.getListContour();
+		for (Point2D p : points) {
+			xPoints[i] = transform((int)p.getX())+150;
+			yPoints[i] = transform((int)p.getY());
+			//System.out.println("test : " + s.getRayon() + " -> " + xPoints[i] + " : " + yPoints[i]);
+			i++;
+		}
+		g.setColor(Color.black);
+		g.drawPolygon(xPoints, yPoints, n);
 	}
 
 	public AffichSphere(Sphere s) {
