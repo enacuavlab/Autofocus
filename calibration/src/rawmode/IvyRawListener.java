@@ -68,4 +68,7 @@ public class IvyRawListener extends Thread implements IvyMessageListener {
 		// TODO Auto-generated method stub
 
 	}
+	public void finalize(){
+		bus.stop();
+	}
 }

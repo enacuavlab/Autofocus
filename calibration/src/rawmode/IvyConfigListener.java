@@ -20,13 +20,16 @@ public class IvyConfigListener {
 	 * @throws IvyException
 	 * @throws InterruptedException
 	 */
-	public IvyConfigListener(final int idDrone) throws IvyException,
-			InterruptedException {
+	public IvyConfigListener(final int idDrone) throws GetConfigException {
 		id = idDrone;
 		bus = new Ivy("IvyConfigListener", "IvyConfigListener Ready", null);
-		bus.start(null);
+		try {
+			bus.start(null);
 		Thread.sleep(20);
 		sendRequest();
+		} catch (Exception e) {
+			throw new GetConfigException("problem of bus creation",e);
+		}
 	}
 
 	/**
