@@ -40,6 +40,7 @@ public class AffichSphere extends JPanel {
 
 	public AffichSphere(Sphere s) {
 		this.s = s;
+		majZone();
 	}
 
 	/**
