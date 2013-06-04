@@ -1,5 +1,6 @@
 package ellipsoide;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
@@ -45,7 +46,8 @@ public class AffichSphere extends JPanel {
 				//System.out.println("test : " + s.getRayon() + " -> " + xPoints[i] + " : " + yPoints[i]);
 				i++;
 			}
-			g.drawPolygon(xPoints, yPoints, n);
+			g.setColor(new Color(255-z.getDensity().getColor(),z.getDensity().getColor(),0));
+			g.fillPolygon(xPoints, yPoints, n);
 		}
 	}
 
