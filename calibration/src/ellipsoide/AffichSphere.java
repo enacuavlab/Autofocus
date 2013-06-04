@@ -35,7 +35,7 @@ public class AffichSphere extends JPanel {
 			for (Point2D p : points) {
 				xPoints[i] = (int) p.getX();
 				yPoints[i] = (int) p.getY();
-				System.out.println("" + z + " -> " + xPoints[i] + " : " + yPoints[i]);
+				System.out.println("test : " + z + " -> " + xPoints[i] + " : " + yPoints[i]);
 				i++;
 			}
 			g.drawPolygon(xPoints, yPoints, n);
