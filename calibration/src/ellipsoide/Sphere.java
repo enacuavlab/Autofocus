@@ -22,6 +22,7 @@ public class Sphere {
 	protected List<Zone> lzone;
 	final double erreur = 20.0;
 	private AffichSphere affichage;
+	private double surfaceSphere;
 
 	/**
 	 * Create the Sphere and define the number of zones
@@ -36,6 +37,7 @@ public class Sphere {
 		this.latitude = latitude;
 		center = new Vecteur(0, 0, 0);
 		radius = 0;
+		surfaceSphere=0;
 		lvector = new ArrayList<VecteurFiltrable<Double>>();
 		lzone = new ArrayList<Zone>();
 		create_zone();
@@ -63,7 +65,7 @@ public class Sphere {
 				|| (Math.abs(center.getZ() - newcenter.getZ()) > erreur)) {
 			this.radius = radius;
 			this.center = newcenter;
-			System.out.println("maj sphere");
+			this.surfaceSphere=4*Math.PI*Math.pow(radius,2);
 			update_all_zone();
 			affichage.majZone();
 
@@ -107,6 +109,7 @@ public class Sphere {
 		while (j.hasNext()) {
 			ztemp = j.next();
 			ztemp.maj_list_contour(radius);
+			ztemp.calculateSurface(radius,surfaceSphere);
 			ztemp.reset();
 			i = lvector.listIterator();
 			while (i.hasNext()) {
