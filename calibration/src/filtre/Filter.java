@@ -21,7 +21,7 @@ public class Filter {
 	 */
 	public Filter(int windowSize,TypeCalibration t) {
 		if (t.equals(TypeCalibration.ACCELEROMETER)){
-			noiseThreshold = 5;
+			noiseThreshold = 3;
 		}
 		if(t.equals(TypeCalibration.MAGNETOMETER)){
 			noiseThreshold = 60;
@@ -47,7 +47,7 @@ public class Filter {
 	protected boolean update(VecteurFiltrable<Double> v) {
 		boolean validite = true;
 		for (DescriptiveStatistics e : variables) {
-			System.out.println("std : " + e.getStandardDeviation());
+			//System.out.println("std : " + e.getStandardDeviation());
 			validite = (e.getStandardDeviation() < noiseThreshold) && validite;
 		}
 		if (validite != v.isCorrect()) {
