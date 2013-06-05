@@ -66,9 +66,11 @@ public class FilterSphere extends Filter {
 		rayon = (maxX - minX > maxY - minY ? (maxX - minX > maxZ - minZ ? maxX
 				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
 				- minY : maxZ - minZ));
+		if (window.remainingCapacity() > 0) {
 		center = new Vecteur((maxX + minX)/2,(maxY + minY)/2,(maxZ + minZ)/2);
 		s.update(rayon, center, window.toArray(a)[windowSize-1]);
-		System.out.println(center);
+		}
+		//System.out.println(center);
 	}
 
 	
