@@ -73,7 +73,7 @@ public class FilterSphere extends Filter {
 		center = new Vecteur((maxX + minX) / 2, (maxY + minY) / 2,
 				(maxZ + minZ) / 2);
 		if (!(window.remainingCapacity() > 0)) {
-			s.update(rayon, center, window.toArray(a)[windowSize - 1]);
+			s.update(rayon, center, window.toArray(a)[windowSize - 1],v);
 		}
 		// System.out.println(center);
 	}
