@@ -14,7 +14,7 @@ public class FilterSphere extends Filter {
 	private int maxZ = 0;
 	private int minZ = 0;
 	private Sphere s;
-	private int rayon = 0;
+	private double rayon = 0;
 	private Vecteur center = new Vecteur(0,0,0);
 	
 	/**
@@ -66,7 +66,7 @@ public class FilterSphere extends Filter {
 				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
 				- minY : maxZ - minZ));
 		center = new Vecteur((maxX + minX)/2,(maxY + minY)/2,(maxZ + minZ)/2);
-		s.update(rayon, center, v);
+		s.update(rayon, center, v, v);
 	}
 
 	
