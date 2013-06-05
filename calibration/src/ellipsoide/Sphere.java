@@ -20,7 +20,7 @@ public class Sphere {
 	private VecteurFiltrable<Double> center;
 	private List<VecteurFiltrable<Double>> lvector;
 	private List<Zone> lzone;
-	final double erreur = 20.0;
+	final double error = 20.0; // error of the previous center of the sphere tolerated
 	private AffichSphere affichage;
 	private double surfaceSphere;
 	private Zone zoneCourante;
@@ -62,11 +62,13 @@ public class Sphere {
 	 *            new vector added
 	 */
 	public void update(double radius, VecteurFiltrable<Double> newcenter,
-			VecteurFiltrable<Double> v) {
-		lvector.add(v);
-		if ((Math.abs(center.getX() - newcenter.getX()) > erreur)
-				|| (Math.abs(center.getY() - newcenter.getY()) > erreur)
-				|| (Math.abs(center.getZ() - newcenter.getZ()) > erreur)) {
+			VecteurFiltrable<Double> v, VecteurFiltrable<Double> vcourant) {
+		if (v.isCorrect()) {
+			lvector.add(v);
+		}
+		if ((Math.abs(center.getX() - newcenter.getX()) > error)
+				|| (Math.abs(center.getY() - newcenter.getY()) > error)
+				|| (Math.abs(center.getZ() - newcenter.getZ()) > error)) {
 			this.radius = radius;
 			this.center = newcenter;
 			this.surfaceSphere=4*Math.PI*Math.pow(radius,2);
@@ -150,7 +152,7 @@ public class Sphere {
 		Sphere s = new Sphere(20,10);
 		Vecteur center= new Vecteur(5,10,15);
 		Vecteur v = new Vecteur(8,20,21);
-		s.update(10.5, center, v);
+		s.update(10.5, center, v,v);
 		ListIterator<Zone> j= s.getZones().listIterator();
 		while (j.hasNext()){
 			if(j.next().getDensity().getColor()>0){
