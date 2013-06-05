@@ -15,7 +15,7 @@ public class StartUp {
 	public StartUp(TypeCalibration t, JPanel panel_dessin) throws IvyException, InterruptedException {
 		if (t == TypeCalibration.MAGNETOMETER) {
 			System.out.println("type");
-			Sphere sp = new Sphere(20, 10);
+			Sphere sp = new Sphere(5, 5);
 			FilterSphere filtre = new FilterSphere(sp,10,TypeCalibration.MAGNETOMETER);
 			System.out.println("filtre");
 			Data data = new Data(t, filtre);

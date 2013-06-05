@@ -58,7 +58,7 @@ public class AffichSphere extends JPanel {
 			//System.out.println("test : " + s.getRayon() + " -> " + xPoints[i] + " : " + yPoints[i]);
 			i++;
 		}
-		g.setColor(Color.black);
+		g.setColor(Color.yellow);
 		g.drawPolygon(xPoints, yPoints, n);
 	}
 

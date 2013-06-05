@@ -12,11 +12,10 @@ import fr.dgac.ivy.IvyException;
 
 public class TestIMU {
 	public static void main(String args[]) throws IvyException, InterruptedException {
-		TypeCalibration t = TypeCalibration.MAGNETOMETER;
-
+		TypeCalibration t = TypeCalibration.ACCELEROMETER;
 		System.out.println("type");
-		Sphere sp = new Sphere(20,10);
-		FilterSphere filtre = new FilterSphere(sp,10,TypeCalibration.MAGNETOMETER);
+		Sphere sp = new Sphere(5,5);
+		FilterSphere filtre = new FilterSphere(sp,40,t);
 		System.out.println("filtre");
 		Data data = new Data(t,filtre);
 		System.out.println("data");
