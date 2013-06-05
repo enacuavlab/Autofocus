@@ -25,7 +25,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
 import common.StartUp;
@@ -95,13 +97,15 @@ public class ShellV2 extends JFrame {
 	 */
 	private void initialise() {
 		// Pour test
-		btn_accelero.setEnabled(true);
-		btn_magneto.setEnabled(true);
+		//btn_accelero.setEnabled(true);
+		//btn_magneto.setEnabled(true);
 		// Active les boutons
 		activateButton(mod);
 		// Panel titre
 		JPanel panel_titre = new JPanel();
-		panel_titre.setBackground(Color.blue);
+		Border border_titre=BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.black, Color.white);
+		panel_titre.setBackground(Color.LIGHT_GRAY);
+		panel_titre.setBorder(border_titre);
 		panel_titre.setPreferredSize(new Dimension(1600, 100));
 		getContentPane().add(panel_titre, "North");
 		titre = new JLabel("<html><br>Veuillez remplir les champs</html>");
@@ -128,7 +132,7 @@ public class ShellV2 extends JFrame {
 		JPanel panel_name = new JPanel();
 		Border border_name = BorderFactory.createRaisedBevelBorder();
 		panel_name.setBorder(border_name);
-		panel_name.setBackground(Color.MAGENTA);
+		panel_name.setBackground(new Color(202,205,236));
 		panel_name.setBounds(275, 38, 508, 99);
 		panel_center.add(panel_name);
 		panel_name.setLayout(null);
@@ -141,14 +145,13 @@ public class ShellV2 extends JFrame {
 		// Panel_mod
 		Border border_mod = BorderFactory.createRaisedBevelBorder();
 		JPanel panel_mod = new JPanel();
-		panel_mod.setBackground(Color.ORANGE);
+		panel_mod.setBackground(new Color(202,205,236));
 		panel_mod.setForeground(Color.BLACK);
 		panel_mod.setBounds(275, 213, 508, 177);
 		panel_mod.setBorder(border_mod);
 		panel_center.add(panel_mod);
 		panel_mod.setVisible(false);
 		panel_mod.setLayout(null);
-
 		/*
 		 * textField.addActionListener(new ActionListener(){ public void
 		 * actionPerformed(ActionEvent e){ name=textField.getText();
@@ -165,7 +168,7 @@ public class ShellV2 extends JFrame {
 	private void addOptions() {
 		// Panel options
 		JPanel panel_options = new JPanel();
-		panel_options.setBackground(Color.red);
+		panel_options.setBackground(Color.gray);
 		getContentPane().add(panel_options, "West");
 		GridLayout gd_options = new GridLayout(5, 1);
 		gd_options.setVgap(30);
@@ -386,17 +389,31 @@ public class ShellV2 extends JFrame {
 		JPanel panel_center = new JPanel();
 		panel_center.setLayout(null);
 		panel_accl.add(panel_center, BorderLayout.CENTER);
+		//Panel_dessin
 		JPanel panel_dessin = new JPanel();
 		Border border_mod = BorderFactory.createRaisedBevelBorder();
 		panel_dessin.setBackground(Color.WHITE);
-		panel_dessin.setBounds(50, 0, 625, 425);
+		panel_dessin.setBounds(50, 0, 625, 325);
 		panel_dessin.setBorder(border_mod);
 		panel_center.add(panel_dessin);
+		//Panel instruction
 		JPanel panel_inst = new JPanel();
 		panel_inst.setBounds(825, 0, 300, 425);
 		panel_inst.setBorder(border_mod);
 		panel_inst.setBackground(Color.WHITE);
 		panel_center.add(panel_inst);
+		//Panel progress Bar
+		JPanel panelBar = new JPanel();
+		panelBar.setBounds(50,375,625,50);
+		panelBar.setBackground(Color.WHITE);
+		panelBar.setLayout(null);
+		panel_center.add(panelBar);
+		
+		//Progress Bar 
+		JProgressBar progressBar = new JProgressBar(0,100);
+		progressBar.setBounds(0, 0, 625, 50);
+		panelBar.add(progressBar);
+	
 
 	}
 
@@ -423,10 +440,7 @@ public class ShellV2 extends JFrame {
 		panel_center.setLayout(null);
 		panel_mag.add(panel_center, BorderLayout.CENTER);
 		panel_dessin = new JPanel();
-		Border border_mod = BorderFactory.createRaisedBevelBorder();
-		panel_dessin.setBackground(Color.WHITE);
 		panel_dessin.setBounds(125, 0, 775, 425);
-		panel_dessin.setBorder(border_mod);
 		panel_center.add(panel_dessin);
 
 	}
