@@ -47,6 +47,7 @@ public class FilterSphere extends Filter {
 	 */
 	@Override
 	public void add(VecteurFiltrable<Double> v) {
+		Vecteur a[] = new Vecteur[windowSize];
 		super.add(v);
 		if (v.isCorrect()) {
 			if (v.getX() > maxX)
@@ -66,7 +67,7 @@ public class FilterSphere extends Filter {
 				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
 				- minY : maxZ - minZ));
 		center = new Vecteur((maxX + minX)/2,(maxY + minY)/2,(maxZ + minZ)/2);
-		s.update(rayon, center, v);
+		s.update(rayon, center, window.toArray(a)[windowSize-1]);
 		System.out.println(center);
 	}
 
