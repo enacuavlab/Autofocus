@@ -1,8 +1,11 @@
 package ellipsoide;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.util.List;
 
@@ -10,6 +13,7 @@ import javax.swing.JPanel;
 
 public class AffichSphere extends JPanel {
 
+	private Stroke stroke = new BasicStroke(2f);
 	private Sphere s;
 	private List<Zone> zones;
 
@@ -31,6 +35,7 @@ public class AffichSphere extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
+		Graphics2D g2d = (Graphics2D) g;
 		g.clearRect(0, 0, 800, 800);
 		List<Point2D> points;
 		int n = zones.get(1).getListContour().size();
@@ -59,6 +64,7 @@ public class AffichSphere extends JPanel {
 			i++;
 		}
 		g.setColor(Color.yellow);
+		g2d.setStroke(stroke);
 		g.drawPolygon(xPoints, yPoints, n);
 	}
 
