@@ -123,12 +123,10 @@ public class Sphere {
 			ztemp.maj_list_contour(radius);
 			ztemp.calculateSurface(radius,surfaceSphere);
 			ztemp.reset();
-			/*i = lvector.listIterator();
+			ListIterator<VecteurFiltrable<Double>> i = lvector.listIterator();
 			while (i.hasNext()) {
-				if(ztemp.is_in(i.next(), center)){
-					zoneCourante=ztemp;
-				}
-			}*/
+				ztemp.is_in(i.next(), center);
+			}
 
 		}
 	}

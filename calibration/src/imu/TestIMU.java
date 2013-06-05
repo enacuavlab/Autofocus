@@ -14,15 +14,15 @@ public class TestIMU {
 	public static void main(String args[]) throws IvyException, InterruptedException {
 		TypeCalibration t = TypeCalibration.ACCELEROMETER;
 		System.out.println("type");
-		Sphere sp = new Sphere(5,5);
+		Sphere sp = new Sphere(20,10);
 		FilterSphere filtre = new FilterSphere(sp,40,t);
 		System.out.println("filtre");
 		Data data = new Data(t,filtre);
 		System.out.println("data");
 		GUIHelper.showOnFrame(sp.getAffichage(), "test");
-		Sender s = new Sender("/home/paparazzi/var/logs/13_05_29__10_15_23.data");
+		Sender s = new Sender("/home/paparazzi/var/logs/13_04_03__13_49_35.data");
 		System.out.println("sender");
-		IMU imu =new IMU(t,17,data);
+		IMU imu =new IMU(t,3,data);
 		s.start();
 		s.join();
 		s.arret();
