@@ -20,7 +20,7 @@ public class Sphere {
 	private VecteurFiltrable<Double> center;
 	private List<VecteurFiltrable<Double>> lvector;
 	private List<Zone> lzone;
-	final double erreur = 20.0;
+	final double error = 20.0; // error of the previous center of the sphere tolerated
 	private AffichSphere affichage;
 	private double surfaceSphere;
 	private Zone zoneCourante;
@@ -79,9 +79,9 @@ public class Sphere {
 		if (v.isCorrect()) {
 			lvector.add(v);
 		}
-		if ((Math.abs(center.getX() - newcenter.getX()) > erreur)
-				|| (Math.abs(center.getY() - newcenter.getY()) > erreur)
-				|| (Math.abs(center.getZ() - newcenter.getZ()) > erreur)) {
+		if ((Math.abs(center.getX() - newcenter.getX()) > error)
+				|| (Math.abs(center.getY() - newcenter.getY()) > error)
+				|| (Math.abs(center.getZ() - newcenter.getZ()) > error)) {
 			this.radius = radius;
 			this.center = newcenter;
 			this.surfaceSphere = 4 * Math.PI * Math.pow(radius, 2);
