@@ -58,14 +58,14 @@ public class AffichSphere extends JPanel {
 		i = 0;
 		points = temp.getListContour();
 		for (Point2D p : points) {
-			xPoints[i] = transform((int)p.getX())+150;
+			xPoints[i] = transform((int)p.getX())+200;
 			yPoints[i] = transform((int)p.getY());
 			//System.out.println("test : " + s.getRayon() + " -> " + xPoints[i] + " : " + yPoints[i]);
 			i++;
 		}
 		g.setColor(Color.yellow);
 		g2d.setStroke(stroke);
-		g.drawPolygon(xPoints, yPoints, n);
+		g2d.drawPolygon(xPoints, yPoints, n);
 	}
 
 	public AffichSphere(Sphere s) {
