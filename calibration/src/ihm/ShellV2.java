@@ -1,4 +1,3 @@
-
 package ihm;
 
 import fr.dgac.ivy.IvyException;
@@ -40,22 +39,22 @@ import rawmode.IvyRawListener;
 
 public class ShellV2 extends JFrame {
 
-	
 	private JButton btn_accelero, btn_magneto, btn_gyro;
 	private JLabel titre;
 	private JButton btnQuitter, btnStop;
-	private int id;//Id du drone
-	private String name,url;//Nom et url du drone 
-	private JPanel panel_home, panel_accl, panel_gyro, panel_mag, content,panel_dessin;
+	private int id;// Id du drone
+	private String name, url;// Nom et url du drone
+	private JPanel panel_home, panel_accl, panel_gyro, panel_mag, content,
+			panel_dessin;
 	private String[] listContent = { "HOME", "ACCL", "MAG", "GYRO" };
 	private CardLayout cl;
-	private String mod;//Pour savoir quel bouton activer
+	private String mod;// Pour savoir quel bouton activer
 	private Action ac1, ac2, ac3;
 	private Result result;
-	
-/**
- * Constructeur qui initialise la fenetre et met en place le cardLayout
- */
+
+	/**
+	 * Constructeur qui initialise la fenetre et met en place le cardLayout
+	 */
 	public ShellV2() {
 		super();
 		// Shell
@@ -68,7 +67,7 @@ public class ShellV2 extends JFrame {
 														// fermer lors du clic
 														// sur la croix
 		getContentPane().setLayout(new BorderLayout());
-		result = new Result(this,"Result",true);
+		result = new Result(this, "Result", true);
 		cl = new CardLayout();
 		content = new JPanel();
 		content.setLayout(cl);
@@ -90,14 +89,15 @@ public class ShellV2 extends JFrame {
 		initialise();// On initialise notre fenêtre
 
 	}
-/**
- * Fonction pour initialiser et réinitialiser l'accueil
- */
+
+	/**
+	 * Fonction pour initialiser et réinitialiser l'accueil
+	 */
 	private void initialise() {
 		// Pour test
 		btn_accelero.setEnabled(true);
 		btn_magneto.setEnabled(true);
-		//Active les boutons
+		// Active les boutons
 		activateButton(mod);
 		// Panel titre
 		JPanel panel_titre = new JPanel();
@@ -108,7 +108,7 @@ public class ShellV2 extends JFrame {
 		titre.setFont(new Font("Calibri", Font.BOLD, 28));
 		panel_titre.add(titre);
 
-		//Panel qui va contenir la combobox pour le choix de l'id du drone
+		// Panel qui va contenir la combobox pour le choix de l'id du drone
 		JPanel panel_north = new JPanel();
 		panel_home.add(panel_north, BorderLayout.NORTH);
 		panel_north.setPreferredSize(new Dimension(1600, 100));
@@ -118,8 +118,8 @@ public class ShellV2 extends JFrame {
 		gbl_panel_north.columnWeights = new double[] { 0.0, 0.0, 1.0 };
 		gbl_panel_north.rowWeights = new double[] { 0.0, 0.0 };
 		panel_north.setLayout(gbl_panel_north);
-		
-		//Panel centre qui va contenir les panels mod et name
+
+		// Panel centre qui va contenir les panels mod et name
 		JPanel panel_center = new JPanel();
 		panel_home.add(panel_center, BorderLayout.CENTER);
 		panel_center.setLayout(null);
@@ -133,13 +133,11 @@ public class ShellV2 extends JFrame {
 		panel_center.add(panel_name);
 		panel_name.setLayout(null);
 		panel_name.setVisible(false);
-		
+
 		JLabel label_name = new JLabel();
 		label_name.setBounds(106, 12, 138, 60);
 		panel_name.add(label_name);
 
-		
-		
 		// Panel_mod
 		Border border_mod = BorderFactory.createRaisedBevelBorder();
 		JPanel panel_mod = new JPanel();
@@ -241,17 +239,16 @@ public class ShellV2 extends JFrame {
 		gbc_comboBox.gridx = 2;
 		gbc_comboBox.gridy = 1;
 		panel_north.add(combo, gbc_comboBox);
-		
-		//Label with the drone's name
+
+		// Label with the drone's name
 		final JLabel dronesName = new JLabel();
 		dronesName.setBounds(273, 35, 114, 29);
 		dronesName.setBackground(Color.WHITE);
 		panel.add(dronesName);
-		
-		
+
 		// Add drone id detected
 		combo.addItem(" ");
-		//combo.addItem("1");
+		// combo.addItem("1");
 		try {
 			IvyIdListener ivyid = new IvyIdListener();
 			ArrayList<Integer> l = (ArrayList<Integer>) ivyid.getList();
@@ -274,22 +271,26 @@ public class ShellV2 extends JFrame {
 					panel_mod.setVisible(false);
 				} else {
 					id = Integer.parseInt(combo.getSelectedItem().toString());
-					try{
-						IvyConfigListener ivyConfig=new IvyConfigListener(id);
-						name=ivyConfig.getAcName();
-						url=ivyConfig.getSettingsURL();
+					try {
+						IvyConfigListener ivyConfig = new IvyConfigListener(id);
+						name = ivyConfig.getAcName();
+						url = ivyConfig.getSettingsURL();
 						ivyConfig.finalize();
 						label.setText("<html>Le nom de votre drone d'id "
 								+ Integer.toString(id) + " est : </html>");
 						dronesName.setText(name);
 						panel.setVisible(true);
-				
-						addcombo_mod(panel_mod,panel);
-					}catch (GetConfigException eConf){
+
+						addcombo_mod(panel_mod, panel);
+					} catch (GetConfigException eConf) {
 						combo.setSelectedItem(" ");
-						JOptionPane.showMessageDialog(null, "Bus problem, check if ground station is launched ", "Bus error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Bus problem, check if ground station is launched ",
+										"Bus error", JOptionPane.ERROR_MESSAGE);
 					}
-					
+
 				}
 			}
 		});
@@ -300,7 +301,7 @@ public class ShellV2 extends JFrame {
 	 * 
 	 * @param panel
 	 */
-	private void addcombo_mod(JPanel panel_mod,JPanel panel_name) {
+	private void addcombo_mod(JPanel panel_mod, JPanel panel_name) {
 		final JLabel label_mod = new JLabel(
 				"Veuillez choisir le mode de votre drone " + name + " :");
 		label_mod.setBounds(80, 45, 360, 42);
@@ -364,7 +365,7 @@ public class ShellV2 extends JFrame {
 	 * Function to add some elements in order to make accelerometers calibration
 	 */
 	private void modAccelero() {
-		
+
 		btn_accelero.removeActionListener(ac1);
 		mod = "Accl";
 		cl.show(content, listContent[1]);
@@ -396,7 +397,7 @@ public class ShellV2 extends JFrame {
 		panel_inst.setBorder(border_mod);
 		panel_inst.setBackground(Color.WHITE);
 		panel_center.add(panel_inst);
-		
+
 	}
 
 	/**
@@ -428,7 +429,6 @@ public class ShellV2 extends JFrame {
 		panel_dessin.setBorder(border_mod);
 		panel_center.add(panel_dessin);
 
-		
 	}
 
 	/**
@@ -491,12 +491,13 @@ public class ShellV2 extends JFrame {
 			}
 		});
 	}
-	
 
 	/**
-	 * Classe qui implément ActionListener pour appliquer un mode suivant l'action réalisé sur un bouton
+	 * Classe qui implément ActionListener pour appliquer un mode suivant
+	 * l'action réalisé sur un bouton
+	 * 
 	 * @author gui
-	 *
+	 * 
 	 */
 	class Action implements ActionListener {
 		private String mod;
@@ -509,25 +510,28 @@ public class ShellV2 extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (mod.equals("Accl")) {
 				modAccelero();
-			
+
 			} else if (mod.equals("Mag")) {
 				modMagneto();
-				SwingUtilities.invokeLater(new Runnable(){
-					public void run(){
-						try{
-							StartUp start = new StartUp(TypeCalibration.MAGNETOMETER,panel_dessin);
-						}catch (IvyException eIvy){
-							eIvy.printStackTrace();
-						}catch (InterruptedException eInt){
-							eInt.printStackTrace();
+				Thread model = new Thread() {
+					public void run() {
+						try {
+							StartUp start = new StartUp(
+									TypeCalibration.MAGNETOMETER, panel_dessin);
+						} catch (IvyException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
 					}
-				});
+				};
+				model.start();
 			} else if (mod.equals("Gyro")) {
 				modGyro();
 			}
 		}
-
 	}
 
 	/**

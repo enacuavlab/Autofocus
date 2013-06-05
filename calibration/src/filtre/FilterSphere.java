@@ -67,6 +67,7 @@ public class FilterSphere extends Filter {
 				- minY : maxZ - minZ));
 		center = new Vecteur((maxX + minX)/2,(maxY + minY)/2,(maxZ + minZ)/2);
 		s.update(rayon, center, v);
+		System.out.println(center);
 	}
 
 	

@@ -252,7 +252,7 @@ public class Shell extends JFrame {
 	}
 
 	/**
-	 * Function to add some elements in order to change drone mod
+	 * Function to add some elements in order to change drone mode
 	 * 
 	 * @param panel
 	 */

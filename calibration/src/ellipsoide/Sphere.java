@@ -47,8 +47,16 @@ public class Sphere {
 		zoneCourante=j.next();
 		affichage = new AffichSphere(this);
 	}
+	
 	public AffichSphere getAffichage(){
 		return affichage;
+	}
+	
+	/**Returns the zone in which the user is plotting
+	 * 
+	 */
+	public Zone getZoneCurrent() {
+		return zoneCourante;
 	}
 	
 	/**
@@ -108,19 +116,19 @@ public class Sphere {
 	private void update_all_zone() {
 		Zone ztemp;
 		ListIterator<Zone> j = lzone.listIterator();
-		ListIterator<VecteurFiltrable<Double>> i;
+		//ListIterator<VecteurFiltrable<Double>> i;
 
 		while (j.hasNext()) {
 			ztemp = j.next();
 			ztemp.maj_list_contour(radius);
 			ztemp.calculateSurface(radius,surfaceSphere);
 			ztemp.reset();
-			i = lvector.listIterator();
+			/*i = lvector.listIterator();
 			while (i.hasNext()) {
 				if(ztemp.is_in(i.next(), center)){
 					zoneCourante=ztemp;
 				}
-			}
+			}*/
 
 		}
 	}
@@ -131,8 +139,11 @@ public class Sphere {
 	protected void update(VecteurFiltrable<Double> v) {
 		boolean b = false;
 		ListIterator<Zone> j = lzone.listIterator();
+		Zone temp;
 		while (b == false && j.hasNext()) {
-			b = j.next().is_in(v, center);
+			temp = j.next();
+			b = temp.is_in(v, center);
+			if (b) zoneCourante = temp;
 		}
 	}
 	
