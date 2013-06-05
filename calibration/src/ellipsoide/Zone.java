@@ -59,17 +59,24 @@ public class Zone {
 	public void reset() {
 		density.reset();
 	}
+
+	/**
+	 * Thanks to that method we can find the currant zone in order to print the current zone
+	 * @param v the currant vector that is actually the last one received by the IMU  
+	 * @param center center of the sphere
+	 * @return boolean true when the vector is in this zone
+	 */
 	public boolean updateZoneCourante(VecteurFiltrable<Double> v,
-			VecteurFiltrable<Double> center){
+			VecteurFiltrable<Double> center) {
 		if (is_in_lat(v.getX(), v.getY(), v.getZ(), center.getX(),
 				center.getY(), center.getZ())
 				&& is_in_long(v.getX(), v.getY(), center.getX(), center.getY())) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
+
 	/**
 	 * return the density
 	 * 
@@ -77,7 +84,7 @@ public class Zone {
 	 */
 	public Density getDensity() {
 		return density;
-		
+
 	}
 
 	/**
@@ -249,6 +256,15 @@ public class Zone {
 		}
 	}
 
+	/**
+	 * this method calculate the surface of the zone and update the surface of
+	 * the sphere
+	 * 
+	 * @param radius
+	 *            the actual radius of the sphere
+	 * @param surfaceS
+	 *            the actual surface of the sphere
+	 */
 	public void calculateSurface(double radius, double surfaceS) {
 		surfaceSphere = surfaceS;
 		System.out.println("surfaceSphere " + surfaceSphere);

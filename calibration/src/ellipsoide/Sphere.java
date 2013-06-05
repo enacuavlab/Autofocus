@@ -47,6 +47,11 @@ public class Sphere {
 		affichage = new AffichSphere(this);
 	}
 
+	/**
+	 * getter of the display
+	 * 
+	 * @return the display
+	 */
 	public AffichSphere getAffichage() {
 		return affichage;
 	}
@@ -70,7 +75,7 @@ public class Sphere {
 	 *            new vector added
 	 */
 	public void update(double radius, VecteurFiltrable<Double> newcenter,
-			VecteurFiltrable<Double> v,VecteurFiltrable<Double> vcourant) {
+			VecteurFiltrable<Double> v, VecteurFiltrable<Double> vcourant) {
 		if (v.isCorrect()) {
 			lvector.add(v);
 		}
@@ -82,7 +87,7 @@ public class Sphere {
 			this.surfaceSphere = 4 * Math.PI * Math.pow(radius, 2);
 			update_all_zone();
 			updateVecCourant(vcourant);
-			
+
 			affichage.majZone();
 		} else {
 			update(v);
@@ -149,14 +154,19 @@ public class Sphere {
 			b = temp.isIn(v, center);
 		}
 	}
-	protected void updateVecCourant(VecteurFiltrable<Double> vcourant){
+
+	/**
+	 *Update the currant zone thanks to the last vector received  
+	 * @param vcourant last vector sent by the IMU
+	 */
+	protected void updateVecCourant(VecteurFiltrable<Double> vcourant) {
 		boolean b = false;
 		ListIterator<Zone> j = lzone.listIterator();
 		Zone temp;
 		while (b == false && j.hasNext()) {
 			temp = j.next();
 			b = temp.updateZoneCourante(vcourant, center);
-			zoneCourante=temp;
+			zoneCourante = temp;
 		}
 	}
 

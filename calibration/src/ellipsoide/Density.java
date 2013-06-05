@@ -1,7 +1,7 @@
 package ellipsoide;
 
 public class Density {
-	int nbMax=1000;
+	int nbMax=3000;
 	int colorParameter; // in [0;255}
 	double nb;
 	public Density(){
