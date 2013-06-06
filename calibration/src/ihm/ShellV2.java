@@ -47,7 +47,7 @@ public class ShellV2 extends JFrame {
 	private int id;// Id du drone
 	private String name, url;// Nom et url du drone
 	private JPanel panel_home, panel_accl, panel_gyro, panel_mag, content,
-			panel_dessin;
+			panel_dessin, panelBar, panelInst;
 	private String[] listContent = { "HOME", "ACCL", "MAG", "GYRO" };
 	private CardLayout cl;
 	private String mod;// Pour savoir quel bouton activer
@@ -98,7 +98,7 @@ public class ShellV2 extends JFrame {
 	private void initialise() {
 		// Pour test
 		btn_accelero.setEnabled(true);
-		//btn_magneto.setEnabled(true);
+		btn_magneto.setEnabled(true);
 		// Active les boutons
 		activateButton(mod);
 		// Panel titre
@@ -397,22 +397,18 @@ public class ShellV2 extends JFrame {
 		panel_dessin.setBorder(border_mod);
 		panel_center.add(panel_dessin);
 		//Panel instruction
-		JPanel panel_inst = new JPanel();
-		panel_inst.setBounds(825, 0, 320, 420);
-		panel_inst.setBorder(border_mod);
-		panel_inst.setBackground(Color.WHITE);
-		panel_center.add(panel_inst);
+		panelInst = new JPanel();
+		panelInst.setBounds(825, 0, 320, 420);
+		panelInst.setBorder(border_mod);
+		panelInst.setBackground(Color.WHITE);
+		panel_center.add(panelInst);
 		//Panel progress Bar
-		JPanel panelBar = new JPanel();
+		panelBar = new JPanel();
 		panelBar.setBounds(50,375,625,50);
 		panelBar.setBackground(Color.WHITE);
 		panelBar.setLayout(null);
 		panel_center.add(panelBar);
 		
-		//Progress Bar 
-		JProgressBar progressBar = new JProgressBar(0,100);
-		progressBar.setBounds(0, 0, 625, 50);
-		panelBar.add(progressBar);
 	
 
 	}
@@ -524,21 +520,22 @@ public class ShellV2 extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (mod.equals("Accl")) {
 				modAccelero();
+				Thread model = new Thread() {
+					public void run() {
+							StartUp start = new StartUp(
+									TypeCalibration.ACCELEROMETER, panel_dessin,id,panelInst,panelBar);
+						
+					}
+				};
+				model.start();
 
 			} else if (mod.equals("Mag")) {
 				modMagneto();
 				Thread model = new Thread() {
 					public void run() {
-						try {
 							StartUp start = new StartUp(
 									TypeCalibration.MAGNETOMETER, panel_dessin,id);
-						} catch (IvyException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+					
 					}
 				};
 				model.start();
