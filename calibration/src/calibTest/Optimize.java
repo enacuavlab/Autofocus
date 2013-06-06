@@ -12,7 +12,7 @@ public class Optimize {
 	public static void main(String[] args) {
 
 		MyFunction error = new MyFunction();
-		My jac = new My
+		MyJacobian jac = new MyJacobian();
 		
 		 error.addPoint(1, 34.234064369);
 		 error.addPoint(2, 68.2681162306);
@@ -24,6 +24,17 @@ public class Optimize {
 		 error.addPoint(8, 608.1409492707);
 		 error.addPoint(9, 754.5988686671);
 		 error.addPoint(10, 916.1288180859);
+		 
+		 jac.addPoint(1, 34.234064369);
+		 jac.addPoint(2, 68.2681162306);
+		 jac.addPoint(3, 118.6158990846);
+		 jac.addPoint(4, 184.1381972386);
+		 jac.addPoint(5, 266.5998779163);
+		 jac.addPoint(6, 364.1477352516);
+		 jac.addPoint(7, 478.0192260919);
+		 jac.addPoint(8, 608.1409492707);
+		 jac.addPoint(9, 754.5988686671);
+		 jac.addPoint(10, 916.1288180859);
 
 		// weight Matrix
 		final double[] weights = new double[12];
@@ -35,10 +46,8 @@ public class Optimize {
 		final LevenbergMarquardtOptimizer optimizer = new LevenbergMarquardtOptimizer();
 
 		final PointVectorValuePair optimum = optimizer.optimize(
-				new MaxEval(100), new InitialGuess(startPoint), new Target(
-						), new Weight(weights), new ModelFunction(
-						), new ModelFunctionJacobian(
-						new MyJacobian()));
+				new MaxEval(100), new InitialGuess(startPoint), new Target(error.calculateTarget),
+				new Weight(weights), new ModelFunction(error), new ModelFunctionJacobian(jac));
 
 		final double[] solution = optimum.getPoint();
 
