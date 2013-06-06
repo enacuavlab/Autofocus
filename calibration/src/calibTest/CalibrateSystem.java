@@ -1,56 +1,120 @@
 package calibTest;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.StringWriter;
+import java.io.InputStreamReader;
 
-import ellipsoide.Sphere;
-import filtre.FilterSphere;
-import filtre.GUIHelper;
-import fr.dgac.ivy.IvyException;
-import imu.IMU;
-import testData.Sender;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 import common.TypeCalibration;
 
-import data.Data;
+import filtre.GUIHelper;
 
-public class CalibrateSystem {
+public class CalibrateSystem extends JTextArea {
 
-	public void calibrates(String logName) throws IOException {
-		
-		String[] tab_commandes = new String[2];
-		tab_commandes[0] = "/home/paparazzi/sw/tools/calibration/calibrate.py " + logName;
-		Process processus = Runtime.getRuntime().exec(tab_commandes);
-		System.out.println("Processus: " + processus);
-		System.out.println("processus.getInputStream(): "
-				+ processus.getInputStream());
-		StringWriter writer = new StringWriter();
-		copy(processus.getInputStream(), writer, );
-		String theString = writer.toString();
-		System.out.println("Fin de l'appel de commandes UNIX en java");
+	/**
+	 * Allows to determine the string to launch the extern program
+	 */
+	TypeCalibration type;
 
+	/**
+	 * To find the place where the calibration script is
+	 */
+	String ppzHome;
+
+	/**
+	 * The name of the file we pull the parameters of
+	 */
+	String logName;
+
+	/**
+	 * The string displayed in the area
+	 */
+	String parameters = "calcul en cours";
+
+	/**
+	 * Default serial number
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Initialize the values of the attributes
+	 * 
+	 * @param t
+	 * @param paparazziHome
+	 * @param logName
+	 */
+	public CalibrateSystem(TypeCalibration t, String paparazziHome,
+			String logName) {
+		type = t;
+		ppzHome = paparazziHome;
+		this.logName = logName;
+		this.setText(parameters);
+		this.setBounds(20, 20, 500, 158);
 	}
 
-	public static void main(String args[]) throws IvyException,
-			InterruptedException {
-		TypeCalibration t = TypeCalibration.ACCELEROMETER;
-		System.out.println("type");
-		Sphere sp = new Sphere(20, 10);
-		FilterSphere filtre = new FilterSphere(sp, 40, t);
-		System.out.println("filtre");
-		Data data = new Data(t, filtre);
-		System.out.println("data");
-		GUIHelper.showOnFrame(sp.getAffichage(), "test");
-		Sender s = new Sender(
-				"/home/paparazzi/var/logs/13_04_03__13_49_35.data");
-		System.out.println("sender");
-		IMU imu = new IMU(t, 3, data);
-		s.start();
-		s.join();
-		s.arret();
-		imu.arret();
-		// System.out.println(data.toString());
-		System.out.println("fin");
+	/**
+	 * The procedure used to get the calibration values
+	 * 
+	 * @param logName
+	 * @throws IOException
+	 */
+	private void calibrates() throws InterruptedException, IOException {
+		String Newligne=System.getProperty("line.separator"); 
+		Runtime runtime = Runtime.getRuntime();
+		final Process process = runtime.exec("python " + ppzHome
+				+ "sw/tools/calibration/calibrate.py " + logName);
+
+		// Consommation de la sortie standard
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					process.getInputStream()));
+			StringBuffer line = new StringBuffer("");
+			String l = "";
+			while ((l = reader.readLine()) != null) {
+				// Traitement du flux de sortie de l'application
+				line.append(l);
+				line.append(Newligne);
+			}
+			reader.close();
+			parameters = line.toString().substring(109);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			parameters = "unable to parse";
+		}
+	}
+
+	/**
+	 * Update the string displayed in the textArea
+	 */
+	public void maj() {
+				try {
+					calibrates();
+				} catch (Exception e) {
+					parameters = "unable to get the parameters";
+				}
+				setText(parameters);
+	}
+
+	/**
+	 * Test Function
+	 * 
+	 * @param args
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	public static void main(String args[]) throws InterruptedException,
+			IOException {
+		try {
+			CalibrateSystem s = new CalibrateSystem(
+					TypeCalibration.MAGNETOMETER, "/home/gui/paparazzi/",
+					"/home/gui/paparazzi/var/logs/13_04_03__13_49_35.data");
+			GUIHelper.showOnFrame(s, "test");
+			s.maj();
+		} finally {
+			System.out.println("done");
+		}
 	}
 
 }
