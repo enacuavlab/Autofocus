@@ -20,9 +20,9 @@ import data.Data;
 public class IMU implements IvyMessageListener {
 	private List <Integer> listeId;
 	private Ivy bus;
-	private TypeCalibration calibration;
+	//private TypeCalibration calibration;
 	private int idDrone;
-	private Data data;
+	//private Data data;
 	private Boolean rawOnBus = false;
 	private String telemetryMode=null;
 	private int reqid = 176;
@@ -34,12 +34,12 @@ public class IMU implements IvyMessageListener {
 	 * 
 	 * @throws IvyException
 	 */
-	public IMU(TypeCalibration calibration, final Data data) {
+	public IMU() {
 		idDrone = -1;
-		this.data=data;
+		//this.data=data;
 		listeId=new ArrayList<Integer>();
 		System.out.println("Debut IMU");
-		this.calibration = calibration;
+		//this.calibration = calibration;
 		// starts the bus on the default domain
 		bus = new Ivy("IMU", "IMU Ready", null);
 	}
@@ -48,7 +48,7 @@ public class IMU implements IvyMessageListener {
 		idDrone =id;
 	}
 	
-	public void ListenIMU(){
+	public void ListenIMU(final Data data, TypeCalibration calibration){
 		try {
 			// build the regexp according to parameters
 			StringBuffer regexp = new StringBuffer("^");
@@ -61,6 +61,7 @@ public class IMU implements IvyMessageListener {
 			regexp.append(" ([\\-]*[0-9]+)");
 			String test = regexp.toString();
 			System.out.println(test);
+			bus.start(null);
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
 					// System.out.println("IMU : " + "x:" + args[0] + " y:" +
@@ -74,14 +75,14 @@ public class IMU implements IvyMessageListener {
 					});
 				}
 			});
-			bus.start(null);
+			
 		} catch (Exception e) {
 			System.out.println("Erreur d'initialisation d'IMU");
 			e.printStackTrace();
 		}
 	}
 	
-	public void stopListenImu(){
+	public void stopListenImu(TypeCalibration calibration){
 		StringBuffer regexp = new StringBuffer("^");
 		regexp.append(idDrone);
 		regexp.append(TypeCalibration.MAGNETOMETER.equals(calibration) ? " IMU_MAG_RAW"
