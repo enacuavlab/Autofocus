@@ -27,7 +27,6 @@ public class IvyRawListener extends Thread implements IvyMessageListener {
 							telemetryMode = args[1].split(",")[indexTelemetry];
 					}
 				});
-		// bus.bindMsg("(.*)", this);
 		bus.start(null);
 	}
 
@@ -38,6 +37,7 @@ public class IvyRawListener extends Thread implements IvyMessageListener {
 	public Boolean isRawOnBus() {
 		return rawOnBus;
 	}
+	
 
 	public int getTelemetryMode() {
 		if (telemetryMode != null){

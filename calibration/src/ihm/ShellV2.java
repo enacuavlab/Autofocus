@@ -2,6 +2,7 @@ package ihm;
 
 import fr.dgac.ivy.IvyException;
 import iddrone.IvyIdListener;
+import imu.GetConfigException;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -34,7 +35,6 @@ import common.StartUp;
 import common.TypeCalibration;
 
 import rawmode.ExtractRawData;
-import rawmode.GetConfigException;
 import rawmode.IncorrectXmlException;
 import rawmode.IvyConfigListener;
 import rawmode.IvyRawListener;

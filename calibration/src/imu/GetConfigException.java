@@ -1,4 +1,4 @@
-package rawmode;
+package imu;
 
 public class GetConfigException extends Exception {
 

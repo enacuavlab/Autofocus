@@ -23,7 +23,7 @@ public class TestIMU {
 		GUIHelper.showOnFrame(sp.getAffichage(), "test");
 		Sender s = new Sender("/home/paparazzi/var/logs/13_04_03__13_49_35.data");
 		System.out.println("sender");
-		IMU imu =new IMU(t,3,data);
+		IMU imu =new IMU(t,data);
 		s.start();
 		s.join();
 		s.arret();
