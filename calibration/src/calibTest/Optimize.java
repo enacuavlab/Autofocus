@@ -2,22 +2,24 @@ package calibTest;
 
 import java.util.List;
 
+import org.apache.commons.math3.optim.InitialGuess;
+import org.apache.commons.math3.optim.MaxEval;
+import org.apache.commons.math3.optim.PointVectorValuePair;
 import org.apache.commons.math3.optim.nonlinear.vector.ModelFunction;
 import org.apache.commons.math3.optim.nonlinear.vector.ModelFunctionJacobian;
 import org.apache.commons.math3.optim.nonlinear.vector.Target;
 import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.jacobian.LevenbergMarquardtOptimizer;
-import org.apache.commons.math3.optim.*;
 
-import data.Vecteur;
+import filtre.VecteurFiltrable;
 
 public class Optimize {
 
 	MyFunction error = new MyFunction();
 	MyJacobian jac = new MyJacobian();
 	
-	public Optimize(List<Vecteur> data) {
-		for(Vecteur v : data) {
+	public Optimize(List<VecteurFiltrable<Double>> data) {
+		for(VecteurFiltrable<Double> v : data) {
 			error.add(v);
 			jac.add(v);
 		}
@@ -30,7 +32,7 @@ public class Optimize {
 		 final double[] weights = error.calculateWeight();
 
 		// guess
-		double[] startPoint = {300,300,300,5,5,5};
+		double[] startPoint = error.getInitialGuess();
 
 		final LevenbergMarquardtOptimizer optimizer = new LevenbergMarquardtOptimizer();
 
