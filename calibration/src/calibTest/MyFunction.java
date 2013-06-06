@@ -35,80 +35,71 @@ public class MyFunction implements MultivariateVectorFunction {
     }
     
     public double[] calculateWeight() {
-    	//Tout les points sont à 1 donc on ne s'embete pas
-    	return calculateTarget();
+        double[] target = new double[y.size()];
+        for (int i = 0; i < y.size(); i++) {
+                target[i] = 1;
+        }
+        return target;
     }
 
-    private int getMinX() {
-    	int index = 0;
-    	int i = 1;
+    private double getMinX() {
+    	double res = x.get(0);
     	for(double v : x){
-    		if(x.get(index) > v) {
-    			index = i;
+    		if(res > v) {
+    			res = v;
     		}
-    		i++;
     	}
-    	return index;
+    	return res;
     }
     
-    private int getMaxX() {
-    	int index = 0;
-    	int i = 1;
+    private double getMaxX() {
+    	double res = x.get(0);
     	for(double v : x){
-    		if(x.get(index) < v) {
-    			index = i;
+    		if(res < v) {
+    			res = v;
     		}
-    		i++;
     	}
-    	return index;
+    	return res;
     }
     
-    private int getMinY() {
-    	int index = 0;
-    	int i = 1;
+    private double getMinY() {
+    	double res = y.get(0);
     	for(double v : y){
-    		if(y.get(index) > v) {
-    			index = i;
+    		if(res > v) {
+    			res = v;
     		}
-    		i++;
     	}
-    	return index;
+    	return res;
     }
     
-    private int getMaxY() {
-    	int index = 0;
-    	int i = 1;
+    private double getMaxY() {
+    	double res = y.get(0);
     	for(double v : y){
-    		if(y.get(index) < v) {
-    			index = i;
+    		if(res < v) {
+    			res = v;
     		}
-    		i++;
     	}
-    	return index;
+    	return res;
     }
     
-    private int getMinZ() {
-    	int index = 0;
-    	int i = 1;
-    	for(double v : z){
-    		if(z.get(index) > v) {
-    			index = i;
+    private double getMinZ() {
+    	double res = y.get(0);
+    	for(double v : y){
+    		if(res > v) {
+    			res = v;
     		}
-    		i++;
     	}
-    	return index;
+    	return res;
     }
     
-    private int getMaxZ() {
-    	int index = 0;
-    	int i = 1;
-    	for(double v : z){
-    		if(z.get(index) < v) {
-    			index = i;
+    private double getMaxZ() {
+    	double res = y.get(0);
+    	for(double v : y){
+    		if(res < v) {
+    			res = v;
     		}
-    		i++;
     	}
-    	return index;
+    	return res;
     }
     
     
@@ -133,7 +124,7 @@ public class MyFunction implements MultivariateVectorFunction {
         	smx = (x.get(i) - variables[0])*variables[3];
         	smy = (y.get(i) - variables[1])*variables[4];
         	smz = (z.get(i) - variables[2])*variables[5];
-            values[i] = (smx*smx + smy*smy + smz*smz);
+            values[i] = 1 - (smx*smx + smy*smy + smz*smz);
         }
         return values;
 	}// end of value function

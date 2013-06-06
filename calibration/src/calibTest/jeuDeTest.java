@@ -53,14 +53,14 @@ public class jeuDeTest {
 			theta = myRandomDouble(-Math.PI, Math.PI);
 			phi = myRandomDouble(-Math.PI / 2, Math.PI / 2);
 			tempx = radius * Math.cos(theta) * Math.cos(phi);
-			System.out.println(theta + phi);
-			System.out.println("tempx : " + tempx);
+			//System.out.println(theta + phi);
+			//System.out.println("tempx : " + tempx);
 			theta = myRandomDouble(-Math.PI, Math.PI);
 			phi = myRandomDouble(-Math.PI / 2, Math.PI / 2);
 			tempy = radius * Math.sin(theta) * Math.cos(phi);
-			System.out.println(theta + phi);
+			//System.out.println(theta + phi);
 			phi = myRandomDouble(-Math.PI / 2, Math.PI / 2);
-			System.out.println(theta + phi);
+			//System.out.println(theta + phi);
 			tempz = radius * Math.sin(phi);
 			listclean.add(new Vecteur(
 					((1/sensibility.getX()) * tempx) + bias.getX(),
