@@ -12,6 +12,7 @@ import data.Data;
 
 public class StartUp {
 
+
 	public StartUp(TypeCalibration t, JPanel panel_dessin,int id) throws IvyException, InterruptedException {
 		if (t == TypeCalibration.MAGNETOMETER) {
 			System.out.println("type");
