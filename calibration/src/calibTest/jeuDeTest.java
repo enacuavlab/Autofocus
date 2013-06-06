@@ -36,7 +36,7 @@ public class jeuDeTest {
 	 * @param nb it is the number of points generated;
 	 * 
 	 */
-	public jeuDeTest(double radius, Vecteur sensibility, Vecteur bias,
+	public jeuDeTest(double radius, Vecteur bias, Vecteur sensibility,
 			double noise,int nb) {
 		this.radius = radius;
 		this.bias = bias;
@@ -63,9 +63,9 @@ public class jeuDeTest {
 			System.out.println(theta + phi);
 			tempz = radius * Math.sin(phi);
 			listclean.add(new Vecteur(
-					(sensibility.getX() * tempx) + bias.getX(),
-					(sensibility.getY() * tempy) + bias.getY(),
-					(sensibility.getZ() * tempz) + bias.getZ()
+					((1/sensibility.getX()) * tempx) + bias.getX(),
+					((1/sensibility.getY()) * tempy) + bias.getY(),
+					((1/sensibility.getZ()) * tempz) + bias.getZ()
 					));
 			ListIterator<VecteurFiltrable<Double>> iter = listclean
 					.listIterator();
@@ -113,7 +113,8 @@ public class jeuDeTest {
 			Vecteur temp;
 				while (iter.hasNext()) {
 				temp = (Vecteur) iter.next();
-				System.out.println(temp);
+				System.out.println(" [" + temp.getX() + ";" + temp.getY() + ";"
+						+ temp.getZ() + "] ");
 			}
 			System.out.println();
 		} else {
@@ -134,7 +135,7 @@ public class jeuDeTest {
 		double radius = 1;
 		Vecteur bias = new Vecteur(0, 0, 0);
 		Vecteur sensibility = new Vecteur(1, 1, 1);
-		jeuDeTest test = new jeuDeTest(radius, bias, sensibility, 0.0, 10);
+		jeuDeTest test = new jeuDeTest(radius, bias, sensibility, 1.0, 10);
 		test.affiche(true);
 	}
 }
