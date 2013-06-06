@@ -11,6 +11,8 @@ import org.apache.commons.math3.optim.nonlinear.vector.Target;
 import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.jacobian.LevenbergMarquardtOptimizer;
 
+import data.Vecteur;
+
 import filtre.VecteurFiltrable;
 
 public class Optimize {
@@ -24,7 +26,7 @@ public class Optimize {
 			jac.add(v);
 		}
 	}
-	
+
 	public void optimize() {
 
 
