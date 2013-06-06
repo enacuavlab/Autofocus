@@ -14,7 +14,7 @@ import data.Data;
 
 public class StartUp {
 
-	public StartUp(TypeCalibration t, JPanel panelDessin,int id){
+	public StartUp(TypeCalibration t, JPanel panelDessin,int id,IMU imu){
 		if (t == TypeCalibration.MAGNETOMETER) {
 			System.out.println("type");
 			Sphere sp = new Sphere(5, 5);
@@ -31,7 +31,7 @@ public class StartUp {
 				//	"/home/gui/paparazzi/var/logs/13_05_29__10_15_23.data");
 			//Sender s = new Sender("C:\\Users\\Alino�\\Desktop\\13_05_29__10_15_23.data");
 			System.out.println("sender");
-			IMU imu = new IMU(t, id, data);
+			imu.ListenIMU(data, t);
 			/*s.start();
 			s.join();
 			s.arret();*/
@@ -41,13 +41,13 @@ public class StartUp {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			imu.arret();
+			imu.stopListenImu(t);
 			System.out.println("fin");
 			System.out.println(data.toString());
 		}
 	}
 	
-	public StartUp(TypeCalibration t , JPanel panelDessin ,int id , JPanel panelInst, JPanel panelBar){
+	public StartUp(TypeCalibration t , JPanel panelDessin ,int id , JPanel panelInst, JPanel panelBar, IMU imu){
 		if (t == TypeCalibration.ACCELEROMETER) {
 			System.out.println("Accelero");
 			AffichAccel affAccel = new AffichAccel();
@@ -62,15 +62,14 @@ public class StartUp {
 			panelBar.add(affAccel.getProgressBar());
 			panelBar.validate();
 			
-			
-			IMU imu = new IMU(t, id, data);
+			imu.ListenIMU(data, t);
 			try {
 				Thread.sleep(150000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			imu.arret();
+			imu.stopListenImu(t);
 			System.out.println("fin");
 			
 		}
