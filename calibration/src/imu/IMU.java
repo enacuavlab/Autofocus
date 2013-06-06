@@ -1,3 +1,6 @@
+/**
+ * Package of the IMU. This is all the interactions with the IVY BUS
+ */
 package imu;
 
 import java.util.ArrayList;
@@ -21,11 +24,14 @@ import fr.dgac.ivy.IvyMessageListener;
  */
 
 public class IMU implements IvyMessageListener {
+	/**
+	 *this is the list of drone's id currently emitting on the IVY BUS
+	 */
 	private List <Integer> listeId;
 	private Ivy bus;
 	//private TypeCalibration calibration;
 	private int idDrone;
-	//private Data data;
+	private Data data=null;
 	private Boolean rawOnBus = false;
 	private String telemetryMode=null;
 	private int reqid = 176;
@@ -54,6 +60,7 @@ public class IMU implements IvyMessageListener {
 	
 	public void ListenIMU(final Data data, TypeCalibration calibration){
 		try {
+			this.data=data;
 			// build the regexp according to parameters
 			StringBuffer regexp = new StringBuffer("^");
 			regexp.append(idDrone);
@@ -86,6 +93,10 @@ public class IMU implements IvyMessageListener {
 		}
 	}
 	
+	public void deleteData(){
+		data = null;
+	}
+	
 	public void stopListenImu(TypeCalibration calibration){
 		StringBuffer regexp = new StringBuffer("^");
 		regexp.append(idDrone);
@@ -114,7 +125,8 @@ public class IMU implements IvyMessageListener {
 								Integer.valueOf(idDrone)))
 							//System.out.println("indexTelemetry"+ indexTelemetry);
 							telemetryMode = args[1].split(",")[indexTelemetry-2];
-						//System.out.println("Imu telemetry mode" + telemetryMode);
+						// it is considered that the two first DL_SETTINGS of the .XML of
+						// the drone are unused 
 					}
 				});
 	}

@@ -31,6 +31,4 @@ public class Data {
 	public String toString() {
 		return list.toString();
 	}
-	
-
 }
