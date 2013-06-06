@@ -39,6 +39,7 @@ public class IvyRawListener extends Thread implements IvyMessageListener {
 	public Boolean isRawOnBus() {
 		return rawOnBus;
 	}
+	
 
 	public int getTelemetryMode() {
 		if (telemetryMode != null){
