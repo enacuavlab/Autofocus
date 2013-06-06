@@ -29,19 +29,12 @@ public class StartUp {
 			panelDessin.validate();
 			//Sender s = new Sender(
 				//	"/home/gui/paparazzi/var/logs/13_05_29__10_15_23.data");
-			//Sender s = new Sender("C:\\Users\\Alinoï¿½\\Desktop\\13_05_29__10_15_23.data");
+			Sender s = new Sender("C:\\Users\\Alinoé\\Desktop\\13_05_29__10_15_23.data");
 			System.out.println("sender");
 			imu.ListenIMU(data, t);
 			/*s.start();
 			s.join();
 			s.arret();*/
-			try {
-				Thread.sleep(150000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			imu.stopListenImu(t);
 			System.out.println("fin");
 			System.out.println(data.toString());
 		}
