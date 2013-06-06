@@ -5,27 +5,35 @@ import java.util.List;
 
 import org.apache.commons.math3.analysis.MultivariateMatrixFunction;
 
+import data.Vecteur;
+
 public class MyJacobian implements MultivariateMatrixFunction {
 
-	private List<Double> x;
-	private List<Double> y;
-
+    private List<Double> x;
+    private List<Double> y;
+    private List<Double> z;
+    
 	public MyJacobian() {
-		x = new ArrayList<Double>();
-		y = new ArrayList<Double>();
+        x = new ArrayList<Double>();
+        y = new ArrayList<Double>();
+        z = new ArrayList<Double>();
 	}
-
-	public void addPoint(double x, double y) {
-		this.x.add(x);
-		this.y.add(y);
-	}
+	
+    public void add(Vecteur v) {
+    	this.x.add(v.getX());
+    	this.y.add(v.getY());
+    	this.z.add(v.getZ());
+    }
 
 	public double[][] value(double[] variables) {
-		double[][] jacobian = new double[x.size()][3];
+		double[][] jacobian = new double[x.size()][6];
 		for (int i = 0; i < jacobian.length; ++i) {
-			jacobian[i][0] = x.get(i) * x.get(i);
-			jacobian[i][1] = x.get(i);
-			jacobian[i][2] = 1.0;
+			jacobian[i][0] = 2*(variables[0]-x.get(i))*variables[3];
+			jacobian[i][1] = 2*(variables[1]-y.get(i))*variables[4];
+			jacobian[i][2] = 2*(variables[2]-z.get(i))*variables[5];
+			jacobian[i][3] = 2*(x.get(i) - variables[0])*(x.get(i) - variables[0]);
+			jacobian[i][4] = 2*(y.get(i) - variables[1])*(y.get(i) - variables[1]);
+			jacobian[i][5] = 2*(z.get(i) - variables[2])*(z.get(i) - variables[2]);
 		}
 		return jacobian;
 	}

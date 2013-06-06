@@ -1,5 +1,7 @@
 package calibTest;
 
+import java.util.List;
+
 import org.apache.commons.math3.optim.nonlinear.vector.ModelFunction;
 import org.apache.commons.math3.optim.nonlinear.vector.ModelFunctionJacobian;
 import org.apache.commons.math3.optim.nonlinear.vector.Target;
@@ -7,46 +9,33 @@ import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.jacobian.LevenbergMarquardtOptimizer;
 import org.apache.commons.math3.optim.*;
 
+import data.Vecteur;
+
 public class Optimize {
 
-	public static void main(String[] args) {
+	MyFunction error = new MyFunction();
+	MyJacobian jac = new MyJacobian();
+	
+	public Optimize(List<Vecteur> data) {
+		for(Vecteur v : data) {
+			error.add(v);
+			jac.add(v);
+		}
+	}
+	
+	public void optimize() {
 
-		MyFunction error = new MyFunction();
-		MyJacobian jac = new MyJacobian();
-		
-		 error.addPoint(1, 34.234064369);
-		 error.addPoint(2, 68.2681162306);
-		 error.addPoint(3, 118.6158990846);
-		 error.addPoint(4, 184.1381972386);
-		 error.addPoint(5, 266.5998779163);
-		 error.addPoint(6, 364.1477352516);
-		 error.addPoint(7, 478.0192260919);
-		 error.addPoint(8, 608.1409492707);
-		 error.addPoint(9, 754.5988686671);
-		 error.addPoint(10, 916.1288180859);
-		 
-		 jac.addPoint(1, 34.234064369);
-		 jac.addPoint(2, 68.2681162306);
-		 jac.addPoint(3, 118.6158990846);
-		 jac.addPoint(4, 184.1381972386);
-		 jac.addPoint(5, 266.5998779163);
-		 jac.addPoint(6, 364.1477352516);
-		 jac.addPoint(7, 478.0192260919);
-		 jac.addPoint(8, 608.1409492707);
-		 jac.addPoint(9, 754.5988686671);
-		 jac.addPoint(10, 916.1288180859);
 
 		// weight Matrix
-		final double[] weights = new double[12];
+		 final double[] weights = error.calculateWeight();
 
 		// guess
-		double[] startPoint = { 1, 0.0 }; // expectedSolution : a = 2, b=1; (2x
-											// + 1)
+		double[] startPoint = {300,300,300,5,5,5};
 
 		final LevenbergMarquardtOptimizer optimizer = new LevenbergMarquardtOptimizer();
 
 		final PointVectorValuePair optimum = optimizer.optimize(
-				new MaxEval(100), new InitialGuess(startPoint), new Target(error.calculateTarget),
+				new MaxEval(100), new InitialGuess(startPoint), new Target(error.calculateTarget()),
 				new Weight(weights), new ModelFunction(error), new ModelFunctionJacobian(jac));
 
 		final double[] solution = optimum.getPoint();
