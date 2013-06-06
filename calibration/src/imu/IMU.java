@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import calibTest.PrintLog;
+
 import common.TypeCalibration;
 
 import data.Data;
@@ -66,13 +68,18 @@ public class IMU implements IvyMessageListener {
 	 * aircraft name
 	 */
 	private String acName;
+	/**
+	 * log file
+	 */
+	private PrintLog log;
 
 	/**
 	 * allows to get back the right RAW_DATA messages
 	 * 
 	 * @throws IvyException
 	 */
-	public IMU() throws IvyException {
+	public IMU(PrintLog log) throws IvyException {
+		this.log = log;
 		idDrone = -1;
 		// this.data=data;
 		listeId = new ArrayList<Integer>();
@@ -100,7 +107,7 @@ public class IMU implements IvyMessageListener {
 	 * @param data
 	 * @param calibration
 	 */
-	public void ListenIMU(final Data data, TypeCalibration calibration) {
+	public void ListenIMU(final Data data, final TypeCalibration calibration) {
 		try {
 			this.data = data;
 			this.calibration = calibration;
@@ -114,17 +121,18 @@ public class IMU implements IvyMessageListener {
 			regexp.append(" ([\\-]*[0-9]+)");
 			regexp.append(" ([\\-]*[0-9]+)");
 			String test = regexp.toString();
-			System.out.println(test);
-			bus.start(null);
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-					// System.out.println("IMU : " + "x:" + args[0] + " y:" +
-					// args[1] + " z:" + args[2]);
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							data.store(Integer.valueOf(args[0]),
 									Integer.valueOf(args[1]),
 									Integer.valueOf(args[2]));
+							log.add(idDrone
+									+ (TypeCalibration.MAGNETOMETER
+											.equals(calibration) ? " IMU_MAG_RAW"
+											: " IMU_ACCEL_RAW") + " " + args[0]
+									+ " " + args[1] + " " + args[2]);
 						}
 					});
 				}
@@ -385,4 +393,22 @@ public class IMU implements IvyMessageListener {
 		System.out.println(args[0] + " " + args[1] + " " + args[2]);
 	}
 
+	/**
+	 * getter of data
+	 * 
+	 * @return data
+	 */
+	public Data getData() {
+		return data;
+	}
+
+	/**
+	 * getter of the log
+	 * 
+	 * @return log
+	 */
+	public PrintLog getLog() {
+		return log;
+
+	}
 }
