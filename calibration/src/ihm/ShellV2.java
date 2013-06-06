@@ -97,7 +97,7 @@ public class ShellV2 extends JFrame {
 	 */
 	private void initialise() {
 		// Pour test
-		//btn_accelero.setEnabled(true);
+		btn_accelero.setEnabled(true);
 		//btn_magneto.setEnabled(true);
 		// Active les boutons
 		activateButton(mod);
@@ -398,7 +398,7 @@ public class ShellV2 extends JFrame {
 		panel_center.add(panel_dessin);
 		//Panel instruction
 		JPanel panel_inst = new JPanel();
-		panel_inst.setBounds(825, 0, 300, 425);
+		panel_inst.setBounds(825, 0, 320, 420);
 		panel_inst.setBorder(border_mod);
 		panel_inst.setBackground(Color.WHITE);
 		panel_center.add(panel_inst);
@@ -531,7 +531,7 @@ public class ShellV2 extends JFrame {
 					public void run() {
 						try {
 							StartUp start = new StartUp(
-									TypeCalibration.MAGNETOMETER, panel_dessin);
+									TypeCalibration.MAGNETOMETER, panel_dessin,id);
 						} catch (IvyException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
