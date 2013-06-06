@@ -37,7 +37,7 @@ public class IMU implements IvyMessageListener {
 	 * 
 	 * @throws IvyException
 	 */
-	public IMU() {
+	public IMU() throws IvyException {
 		idDrone = -1;
 		//this.data=data;
 		listeId=new ArrayList<Integer>();
@@ -45,6 +45,7 @@ public class IMU implements IvyMessageListener {
 		//this.calibration = calibration;
 		// starts the bus on the default domain
 		bus = new Ivy("IMU", "IMU Ready", null);
+		bus.start(null);
 	}
 
 	public void setId(int id){
@@ -106,12 +107,14 @@ public class IMU implements IvyMessageListener {
 						rawOnBus = true;
 					}
 				});
-		bus.bindMsg("^" + idDrone + " DL_VALUES ([0-9]+) (.*)",
+		bus.bindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)",
 				new IvyMessageListener() {
 					public void receive(IvyClient arg0, String[] args) {
 						if (Integer.valueOf(args[0]).equals(
 								Integer.valueOf(idDrone)))
-							telemetryMode = args[1].split(",")[indexTelemetry];
+							//System.out.println("indexTelemetry"+ indexTelemetry);
+							telemetryMode = args[1].split(",")[indexTelemetry-2];
+						//System.out.println("Imu telemetry mode" + telemetryMode);
 					}
 				});
 	}
@@ -129,7 +132,6 @@ public class IMU implements IvyMessageListener {
 		return rawOnBus;
 	}
 	public void IvyIdListener() throws IvyException {
-		bus = new Ivy("IvyIdListener", "IvyIdListener Ready", null);
 		bus.bindMsg("^([0-9]+) [A-Za-z0-9]", new IvyMessageListener(){
 			public void receive(IvyClient arg0, String[] args) {
 				if (!listeId.contains(Integer.valueOf(args[0]))) {
@@ -156,9 +158,15 @@ public class IMU implements IvyMessageListener {
 		return listeId;
 	}
 
-	public int getTelemetryMode() {
+	public Integer getTelemetryMode() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (telemetryMode != null){
-			return Integer.valueOf(telemetryMode);
+			return  Double.valueOf(telemetryMode).intValue();
 		} else return 0;
 	}
 	

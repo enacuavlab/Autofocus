@@ -102,7 +102,12 @@ public class ShellV2 extends JFrame {
 		//btnAccelero.setEnabled(true);
 		//btnMagneto.setEnabled(true);
 		//IMU
-		imu = new IMU();
+		try {
+			imu = new IMU();
+		} catch (IvyException e) {
+			JOptionPane.showMessageDialog(null, "Ivy Bus problem"
+					+ name,"Error Bus ", JOptionPane.ERROR_MESSAGE);
+		}
 		// Active les boutons
 		activateButton(mod);
 		// Panel titre
@@ -258,13 +263,16 @@ public class ShellV2 extends JFrame {
 		combo.addItem(" ");
 		// combo.addItem("1");
 		try {
+			System.out.println("IvyIdListener");
 			imu.IvyIdListener();
+			System.out.println("Passé");
 			ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
 			if (!l.isEmpty()) {
 				for (Integer i : l) {
 					combo.addItem(i.toString());
 				}
 			}
+			else System.out.println("Florent est une merde");
 			imu.stopIdListener();
 		} catch (IvyException eivy) {
 			eivy.printStackTrace();
@@ -284,7 +292,6 @@ public class ShellV2 extends JFrame {
 						imu.IvyConfigListener();
 						name = imu.getAcName();
 						url = imu.getSettingsURL();
-						imu.finalize();
 						label.setText("<html>Le nom de votre drone d'id "
 								+ Integer.toString(id) + " est : </html>");
 						dronesName.setText(name);
@@ -333,6 +340,7 @@ public class ShellV2 extends JFrame {
 			}
 			imu.IvyRawListener(d.getIndex());
 			int modeActuel = imu.getTelemetryMode();
+			System.out.println("Mode actuel : " + modeActuel );
 			comboMod.setSelectedIndex(modeActuel);
 			comboMod.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
