@@ -1,6 +1,10 @@
 package common;
 
+import java.util.prefs.PreferenceChangeEvent;
+
 import javax.swing.JPanel;
+
+import calibTest.PrintLog;
 
 import ellipsoide.AffichAccel;
 import ellipsoide.Sphere;
@@ -22,6 +26,7 @@ public class StartUp {
 			System.out.println("filtre");
 			Data data = new Data(t, filtre);
 			System.out.println("data");
+			PrintLog prlog = new PrintLog();
 			//GUIHelper.showOnFrame(sp.getAffichage(), "test");
 			
 			//(sp.getAffichage()).setBounds(125, 0, 775, 425);
@@ -29,9 +34,17 @@ public class StartUp {
 			panelDessin.validate();
 			//Sender s = new Sender(
 				//	"/home/gui/paparazzi/var/logs/13_05_29__10_15_23.data");
-			Sender s = new Sender("C:\\Users\\Alinoé\\Desktop\\13_05_29__10_15_23.data");
+			try {
+				Sender s = new Sender("C:\\Users\\Alinoé\\Desktop\\13_05_29__10_15_23.data");
+			} catch (IvyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.out.println("sender");
-			imu.ListenIMU(data, t);
+			imu.ListenIMU(data, t,prlog);
 			/*s.start();
 			s.join();
 			s.arret();*/
@@ -47,6 +60,7 @@ public class StartUp {
 			FilterAccel filtre = new FilterAccel(40,t,200,15,affAccel);
 			System.out.println("filtre");
 			Data data = new Data(t, filtre);
+			PrintLog prlog = new PrintLog();
 			System.out.println("data");
 			panelDessin.add(affAccel.getSphere().getAffichage());
 			panelDessin.validate();
@@ -55,7 +69,7 @@ public class StartUp {
 			panelBar.add(affAccel.getProgressBar());
 			panelBar.validate();
 			
-			imu.ListenIMU(data, t);
+			imu.ListenIMU(data, t,prlog);
 			try {
 				Thread.sleep(150000);
 			} catch (InterruptedException e) {
@@ -69,6 +83,6 @@ public class StartUp {
 	}
 
 	public static void main(String args[]) throws IvyException, InterruptedException {
-		new StartUp(TypeCalibration.MAGNETOMETER,null,5);
+		
 	}
 }

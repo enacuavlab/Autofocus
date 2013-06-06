@@ -157,8 +157,9 @@ public class IMU implements IvyMessageListener {
 	/**
 	 * release the handle on data
 	 */
-	public void deleteData() {
+	public void deleteDataLog() {
 		data = null;
+		log = null;
 	}
 
 	/**

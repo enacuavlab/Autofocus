@@ -12,16 +12,19 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import calibTest.CalibrateSystem;
+
 public class Result extends JDialog {
 	private JTextArea textResult;
 	private JButton btnReturn, btnCopy, btnContinue;
 	TextTransfer transfer = new TextTransfer();
 	private IMU imu;
-	private ShellV2 shell;
+	private ShellV2 parent;
+
 	
-	public Result(JFrame parent, String title, boolean modal, IMU imu , ShellV2 shell){
-	    super(parent, title, modal);
-	    this.shell = shell;
+	public Result(ShellV2 parent, String title, boolean modal, IMU imu){
+	    super(parent,title, modal);
+	    this.parent=parent;
 	    this.imu = imu;
 	    this.setSize(550, 270);
 	    this.setLocationRelativeTo(null);
@@ -34,11 +37,12 @@ public class Result extends JDialog {
 		JPanel panel = new JPanel();
 		this.getContentPane().add(panel);
 		panel.setLayout(null);
-		textResult = new JTextArea();
-		textResult.setEditable(false);
-		textResult.setLineWrap(true);
-		textResult.setBackground(Color.WHITE);
-		textResult.setBounds(10,10,530,180);
+		imu.getLog().print("/home/gui/test.data");
+		textResult = new CalibrateSystem(imu.getCalibration(),System.getenv("HOME")+"/paparazzi","/home/gui/test.data");
+		//textResult.setEditable(false);
+		//textResult.setLineWrap(true);
+		//textResult.setBackground(Color.WHITE);
+		//textResult.setBounds(10,10,530,180);
 		
 		panel.add(textResult);
 		
@@ -60,13 +64,13 @@ public class Result extends JDialog {
 		btnReturn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				setVisible(false);
-				shell.backHome();
+				parent.backHome();
 			}
 		});
 		btnContinue.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				setVisible(false);
-				imu.ListenIMU(imu.getData(), imu.getCalibration());
+				imu.ListenIMU(imu.getData(), imu.getCalibration(), imu.getLog());
 			}
 		});
 		

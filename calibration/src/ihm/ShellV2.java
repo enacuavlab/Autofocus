@@ -93,12 +93,14 @@ public class ShellV2 extends JFrame {
 	 */
 	private Result result;
 	
+	private ShellV2 me= null;
 	/**
 	 * Constructeur qui initialise la fenetre et met en place le cardLayout
 	 */
 	public ShellV2() {
 		super();
 		// Shell
+		me=this;
 		setTitle("Autofocus");
 		setSize(1600, 800);
 		setLocationRelativeTo(null);
@@ -526,7 +528,7 @@ public class ShellV2 extends JFrame {
 		panelSouthCenter.add(btnReturn, gbcBtnReturn);
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				imu.deleteData();
+				imu.deleteDataLog();
 				panel.removeAll();
 				cl.show(content,listContent[0]);
 			}
@@ -558,7 +560,7 @@ public class ShellV2 extends JFrame {
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				imu.stopListenImu(imu.getCalibration());
-				
+				result = new Result(me, "Result", true ,imu);
 			}
 		});
 	}
@@ -608,7 +610,7 @@ public class ShellV2 extends JFrame {
 	}
 	
 	public void backHome(){
-		imu.deleteData();
+		imu.deleteDataLog();
 		TypeCalibration t = imu.getCalibration();
 		if (t==TypeCalibration.ACCELEROMETER){
 			panelAccl.removeAll();
