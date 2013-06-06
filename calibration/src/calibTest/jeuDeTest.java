@@ -61,8 +61,8 @@ public class jeuDeTest {
 			phi = myRandomDouble(-Math.PI / 2, Math.PI / 2);
 			System.out.println(theta + phi);
 			tempz = radius * Math.sin(phi);
-			listclean.add(new Vecteur(sensibility.getX()
-					* (tempx - bias.getX()), sensibility.getY()
+			listclean.add(new Vecteur((sensibility.getX()
+					* tempx) - bias.getX()), (sensibility.getY()
 					* (tempy - bias.getY()), sensibility.getZ()
 					* (tempz - bias.getZ())));
 			ListIterator<VecteurFiltrable<Double>> iter = listclean
