@@ -1,8 +1,8 @@
 package ihm;
 
 import fr.dgac.ivy.IvyException;
-import iddrone.IvyIdListener;
 import imu.GetConfigException;
+import imu.IMU;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -31,8 +31,6 @@ import javax.swing.border.Border;
 
 import rawmode.ExtractRawData;
 import rawmode.IncorrectXmlException;
-import rawmode.IvyConfigListener;
-import rawmode.IvyRawListener;
 
 import common.StartUp;
 import common.TypeCalibration;
@@ -42,7 +40,6 @@ import common.TypeCalibration;
  *@author SAAS Guillaume
  *@version 2.0
  */
-
 public class ShellV2 extends JFrame {
 
     private JButton btnAccelero, btnMagneto, btnGyro;
@@ -57,6 +54,7 @@ public class ShellV2 extends JFrame {
 	private String mod;// Pour savoir quel bouton activer
 	private Action ac1, ac2, ac3;
 	private Result result;
+	private IMU imu;
 
 	/**
 	 * Constructeur qui initialise la fenetre et met en place le cardLayout
@@ -103,6 +101,8 @@ public class ShellV2 extends JFrame {
 		// Pour test
 		//btnAccelero.setEnabled(true);
 		//btnMagneto.setEnabled(true);
+		//IMU
+		imu = new IMU();
 		// Active les boutons
 		activateButton(mod);
 		// Panel titre
@@ -258,14 +258,14 @@ public class ShellV2 extends JFrame {
 		combo.addItem(" ");
 		// combo.addItem("1");
 		try {
-			IvyIdListener ivyid = new IvyIdListener();
-			ArrayList<Integer> l = (ArrayList<Integer>) ivyid.getList();
+			imu.IvyIdListener();
+			ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
 			if (!l.isEmpty()) {
 				for (Integer i : l) {
 					combo.addItem(i.toString());
 				}
 			}
-			ivyid.stop();
+			imu.stopIdListener();
 		} catch (IvyException eivy) {
 			eivy.printStackTrace();
 		}
@@ -279,11 +279,12 @@ public class ShellV2 extends JFrame {
 					panelMod.setVisible(false);
 				} else {
 					id = Integer.parseInt(combo.getSelectedItem().toString());
+					imu.setId(id);
 					try {
-						IvyConfigListener ivyConfig = new IvyConfigListener(id);
-						name = ivyConfig.getAcName();
-						url = ivyConfig.getSettingsURL();
-						ivyConfig.finalize();
+						imu.IvyConfigListener();
+						name = imu.getAcName();
+						url = imu.getSettingsURL();
+						imu.finalize();
 						label.setText("<html>Le nom de votre drone d'id "
 								+ Integer.toString(id) + " est : </html>");
 						dronesName.setText(name);
@@ -297,6 +298,10 @@ public class ShellV2 extends JFrame {
 										null,
 										"Bus problem, check if ground station is launched ",
 										"Bus error", JOptionPane.ERROR_MESSAGE);
+					} catch (IvyException e1){
+						e1.printStackTrace();
+					} catch (InterruptedException e1){
+						e1.printStackTrace();
 					}
 
 				}
@@ -326,8 +331,8 @@ public class ShellV2 extends JFrame {
 					comboMod.addItem(i.toString());
 				}
 			}
-			final IvyRawListener ivyraw = new IvyRawListener(id, d.getIndex());
-			int modeActuel = ivyraw.getTelemetryMode();
+			imu.IvyRawListener(d.getIndex());
+			int modeActuel = imu.getTelemetryMode();
 			comboMod.setSelectedIndex(modeActuel);
 			comboMod.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -336,11 +341,11 @@ public class ShellV2 extends JFrame {
 						try {
 							Integer mod = new Integer(comboMod
 									.getSelectedIndex());
-							ivyraw.sendMode(id, mod.doubleValue());
+							imu.sendMode(id, mod.doubleValue());
 						} catch (IvyException e1) {
 							e1.printStackTrace();
 						}
-						if (ivyraw.isRawOnBus()) {
+						if (imu.isRawOnBus()) {
 							btnAccelero.setEnabled(true);
 							btnMagneto.setEnabled(true);
 						}
@@ -526,7 +531,7 @@ public class ShellV2 extends JFrame {
 					public void run() {
 						StartUp start = new StartUp(
 								TypeCalibration.ACCELEROMETER, panelDessin, id,
-								panelInst, panelBar);
+								panelInst, panelBar,imu);
 
 					}
 				};
@@ -537,7 +542,7 @@ public class ShellV2 extends JFrame {
 				Thread model = new Thread() {
 					public void run() {
 						StartUp start = new StartUp(
-								TypeCalibration.MAGNETOMETER, panelDessin, id);
+								TypeCalibration.MAGNETOMETER, panelDessin, id,imu);
 
 					}
 				};

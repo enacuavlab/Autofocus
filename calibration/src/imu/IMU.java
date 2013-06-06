@@ -5,15 +5,18 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-
-import fr.dgac.ivy.*;
 import common.TypeCalibration;
+
 import data.Data;
+import fr.dgac.ivy.Ivy;
+import fr.dgac.ivy.IvyClient;
+import fr.dgac.ivy.IvyException;
+import fr.dgac.ivy.IvyMessageListener;
 
 /**
- * This is the class that links the calibrating program to the IVY bus in order
- * to get the RAW_DATA messages.
- * 
+ * This is the class that links the calibrating program to the
+ * IVY bus in order to get the RAW_DATA messages.
+ *
  * @author Florent GERVAIS
  */
 
