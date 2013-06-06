@@ -27,7 +27,7 @@ import fr.dgac.ivy.IvyMessageListener;
 
 public class IMU implements IvyMessageListener {
 	/**
-	 * this is the list of drone's id currently emiting on the IVY BUS
+	 * this is the list of drone's id currently sending on the IVY BUS
 	 */
 	private List<Integer> listeId;
 	/**
