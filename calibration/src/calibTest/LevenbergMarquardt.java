@@ -111,23 +111,23 @@ public class LevenbergMarquardt {
                              DenseMatrix64F X ,
                              DenseMatrix64F Y )
     {
-   
+       // X = scalepoints(X,initParam);
+    	
+    	
+    	
     	initParam.set(initialPar(X));
     	
-    	for (int i = 0; i<initParam.getNumRows();i++){
-    		System.out.println(initParam.get(i)+"ok");
-    	}
-
+    	  	
+    	
     	configure(initParam,X,Y);
     	
-    	for (int i = 0; i<initParam.getNumRows();i++){
-    		System.out.println(initParam.get(i));
-    	}
-    	
+    	System.out.println(X.getNumCols());
+
         // save the cost of the initial parameters so that it knows if it improves or not
         initialCost = cost(param,X,Y);
         
-               
+        System.out.print(true);
+        
         // iterate until the difference between the costs is insignificant
         // or it iterates too many times
         if( !adjustParam(X, Y, initialCost) ) {
@@ -162,17 +162,12 @@ public class LevenbergMarquardt {
             for( int i = 0; i < 5; i++ ) {
                 computeA(A,H,lambda);
                 
-                for(i=0;i<A.getNumRows();i++){
-                System.out.println(A.get(i)+"and "+negDelta.get(i)+" and "+d);
-                }
-                
                 System.out.println("hein");
-                /*
+                
                 if(CommonOps.solve(A,d,negDelta) ) {
                 	System.out.println("quoi");
                     return false;
                 }
-                */
                 // compute the candidate parameters
                 CommonOps.sub(param,negDelta,tempParam);
                 
@@ -184,8 +179,7 @@ public class LevenbergMarquardt {
                 
                 
                 double cost = cost(tempParam,X,Y);
-                System.out.println(cost+"cost"+ prevCost);
-                
+                System.out.println(cost+""+ prevCost);
                 if( cost < prevCost ) {
                     // the candidate parameters produced better results so use it
                     foundBetter = true;
@@ -210,10 +204,10 @@ public class LevenbergMarquardt {
      * Performs sanity checks on the input data and reshapes internal matrices.  By reshaping
      * a matrix it will only declare new memory when needed.
      */
-    protected void configure( DenseMatrix64F initParam , DenseMatrix64F X, DenseMatrix64F Y )
+    protected void configure( DenseMatrix64F initParam , DenseMatrix64F Xthree , DenseMatrix64F Y )
     {
     	
-    	//DenseMatrix64F X = new DenseMatrix64F(Xthree.getNumRows(),0);
+    	DenseMatrix64F X = new DenseMatrix64F(Xthree.getNumRows(),0);
     	
     	//X = scalepoints(Xthree,initParam);
     	
@@ -262,8 +256,14 @@ public class LevenbergMarquardt {
         
         CommonOps.subEquals(tempDH,y);
 
-       
-               
+        for (int o = 0; o<x.getNumRows();o++){
+        	System.out.println(x.get(o)+" " + tempDH.get(o));
+        }
+        
+        
+        
+        
+        
         computeNumericalJacobian(param,x,jacobian);
 
         
@@ -397,14 +397,19 @@ public class LevenbergMarquardt {
 		out.set(2,0,(CommonOps.elementMax(z)+CommonOps.elementMin(z))/2);
 		
 		out.set(3,0,2*sf/(CommonOps.elementMax(x)-CommonOps.elementMin(x)));
-		System.out.println(CommonOps.elementMax(x));
-		System.out.println(CommonOps.elementMax(y));
 		out.set(4,0,2*sf/(CommonOps.elementMax(y)-CommonOps.elementMin(y)));
 		out.set(5,0,2*sf/(CommonOps.elementMax(z)-CommonOps.elementMin(z)));
 		
 		
 		
-	return out;
+		out.set(0,0,2);
+		out.set(1,0,2);
+		out.set(2,0,2);
+		out.set(3,0,0.5);
+		out.set(4,0,0.55);
+		out.set(5,0,0.5);
+
+		return out;
 	}
 
 
