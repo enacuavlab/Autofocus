@@ -30,13 +30,13 @@ public class FilterAccel extends Filter {
 		 * @param windowSize
 		 * @param type
 		 */
-		public FilterAccel(int windowSize, TypeCalibration type,int thresholdOK,int thresholdWrong) {
+		public FilterAccel(int windowSize, TypeCalibration type,int thresholdOK,int thresholdWrong,AffichAccel affAccel) {
 			super(windowSize, type);
 			this.thresholdOK=thresholdOK;
 			this.thresholdWrong=thresholdWrong;
 			nbCorrectVect=0;
 			nbWrongVect=0;
-			affAccel= new AffichAccel();
+			this.affAccel=affAccel;
 			
 		}
 
