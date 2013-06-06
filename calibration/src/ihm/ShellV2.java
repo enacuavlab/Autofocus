@@ -41,21 +41,58 @@ import common.TypeCalibration;
  *@version 2.0
  */
 public class ShellV2 extends JFrame {
-
+	/**
+	 * Options Button to choose the type of the calibration
+	 */
     private JButton btnAccelero, btnMagneto, btnGyro;
-    private JLabel titre;
-	private JButton btnQuitter, btnStop;
-	private int id ;// Id du drone
-	private String name, url;// Nom et url du drone
+    /**
+     * Label title : title of our activity 
+     */
+    private JLabel title;
+    /**
+     * Button Quit Stop and Return in panels of calibration
+     */
+	private JButton btnQuit, btnStop,btnReturn;
+	/**
+	 * Drone's id
+	 */
+	private int id ;
+	/**
+	 * Drone's name and url of the drone's settings.xml
+	 */
+	private String name, url;
+	/**
+	 * Different panels of our Application : panelHome , panelGyro, panelMag -> background panels
+	 * content contents all the background panels
+	 * panelDessin, panelBar, panelInst to design calibration
+	 */
 	private JPanel panelHome, panelAccl, panelGyro, panelMag, content,
 			panelDessin, panelBar, panelInst;
+	/**
+	 * listContent to get an access to the background panels
+	 */
 	private String[] listContent = { "HOME", "ACCL", "MAG", "GYRO" };
+	/**
+	 * CardLayout
+	 */
 	private CardLayout cl;
-	private String mod;// Pour savoir quel bouton activer
+	/**
+	 * To know the mode 
+	 */
+	private String mod;
+	/**
+	 * Button's actions
+	 */
 	private Action ac1, ac2, ac3;
-	private Result result;
+	/**
+	 * IMU
+	 */
 	private IMU imu;
-
+	/**
+	 * Result
+	 */
+	private Result result;
+	
 	/**
 	 * Constructeur qui initialise la fenetre et met en place le cardLayout
 	 */
@@ -66,12 +103,8 @@ public class ShellV2 extends JFrame {
 		setSize(1600, 800);
 		setLocationRelativeTo(null);
 		setResizable(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // On dit à
-														// l'application de se
-														// fermer lors du clic
-														// sur la croix
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
-		result = new Result(this, "Result", true);
 		cl = new CardLayout();
 		content = new JPanel();
 		content.setLayout(cl);
@@ -118,9 +151,9 @@ public class ShellV2 extends JFrame {
 		panelTitre.setBorder(border_titre);
 		panelTitre.setPreferredSize(new Dimension(1600, 100));
 		getContentPane().add(panelTitre, "North");
-		titre = new JLabel("<html><br>Veuillez remplir les champs</html>");
-		titre.setFont(new Font("Calibri", Font.BOLD, 28));
-		panelTitre.add(titre);
+		title = new JLabel("<html><br>Veuillez remplir les champs</html>");
+		title.setFont(new Font("Calibri", Font.BOLD, 28));
+		panelTitre.add(title);
 
 		// Panel qui va contenir la combobox pour le choix de l'id du drone
 		JPanel panelNorth = new JPanel();
@@ -390,11 +423,9 @@ public class ShellV2 extends JFrame {
 		btnAccelero.removeActionListener(ac1);
 		mod = "Accl";
 		cl.show(content, listContent[1]);
-		result.setResult("vsfsnvksnkvnksdvnkdnvksdvnksdvnksdnvksdnvksdnvksdnvksdvndskvnsdkcsncslnsdkvnsdlkvndslkvnsdlvnsdlvnsdlnvlsdnvdskvnlsdvnsdlknvlsn");
-		result.showResult();
 		btnMagneto.setEnabled(false);
 		btnGyro.setEnabled(false);
-		titre.setText("<html><br>Calibration des Accéléromètre</html>");
+		title.setText("<html><br>Calibration des Accéléromètre</html>");
 		addButton(panelAccl);
 		JPanel panelNorth = new JPanel();
 		panelNorth.setPreferredSize(new Dimension(1600, 75));
@@ -438,7 +469,7 @@ public class ShellV2 extends JFrame {
 		cl.show(content, listContent[2]);
 		btnAccelero.setEnabled(false);
 		btnGyro.setEnabled(false);
-		titre.setText("<html><br>Calibration des Magnétomètres</html>");
+		title.setText("<html><br>Calibration des Magnétomètres</html>");
 		addButton(panelMag);
 		JPanel panelNorth = new JPanel();
 		panelNorth.setPreferredSize(new Dimension(1600, 100));
@@ -466,7 +497,7 @@ public class ShellV2 extends JFrame {
 		cl.show(content, listContent[3]);
 		btnAccelero.setEnabled(false);
 		btnMagneto.setEnabled(false);
-		titre.setText("<html><br>Calibration des Gyromètres</html>");
+		title.setText("<html><br>Calibration des Gyromètres</html>");
 	}
 
 	/**
@@ -486,33 +517,48 @@ public class ShellV2 extends JFrame {
 		panelSouthCenter.setLayout(gblPanelSouthCenter);
 
 		// Stop Button
-		btnStop = new JButton("STOP");
-		GridBagConstraints gbcBtnStop = new GridBagConstraints();
-		gbcBtnStop.fill = GridBagConstraints.HORIZONTAL;
-		gbcBtnStop.insets = new Insets(0, 0, 0, 5);
-		gbcBtnStop.gridx = 4;
-		gbcBtnStop.gridy = 0;
-		panelSouthCenter.add(btnStop, gbcBtnStop);
-		btnStop.addActionListener(new ActionListener() {
+		btnReturn = new JButton("Return");
+		GridBagConstraints gbcBtnReturn = new GridBagConstraints();
+		gbcBtnReturn.fill = GridBagConstraints.HORIZONTAL;
+		gbcBtnReturn.insets = new Insets(0, 0, 0, 5);
+		gbcBtnReturn.gridx = 4;
+		gbcBtnReturn.gridy = 0;
+		panelSouthCenter.add(btnReturn, gbcBtnReturn);
+		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				imu.deleteData();
+				panel.removeAll();
+				cl.show(content,listContent[0]);
 			}
 		});
 		// Quit Button
-		btnQuitter = new JButton("Quitter");
+		btnQuit = new JButton("Quitter");
 		GridBagConstraints gbcBtnQuitter = new GridBagConstraints();
 		gbcBtnQuitter.fill = GridBagConstraints.HORIZONTAL;
 		gbcBtnQuitter.gridx = 6;
 		gbcBtnQuitter.gridy = 0;
-		panelSouthCenter.add(btnQuitter, gbcBtnQuitter);
-		btnQuitter.addActionListener(new ActionListener() {
+		panelSouthCenter.add(btnQuit, gbcBtnQuitter);
+		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.removeAll();
 				panelHome.removeAll();
 				panelHome.repaint();
 				cl.show(content, listContent[0]);
 				initialise();
-
+			}
+		});
+		// Stop Button
+		btnStop = new JButton("STOP");
+		GridBagConstraints gbcBtnStop = new GridBagConstraints();
+		gbcBtnStop.fill = GridBagConstraints.HORIZONTAL;
+		gbcBtnStop.insets = new Insets(0, 0, 0, 5);
+		gbcBtnStop.gridx = 2;
+		gbcBtnStop.gridy = 0;
+		panelSouthCenter.add(btnStop, gbcBtnStop);
+		btnStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				imu.stopListenImu(imu.getCalibration());
+				
 			}
 		});
 	}
@@ -559,6 +605,19 @@ public class ShellV2 extends JFrame {
 				modGyro();
 			}
 		}
+	}
+	
+	public void backHome(){
+		imu.deleteData();
+		TypeCalibration t = imu.getCalibration();
+		if (t==TypeCalibration.ACCELEROMETER){
+			panelAccl.removeAll();
+		}
+		else if (t==TypeCalibration.MAGNETOMETER){
+			panelMag.removeAll();
+		}
+		else panelGyro.removeAll();
+		cl.show(content,listContent[0]);
 	}
 
 	/**
