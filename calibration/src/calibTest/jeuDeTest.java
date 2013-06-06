@@ -54,6 +54,7 @@ public class jeuDeTest {
 			phi = myRandomDouble(-Math.PI / 2, Math.PI / 2);
 			tempx = radius * Math.cos(theta) * Math.cos(phi);
 			System.out.println(theta + phi);
+			System.out.println("tempx : " + tempx);
 			theta = myRandomDouble(-Math.PI, Math.PI);
 			phi = myRandomDouble(-Math.PI / 2, Math.PI / 2);
 			tempy = radius * Math.sin(theta) * Math.cos(phi);
@@ -61,10 +62,11 @@ public class jeuDeTest {
 			phi = myRandomDouble(-Math.PI / 2, Math.PI / 2);
 			System.out.println(theta + phi);
 			tempz = radius * Math.sin(phi);
-			listclean.add(new Vecteur((sensibility.getX()
-					* tempx) - bias.getX()), (sensibility.getY()
-					* (tempy - bias.getY()), sensibility.getZ()
-					* (tempz - bias.getZ())));
+			listclean.add(new Vecteur(
+					(sensibility.getX() * tempx) + bias.getX(),
+					(sensibility.getY() * tempy) + bias.getY(),
+					(sensibility.getZ() * tempz) + bias.getZ()
+					));
 			ListIterator<VecteurFiltrable<Double>> iter = listclean
 					.listIterator();
 			Vecteur temp;
@@ -111,11 +113,8 @@ public class jeuDeTest {
 			Vecteur temp;
 				while (iter.hasNext()) {
 				temp = (Vecteur) iter.next();
-				System.out.println(" [" + temp.getX() + ";" + temp.getY() + ";"
-						+ temp.getZ() + "] ");
+				System.out.println(temp);
 			}
-			System.out.println();
-			System.out.println();
 			System.out.println();
 		} else {
 			ListIterator<VecteurFiltrable<Double>> iternoised = listnoised
@@ -132,11 +131,10 @@ public class jeuDeTest {
 	}
 
 	public static void main(String[] args) {
-		double radius = 154;
-		Vecteur bias = new Vecteur(251, 209, 243);
-		Vecteur sensibility = new Vecteur(30, 32, 38);
-		jeuDeTest test = new jeuDeTest(radius, bias, sensibility, 15.0, 1);
+		double radius = 1;
+		Vecteur bias = new Vecteur(0, 0, 0);
+		Vecteur sensibility = new Vecteur(1, 1, 1);
+		jeuDeTest test = new jeuDeTest(radius, bias, sensibility, 0.0, 10);
 		test.affiche(true);
-		test.affiche(false);
 	}
 }
