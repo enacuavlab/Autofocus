@@ -51,6 +51,10 @@ public class AffichAccel {
 	public JProgressBar getProgressBar(){
 		return progressBar;
 	}
+	
+	public Sphere getSphere(){
+		return sp;
+	}
 
 
 	public void update(double radius,VecteurFiltrable<Double> newcenter,VecteurFiltrable<Double> v ,VecteurFiltrable<Double> vcourant, int nbCorrectOK){

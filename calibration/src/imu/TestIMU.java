@@ -1,8 +1,11 @@
 package imu;
 
+import calibTest.Optimize;
 import testData.Sender;
 
 import common.TypeCalibration;
+import data.Vecteur;
+import filtre.VecteurFiltrable;
 
 import data.Data;
 import ellipsoide.Sphere;
@@ -30,7 +33,7 @@ public class TestIMU {
 		imu.arret();
 		//System.out.println(data.toString());	
 		System.out.println("fin");
-		System.out.println(data.toString());	
+		new Optimize(data.getVecteur()).optimize();	
 
 	}
 }
