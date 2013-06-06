@@ -24,7 +24,6 @@ public class Sphere {
 	private AffichSphere affichage;
 	private double surfaceSphere;
 	private Zone zoneCourante;
-	
 
 	/**
 	 * Create the Sphere and define the number of zones
@@ -39,18 +38,32 @@ public class Sphere {
 		this.latitude = latitude;
 		center = new Vecteur(0, 0, 0);
 		radius = 0;
-		surfaceSphere=0;
+		surfaceSphere = 0;
 		lvector = new ArrayList<VecteurFiltrable<Double>>();
 		lzone = new ArrayList<Zone>();
 		createZone();
-		ListIterator<Zone> j=lzone.listIterator();
-		zoneCourante=j.next();
+		ListIterator<Zone> j = lzone.listIterator();
+		zoneCourante = j.next();
 		affichage = new AffichSphere(this);
 	}
-	public AffichSphere getAffichage(){
+
+	/**
+	 * getter of the display
+	 * 
+	 * @return the display
+	 */
+	public AffichSphere getAffichage() {
 		return affichage;
 	}
-	
+
+	/**
+	 * Returns the zone in which the user is plotting
+	 * 
+	 */
+	public Zone getZoneCurrent() {
+		return zoneCourante;
+	}
+
 	/**
 	 * method called each time a new vector is added
 	 * 
@@ -71,12 +84,14 @@ public class Sphere {
 				|| (Math.abs(center.getZ() - newcenter.getZ()) > error)) {
 			this.radius = radius;
 			this.center = newcenter;
-			this.surfaceSphere=4*Math.PI*Math.pow(radius,2);
+			this.surfaceSphere = 4 * Math.PI * Math.pow(radius, 2);
 			update_all_zone();
-			affichage.majZone();
+			updateVecCourant(vcourant);
 
+			affichage.majZone();
 		} else {
 			update(v);
+			updateVecCourant(vcourant);
 			affichage.affiche();
 		}
 	}
@@ -110,56 +125,74 @@ public class Sphere {
 	private void update_all_zone() {
 		Zone ztemp;
 		ListIterator<Zone> j = lzone.listIterator();
-		ListIterator<VecteurFiltrable<Double>> i;
+		// ListIterator<VecteurFiltrable<Double>> i;
 
 		while (j.hasNext()) {
 			ztemp = j.next();
 			ztemp.maj_list_contour(radius);
-			ztemp.calculateSurface(radius,surfaceSphere);
+			ztemp.calculateSurface(radius, surfaceSphere);
 			ztemp.reset();
-			i = lvector.listIterator();
+			ListIterator<VecteurFiltrable<Double>> i = lvector.listIterator();
 			while (i.hasNext()) {
-				if(ztemp.is_in(i.next(), center)){
-					zoneCourante=ztemp;
-				}
+				ztemp.isIn(i.next(), center);
 			}
 
 		}
 	}
+
 	/**
 	 * method that update the zones with only one vector
+	 * 
 	 * @param v
 	 */
 	protected void update(VecteurFiltrable<Double> v) {
 		boolean b = false;
 		ListIterator<Zone> j = lzone.listIterator();
+		Zone temp;
 		while (b == false && j.hasNext()) {
-			b = j.next().is_in(v, center);
+			temp = j.next();
+			b = temp.isIn(v, center);
 		}
 	}
-	
+
+	/**
+	 *Update the currant zone thanks to the last vector received  
+	 * @param vcourant last vector sent by the IMU
+	 */
+	protected void updateVecCourant(VecteurFiltrable<Double> vcourant) {
+		boolean b = false;
+		ListIterator<Zone> j = lzone.listIterator();
+		Zone temp;
+		while (b == false && j.hasNext()) {
+			temp = j.next();
+			b = temp.updateZoneCourante(vcourant, center);
+			zoneCourante = temp;
+		}
+	}
+
 	/**
 	 * Function for display
+	 * 
 	 * @return radius of the sphere
 	 */
-	protected int getRayon(){
-		return (int)radius;
+	protected int getRayon() {
+		return (int) radius;
 	}
-	
-	/** test function of the class*/
-	
-	public static  void main(String[] args){
-		Sphere s = new Sphere(20,10);
-		Vecteur center= new Vecteur(5,10,15);
-		Vecteur v = new Vecteur(8,20,21);
-		s.update(10.5, center, v,v);
-		ListIterator<Zone> j= s.getZones().listIterator();
-		while (j.hasNext()){
-			if(j.next().getDensity().getColor()>0){
-				System.out.println("point rentré");	
+
+	/** test function of the class */
+
+	public static void main(String[] args) {
+		Sphere s = new Sphere(20, 10);
+		Vecteur center = new Vecteur(5, 10, 15);
+		Vecteur v = new Vecteur(8, 20, 21);
+		s.update(10.5, center, v, v);
+		ListIterator<Zone> j = s.getZones().listIterator();
+		while (j.hasNext()) {
+			if (j.next().getDensity().getColor() > 0) {
+				System.out.println("point rentré");
 			}
 		}
-		
+
 	}
 
 }

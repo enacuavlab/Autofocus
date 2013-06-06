@@ -14,23 +14,25 @@ public class FilterSphere extends Filter {
 	private int maxZ = 0;
 	private int minZ = 0;
 	private Sphere s;
-	private double rayon = 0;
-	private Vecteur center = new Vecteur(0,0,0);
-	
+	private int rayon = 0;
+	private Vecteur center = new Vecteur(0, 0, 0);
+
 	/**
-	 * Creates a filter who plots the vector in a two dimensional window
-	 * (simple orthogonal projection on xy)
+	 * Creates a filter who plots the vector in a two dimensional window (simple
+	 * orthogonal projection on xy)
+	 * 
 	 * @param windowSize
 	 * @param type
 	 */
 	public FilterSphere(int windowSize, TypeCalibration type) {
 		super(windowSize, type);
-		s = new Sphere(20,10);
+		s = new Sphere(20, 10);
 	}
 
 	/**
-	 * Creates a filter who uses the plot given as an argument to plot in
-	 * a two dimensional graph (simple orthogonal projection on xy)
+	 * Creates a filter who uses the plot given as an argument to plot in a two
+	 * dimensional graph (simple orthogonal projection on xy)
+	 * 
 	 * @param plot
 	 * @param windowSize
 	 * @param type
@@ -41,12 +43,15 @@ public class FilterSphere extends Filter {
 	}
 
 	/**
-	 * Add the vector given in argument to the filter and update the sphere
-	 * with new radius and center
-	 * @param v vector to add
+	 * Add the vector given in argument to the filter and update the sphere with
+	 * new radius and center
+	 * 
+	 * @param v
+	 *            vector to add
 	 */
 	@Override
 	public void add(VecteurFiltrable<Double> v) {
+		Vecteur a[] = new Vecteur[windowSize];
 		super.add(v);
 		if (v.isCorrect()) {
 			if (v.getX() > maxX)
@@ -65,9 +70,12 @@ public class FilterSphere extends Filter {
 		rayon = (maxX - minX > maxY - minY ? (maxX - minX > maxZ - minZ ? maxX
 				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
 				- minY : maxZ - minZ));
-		center = new Vecteur((maxX + minX)/2,(maxY + minY)/2,(maxZ + minZ)/2);
-		s.update(rayon, center, v, v);
+		center = new Vecteur((maxX + minX) / 2, (maxY + minY) / 2,
+				(maxZ + minZ) / 2);
+		if (!(window.remainingCapacity() > 0)) {
+			s.update(rayon, center, window.toArray(a)[windowSize - 1],v);
+		}
+		// System.out.println(center);
 	}
 
-	
 }

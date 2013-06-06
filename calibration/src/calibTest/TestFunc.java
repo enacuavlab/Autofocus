@@ -93,8 +93,12 @@ public static void main(String []args){
 	
 	System.out.println(lm.optimize(param, numbers, output));
 	
-
-
+	param.set(lm.getParameters());
+	
+	double r = param.get(1);
+	
+	double a = lm.getInitialCost();
+	
 	System.out.println(lm.getInitialCost());
 	System.out.println(lm.getFinalCost());
 	System.out.println(lm.getParameters());

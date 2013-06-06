@@ -65,7 +65,7 @@ public class Plotter extends JPanel {
 				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
 				- minY : maxZ - minZ));
 		if (s!=null) {
-			s.update(rayon, new Vecteur((minX+maxX)/2, (minY+maxY)/2, (minZ+maxZ)/2),v,v);
+			s.update(rayon, new Vecteur((minX+maxX)/2, (minY+maxY)/2, (minZ+maxZ)/2),v);
 		}
 		this.repaint();
 	}

@@ -6,7 +6,7 @@ import org.ejml.factory.LinearSolverFactory;
 import org.ejml.ops.CommonOps;
 import common.TypeCalibration;
 
-public class Fonction implements LevenbergMarquardt.Function{
+class Fonction implements LevenbergMarquardt.Function{
 	
 	//DenseMatrix64F x;
 	
@@ -83,7 +83,7 @@ public class Fonction implements LevenbergMarquardt.Function{
 	}
 
 	
-	private void scalepoints(){
+	public void scalepoints(){
 		
 		for (int i = 0; i< points.getNumRows();i++){
 

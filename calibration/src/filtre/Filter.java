@@ -12,7 +12,7 @@ public class Filter {
 	protected ArrayList<DescriptiveStatistics> variables;
 	protected int windowSize;
 	protected SlidingWindow<VecteurFiltrable<Double>> window;
-	private int noiseThreshold;
+	private double noiseThreshold;
 
 	/**Creates a filter with fixed window size which filter the
 	 * type of calibration given in parameter
@@ -21,7 +21,7 @@ public class Filter {
 	 */
 	public Filter(int windowSize,TypeCalibration t) {
 		if (t.equals(TypeCalibration.ACCELEROMETER)){
-			noiseThreshold = 3;
+			noiseThreshold = 2.5;
 		}
 		if(t.equals(TypeCalibration.MAGNETOMETER)){
 			noiseThreshold = 60;
