@@ -33,7 +33,5 @@ public class TestIMU {
 		imu.arret();
 		//System.out.println(data.toString());	
 		System.out.println("fin");
-		new Optimize(data.getVecteur()).optimize();	
-
 	}
 }
