@@ -11,6 +11,7 @@ import filtre.GUIHelper;
 import fr.dgac.ivy.IvyException;
 
 public class TestIMU {
+	
 	public static void main(String args[]) throws IvyException, InterruptedException {
 		TypeCalibration t = TypeCalibration.ACCELEROMETER;
 		System.out.println("type");
