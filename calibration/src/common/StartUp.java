@@ -35,6 +35,12 @@ public class StartUp {
 			/*s.start();
 			s.join();
 			s.arret();*/
+			try {
+				Thread.sleep(150000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			imu.arret();
 			System.out.println("fin");
 			System.out.println(data.toString());
@@ -58,6 +64,12 @@ public class StartUp {
 			
 			
 			IMU imu = new IMU(t, id, data);
+			try {
+				Thread.sleep(150000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			imu.arret();
 			System.out.println("fin");
 			

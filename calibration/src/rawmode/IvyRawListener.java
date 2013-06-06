@@ -13,6 +13,7 @@ public class IvyRawListener extends Thread implements IvyMessageListener {
 
 	public IvyRawListener(final int idDrone, final int indexTelemetry) throws IvyException {
 		bus = new Ivy("IvyRawListener", "IvyRawListener Ready", null);
+		bus.start(null);
 		bus.bindMsg("^" + idDrone +" [A-Za-z0-9_]+RAW(.*)",
 				new IvyMessageListener() {
 					public void receive(IvyClient arg0, String[] args) {
@@ -28,7 +29,7 @@ public class IvyRawListener extends Thread implements IvyMessageListener {
 					}
 				});
 		// bus.bindMsg("(.*)", this);
-		bus.start(null);
+
 	}
 
 	/**
