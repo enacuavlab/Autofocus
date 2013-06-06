@@ -78,8 +78,8 @@ public class IMU implements IvyMessageListener {
 	 * 
 	 * @throws IvyException
 	 */
-	public IMU(PrintLog log) throws IvyException {
-		this.log = log;
+	public IMU() throws IvyException {
+		this.log = null;
 		idDrone = -1;
 		// this.data=data;
 		listeId = new ArrayList<Integer>();
@@ -107,8 +107,9 @@ public class IMU implements IvyMessageListener {
 	 * @param data
 	 * @param calibration
 	 */
-	public void ListenIMU(final Data data, final TypeCalibration calibration) {
+	public void ListenIMU(final Data data, final TypeCalibration calibration,final PrintLog log) {
 		try {
+			this.log=log;
 			this.data = data;
 			this.calibration = calibration;
 			// build the regexp according to parameters
