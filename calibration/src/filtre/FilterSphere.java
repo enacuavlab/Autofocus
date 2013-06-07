@@ -1,5 +1,7 @@
 package filtre;
 
+import javax.swing.SwingUtilities;
+
 import common.TypeCalibration;
 import data.Vecteur;
 
@@ -50,8 +52,8 @@ public class FilterSphere extends Filter {
 	 *            vector to add
 	 */
 	@Override
-	public void add(VecteurFiltrable<Double> v) {
-		Vecteur a[] = new Vecteur[windowSize];
+	public void add(final VecteurFiltrable<Double> v) {
+		final Vecteur a[] = new Vecteur[windowSize];
 		super.add(v);
 		if (v.isCorrect()) {
 			if (v.getX() > maxX)
@@ -73,7 +75,12 @@ public class FilterSphere extends Filter {
 		center = new Vecteur((maxX + minX) / 2, (maxY + minY) / 2,
 				(maxZ + minZ) / 2);
 		if (!(window.remainingCapacity() > 0)) {
-			s.update(rayon, center, window.toArray(a)[windowSize - 1],v);
+			SwingUtilities.invokeLater(
+					new Runnable() {
+						public void run() {
+						s.update(rayon, center, window.toArray(a)[windowSize - 1],v);
+						}
+					});
 		}
 		// System.out.println(center);
 	}

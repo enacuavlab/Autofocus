@@ -1,6 +1,10 @@
 package ellipsoide;
 
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -10,7 +14,13 @@ import javax.swing.JTextArea;
 
 import filtre.VecteurFiltrable;
 
-public class AffichAccel {
+public class AffichAccel extends JPanel{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1632196092075420985L;
+
 	private Sphere sp;
 	private JProgressBar progressBar;
 	private JPanel panelInst;
@@ -18,12 +28,19 @@ public class AffichAccel {
 	private JLabel labelPhoto;
 	
 	
-	public AffichAccel(){
-		sp=new Sphere(20,10);
+	public AffichAccel(Sphere s){
+		this.setPreferredSize(new Dimension(1000,600));
+		this.setLayout(null);
+		sp=s;
 		progressBar=new JProgressBar(0,100);
+		progressBar.setBounds(240, 400, 300, 25);
+		this.add(progressBar);
+		sp.getAffichage().setBounds(0, 0, 800, 400);
+		this.add(sp.getAffichage());
 		panelInst=new JPanel();
 		panelInst.setLayout(null);
-		panelInst.setBounds(0, 0, 320, 420);
+		panelInst.setBounds(850, 50, 320, 420);
+		this.add(panelInst);
 		inst = new JTextArea();
 		inst.setEditable(false);
 		inst.setBounds(20,20,280,280);
@@ -54,7 +71,11 @@ public class AffichAccel {
 	}
 
 
-	public void update(double radius,VecteurFiltrable<Double> newcenter,VecteurFiltrable<Double> v ,VecteurFiltrable<Double> vcourant, int nbCorrectOK){
+	public void update(final double radius,
+			final VecteurFiltrable<Double> newcenter,
+			final VecteurFiltrable<Double> v ,
+			final VecteurFiltrable<Double> vcourant, 
+			final int nbCorrectOK){
 		sp.update(radius, newcenter, v, vcourant);
 		setValueProgressBar(nbCorrectOK);
 	}
@@ -63,8 +84,14 @@ public class AffichAccel {
 		setValueProgressBar(0);
 		inst.setText("Maintain your drone in a stable position not yet explored");	
 	}
+	
 	public JPanel getLabel(){
 		return panelInst;
+	}
+	
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponents(g);
 	}
 	
 }

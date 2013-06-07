@@ -1,10 +1,11 @@
 package filtre;
 
+import javax.swing.SwingUtilities;
+
 import common.TypeCalibration;
 
 import data.Vecteur;
 import ellipsoide.AffichAccel;
-import ellipsoide.Sphere;
 
 public class FilterAccel extends Filter {
 
@@ -36,8 +37,7 @@ public class FilterAccel extends Filter {
 			this.thresholdWrong=thresholdWrong;
 			nbCorrectVect=0;
 			nbWrongVect=0;
-			this.affAccel=affAccel;
-			
+			this.affAccel=affAccel;		
 		}
 
 
@@ -49,8 +49,8 @@ public class FilterAccel extends Filter {
 		 *            vector to add
 		 */
 		@Override
-		public void add(VecteurFiltrable<Double> v) {
-			Vecteur a[] = new Vecteur[windowSize];
+		public void add(final VecteurFiltrable<Double> v) {
+			final Vecteur a[] = new Vecteur[windowSize];
 			super.add(v);
 			if (v.isCorrect()) {
 				nbCorrectVect++;
@@ -74,8 +74,15 @@ public class FilterAccel extends Filter {
 			center = new Vecteur((maxX + minX) / 2, (maxY + minY) / 2,
 					(maxZ + minZ) / 2);
 			if (!(window.remainingCapacity() > 0)) {
-				affAccel.update(rayon, center, window.toArray(a)[windowSize - 1],v,nbCorrectVect);
-				if ((nbWrongVect> thresholdWrong)||(nbCorrectVect > thresholdOK)) {
+				SwingUtilities.invokeLater(
+						new Runnable() {
+							public void run() {
+								affAccel.update(rayon, center, 
+										window.toArray(a)[windowSize - 1],
+										v,nbCorrectVect);
+							}
+						});
+					if ((nbWrongVect> thresholdWrong)||(nbCorrectVect > thresholdOK)) {
 					affAccel.changedStates();
 					nbWrongVect=0;
 					nbCorrectVect=0;

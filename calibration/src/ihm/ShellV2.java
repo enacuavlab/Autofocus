@@ -425,7 +425,6 @@ public class ShellV2 extends JFrame {
 	 * Function to add some elements in order to make accelerometers calibration
 	 */
 	private void modAccelero() {
-
 		btnAccelero.removeActionListener(ac1);
 		mod = "Accl";
 		cl.show(content, listContent[1]);
@@ -444,28 +443,6 @@ public class ShellV2 extends JFrame {
 		JPanel panelCenter = new JPanel();
 		panelCenter.setLayout(null);
 		panelAccl.add(panelCenter, BorderLayout.CENTER, 1);
-		// Panel_dessin
-		panelDessinAccl = new JPanel();
-		Border borderMod = BorderFactory.createRaisedBevelBorder();
-		panelDessinAccl.setBackground(Color.WHITE);
-		panelDessinAccl.setLayout(null);
-		panelDessinAccl.setBounds(50, 0, 625, 325);
-		panelDessinAccl.setBorder(borderMod);
-		panelCenter.add(panelDessinAccl);
-		
-		// Panel instruction
-		panelInst = new JPanel();
-		panelInst.setBounds(825, 0, 320, 420);
-		panelInst.setBorder(borderMod);
-		panelInst.setBackground(Color.WHITE);
-		panelCenter.add(panelInst);
-		// Panel progress Bar
-		panelBar = new JPanel();
-		panelBar.setBounds(50, 375, 625, 50);
-		panelBar.setBackground(Color.WHITE);
-		panelBar.setLayout(null);
-		panelCenter.add(panelBar);
-
 	}
 
 	/**
@@ -493,7 +470,6 @@ public class ShellV2 extends JFrame {
 		panelDessinMag = new JPanel();
 		panelDessinMag.setBounds(125, 0, 775, 425);
 		panelCenter.add(panelDessinMag);
-
 	}
 
 	/**
@@ -611,8 +587,7 @@ public class ShellV2 extends JFrame {
 				Thread model = new Thread() {
 					public void run() {
 						StartUp start = new StartUp(
-								TypeCalibration.ACCELEROMETER, panelDessinAccl, id,
-								panelInst, panelBar, imu);
+								TypeCalibration.ACCELEROMETER, panelAccl, id, imu,1);
 
 					}
 				};
