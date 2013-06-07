@@ -1,3 +1,6 @@
+/**
+ * Classes used to display view of the current calibration
+ */
 package ellipsoide;
 
 import java.awt.geom.Point2D;
@@ -15,16 +18,50 @@ import filtre.VecteurFiltrable;
  * @author GERVAIS florent
  */
 public class Zone {
-	private double latAngleHigh;// varie entre -PI/2 et + PI/2
+	/**
+	 * Latitude Angle High: The latitude angle defining the highest bound of
+	 * zone variates between -PI/2 and + PI/2
+	 */
+	private double latAngleHigh;
+	/**
+	 * Latitude Angle Low : The latitude angle defining the lowest bound of zone
+	 */
 	private double latAngleLow;
+	/**
+	 * Longitude Angle Begin : The western angle defining the zone
+	 */
 	private double longAngleBegin;// varie entre -PI et +PI
+	/**
+	 * Longitude Angle End : The eastern angle defining the zone
+	 */
 	private double longAngleEnd;
+	/**
+	 * The surface of the zone
+	 */
 	private double surface;
+	/**
+	 * The number of points on each boundary of the zone. More or less the
+	 * resolution of the sphere
+	 */
 	private int nbPointsByLine = 4;
+	/**
+	 * List of the points defining the boundaries of the zone
+	 */
 	private List<Point2D> listContour;
+	/**
+	 * The surface of the Sphere
+	 */
 	private double surfaceSphere;
+	/**
+	 * The density of points over the zone
+	 */
 	private Density density;
 
+	/**
+	 * Give the list of the points defining the boundaries
+	 * 
+	 * @return listContour
+	 */
 	public List<Point2D> getListContour() {
 		return listContour;
 	}
@@ -61,9 +98,14 @@ public class Zone {
 	}
 
 	/**
-	 * Thanks to that method we can find the currant zone in order to print the current zone
-	 * @param v the currant vector that is actually the last one received by the IMU  
-	 * @param center center of the sphere
+	 * Thanks to that method we can find the currant zone in order to print the
+	 * current zone
+	 * 
+	 * @param v
+	 *            the currant vector that is actually the last one received by
+	 *            the IMU
+	 * @param center
+	 *            center of the sphere
 	 * @return boolean true when the vector is in this zone
 	 */
 	public boolean updateZoneCourante(VecteurFiltrable<Double> v,
@@ -104,9 +146,6 @@ public class Zone {
 			if (v.isCorrect()) {
 				density.updateDensity(surfaceSphere, surface);
 			}
-			// System.out.println("nb = "+ nb_points +" "+
-			// this.lat_angle_low+" "+this.lat_angle_high+" "+this.long_angle_begin+" "+this.long_angle_end);
-
 			return true;
 		} else
 			return false;
@@ -134,40 +173,21 @@ public class Zone {
 		if (den1 != 0) {
 			if (xc_x >= 0 && yc_y >= 0) {
 				alpha = Math.asin(xc_x / den1);
-				if (alpha >= longAngleBegin && alpha <= longAngleEnd) {
-					// System.out.println(alpha + "number 1");
-					return true;
-				} else {
-					return false;
-				}
+				return (alpha >= longAngleBegin && alpha <= longAngleEnd);
 			}
 			if (xc_x <= 0 && yc_y >= 0) {
 				alpha = Math.asin(-xc_x / den1) + (Math.PI / 2);
-				if (alpha >= longAngleBegin && alpha <= longAngleEnd) {
-					// System.out.println(alpha + "number 2");
-					return true;
-				} else {
-					return false;
-				}
+				return (alpha >= longAngleBegin && alpha <= longAngleEnd); 
 			}
 
 			if (xc_x >= 0 && yc_y <= 0) {
 				alpha = Math.asin(xc_x / den1) - (Math.PI / 2);
-				if (alpha >= longAngleBegin && alpha <= longAngleEnd) {
+				return (alpha >= longAngleBegin && alpha <= longAngleEnd);
 					// System.out.println(alpha + "number 3");
-					return true;
-				} else {
-					return false;
-				}
 			}
 			if (xc_x <= 0 && yc_y <= 0) {
 				alpha = Math.asin(-xc_x / den1) - (Math.PI);
-				if (alpha >= longAngleBegin && alpha <= longAngleEnd) {
-					// System.out.println(alpha + "number 4");
-					return true;
-				} else {
-					return false;
-				}
+				return (alpha >= longAngleBegin && alpha <= longAngleEnd);			
 			}
 			return false;
 
@@ -200,11 +220,7 @@ public class Zone {
 		double zc_z = z_coord - z_center;
 		if (den != 0) {
 			alpha = Math.atan(zc_z / den);
-			if (alpha <= latAngleHigh && alpha >= latAngleLow) {
-				return true;
-			} else {
-				return false;
-			}
+			return (alpha <= latAngleHigh && alpha >= latAngleLow);
 		} else {
 			return false;
 		}
@@ -272,7 +288,9 @@ public class Zone {
 				* Math.abs(Math.sin(longAngleEnd) - Math.sin(longAngleBegin));
 
 	}
-
+/**
+ * @return String 
+ */
 	public String toString() {
 		ListIterator<Point2D> j = listContour.listIterator();
 		String str = "";
@@ -281,7 +299,10 @@ public class Zone {
 		}
 		return str;
 	}
-
+/**
+ * Test functions
+ * @param args
+ */
 	public static void main(String[] args) {
 		// test de l'angle theta du repère sphérique
 		Zone zone1 = new Zone(0, Math.PI / 2, 0, Math.PI / 2);

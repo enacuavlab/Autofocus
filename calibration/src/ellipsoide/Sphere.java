@@ -1,3 +1,6 @@
+/**
+ * Classes used to display view of the current calibration
+ */
 package ellipsoide;
 
 import java.util.ArrayList;
@@ -14,15 +17,46 @@ import filtre.VecteurFiltrable;
  * 
  */
 public class Sphere {
+	/**
+	 * The longitude of the sphere
+	 */
 	private double longitude;
+	/**
+	 * The latitude of the sphere
+	 */
 	private double latitude;
+	/**
+	 * The radius of the sphere
+	 */
 	private double radius;
+	/**
+	 * The center of the sphere
+	 */
 	private VecteurFiltrable<Double> center;
+	/**
+	 * List of the vectors
+	 */
 	private List<VecteurFiltrable<Double>> lvector;
+	/**
+	 * List of the zones
+	 */
 	private List<Zone> lzone;
-	final double error = 20.0; // error of the previous center of the sphere tolerated
+	/**
+	 * error of the previous center of the sphere tolerated
+	 */
+	private final double error = 20.0;
+	/**
+	 * The display of the sphere
+	 */
 	private AffichSphere affichage;
+	/**
+	 * The surface of the sphere used to calculate the density accross the
+	 * sphere
+	 */
 	private double surfaceSphere;
+	/**
+	 * Current zone
+	 */
 	private Zone zoneCourante;
 
 	/**
@@ -73,6 +107,8 @@ public class Sphere {
 	 *            center of the sphere
 	 * @param v
 	 *            new vector added
+	 * @param vcourant
+	 *            current vector
 	 */
 	public void update(double radius, VecteurFiltrable<Double> newcenter,
 			VecteurFiltrable<Double> v, VecteurFiltrable<Double> vcourant) {
@@ -85,7 +121,7 @@ public class Sphere {
 			this.radius = radius;
 			this.center = newcenter;
 			this.surfaceSphere = 4 * Math.PI * Math.pow(radius, 2);
-			update_all_zone();
+			updateAllZone();
 			updateVecCourant(vcourant);
 
 			affichage.majZone();
@@ -122,7 +158,7 @@ public class Sphere {
 	/**
 	 * method that update all the zones with all vectors
 	 */
-	private void update_all_zone() {
+	private void updateAllZone() {
 		Zone ztemp;
 		ListIterator<Zone> j = lzone.listIterator();
 		// ListIterator<VecteurFiltrable<Double>> i;
@@ -149,21 +185,23 @@ public class Sphere {
 		boolean b = false;
 		ListIterator<Zone> j = lzone.listIterator();
 		Zone temp;
-		while (b == false && j.hasNext()) {
+		while (!b && j.hasNext()) {
 			temp = j.next();
 			b = temp.isIn(v, center);
 		}
 	}
 
 	/**
-	 *Update the currant zone thanks to the last vector received  
-	 * @param vcourant last vector sent by the IMU
+	 * Update the currant zone thanks to the last vector received
+	 * 
+	 * @param vcourant
+	 *            last vector sent by the IMU
 	 */
 	protected void updateVecCourant(VecteurFiltrable<Double> vcourant) {
 		boolean b = false;
 		ListIterator<Zone> j = lzone.listIterator();
 		Zone temp;
-		while (b == false && j.hasNext()) {
+		while (!b && j.hasNext()) {
 			temp = j.next();
 			b = temp.updateZoneCourante(vcourant, center);
 			zoneCourante = temp;
@@ -179,7 +217,11 @@ public class Sphere {
 		return (int) radius;
 	}
 
-	/** test function of the class */
+	/**
+	 * Test functions of the class
+	 * 
+	 * @param args
+	 */
 
 	public static void main(String[] args) {
 		Sphere s = new Sphere(20, 10);

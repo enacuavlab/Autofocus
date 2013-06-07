@@ -6,27 +6,33 @@ import java.io.InputStreamReader;
 
 import common.TypeCalibration;
 
+/**
+ * Implements version of the calibration algorithm using a system call
+ * 
+ * @author Alinoé
+ * 
+ */
 public class CalibrateSystem {
 
 	/**
 	 * Allows to determine the string to launch the extern program
 	 */
-	TypeCalibration type;
+	private TypeCalibration type;
 
 	/**
 	 * To find the place where the calibration script is
 	 */
-	String ppzHome;
+	private String ppzHome;
 
 	/**
 	 * The name of the file we pull the parameters of
 	 */
-	String logName;
+	private String logName;
 
 	/**
 	 * The string displayed in the area
 	 */
-	String parameters = "calcul en cours";
+	private String parameters = "calcul en cours";
 
 	/**
 	 * Initialize the values of the attributes
@@ -48,12 +54,18 @@ public class CalibrateSystem {
 	 * 
 	 * @param logName
 	 * @throws IOException
+	 * @throws InterruptedException
 	 */
 	private void calibrates() throws InterruptedException, IOException {
-		String Newligne = System.getProperty("line.separator");
+		String newligne = System.getProperty("line.separator");
 		Runtime runtime = Runtime.getRuntime();
-		final Process process = runtime.exec("python " + ppzHome
-				+ "sw/tools/calibration/calibrate.py " + logName);
+		final Process process = runtime
+				.exec("python "
+						+ ppzHome
+						+ "sw/tools/calibration/calibrate.py "
+						+ "-s "
+						+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL"
+								: "MAG") + logName);
 
 		// Consommation de la sortie standard
 		try {
@@ -64,10 +76,10 @@ public class CalibrateSystem {
 			while ((l = reader.readLine()) != null) {
 				// Traitement du flux de sortie de l'application
 				line.append(l);
-				line.append(Newligne);
+				line.append(newligne);
 
 			}
-		}catch (IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 			parameters = "Unable to parse";
 		}
@@ -75,6 +87,8 @@ public class CalibrateSystem {
 
 	/**
 	 * Update the string displayed in the textArea
+	 * 
+	 * @return String
 	 */
 	public String maj() {
 		try {
@@ -93,12 +107,12 @@ public class CalibrateSystem {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	public static void main(String args[]) throws InterruptedException,
+	public static void main(String[] args) throws InterruptedException,
 			IOException {
 		try {
 			CalibrateSystem s = new CalibrateSystem(
 
-					TypeCalibration.MAGNETOMETER, "/home/gui/paparazzi/",
+			TypeCalibration.MAGNETOMETER, "/home/gui/paparazzi/",
 					"/home/gui/paparazzi/var/logs/13_04_03__13_49_35.data");
 			System.out.println(s.maj());
 		} finally {

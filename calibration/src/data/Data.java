@@ -3,9 +3,11 @@
  */
 package data;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 import common.TypeCalibration;
+
 import filtre.Filter;
 
 /**
@@ -29,25 +31,25 @@ public class Data {
 	/**
 	 * Constructor for data
 	 * @param calibration current typecalibration
-	 * @param filtre current filtre
+	 * @param filt current filtre
 	 */
-	public Data(TypeCalibration calibration,Filter filtre) {
+	public Data(TypeCalibration calibration, Filter filt) {
 		this.calib = calibration;
-		this.filtre = filtre;
+		this.filtre = filt;
 	}
 /**
  * method used to store vectors
- * @param x_raw
- * @param y_raw
- * @param z_raw
+ * @param xRaw
+ * @param yRaw
+ * @param zRaw
  */
-	public void store(double x_raw, double y_raw, double z_raw) {
-		Vecteur vec = new Vecteur(x_raw, y_raw, z_raw);
+	public void store(double xRaw, double yRaw, double zRaw) {
+		Vecteur vec = new Vecteur(xRaw, yRaw, zRaw);
 		//System.out.println(vec);
 		vec.setType(calib);
 		list.add(vec);
 		filtre.add(vec);
-	
+
 			}
 	public List<Vecteur> getVecteur(){
 		return list;
