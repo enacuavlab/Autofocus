@@ -33,9 +33,6 @@ public class AffichAccel {
 		labelPhoto = new JLabel();
 		labelPhoto.setBounds(20, 20, 280, 100);
 		panelInst.add(labelPhoto);
-		
-		
-	
 	}
 	
 	
@@ -64,7 +61,7 @@ public class AffichAccel {
 	
 	public void changedStates(){
 		setValueProgressBar(0);
-		inst.setText("Maintenez votre drone dans une position stable non encore exploré");	
+		inst.setText("Maintain your drone in a stable position not yet explored");	
 	}
 	public JPanel getLabel(){
 		return panelInst;

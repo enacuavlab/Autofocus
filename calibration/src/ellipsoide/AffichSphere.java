@@ -64,8 +64,11 @@ public class AffichSphere extends JPanel {
 			i++;
 		}
 		g.setColor(Color.yellow);
+		try {
 		g2d.setStroke(stroke);
 		g2d.drawPolygon(xPoints, yPoints, n);
+		} catch (Exception e) {
+		}
 	}
 
 	public AffichSphere(Sphere s) {
