@@ -27,6 +27,7 @@ public class PrintLog {
 	 */
 	public final void print(final String fileName) {
 		try {
+			System.getProperty("line.separator");
 			FileWriter fs = new FileWriter(fileName);
 			for (String line : lines) {
 				fs.write(line);
@@ -46,5 +47,4 @@ public class PrintLog {
 		test.add("ok");
 		test.print("C:\\Users\\Alinoé\\ok.txt");
 	}
-
 }
