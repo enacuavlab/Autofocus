@@ -4,14 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
-
 import common.TypeCalibration;
 
-import filtre.GUIHelper;
-
-public class CalibrateSystem extends JTextArea {
+public class CalibrateSystem {
 
 	/**
 	 * Allows to determine the string to launch the extern program
@@ -34,11 +29,6 @@ public class CalibrateSystem extends JTextArea {
 	String parameters = "calcul en cours";
 
 	/**
-	 * Default serial number
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * Initialize the values of the attributes
 	 * 
 	 * @param t
@@ -50,8 +40,7 @@ public class CalibrateSystem extends JTextArea {
 		type = t;
 		ppzHome = paparazziHome;
 		this.logName = logName;
-		this.setText(parameters);
-		this.setBounds(20, 20, 500, 158);
+		this.parameters = "calcul en cours";
 	}
 
 	/**
@@ -61,7 +50,7 @@ public class CalibrateSystem extends JTextArea {
 	 * @throws IOException
 	 */
 	private void calibrates() throws InterruptedException, IOException {
-		String Newligne=System.getProperty("line.separator"); 
+		String Newligne = System.getProperty("line.separator");
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec("python " + ppzHome
 				+ "sw/tools/calibration/calibrate.py " + logName);
@@ -88,13 +77,13 @@ public class CalibrateSystem extends JTextArea {
 	/**
 	 * Update the string displayed in the textArea
 	 */
-	public void maj() {
-				try {
-					calibrates();
-				} catch (Exception e) {
-					parameters = "unable to get the parameters";
-				}
-				setText(parameters);
+	public String maj() {
+		try {
+			calibrates();
+		} catch (Exception e) {
+			parameters = "unable to get the parameters" + e;
+		}
+		return parameters;
 	}
 
 	/**
@@ -110,8 +99,7 @@ public class CalibrateSystem extends JTextArea {
 			CalibrateSystem s = new CalibrateSystem(
 					TypeCalibration.MAGNETOMETER, "/home/gui/paparazzi/",
 					"/home/gui/paparazzi/var/logs/13_04_03__13_49_35.data");
-			GUIHelper.showOnFrame(s, "test");
-			s.maj();
+			System.out.println(s.maj());
 		} finally {
 			System.out.println("done");
 		}
