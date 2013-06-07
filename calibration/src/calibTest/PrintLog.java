@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 /**Stores the messages used during calibration.
- * @author Alinoé
+ * @author Alinoï¿½
  */
 
 public class PrintLog {
@@ -27,10 +27,12 @@ public class PrintLog {
 	 */
 	public final void print(final String fileName) {
 		try {
-			System.getProperty("line.separator");
+			String nl = System.getProperty("line.separator");
 			FileWriter fs = new FileWriter(fileName);
 			for (String line : lines) {
+				fs.write("11.111 ");
 				fs.write(line);
+				fs.write(nl);
 			}
 			fs.close();
 		} catch (Exception e) {
@@ -45,6 +47,6 @@ public class PrintLog {
 	public static void main(String args[]) {
 		PrintLog test = new PrintLog();
 		test.add("ok");
-		test.print("C:\\Users\\Alinoé\\ok.txt");
+		test.print("C:\\Users\\Alinoï¿½\\ok.txt");
 	}
 }

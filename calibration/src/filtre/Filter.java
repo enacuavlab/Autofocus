@@ -21,7 +21,7 @@ public class Filter {
 	 */
 	public Filter(int windowSize,TypeCalibration t) {
 		if (t.equals(TypeCalibration.ACCELEROMETER)){
-			noiseThreshold = 2.5;
+			noiseThreshold = 3;
 		}
 		if(t.equals(TypeCalibration.MAGNETOMETER)){
 			noiseThreshold = 60;

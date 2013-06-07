@@ -35,7 +35,15 @@ public class StartUp {
 			//Sender s = new Sender(
 				//	"/home/gui/paparazzi/var/logs/13_05_29__10_15_23.data");
 			try {
-				Sender s = new Sender("C:\\Users\\Alinoé\\Desktop\\13_05_29__10_15_23.data");
+				Sender s = new Sender("/home/gui/paparazzi/var/logs/13_05_29__10_15_23.data");
+				System.out.println("sender");
+				imu.setId(17);
+				imu.ListenIMU(data, t,prlog);
+				s.start();
+				s.join();
+				s.arret();
+				System.out.println("fin");
+				System.out.println(data.toString());
 			} catch (IvyException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -43,13 +51,7 @@ public class StartUp {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("sender");
-			imu.ListenIMU(data, t,prlog);
-			/*s.start();
-			s.join();
-			s.arret();*/
-			System.out.println("fin");
-			System.out.println(data.toString());
+			
 		}
 	}
 	

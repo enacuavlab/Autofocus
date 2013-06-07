@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import calibTest.CalibrateSystem;
 
 public class Result extends JDialog {
-	private JTextArea textResult;
+	private CalibrateSystem textResult;
 	private JButton btnReturn, btnCopy, btnContinue;
 	TextTransfer transfer = new TextTransfer();
 	private IMU imu;
@@ -38,7 +38,7 @@ public class Result extends JDialog {
 		this.getContentPane().add(panel);
 		panel.setLayout(null);
 		imu.getLog().print("/home/gui/test.data");
-		textResult = new CalibrateSystem(imu.getCalibration(),System.getenv("HOME")+"/paparazzi","/home/gui/test.data");
+		textResult = new CalibrateSystem(imu.getCalibration(),"/home/gui/paparazzi","/home/gui/test.data");
 		//textResult.setEditable(false);
 		//textResult.setLineWrap(true);
 		//textResult.setBackground(Color.WHITE);
@@ -51,9 +51,9 @@ public class Result extends JDialog {
 		btnCopy = new JButton("Copy");
 		btnContinue = new JButton("Continue");
 		
-		btnCopy.setBounds(200,200,120,30);
-		btnReturn.setBounds(400,200,120,30);
-		btnContinue.setBounds(350,200,120,30);
+		btnCopy.setBounds(20,200,140,30);
+		btnReturn.setBounds(390,200,140,30);
+		btnContinue.setBounds(205,200,140,30);
 		
 		btnCopy.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -85,8 +85,8 @@ public class Result extends JDialog {
 	}
 	
 	
-	public void setResult(String text){
-		textResult.setText(text);
+	public void majResult(){
+				textResult.maj();
 	}
 	
 	public String getResult(){

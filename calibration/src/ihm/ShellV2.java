@@ -135,7 +135,7 @@ public class ShellV2 extends JFrame {
 	private void initialise() {
 		// Pour test
 		//btnAccelero.setEnabled(true);
-		//btnMagneto.setEnabled(true);
+		btnMagneto.setEnabled(true);
 		//IMU
 		try {
 			imu = new IMU();
@@ -436,10 +436,10 @@ public class ShellV2 extends JFrame {
 		inst.setBounds(375, 0, 500, 75);
 		inst.setText("<html>Suivez les instructions écrites à l'écran</html>");
 		panelNorth.add(inst);
-		panelAccl.add(panelNorth, BorderLayout.NORTH);
+		panelAccl.add(panelNorth, BorderLayout.NORTH,0);
 		JPanel panelCenter = new JPanel();
 		panelCenter.setLayout(null);
-		panelAccl.add(panelCenter, BorderLayout.CENTER);
+		panelAccl.add(panelCenter, BorderLayout.CENTER,1);
 		// Panel_dessin
 		JPanel panelDessin = new JPanel();
 		Border borderMod = BorderFactory.createRaisedBevelBorder();
@@ -480,10 +480,10 @@ public class ShellV2 extends JFrame {
 		inst.setBounds(275, 15, 500, 75);
 		inst.setText("<html><br><br>Tournez le drone dans tous les sens afin de remplir les zones rouges</html>");
 		panelNorth.add(inst);
-		panelMag.add(panelNorth, BorderLayout.NORTH);
+		panelMag.add(panelNorth, BorderLayout.NORTH,0);
 		JPanel panelCenter = new JPanel();
 		panelCenter.setLayout(null);
-		panelMag.add(panelCenter, BorderLayout.CENTER);
+		panelMag.add(panelCenter, BorderLayout.CENTER,1);
 		panelDessin = new JPanel();
 		panelDessin.setBounds(125, 0, 775, 425);
 		panelCenter.add(panelDessin);
@@ -528,13 +528,23 @@ public class ShellV2 extends JFrame {
 		panelSouthCenter.add(btnReturn, gbcBtnReturn);
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				imu.stopListenImu(imu.getCalibration());
 				imu.deleteDataLog();
-				panel.removeAll();
+				panel.remove(0);
+				panel.remove(1);
+				if (imu.getCalibration()==TypeCalibration.ACCELEROMETER){
+					btnAccelero.addActionListener(ac1);
+				}
+				else if (imu.getCalibration()==TypeCalibration.MAGNETOMETER){
+					btnMagneto.addActionListener(ac2);
+				}
+				else btnGyro.addActionListener(ac3);
+				addButton(panel);
 				cl.show(content,listContent[0]);
 			}
 		});
 		// Quit Button
-		btnQuit = new JButton("Quitter");
+		btnQuit = new JButton("Quit");
 		GridBagConstraints gbcBtnQuitter = new GridBagConstraints();
 		gbcBtnQuitter.fill = GridBagConstraints.HORIZONTAL;
 		gbcBtnQuitter.gridx = 6;
@@ -542,7 +552,9 @@ public class ShellV2 extends JFrame {
 		panelSouthCenter.add(btnQuit, gbcBtnQuitter);
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panel.removeAll();
+				imu.stopListenImu(imu.getCalibration());
+				panel.remove(0);
+				panel.remove(1);
 				panelHome.removeAll();
 				panelHome.repaint();
 				cl.show(content, listContent[0]);
@@ -561,6 +573,9 @@ public class ShellV2 extends JFrame {
 			public void actionPerformed(ActionEvent e){
 				imu.stopListenImu(imu.getCalibration());
 				result = new Result(me, "Result", true ,imu);
+				result.majResult();
+				result.showResult();
+				
 			}
 		});
 	}
@@ -613,12 +628,16 @@ public class ShellV2 extends JFrame {
 		imu.deleteDataLog();
 		TypeCalibration t = imu.getCalibration();
 		if (t==TypeCalibration.ACCELEROMETER){
-			panelAccl.removeAll();
+			panelAccl.remove(0);
+			panelAccl.remove(1);
+			btnAccelero.addActionListener(ac1);
 		}
 		else if (t==TypeCalibration.MAGNETOMETER){
-			panelMag.removeAll();
+			panelMag.remove(0);
+			panelMag.remove(1);
+			btnMagneto.addActionListener(ac2);
 		}
-		else panelGyro.removeAll();
+		else panelGyro.removeAll();btnGyro.addActionListener(ac3);
 		cl.show(content,listContent[0]);
 	}
 
