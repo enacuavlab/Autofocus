@@ -1,7 +1,8 @@
+/**
+ * Package IHM contents the interface of our application
+ */
 package ihm;
 
-import ellipsoide.AffichAccel;
-import ellipsoide.Sphere;
 import fr.dgac.ivy.IvyException;
 import imu.GetConfigException;
 import imu.IMU;
@@ -40,7 +41,7 @@ import common.TypeCalibration;
 /**
  * Graphic Interface of our application.
  * 
- * @author SAAS Guillaume
+ * @author Guillaume
  * @version 2.0
  */
 public class ShellV2 extends JFrame {
@@ -66,11 +67,11 @@ public class ShellV2 extends JFrame {
 	private String name, url;
 	/**
 	 * Different panels of our Application : panelHome , panelGyro, panelMag ->
-	 * background panels content contents all the background panels panelDessinMag, panelDessinAccl
-	 * panelBar, panelInst to design calibration
+	 * background panels. content contents all the background panels.
+	 * panelDessinMag to design calibration
 	 */
 	private JPanel panelHome, panelAccl, panelGyro, panelMag, content,
-			panelDessinMag,panelDessinAccl ,panelBar, panelInst;
+			panelDessinMag;
 	/**
 	 * listContent to get an access to the background panels
 	 */
@@ -80,11 +81,11 @@ public class ShellV2 extends JFrame {
 	 */
 	private CardLayout cl;
 	/**
-	 * To know the mode
+	 * To know the mode for action
 	 */
-	private String mod;
+	private String type;
 	/**
-	 * Button's actions
+	 * Buttons actions
 	 */
 	private Action ac1, ac2, ac3;
 	/**
@@ -95,22 +96,31 @@ public class ShellV2 extends JFrame {
 	 * Result
 	 */
 	private Result result;
-
+	/**
+	 * 
+	 */
 	private ShellV2 me = null;
 
 	/**
-	 * Constructeur qui initialise la fenetre et met en place le cardLayout
+	 * 
+	 */
+	private final int widthWindow = 1600, heightWindow = 800;
+
+	/**
+	 * Constructor which initialises the window with options Button and the
+	 * cardlayout used.
 	 */
 	public ShellV2() {
 		super();
 		// Shell
 		me = this;
 		setTitle("Autofocus");
-		setSize(1600, 800);
+		setSize(widthWindow, heightWindow);
 		setLocationRelativeTo(null);
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
+		// CardLayout with his panels
 		cl = new CardLayout();
 		content = new JPanel();
 		content.setLayout(cl);
@@ -127,9 +137,13 @@ public class ShellV2 extends JFrame {
 		content.add(panelMag, listContent[2]);
 		content.add(panelGyro, listContent[3]);
 		getContentPane().add(content, BorderLayout.CENTER);
+
+		// Option's panel and buttons
 		addOptions();
-		mod = "Home";
-		initialise();// On initialise notre fenêtre
+		// Mod of our application
+		type = "Home";
+
+		initialise();
 
 	}
 
@@ -137,9 +151,11 @@ public class ShellV2 extends JFrame {
 	 * Fonction pour initialiser et réinitialiser l'accueil
 	 */
 	private void initialise() {
-		// Pour test
-		 btnAccelero.setEnabled(true);
-		 btnMagneto.setEnabled(true);
+
+		// For test
+		btnAccelero.setEnabled(true);
+		btnMagneto.setEnabled(true);
+
 		// IMU
 		try {
 			imu = new IMU();
@@ -147,24 +163,25 @@ public class ShellV2 extends JFrame {
 			JOptionPane.showMessageDialog(null, "Ivy Bus problem" + name,
 					"Error Bus ", JOptionPane.ERROR_MESSAGE);
 		}
-		// Active les boutons
-		activateButton(mod);
-		// Panel titre
-		JPanel panelTitre = new JPanel();
-		Border border_titre = BorderFactory.createBevelBorder(
-				BevelBorder.LOWERED, Color.black, Color.white);
-		panelTitre.setBackground(Color.LIGHT_GRAY);
-		panelTitre.setBorder(border_titre);
-		panelTitre.setPreferredSize(new Dimension(1600, 100));
-		getContentPane().add(panelTitre, "North");
-		title = new JLabel("<html><br>Veuillez remplir les champs</html>");
-		title.setFont(new Font("Calibri", Font.BOLD, 28));
-		panelTitre.add(title);
+		// Activate option buttons
+		activateButton(type);
 
-		// Panel qui va contenir la combobox pour le choix de l'id du drone
+		// Panel title
+		JPanel panelTitle = new JPanel();
+		Border borderTitle = BorderFactory.createBevelBorder(
+				BevelBorder.LOWERED, Color.black, Color.white);
+		panelTitle.setBackground(Color.LIGHT_GRAY);
+		panelTitle.setBorder(borderTitle);
+		panelTitle.setPreferredSize(new Dimension(widthWindow, 100));
+		getContentPane().add(panelTitle, "North");
+		title = new JLabel("<html><br>Home</html>");
+		title.setFont(new Font("Calibri", Font.BOLD, 28));
+		panelTitle.add(title);
+
+		// Panel which contains comboBox for the id choice
 		JPanel panelNorth = new JPanel();
 		panelHome.add(panelNorth, BorderLayout.NORTH);
-		panelNorth.setPreferredSize(new Dimension(1600, 100));
+		panelNorth.setPreferredSize(new Dimension(widthWindow, 100));
 		GridBagLayout gblPanelNorth = new GridBagLayout();
 		gblPanelNorth.columnWidths = new int[] { 300, 300, 30 };
 		gblPanelNorth.rowHeights = new int[] { 40, 40, 40 };
@@ -172,12 +189,12 @@ public class ShellV2 extends JFrame {
 		gblPanelNorth.rowWeights = new double[] { 0.0, 0.0 };
 		panelNorth.setLayout(gblPanelNorth);
 
-		// Panel centre qui va contenir les panels mod et name
+		// Panel Center which contains panel mod and name
 		JPanel panelCenter = new JPanel();
 		panelHome.add(panelCenter, BorderLayout.CENTER);
 		panelCenter.setLayout(null);
 
-		// Panel_name with a textfield and a label
+		// Panel_name with 2 labels
 		JPanel panelName = new JPanel();
 		Border borderName = BorderFactory.createRaisedBevelBorder();
 		panelName.setBorder(borderName);
@@ -187,6 +204,7 @@ public class ShellV2 extends JFrame {
 		panelName.setLayout(null);
 		panelName.setVisible(false);
 
+		// Contains the name of the drone
 		JLabel labelName = new JLabel();
 		labelName.setBounds(106, 12, 138, 60);
 		panelName.add(labelName);
@@ -201,11 +219,6 @@ public class ShellV2 extends JFrame {
 		panelCenter.add(panelMod);
 		panelMod.setVisible(false);
 		panelMod.setLayout(null);
-		/*
-		 * textField.addActionListener(new ActionListener(){ public void
-		 * actionPerformed(ActionEvent e){ name=textField.getText();
-		 * addcombo_mod(panel_mod); } });
-		 */
 
 		addcombo_id(panelNorth, panelName, labelName, panelMod);
 
@@ -241,18 +254,18 @@ public class ShellV2 extends JFrame {
 
 		// Button insertion
 		Border borderType = BorderFactory
-				.createTitledBorder("Type de calibration");
+				.createTitledBorder("Type of calibration");
 		panelOptions.setBorder(borderType);
-		// JLabel titreOptions= new JLabel("Type decalibration");
-		// panelOptions.add(titre_options);
-		// panelOptions.add(new JLabel());
 		panelOptions.add(btnAccelero);
-		// panelOptions.add(new JLabel());
 		panelOptions.add(btnMagneto);
-		// panelOptions.add(new JLabel());
 		panelOptions.add(btnGyro);
 	}
 
+	/**
+	 * Activate the option buttons
+	 * 
+	 * @param mod
+	 */
 	private void activateButton(String mod) {
 		if (mod.equals("Home")) {
 			btnAccelero.addActionListener(ac1);
@@ -277,7 +290,7 @@ public class ShellV2 extends JFrame {
 	 */
 	private void addcombo_id(JPanel panelNorth, final JPanel panel,
 			final JLabel label, final JPanel panelMod) {
-		JLabel labelId = new JLabel("Choissisez l'id de votre drone");
+		JLabel labelId = new JLabel("Choose id of your drone");
 		GridBagConstraints gbcLabelId = new GridBagConstraints();
 		gbcLabelId.insets = new Insets(0, 0, 5, 5);
 		gbcLabelId.anchor = GridBagConstraints.EAST;
@@ -300,25 +313,19 @@ public class ShellV2 extends JFrame {
 
 		// Add drone id detected
 		combo.addItem(" ");
-		// combo.addItem("1");
 		try {
-			System.out.println("IvyIdListener");
 			imu.IvyIdListener();
-			System.out.println("Passé");
 			ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
 			if (!l.isEmpty()) {
 				for (Integer i : l) {
 					combo.addItem(i.toString());
 				}
-			} else
-				System.out.println("Florent est une merde");
+			}
 			imu.stopIdListener();
 		} catch (IvyException eivy) {
 			eivy.printStackTrace();
 		}
-
-		// combo.addItem("1");
-		// combo.addItem("2");
+		// Users choose their id drone
 		combo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (combo.getSelectedItem().toString() == " ") {
@@ -328,16 +335,18 @@ public class ShellV2 extends JFrame {
 					id = Integer.parseInt(combo.getSelectedItem().toString());
 					imu.setId(id);
 					try {
+						// Get name and url of the drone
 						imu.IvyConfigListener();
 						name = imu.getAcName();
 						url = imu.getSettingsURL();
-						label.setText("<html>Le nom de votre drone d'id "
-								+ Integer.toString(id) + " est : </html>");
+						label.setText("<html>The selected id drone name ( id : "
+								+ Integer.toString(id) + " ) is : </html>");
 						dronesName.setText(name);
 						panel.setVisible(true);
-
+						// To change drone mod
 						addcomboMod(panelMod, panel);
 					} catch (GetConfigException eConf) {
+						// Check lack of communication
 						combo.setSelectedItem(" ");
 						JOptionPane
 								.showMessageDialog(
@@ -362,13 +371,14 @@ public class ShellV2 extends JFrame {
 	 */
 	private void addcomboMod(JPanel panelMod, JPanel panelName) {
 		final JLabel labelMod = new JLabel(
-				"Veuillez choisir le mode de votre drone " + name + " :");
-		labelMod.setBounds(80, 45, 360, 42);
+				"Please choose the mod of your drone called " + name + " :");
+		labelMod.setBounds(60, 45, 385, 42);
 		panelMod.add(labelMod);
 		final JComboBox comboMod = new JComboBox();
 		comboMod.setBounds(105, 124, 284, 24);
 		panelMod.add(comboMod);
 		try {
+			// Detect all the available mods of the drone
 			ExtractRawData d = new ExtractRawData(url);
 			List<String> listMod = d.extract();
 			panelMod.setVisible(true);
@@ -377,10 +387,11 @@ public class ShellV2 extends JFrame {
 					comboMod.addItem(i.toString());
 				}
 			}
+			// Detect the current mod
 			imu.IvyRawListener(d.getIndex());
 			int modeActuel = imu.getTelemetryMode();
-			System.out.println("Mode actuel : " + modeActuel);
 			comboMod.setSelectedIndex(modeActuel);
+			// Users can change the current mod
 			comboMod.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (comboMod.getSelectedItem().toString() != " ") {
@@ -392,6 +403,7 @@ public class ShellV2 extends JFrame {
 						} catch (IvyException e1) {
 							e1.printStackTrace();
 						}
+						// Test if their is Raw Data send by the IMU
 						if (imu.isRawOnBus()) {
 							btnAccelero.setEnabled(true);
 							btnMagneto.setEnabled(true);
@@ -400,7 +412,6 @@ public class ShellV2 extends JFrame {
 					}
 				}
 			});
-			// ivyraw.finalize();
 
 		} catch (IOException e) {
 			panelMod.setVisible(false);
@@ -425,19 +436,26 @@ public class ShellV2 extends JFrame {
 	 * Function to add some elements in order to make accelerometers calibration
 	 */
 	private void modAccelero() {
+		// Remove actionListener to prevent a new action during the calibration
 		btnAccelero.removeActionListener(ac1);
-		mod = "Accl";
+		// Accelerometers Calibration
+		type = "Accl";
+		// Show panelAccl
 		cl.show(content, listContent[1]);
+		// Disable the other buttons
 		btnMagneto.setEnabled(false);
 		btnGyro.setEnabled(false);
-		title.setText("<html><br>Calibration des Accéléromètre</html>");
+
+		title.setText("<html><br>Accelerometers Calibration</html>");
+		// Add Quit Stop and Return Button
 		addButton(panelAccl);
+
 		JPanel panelNorth = new JPanel();
 		panelNorth.setPreferredSize(new Dimension(1600, 75));
 		panelNorth.setLayout(null);
 		JLabel inst = new JLabel();
 		inst.setBounds(375, 0, 500, 75);
-		inst.setText("<html>Suivez les instructions écrites à l'écran</html>");
+		inst.setText("<html>Follow the directions on the screen</html>");
 		panelNorth.add(inst);
 		panelAccl.add(panelNorth, BorderLayout.NORTH, 0);
 		JPanel panelCenter = new JPanel();
@@ -449,24 +467,32 @@ public class ShellV2 extends JFrame {
 	 * Function to add some elements in order to make magnetometers calibration
 	 */
 	private void modMagneto() {
+		// Remove actionListener to prevent a new action during the calibration
 		btnMagneto.removeActionListener(ac2);
-		mod = "Mag";
+		// Magnetometers calibration
+		type = "Mag";
+		// Show panelMag
 		cl.show(content, listContent[2]);
+		// Disable the other buttons
 		btnAccelero.setEnabled(false);
 		btnGyro.setEnabled(false);
-		title.setText("<html><br>Calibration des Magnétomètres</html>");
+		title.setText("<html><br>Magnetometers Calibration</html>");
+		// Add quit , return and stop buttons
 		addButton(panelMag);
+		// Directions
 		JPanel panelNorth = new JPanel();
-		panelNorth.setPreferredSize(new Dimension(1600, 100));
+		panelNorth.setPreferredSize(new Dimension(widthWindow, 100));
 		panelNorth.setLayout(null);
 		JLabel inst = new JLabel();
-		inst.setBounds(275, 15, 500, 75);
-		inst.setText("<html><br><br>Tournez le drone dans tous les sens afin de remplir les zones rouges</html>");
+		inst.setBounds(315, 15, 500, 75);
+		inst.setText("<html><br><br>Rotate the drone in all directions in order to fill red areas</html>");
 		panelNorth.add(inst);
 		panelMag.add(panelNorth, BorderLayout.NORTH, 0);
+
 		JPanel panelCenter = new JPanel();
 		panelCenter.setLayout(null);
 		panelMag.add(panelCenter, BorderLayout.CENTER, 1);
+		// Panel which contains the sphere
 		panelDessinMag = new JPanel();
 		panelDessinMag.setBounds(125, 0, 775, 425);
 		panelCenter.add(panelDessinMag);
@@ -476,16 +502,19 @@ public class ShellV2 extends JFrame {
 	 * Function to add some elements in order to make gyrometers calibration
 	 */
 	private void modGyro() {
+		// Remove actionListener to prevent a new action during the calibration
 		btnGyro.removeActionListener(ac3);
-		mod = "Gyro";
+		// Gyrometers calibration
+		type = "Gyro";
+		// Show panelGyro
 		cl.show(content, listContent[3]);
 		btnAccelero.setEnabled(false);
 		btnMagneto.setEnabled(false);
-		title.setText("<html><br>Calibration des Gyromètres</html>");
+		title.setText("<html><br>Gyrometers Calibration</html>");
 	}
 
 	/**
-	 * Funtion to add Quit and Stop button on the panel_center
+	 * Funtion to add Quit and Stop and Return button on the panel_center
 	 */
 	private void addButton(final JPanel panel) {
 		final JPanel panelSouthCenter = new JPanel();
@@ -510,17 +539,13 @@ public class ShellV2 extends JFrame {
 		panelSouthCenter.add(btnReturn, gbcBtnReturn);
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Stop listen imu
 				imu.stopListenImu(imu.getCalibration());
-				imu.deleteDataLog();
-				panel.remove(0);
-				panel.remove(1);
-				if (imu.getCalibration() == TypeCalibration.ACCELEROMETER) {
-					btnAccelero.addActionListener(ac1);
-				} else if (imu.getCalibration() == TypeCalibration.MAGNETOMETER) {
-					btnMagneto.addActionListener(ac2);
-				} else
-					btnGyro.addActionListener(ac3);
+				// Return to the Home
+				backHome();
+
 				addButton(panel);
+				// Show panelHome
 				cl.show(content, listContent[0]);
 			}
 		});
@@ -533,9 +558,12 @@ public class ShellV2 extends JFrame {
 		panelSouthCenter.add(btnQuit, gbcBtnQuitter);
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Stop listen IMU
 				imu.stopListenImu(imu.getCalibration());
+				// Remove some components of the panel
 				panel.remove(0);
 				panel.remove(1);
+				// Remove elements of the panelHome to have an empty panelHome
 				panelHome.removeAll();
 				panelHome.repaint();
 				cl.show(content, listContent[0]);
@@ -552,25 +580,46 @@ public class ShellV2 extends JFrame {
 		panelSouthCenter.add(btnStop, gbcBtnStop);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Stop listen IMU
 				imu.stopListenImu(imu.getCalibration());
+				// Show the result of the calibration
 				result = new Result(me, "Result", true, imu);
-				System.out.println("Appel majresult");
-				new Thread(){
-				public void run(){
-					result.majResult();
-				}
+				new Thread() {
+					public void run() {
+						result.majResult();
+					}
 				}.start();
-				System.out.println("Appel showresult");
 				result.showResult();
-			} 
+			}
 		});
 	}
 
 	/**
-	 * Classe qui implément ActionListener pour appliquer un mode suivant
-	 * l'action réalisé sur un bouton
+	 * Allow to return to the home panel
+	 */
+	public void backHome() {
+		imu.deleteDataLog();
+		TypeCalibration t = imu.getCalibration();
+		if (t == TypeCalibration.ACCELEROMETER) {
+			panelAccl.remove(0);
+			panelAccl.remove(1);
+			btnAccelero.addActionListener(ac1);
+			btnMagneto.setEnabled(true);
+		} else if (t == TypeCalibration.MAGNETOMETER) {
+			panelMag.remove(0);
+			panelMag.remove(1);
+			btnMagneto.addActionListener(ac2);
+			btnAccelero.setEnabled(true);
+		} else
+			panelGyro.removeAll();
+		btnGyro.addActionListener(ac3);
+		cl.show(content, listContent[0]);
+	}
+	
+	/**
+	 * Make an actionListener according to the type of the calibration
 	 * 
-	 * @author gui
+	 * @author Guillaume
 	 * 
 	 */
 	class Action implements ActionListener {
@@ -586,8 +635,9 @@ public class ShellV2 extends JFrame {
 				modAccelero();
 				Thread model = new Thread() {
 					public void run() {
-						StartUp start = new StartUp(
-								TypeCalibration.ACCELEROMETER, panelAccl, id, imu,1);
+						@SuppressWarnings("unused")
+						StartUp start = new StartUp(TypeCalibration.ACCELEROMETER, panelAccl, id,
+								imu, 1);
 
 					}
 				};
@@ -597,9 +647,9 @@ public class ShellV2 extends JFrame {
 				modMagneto();
 				Thread model = new Thread() {
 					public void run() {
-						StartUp start = new StartUp(
-								TypeCalibration.MAGNETOMETER, panelDessinMag, id,
-								imu);
+						@SuppressWarnings("unused")
+						StartUp start = new StartUp(TypeCalibration.MAGNETOMETER,panelDessinMag,
+								id, imu);
 
 					}
 				};
@@ -610,22 +660,7 @@ public class ShellV2 extends JFrame {
 		}
 	}
 
-	public void backHome() {
-		imu.deleteDataLog();
-		TypeCalibration t = imu.getCalibration();
-		if (t == TypeCalibration.ACCELEROMETER) {
-			panelAccl.remove(0);
-			panelAccl.remove(1);
-			btnAccelero.addActionListener(ac1);
-		} else if (t == TypeCalibration.MAGNETOMETER) {
-			panelMag.remove(0);
-			panelMag.remove(1);
-			btnMagneto.addActionListener(ac2);
-		} else
-			panelGyro.removeAll();
-		btnGyro.addActionListener(ac3);
-		cl.show(content, listContent[0]);
-	}
+	
 
 	/**
 	 * 

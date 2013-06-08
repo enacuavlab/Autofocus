@@ -10,13 +10,17 @@ import javax.swing.SwingUtilities;
 /**
  * Implements version of the calibration algorithm using a system call
  * 
- * @author Alinoé
+ * @author Alinoï¿½
  * 
  */
 
 import common.TypeCalibration;
 import filtre.GUIHelper;
-
+/**
+ * Uses the system call in order to get the results of the calibration
+ * @author Guillaume
+ *
+ */
 public class CalibrateSystem extends Thread {
 
 	/**
