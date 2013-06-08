@@ -48,17 +48,12 @@ public class AffichAccel extends JPanel{
 	 * Images
 	 */
 	private JLabel labelPhoto;
-<<<<<<< HEAD
+
 
 	/**
 	 * Create the sphere and the layout of the accelerometer's view
+	 * @param s the sphere to display
 	 */
-	public AffichAccel() {
-		sp = new Sphere(20, 10);
-		progressBar = new JProgressBar(0, 100);
-		panelInst = new JPanel();
-=======
-	
 	
 	public AffichAccel(Sphere s){
 		this.setPreferredSize(new Dimension(1000,600));
@@ -70,7 +65,6 @@ public class AffichAccel extends JPanel{
 		sp.getAffichage().setBounds(0, 0, 800, 400);
 		this.add(sp.getAffichage());
 		panelInst=new JPanel();
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		panelInst.setLayout(null);
 		panelInst.setBounds(850, 50, 320, 420);
 		this.add(panelInst);
@@ -83,10 +77,6 @@ public class AffichAccel extends JPanel{
 		labelPhoto = new JLabel();
 		labelPhoto.setBounds(20, 20, 280, 100);
 		panelInst.add(labelPhoto);
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 	}
 
 	/**
@@ -127,26 +117,20 @@ public class AffichAccel extends JPanel{
 		return sp;
 	}
 
-<<<<<<< HEAD
+
 	/**
-	 * 
+	 * Updates the sphere
 	 * @param radius
 	 * @param newcenter
 	 * @param v
 	 * @param vcourant
 	 * @param nbCorrectOK
 	 */
-	public void update(double radius, VecteurFiltrable<Double> newcenter,
-			VecteurFiltrable<Double> v, VecteurFiltrable<Double> vcourant,
-			int nbCorrectOK) {
-=======
-
 	public void update(final double radius,
 			final VecteurFiltrable<Double> newcenter,
 			final VecteurFiltrable<Double> v ,
 			final VecteurFiltrable<Double> vcourant, 
 			final int nbCorrectOK){
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		sp.update(radius, newcenter, v, vcourant);
 		setValueProgressBar(nbCorrectOK);
 	}
@@ -157,13 +141,8 @@ public class AffichAccel extends JPanel{
 	 */
 	public void changedStates() {
 		setValueProgressBar(0);
-<<<<<<< HEAD
-		inst.setText("Maintenez votre drone dans une position stable non encore exploré");
-=======
 		inst.setText("Maintain your drone in a stable position not yet explored");	
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 	}
-<<<<<<< HEAD
 
 	/**
 	 * Give the instruction panel
@@ -171,20 +150,7 @@ public class AffichAccel extends JPanel{
 	 * @return the panel where we write the instructions
 	 */
 	public JPanel getLabel() {
-=======
-	
-	public JPanel getLabel(){
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		return panelInst;
 	}
-<<<<<<< HEAD
-
-=======
 	
-	@Override
-	public void paintComponent(Graphics g){
-		super.paintComponents(g);
-	}
-	
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 }

@@ -7,14 +7,17 @@ import java.io.InputStreamReader;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-
 /**
  * Implements version of the calibration algorithm using a system call
  * 
  * @author Alinoé
  * 
  */
-public class CalibrateSystem {
+
+import common.TypeCalibration;
+import filtre.GUIHelper;
+
+public class CalibrateSystem extends Thread {
 
 	/**
 	 * Allows to determine the string to launch the extern program
@@ -67,13 +70,8 @@ public class CalibrateSystem {
 	 * @throws InterruptedException
 	 */
 	private void calibrates() throws InterruptedException, IOException {
-<<<<<<< HEAD
-		String newligne = System.getProperty("line.separator");
-=======
-		String Newligne = System.getProperty("line.separator");
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
+		String newline = System.getProperty("line.separator");
 		Runtime runtime = Runtime.getRuntime();
-<<<<<<< HEAD
 		final Process process = runtime
 				.exec("python "
 						+ ppzHome
@@ -82,13 +80,6 @@ public class CalibrateSystem {
 						+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL"
 								: "MAG") + logName);
 
-=======
-		String t = (type.equals(TypeCalibration.ACCELEROMETER) ?
-				"ACCEL" : "MAG");
-		String commande = new String("python " + ppzHome
-				+ "/sw/tools/calibration/calibrate.py " + "-s " + t + " " + logName);
-		final Process process = runtime.exec(commande);
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		// Consommation de la sortie standard
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -98,15 +89,9 @@ public class CalibrateSystem {
 			while ((l = reader.readLine()) != null) {
 				// Traitement du flux de sortie de l'application
 				line.append(l);
-<<<<<<< HEAD
-				line.append(newligne);
-
-=======
-				line.append(Newligne);
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
+				line.append(newline);
 			}
-<<<<<<< HEAD
-=======
+
 			try {
 				parameters = line.toString().substring(112);
 			} catch (Exception e) {
@@ -124,7 +109,6 @@ public class CalibrateSystem {
 				// Traitement du flux de sortie de l'application
 				System.out.println(l);
 			}
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		} catch (IOException e) {
 			e.printStackTrace();
 			parameters = "Unable to parse";
@@ -152,16 +136,11 @@ public class CalibrateSystem {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-		return parameters;
-
-=======
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				result.setText(parameters);
 			}
 		});
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 	}
 
 	/**
@@ -174,18 +153,10 @@ public class CalibrateSystem {
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 		try {
-<<<<<<< HEAD
-			CalibrateSystem s = new CalibrateSystem(
-
-			TypeCalibration.MAGNETOMETER, "/home/gui/paparazzi/",
-					"/home/gui/paparazzi/var/logs/13_04_03__13_49_35.data");
-			System.out.println(s.maj());
-=======
 			JTextArea t = new JTextArea();
 			new CalibrateSystem(TypeCalibration.MAGNETOMETER,
 					"/home/gui/paparazzi", "/home/gui/test.data", t).run();
 			GUIHelper.showOnFrame(t, "test");
->>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		} finally {
 			System.out.println("done");
 		}
