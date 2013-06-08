@@ -6,8 +6,6 @@ package imu;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.SwingUtilities;
-
 import calibTest.PrintLog;
 
 import common.TypeCalibration;
@@ -124,8 +122,6 @@ public class IMU implements IvyMessageListener {
 			String test = regexp.toString();
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-					SwingUtilities.invokeLater(new Runnable() {
-						public void run() {
 							data.store(Integer.valueOf(args[0]),
 									Integer.valueOf(args[1]),
 									Integer.valueOf(args[2]));
@@ -134,8 +130,6 @@ public class IMU implements IvyMessageListener {
 											.equals(calibration) ? " IMU_MAG_RAW"
 											: " IMU_ACCEL_RAW") + " " + args[0]
 									+ " " + args[1] + " " + args[2]);
-						}
-					});
 				}
 			});
 

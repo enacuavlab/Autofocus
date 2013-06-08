@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import data.Vecteur;
+import filtre.GUIHelper;
 import filtre.VecteurFiltrable;
 
 /**

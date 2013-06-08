@@ -1,8 +1,12 @@
 package common;
 
+import java.awt.BorderLayout;
+import java.lang.reflect.InvocationTargetException;
 import java.util.prefs.PreferenceChangeEvent;
 
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
 
 import calibTest.PrintLog;
 
@@ -18,32 +22,33 @@ import data.Data;
 
 public class StartUp {
 
-	public StartUp(TypeCalibration t, JPanel panelDessin,int id,IMU imu){
+	public StartUp(TypeCalibration t, final JPanel panelDessin, int id, IMU imu) {
 		if (t == TypeCalibration.MAGNETOMETER) {
 			System.out.println("type");
-			Sphere sp = new Sphere(5, 5);
-			FilterSphere filtre = new FilterSphere(sp,10,t);
+			final Sphere sp = new Sphere(5, 5);
+			FilterSphere filtre = new FilterSphere(sp, 10, t);
 			System.out.println("filtre");
 			Data data = new Data(t, filtre);
 			System.out.println("data");
 			PrintLog prlog = new PrintLog();
-			//GUIHelper.showOnFrame(sp.getAffichage(), "test");
-			
-			//(sp.getAffichage()).setBounds(125, 0, 775, 425);
-			panelDessin.add(sp.getAffichage());
-			panelDessin.validate();
-			//Sender s = new Sender(
-				//	"/home/gui/paparazzi/var/logs/13_05_29__10_15_23.data");
+			// GUIHelper.showOnFrame(sp.getAffichage(), "test");
+			// (sp.getAffichage()).setBounds(125, 0, 775, 425);
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					panelDessin.add(sp.getAffichage());
+					panelDessin.validate();
+				}
+			});
+			Sender s;
 			try {
-				Sender s = new Sender("/home/gui/paparazzi/var/logs/13_05_29__10_15_23.data");
+				s = new Sender(
+						"/home/gui/paparazzi/var/logs/13_05_29__10_15_23.data");
 				System.out.println("sender");
 				imu.setId(17);
-				imu.ListenIMU(data, t,prlog);
+				imu.ListenIMU(data, t, prlog);
 				s.start();
 				s.join();
 				s.arret();
-				System.out.println("fin");
-				System.out.println(data.toString());
 			} catch (IvyException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -52,39 +57,56 @@ public class StartUp {
 				e.printStackTrace();
 			}
 			
-		}
-	}
-	
-	public StartUp(TypeCalibration t , JPanel panelDessin ,int id , JPanel panelInst, JPanel panelBar, IMU imu){
-		if (t == TypeCalibration.ACCELEROMETER) {
-			System.out.println("Accelero");
-			AffichAccel affAccel = new AffichAccel();
-			FilterAccel filtre = new FilterAccel(40,t,200,15,affAccel);
-			System.out.println("filtre");
-			Data data = new Data(t, filtre);
-			PrintLog prlog = new PrintLog();
-			System.out.println("data");
-			panelDessin.add(affAccel.getSphere().getAffichage());
-			panelDessin.validate();
-			panelInst.add(affAccel.getLabel());
-			panelInst.validate();
-			panelBar.add(affAccel.getProgressBar());
-			panelBar.validate();
-			
-			imu.ListenIMU(data, t,prlog);
-			try {
-				Thread.sleep(150000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			imu.stopListenImu(t);
+
 			System.out.println("fin");
-			
+			System.out.println(data.toString());
+
 		}
 	}
 
-	public static void main(String args[]) throws IvyException, InterruptedException {
-		
+	public StartUp(TypeCalibration t, final JPanel panel, int id, IMU imu,
+			int test) {
+		System.out.println("type");
+		final Sphere sp = new Sphere(5, 5);
+		final AffichAccel affAccel = new AffichAccel(sp);
+		FilterAccel filtre = new FilterAccel(40,t,300,20,affAccel);
+		System.out.println("filtre");
+		Data data = new Data(t, filtre);
+		System.out.println("data");
+		PrintLog prlog = new PrintLog();
+		// GUIHelper.showOnFrame(sp.getAffichage(), "test");
+		// (sp.getAffichage()).setBounds(125, 0, 775, 425);
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				panel.add(affAccel,BorderLayout.CENTER);
+				panel.validate();
+			}
+		});
+		Sender s;
+		try {
+			s = new Sender(
+					"/home/gui/paparazzi/var/logs/13_05_29__10_15_23.data");
+			System.out.println("sender");
+			imu.setId(17);
+			imu.ListenIMU(data, t, prlog);
+			s.start();
+			s.join();
+			s.arret();
+		} catch (IvyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println("fin");
+		System.out.println(data.toString());
+
+	}
+
+	public static void main(String args[]) throws IvyException,
+			InterruptedException {
+
 	}
 }

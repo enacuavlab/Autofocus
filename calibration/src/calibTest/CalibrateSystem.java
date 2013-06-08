@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import common.TypeCalibration;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+
 
 /**
  * Implements version of the calibration algorithm using a system call
@@ -35,18 +37,26 @@ public class CalibrateSystem {
 	private String parameters = "calcul en cours";
 
 	/**
+	 * the textArea to print to
+	 */
+	JTextArea result;
+
+	/**
 	 * Initialize the values of the attributes
 	 * 
 	 * @param t
 	 * @param paparazziHome
 	 * @param logName
+	 * @param result
+	 *            the textArea to print to
 	 */
 	public CalibrateSystem(TypeCalibration t, String paparazziHome,
-			String logName) {
+			String logName, JTextArea result) {
 		type = t;
 		ppzHome = paparazziHome;
 		this.logName = logName;
 		this.parameters = "calcul en cours";
+		this.result = result;
 	}
 
 	/**
@@ -57,8 +67,13 @@ public class CalibrateSystem {
 	 * @throws InterruptedException
 	 */
 	private void calibrates() throws InterruptedException, IOException {
+<<<<<<< HEAD
 		String newligne = System.getProperty("line.separator");
+=======
+		String Newligne = System.getProperty("line.separator");
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		Runtime runtime = Runtime.getRuntime();
+<<<<<<< HEAD
 		final Process process = runtime
 				.exec("python "
 						+ ppzHome
@@ -67,6 +82,13 @@ public class CalibrateSystem {
 						+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL"
 								: "MAG") + logName);
 
+=======
+		String t = (type.equals(TypeCalibration.ACCELEROMETER) ?
+				"ACCEL" : "MAG");
+		String commande = new String("python " + ppzHome
+				+ "/sw/tools/calibration/calibrate.py " + "-s " + t + " " + logName);
+		final Process process = runtime.exec(commande);
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		// Consommation de la sortie standard
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -76,9 +98,33 @@ public class CalibrateSystem {
 			while ((l = reader.readLine()) != null) {
 				// Traitement du flux de sortie de l'application
 				line.append(l);
+<<<<<<< HEAD
 				line.append(newligne);
 
+=======
+				line.append(Newligne);
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 			}
+<<<<<<< HEAD
+=======
+			try {
+				parameters = line.toString().substring(112);
+			} catch (Exception e) {
+				parameters = "not enough data";
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			parameters = "Unable to parse";
+		}
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					process.getErrorStream()));
+			String l = "";
+			while ((l = reader.readLine()) != null) {
+				// Traitement du flux de sortie de l'application
+				System.out.println(l);
+			}
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		} catch (IOException e) {
 			e.printStackTrace();
 			parameters = "Unable to parse";
@@ -90,14 +136,32 @@ public class CalibrateSystem {
 	 * 
 	 * @return String
 	 */
-	public String maj() {
+	@Override
+	public void run() {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				result.setText(parameters);
+			}
+		});
 		try {
 			calibrates();
-		} catch (Exception e) {
-			parameters = "unable to get the parameters" + e;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+<<<<<<< HEAD
 		return parameters;
 
+=======
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				result.setText(parameters);
+			}
+		});
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 	}
 
 	/**
@@ -110,11 +174,18 @@ public class CalibrateSystem {
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 		try {
+<<<<<<< HEAD
 			CalibrateSystem s = new CalibrateSystem(
 
 			TypeCalibration.MAGNETOMETER, "/home/gui/paparazzi/",
 					"/home/gui/paparazzi/var/logs/13_04_03__13_49_35.data");
 			System.out.println(s.maj());
+=======
+			JTextArea t = new JTextArea();
+			new CalibrateSystem(TypeCalibration.MAGNETOMETER,
+					"/home/gui/paparazzi", "/home/gui/test.data", t).run();
+			GUIHelper.showOnFrame(t, "test");
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		} finally {
 			System.out.println("done");
 		}

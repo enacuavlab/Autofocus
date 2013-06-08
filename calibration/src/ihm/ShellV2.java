@@ -1,5 +1,7 @@
 package ihm;
 
+import ellipsoide.AffichAccel;
+import ellipsoide.Sphere;
 import fr.dgac.ivy.IvyException;
 import imu.GetConfigException;
 import imu.IMU;
@@ -34,40 +36,41 @@ import rawmode.IncorrectXmlException;
 
 import common.StartUp;
 import common.TypeCalibration;
+
 /**
  * Graphic Interface of our application.
- *
- *@author SAAS Guillaume
- *@version 2.0
+ * 
+ * @author SAAS Guillaume
+ * @version 2.0
  */
 public class ShellV2 extends JFrame {
 	/**
 	 * Options Button to choose the type of the calibration
 	 */
-    private JButton btnAccelero, btnMagneto, btnGyro;
-    /**
-     * Label title : title of our activity 
-     */
-    private JLabel title;
-    /**
-     * Button Quit Stop and Return in panels of calibration
-     */
-	private JButton btnQuit, btnStop,btnReturn;
+	private JButton btnAccelero, btnMagneto, btnGyro;
+	/**
+	 * Label title : title of our activity
+	 */
+	private JLabel title;
+	/**
+	 * Button Quit Stop and Return in panels of calibration
+	 */
+	private JButton btnQuit, btnStop, btnReturn;
 	/**
 	 * Drone's id
 	 */
-	private int id ;
+	private int id;
 	/**
 	 * Drone's name and url of the drone's settings.xml
 	 */
 	private String name, url;
 	/**
-	 * Different panels of our Application : panelHome , panelGyro, panelMag -> background panels
-	 * content contents all the background panels
-	 * panelDessin, panelBar, panelInst to design calibration
+	 * Different panels of our Application : panelHome , panelGyro, panelMag ->
+	 * background panels content contents all the background panels panelDessinMag, panelDessinAccl
+	 * panelBar, panelInst to design calibration
 	 */
 	private JPanel panelHome, panelAccl, panelGyro, panelMag, content,
-			panelDessin, panelBar, panelInst;
+			panelDessinMag,panelDessinAccl ,panelBar, panelInst;
 	/**
 	 * listContent to get an access to the background panels
 	 */
@@ -77,7 +80,7 @@ public class ShellV2 extends JFrame {
 	 */
 	private CardLayout cl;
 	/**
-	 * To know the mode 
+	 * To know the mode
 	 */
 	private String mod;
 	/**
@@ -92,15 +95,16 @@ public class ShellV2 extends JFrame {
 	 * Result
 	 */
 	private Result result;
-	
-	private ShellV2 me= null;
+
+	private ShellV2 me = null;
+
 	/**
 	 * Constructeur qui initialise la fenetre et met en place le cardLayout
 	 */
 	public ShellV2() {
 		super();
 		// Shell
-		me=this;
+		me = this;
 		setTitle("Autofocus");
 		setSize(1600, 800);
 		setLocationRelativeTo(null);
@@ -134,14 +138,14 @@ public class ShellV2 extends JFrame {
 	 */
 	private void initialise() {
 		// Pour test
-		//btnAccelero.setEnabled(true);
-		btnMagneto.setEnabled(true);
-		//IMU
+		 btnAccelero.setEnabled(true);
+		 btnMagneto.setEnabled(true);
+		// IMU
 		try {
 			imu = new IMU();
 		} catch (IvyException e) {
-			JOptionPane.showMessageDialog(null, "Ivy Bus problem"
-					+ name,"Error Bus ", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ivy Bus problem" + name,
+					"Error Bus ", JOptionPane.ERROR_MESSAGE);
 		}
 		// Active les boutons
 		activateButton(mod);
@@ -306,8 +310,8 @@ public class ShellV2 extends JFrame {
 				for (Integer i : l) {
 					combo.addItem(i.toString());
 				}
-			}
-			else System.out.println("Florent est une merde");
+			} else
+				System.out.println("Florent est une merde");
 			imu.stopIdListener();
 		} catch (IvyException eivy) {
 			eivy.printStackTrace();
@@ -340,9 +344,9 @@ public class ShellV2 extends JFrame {
 										null,
 										"Bus problem, check if ground station is launched ",
 										"Bus error", JOptionPane.ERROR_MESSAGE);
-					} catch (IvyException e1){
+					} catch (IvyException e1) {
 						e1.printStackTrace();
-					} catch (InterruptedException e1){
+					} catch (InterruptedException e1) {
 						e1.printStackTrace();
 					}
 
@@ -375,7 +379,7 @@ public class ShellV2 extends JFrame {
 			}
 			imu.IvyRawListener(d.getIndex());
 			int modeActuel = imu.getTelemetryMode();
-			System.out.println("Mode actuel : " + modeActuel );
+			System.out.println("Mode actuel : " + modeActuel);
 			comboMod.setSelectedIndex(modeActuel);
 			comboMod.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -396,7 +400,7 @@ public class ShellV2 extends JFrame {
 					}
 				}
 			});
-			//ivyraw.finalize();
+			// ivyraw.finalize();
 
 		} catch (IOException e) {
 			panelMod.setVisible(false);
@@ -421,7 +425,6 @@ public class ShellV2 extends JFrame {
 	 * Function to add some elements in order to make accelerometers calibration
 	 */
 	private void modAccelero() {
-
 		btnAccelero.removeActionListener(ac1);
 		mod = "Accl";
 		cl.show(content, listContent[1]);
@@ -436,30 +439,10 @@ public class ShellV2 extends JFrame {
 		inst.setBounds(375, 0, 500, 75);
 		inst.setText("<html>Suivez les instructions écrites à l'écran</html>");
 		panelNorth.add(inst);
-		panelAccl.add(panelNorth, BorderLayout.NORTH,0);
+		panelAccl.add(panelNorth, BorderLayout.NORTH, 0);
 		JPanel panelCenter = new JPanel();
 		panelCenter.setLayout(null);
-		panelAccl.add(panelCenter, BorderLayout.CENTER,1);
-		// Panel_dessin
-		JPanel panelDessin = new JPanel();
-		Border borderMod = BorderFactory.createRaisedBevelBorder();
-		panelDessin.setBackground(Color.WHITE);
-		panelDessin.setBounds(50, 0, 625, 325);
-		panelDessin.setBorder(borderMod);
-		panelCenter.add(panelDessin);
-		// Panel instruction
-		panelInst = new JPanel();
-		panelInst.setBounds(825, 0, 320, 420);
-		panelInst.setBorder(borderMod);
-		panelInst.setBackground(Color.WHITE);
-		panelCenter.add(panelInst);
-		// Panel progress Bar
-		panelBar = new JPanel();
-		panelBar.setBounds(50, 375, 625, 50);
-		panelBar.setBackground(Color.WHITE);
-		panelBar.setLayout(null);
-		panelCenter.add(panelBar);
-
+		panelAccl.add(panelCenter, BorderLayout.CENTER, 1);
 	}
 
 	/**
@@ -480,14 +463,13 @@ public class ShellV2 extends JFrame {
 		inst.setBounds(275, 15, 500, 75);
 		inst.setText("<html><br><br>Tournez le drone dans tous les sens afin de remplir les zones rouges</html>");
 		panelNorth.add(inst);
-		panelMag.add(panelNorth, BorderLayout.NORTH,0);
+		panelMag.add(panelNorth, BorderLayout.NORTH, 0);
 		JPanel panelCenter = new JPanel();
 		panelCenter.setLayout(null);
-		panelMag.add(panelCenter, BorderLayout.CENTER,1);
-		panelDessin = new JPanel();
-		panelDessin.setBounds(125, 0, 775, 425);
-		panelCenter.add(panelDessin);
-
+		panelMag.add(panelCenter, BorderLayout.CENTER, 1);
+		panelDessinMag = new JPanel();
+		panelDessinMag.setBounds(125, 0, 775, 425);
+		panelCenter.add(panelDessinMag);
 	}
 
 	/**
@@ -532,15 +514,14 @@ public class ShellV2 extends JFrame {
 				imu.deleteDataLog();
 				panel.remove(0);
 				panel.remove(1);
-				if (imu.getCalibration()==TypeCalibration.ACCELEROMETER){
+				if (imu.getCalibration() == TypeCalibration.ACCELEROMETER) {
 					btnAccelero.addActionListener(ac1);
-				}
-				else if (imu.getCalibration()==TypeCalibration.MAGNETOMETER){
+				} else if (imu.getCalibration() == TypeCalibration.MAGNETOMETER) {
 					btnMagneto.addActionListener(ac2);
-				}
-				else btnGyro.addActionListener(ac3);
+				} else
+					btnGyro.addActionListener(ac3);
 				addButton(panel);
-				cl.show(content,listContent[0]);
+				cl.show(content, listContent[0]);
 			}
 		});
 		// Quit Button
@@ -570,13 +551,18 @@ public class ShellV2 extends JFrame {
 		gbcBtnStop.gridy = 0;
 		panelSouthCenter.add(btnStop, gbcBtnStop);
 		btnStop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
+			public void actionPerformed(ActionEvent e) {
 				imu.stopListenImu(imu.getCalibration());
-				result = new Result(me, "Result", true ,imu);
-				result.majResult();
+				result = new Result(me, "Result", true, imu);
+				System.out.println("Appel majresult");
+				new Thread(){
+				public void run(){
+					result.majResult();
+				}
+				}.start();
+				System.out.println("Appel showresult");
 				result.showResult();
-				
-			}
+			} 
 		});
 	}
 
@@ -601,8 +587,7 @@ public class ShellV2 extends JFrame {
 				Thread model = new Thread() {
 					public void run() {
 						StartUp start = new StartUp(
-								TypeCalibration.ACCELEROMETER, panelDessin, id,
-								panelInst, panelBar,imu);
+								TypeCalibration.ACCELEROMETER, panelAccl, id, imu,1);
 
 					}
 				};
@@ -613,7 +598,8 @@ public class ShellV2 extends JFrame {
 				Thread model = new Thread() {
 					public void run() {
 						StartUp start = new StartUp(
-								TypeCalibration.MAGNETOMETER, panelDessin, id,imu);
+								TypeCalibration.MAGNETOMETER, panelDessinMag, id,
+								imu);
 
 					}
 				};
@@ -623,22 +609,22 @@ public class ShellV2 extends JFrame {
 			}
 		}
 	}
-	
-	public void backHome(){
+
+	public void backHome() {
 		imu.deleteDataLog();
 		TypeCalibration t = imu.getCalibration();
-		if (t==TypeCalibration.ACCELEROMETER){
+		if (t == TypeCalibration.ACCELEROMETER) {
 			panelAccl.remove(0);
 			panelAccl.remove(1);
 			btnAccelero.addActionListener(ac1);
-		}
-		else if (t==TypeCalibration.MAGNETOMETER){
+		} else if (t == TypeCalibration.MAGNETOMETER) {
 			panelMag.remove(0);
 			panelMag.remove(1);
 			btnMagneto.addActionListener(ac2);
-		}
-		else panelGyro.removeAll();btnGyro.addActionListener(ac3);
-		cl.show(content,listContent[0]);
+		} else
+			panelGyro.removeAll();
+		btnGyro.addActionListener(ac3);
+		cl.show(content, listContent[0]);
 	}
 
 	/**

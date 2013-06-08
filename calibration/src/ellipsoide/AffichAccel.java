@@ -3,6 +3,10 @@
  */
 package ellipsoide;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -12,16 +16,20 @@ import javax.swing.JTextArea;
 
 import filtre.VecteurFiltrable;
 
+
 /**
  * Class to build the Accelerometers view
  * 
  * @author Guillaume
  * 
  */
-public class AffichAccel {
+public class AffichAccel extends JPanel{
+	
 	/**
-	 * Sphere which represents the data collected
+	 * 
 	 */
+	private static final long serialVersionUID = -1632196092075420985L;
+
 	private Sphere sp;
 	/**
 	 * ProgressBar which represents the amount of correct vectors collected on
@@ -40,6 +48,7 @@ public class AffichAccel {
 	 * Images
 	 */
 	private JLabel labelPhoto;
+<<<<<<< HEAD
 
 	/**
 	 * Create the sphere and the layout of the accelerometer's view
@@ -48,8 +57,23 @@ public class AffichAccel {
 		sp = new Sphere(20, 10);
 		progressBar = new JProgressBar(0, 100);
 		panelInst = new JPanel();
+=======
+	
+	
+	public AffichAccel(Sphere s){
+		this.setPreferredSize(new Dimension(1000,600));
+		this.setLayout(null);
+		sp=s;
+		progressBar=new JProgressBar(0,100);
+		progressBar.setBounds(240, 400, 300, 25);
+		this.add(progressBar);
+		sp.getAffichage().setBounds(0, 0, 800, 400);
+		this.add(sp.getAffichage());
+		panelInst=new JPanel();
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		panelInst.setLayout(null);
-		panelInst.setBounds(0, 0, 320, 420);
+		panelInst.setBounds(850, 50, 320, 420);
+		this.add(panelInst);
 		inst = new JTextArea();
 		inst.setEditable(false);
 		inst.setBounds(20, 20, 280, 280);
@@ -59,7 +83,10 @@ public class AffichAccel {
 		labelPhoto = new JLabel();
 		labelPhoto.setBounds(20, 20, 280, 100);
 		panelInst.add(labelPhoto);
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 	}
 
 	/**
@@ -100,6 +127,7 @@ public class AffichAccel {
 		return sp;
 	}
 
+<<<<<<< HEAD
 	/**
 	 * 
 	 * @param radius
@@ -111,6 +139,14 @@ public class AffichAccel {
 	public void update(double radius, VecteurFiltrable<Double> newcenter,
 			VecteurFiltrable<Double> v, VecteurFiltrable<Double> vcourant,
 			int nbCorrectOK) {
+=======
+
+	public void update(final double radius,
+			final VecteurFiltrable<Double> newcenter,
+			final VecteurFiltrable<Double> v ,
+			final VecteurFiltrable<Double> vcourant, 
+			final int nbCorrectOK){
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		sp.update(radius, newcenter, v, vcourant);
 		setValueProgressBar(nbCorrectOK);
 	}
@@ -121,8 +157,13 @@ public class AffichAccel {
 	 */
 	public void changedStates() {
 		setValueProgressBar(0);
+<<<<<<< HEAD
 		inst.setText("Maintenez votre drone dans une position stable non encore exploré");
+=======
+		inst.setText("Maintain your drone in a stable position not yet explored");	
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 	}
+<<<<<<< HEAD
 
 	/**
 	 * Give the instruction panel
@@ -130,7 +171,20 @@ public class AffichAccel {
 	 * @return the panel where we write the instructions
 	 */
 	public JPanel getLabel() {
+=======
+	
+	public JPanel getLabel(){
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 		return panelInst;
 	}
+<<<<<<< HEAD
 
+=======
+	
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponents(g);
+	}
+	
+>>>>>>> branch 'master' of ssh://git@git.ienac.fr/java11s/autofocus.git
 }
