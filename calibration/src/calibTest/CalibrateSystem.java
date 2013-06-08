@@ -79,10 +79,10 @@ public class CalibrateSystem extends Thread {
 		final Process process = runtime
 				.exec("python "
 						+ ppzHome
-						+ "sw/tools/calibration/calibrate.py "
+						+ "/sw/tools/calibration/calibrate.py "
 						+ "-s "
-						+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL"
-								: "MAG") + logName);
+						+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL "
+								: "MAG ") + logName);
 
 		// Consommation de la sortie standard
 		try {
