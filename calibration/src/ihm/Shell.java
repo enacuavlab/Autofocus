@@ -153,7 +153,7 @@ public class Shell extends JFrame {
 	private void initialise() {
 
 		// For test
-		//btnAccelero.setEnabled(true);
+		btnAccelero.setEnabled(true);
 		//btnMagneto.setEnabled(true);
 
 		// IMU

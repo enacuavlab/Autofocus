@@ -94,9 +94,9 @@ public class StartUp {
 		/*Sender s;
 		try {
 			s = new Sender(System.getenv("HOME") + 
-					"/paparazzi/var/logs/13_05_29__10_15_23.data");
+					"/paparazzi/var/logs/13_04_03__13_49_35.data");
 			System.out.println("sender");
-			imu.setId(17);
+			imu.setId(3);
 			imu.ListenIMU(data, t, prlog);
 			s.start();
 			s.join();
