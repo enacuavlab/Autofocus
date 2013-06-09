@@ -43,8 +43,11 @@ public class StartUp {
 					panelDessin.validate();
 				}
 			});
-			//imu.ListenIMU(data, t, prlog);
-			Sender s;
+ 			imu.ListenIMU(data, t, prlog);//Comment for test
+			
+			
+			//For test
+			/*Sender s;
 			try {
 				s = new Sender(System.getenv("HOME") +
 						"/paparazzi/var/logs/13_05_29__10_15_23.data");
@@ -60,7 +63,7 @@ public class StartUp {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			
 
 	}
@@ -86,9 +89,9 @@ public class StartUp {
 				panel.validate();
 			}
 		});
-		
+		imu.ListenIMU(data, t, prlog); //Comment for test
 		// For test
-		Sender s;
+		/*Sender s;
 		try {
 			s = new Sender(System.getenv("HOME") + 
 					"/paparazzi/var/logs/13_05_29__10_15_23.data");
@@ -104,11 +107,11 @@ public class StartUp {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		
 		
-		//imu.ListenIMU(data, t, prlog);
+		
 		
 
 	}
