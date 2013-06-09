@@ -154,7 +154,7 @@ public class Shell extends JFrame {
 
 		// For test
 		btnAccelero.setEnabled(true);
-		btnMagneto.setEnabled(true);
+		//btnMagneto.setEnabled(true);
 
 		// IMU
 		try {

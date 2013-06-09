@@ -15,10 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import calibrate.CalibrateSystem;
+
 /**
  * Show the result of the calibration in a JDialog
+ * 
  * @author Guillaume
- *
+ * 
  */
 public class Result extends JDialog {
 	/**
@@ -26,7 +28,8 @@ public class Result extends JDialog {
 	 */
 	private JTextArea textResult;
 	/**
-	 * Button for different actions : Return home, Copy the result, Continue the calibration
+	 * Button for different actions : Return home, Copy the result, Continue the
+	 * calibration
 	 */
 	private JButton btnReturn, btnCopy, btnContinue;
 	/**
@@ -41,25 +44,30 @@ public class Result extends JDialog {
 	 * To know where the JDialog must be shown
 	 */
 	private Shell parent;
+
 	/**
 	 * 
-	 * @param parent the shell
-	 * @param title	 title of the JDialog
-	 * @param modal	
-	 * @param imu the imu
+	 * @param parent
+	 *            the shell
+	 * @param title
+	 *            title of the JDialog
+	 * @param modal
+	 * @param imu
+	 *            the imu
 	 */
 	public Result(Shell parent, String title, boolean modal, IMU imu) {
 		super(parent, title, modal);
 		this.parent = parent;
 		this.imu = imu;
-		//The size of the JDialog
+		// The size of the JDialog
 		this.setSize(550, 270);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		
+
 		initialise();
 	}
+
 	/**
 	 * Initialise the JDialog
 	 */
@@ -67,7 +75,7 @@ public class Result extends JDialog {
 		JPanel panel = new JPanel();
 		this.getContentPane().add(panel);
 		panel.setLayout(null);
-		//The log file
+		// The log file
 		imu.getLog().print(System.getenv("HOME") + "/test.data");
 		// Text where the result appears
 		textResult = new JTextArea();
@@ -110,12 +118,14 @@ public class Result extends JDialog {
 		panel.add(btnContinue);
 
 	}
+
 	/**
 	 * Show the result
 	 */
 	public void showResult() {
 		this.setVisible(true);
 	}
+
 	/**
 	 * Update the result
 	 */
@@ -125,9 +135,10 @@ public class Result extends JDialog {
 		new CalibrateSystem(imu.getCalibration(), "/home/gui/paparazzi",
 				"/home/gui/test.data", this.textResult).start();
 	}
-	
+
 	/**
 	 * To have the result
+	 * 
 	 * @return
 	 */
 	public String getResult() {
