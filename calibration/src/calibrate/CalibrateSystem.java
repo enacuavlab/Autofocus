@@ -1,4 +1,4 @@
-package calibTest;
+package calibrate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+
+import tests.GUIHelper;
 
 /**
  * Implements version of the calibration algorithm using a system call
@@ -15,7 +17,6 @@ import javax.swing.SwingUtilities;
  */
 
 import common.TypeCalibration;
-import filtre.GUIHelper;
 /**
  * Uses the system call in order to get the results of the calibration
  * @author Guillaume

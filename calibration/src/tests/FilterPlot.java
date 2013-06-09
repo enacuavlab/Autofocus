@@ -1,6 +1,9 @@
-package filtre;
+package tests;
 
+import obsolete.Plotter;
 import common.TypeCalibration;
+import filtre.Filter;
+import filtre.VecteurFiltrable;
 
 public class FilterPlot extends Filter {
 

@@ -1,4 +1,4 @@
-package rawmode;
+package obsolete;
 
 import imu.GetConfigException;
 import fr.dgac.ivy.Ivy;

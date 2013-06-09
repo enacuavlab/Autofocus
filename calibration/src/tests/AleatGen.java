@@ -1,6 +1,7 @@
-package filtre;
+package tests;
 
 import java.util.Random;
+
 
 /** This class aims to simulate the IMU in order to test the filtering */
 class AleatGen {

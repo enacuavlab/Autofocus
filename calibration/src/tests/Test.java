@@ -1,4 +1,5 @@
-package filtre;
+package tests;
+
 
 public class Test extends Thread {
 	

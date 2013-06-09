@@ -1,4 +1,4 @@
-package ihm;
+package obsolete;
 
 import fr.dgac.ivy.IvyException;
 import iddrone.IvyIdListener;
@@ -29,7 +29,6 @@ import javax.swing.border.Border;
 
 import rawmode.ExtractRawData;
 import rawmode.IncorrectXmlException;
-import rawmode.IvyRawListener;
 
 
 public class Shell extends JFrame {

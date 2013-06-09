@@ -1,4 +1,4 @@
-package ellipsoide;
+package obsolete;
 
 import org.ejml.simple.SimpleMatrix;
 

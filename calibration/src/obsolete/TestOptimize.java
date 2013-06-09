@@ -1,4 +1,4 @@
-package calibTest;
+package obsolete;
 
 import data.Vecteur;
 

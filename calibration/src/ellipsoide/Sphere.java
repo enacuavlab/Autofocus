@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import tests.GUIHelper;
+
 import data.Vecteur;
-import filtre.GUIHelper;
 import filtre.VecteurFiltrable;
 
 /**

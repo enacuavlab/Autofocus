@@ -1,7 +1,8 @@
-package filtre;
+package tests;
 
 import java.util.*;
 import data.*;
+import filtre.Filter;
 
 public class EmulData implements Iterable<Vecteur> {
 

@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import testData.Sender;
-import calibTest.PrintLog;
+import calibrate.PrintLog;
 import data.Data;
 import ellipsoide.AffichAccel;
 import ellipsoide.Sphere;

@@ -1,4 +1,4 @@
-package filtre;
+package obsolete;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,8 +8,11 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import tests.GUIHelper;
+
 import data.Vecteur;
 import ellipsoide.Sphere;
+import filtre.VecteurFiltrable;
 
 
 public class Plotter extends JPanel {

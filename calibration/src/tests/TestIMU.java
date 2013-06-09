@@ -1,10 +1,13 @@
-package imu;
+package tests;
+
+import imu.IMU;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import calibTest.Optimize;
-import calibTest.PrintLog;
+import obsolete.Optimize;
+
+import calibrate.PrintLog;
 import testData.Sender;
 
 import common.TypeCalibration;
@@ -16,7 +19,6 @@ import ellipsoide.AffichAccel;
 import ellipsoide.Sphere;
 import filtre.FilterAccel;
 import filtre.FilterSphere;
-import filtre.GUIHelper;
 import fr.dgac.ivy.IvyException;
 
 public class TestIMU {

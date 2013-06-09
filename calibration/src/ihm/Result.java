@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import calibTest.CalibrateSystem;
+import calibrate.CalibrateSystem;
 
 public class Result extends JDialog {
 	private JTextArea textResult;

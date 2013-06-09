@@ -1,4 +1,4 @@
-package rawmode;
+package obsolete;
 
 import fr.dgac.ivy.Ivy;
 import fr.dgac.ivy.IvyClient;

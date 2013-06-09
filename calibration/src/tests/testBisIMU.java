@@ -1,4 +1,6 @@
-package imu;
+package tests;
+
+import imu.IMU;
 
 import java.util.List;
 

@@ -1,9 +1,12 @@
-package calibTest;
+package obsolete;
+
+import obsolete.LevenbergMarquardt.Function;
 
 import org.ddogleg.optimization.functions.FunctionNtoM;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.factory.LinearSolverFactory;
 import org.ejml.ops.CommonOps;
+
 import common.TypeCalibration;
 
 class Fonction implements LevenbergMarquardt.Function{

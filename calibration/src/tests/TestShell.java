@@ -1,4 +1,6 @@
-package ihm;
+package tests;
+
+import ihm.ShellV2;
 
 import javax.swing.SwingUtilities;
 
