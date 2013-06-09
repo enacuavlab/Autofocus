@@ -1,3 +1,4 @@
+/**Package grouping all classes used to filter data*/
 package filtre;
 
 import java.util.Collection;

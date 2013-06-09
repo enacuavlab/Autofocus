@@ -1,3 +1,4 @@
+/**Package grouping all classes used to filter data*/
 package filtre;
 
 import javax.swing.SwingUtilities;
@@ -9,6 +10,9 @@ import ellipsoide.AffichAccel;
 
 public class FilterAccel extends Filter {
 
+		/**Maximum and minimum on each directions used to update the sphere
+		 * 
+		 */
 		private int maxX = 0;
 		private int minX = 0;
 		private int maxY = 0;
@@ -16,12 +20,23 @@ public class FilterAccel extends Filter {
 		private int maxZ = 0;
 		private int minZ = 0;
 		private int rayon = 0;
+		/**The center of the sphere*/
 		private Vecteur center = new Vecteur(0, 0, 0);
-		
+		/**The accelerator of the sphere*/
 		private AffichAccel affAccel;
+		/**The number of correct vector added*/
 		private int nbCorrectVect;
+		/**The number of vector discarded used 
+		 * to reinitialize the progress bar
+		 */
 		private int nbWrongVect;
+		/**The threshold that trigger the 
+		 * reinitialization of the progress bar
+		 */
 		private int thresholdOK;
+		/**The threshold that trigger the 
+		 * reinitialization of the progress bar
+		 */
 		private int thresholdWrong;
 
 		/**

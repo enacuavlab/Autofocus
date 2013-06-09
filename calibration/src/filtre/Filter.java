@@ -1,3 +1,4 @@
+/**Package grouping all classes used to filter data*/
 package filtre;
 
 import java.util.*;
@@ -6,12 +7,19 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 import common.TypeCalibration;
 
+/**Mother class of all filter use to discriminates vector
+ * according to their noise factor
+ */
 
 public class Filter {
 
+	/**The array used to store data, generates medium and standard deviation*/
 	protected ArrayList<DescriptiveStatistics> variables;
+	/**The size of the sliding window of the filter*/
 	protected int windowSize;
+	/**The sliding window of the filter*/
 	protected SlidingWindow<VecteurFiltrable<Double>> window;
+	/**The noise threshold of the filter*/
 	private double noiseThreshold;
 
 	/**Creates a filter with fixed window size which filter the

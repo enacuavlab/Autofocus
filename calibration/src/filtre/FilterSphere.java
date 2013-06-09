@@ -1,3 +1,4 @@
+/**Package grouping all classes used to filter data*/
 package filtre;
 
 import javax.swing.SwingUtilities;
@@ -9,6 +10,9 @@ import ellipsoide.Sphere;
 
 public class FilterSphere extends Filter {
 
+	/**Data of the sphere, max and min of each axis
+	 * center, radius and the sphere
+	 */
 	private int maxX = 0;
 	private int minX = 0;
 	private int maxY = 0;
@@ -16,7 +20,7 @@ public class FilterSphere extends Filter {
 	private int maxZ = 0;
 	private int minZ = 0;
 	private Sphere s;
-	private int rayon = 0;
+	private int radius = 0;
 	private Vecteur center = new Vecteur(0, 0, 0);
 
 	/**
@@ -69,7 +73,7 @@ public class FilterSphere extends Filter {
 			if (v.getZ() < minZ)
 				minZ = (int) v.getZ();
 		}
-		rayon = (maxX - minX > maxY - minY ? (maxX - minX > maxZ - minZ ? maxX
+		radius = (maxX - minX > maxY - minY ? (maxX - minX > maxZ - minZ ? maxX
 				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
 				- minY : maxZ - minZ));
 		center = new Vecteur((maxX + minX) / 2, (maxY + minY) / 2,
@@ -78,7 +82,7 @@ public class FilterSphere extends Filter {
 			SwingUtilities.invokeLater(
 					new Runnable() {
 						public void run() {
-						s.update(rayon, center, window.toArray(a)[windowSize - 1],v);
+						s.update(radius, center, window.toArray(a)[windowSize - 1],v);
 						}
 					});
 		}

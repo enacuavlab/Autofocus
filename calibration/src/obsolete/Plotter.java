@@ -44,7 +44,7 @@ public class Plotter extends JPanel {
 			g.drawOval((int) (maxX + minX) / 4 + 200 - rayon / 4,
 					(int) (maxY + minY) / 4 + 600 - rayon / 4,
 					rayon / 2, rayon / 2);
-			// cast explicite de double avec des 0 après la virgule en int
+			// cast explicite de double avec des 0 aprï¿½s la virgule en int
 		}
 	}
 
@@ -68,7 +68,7 @@ public class Plotter extends JPanel {
 				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
 				- minY : maxZ - minZ));
 		if (s!=null) {
-			s.update(rayon, new Vecteur((minX+maxX)/2, (minY+maxY)/2, (minZ+maxZ)/2),v);
+			//s.update(rayon, new Vecteur((minX+maxX)/2, (minY+maxY)/2, (minZ+maxZ)/2),v);
 		}
 		this.repaint();
 	}
