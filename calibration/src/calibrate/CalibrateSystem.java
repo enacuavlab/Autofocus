@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import tests.GUIHelper;
-
 /**
  * Implements version of the calibration algorithm using a system call
  * 
@@ -17,6 +15,7 @@ import tests.GUIHelper;
  */
 
 import common.TypeCalibration;
+import tests.GUIHelper;
 /**
  * Uses the system call in order to get the results of the calibration
  * @author Guillaume
@@ -80,10 +79,10 @@ public class CalibrateSystem extends Thread {
 		final Process process = runtime
 				.exec("python "
 						+ ppzHome
-						+ "sw/tools/calibration/calibrate.py "
+						+ "/sw/tools/calibration/calibrate.py "
 						+ "-s "
-						+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL"
-								: "MAG") + logName);
+						+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL "
+								: "MAG ") + logName);
 
 		// Consommation de la sortie standard
 		try {
