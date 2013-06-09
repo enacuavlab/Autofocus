@@ -3,9 +3,7 @@
  */
 package ellipsoide;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;

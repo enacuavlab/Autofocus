@@ -1,3 +1,6 @@
+/**
+ * Package IHM contents the interface of our application
+ */
 package ihm;
 
 import imu.IMU;
@@ -8,36 +11,65 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 
 import calibrate.CalibrateSystem;
-
+/**
+ * Show the result of the calibration in a JDialog
+ * @author Guillaume
+ *
+ */
 public class Result extends JDialog {
+	/**
+	 * Where there is the result
+	 */
 	private JTextArea textResult;
+	/**
+	 * Button for different actions : Return home, Copy the result, Continue the calibration
+	 */
 	private JButton btnReturn, btnCopy, btnContinue;
-	TextTransfer transfer = new TextTransfer();
+	/**
+	 * For copy and paste
+	 */
+	private TextTransfer transfer = new TextTransfer();
+	/**
+	 * IMU
+	 */
 	private IMU imu;
+	/**
+	 * To know where the JDialog must be shown
+	 */
 	private Shell parent;
-
+	/**
+	 * 
+	 * @param parent the shell
+	 * @param title	 title of the JDialog
+	 * @param modal	
+	 * @param imu the imu
+	 */
 	public Result(Shell parent, String title, boolean modal, IMU imu) {
 		super(parent, title, modal);
 		this.parent = parent;
 		this.imu = imu;
+		//The size of the JDialog
 		this.setSize(550, 270);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		
 		initialise();
 	}
-
+	/**
+	 * Initialise the JDialog
+	 */
 	public void initialise() {
 		JPanel panel = new JPanel();
 		this.getContentPane().add(panel);
 		panel.setLayout(null);
-		imu.getLog().print("/home/gui/test.data");
+		//The log file
+		imu.getLog().print(System.getenv("HOME") + "/test.data");
+		// Text where the result appears
 		textResult = new JTextArea();
 		textResult.setEditable(false);
 		textResult.setLineWrap(true);
@@ -78,18 +110,26 @@ public class Result extends JDialog {
 		panel.add(btnContinue);
 
 	}
-
+	/**
+	 * Show the result
+	 */
 	public void showResult() {
 		this.setVisible(true);
 	}
-
+	/**
+	 * Update the result
+	 */
 	public void majResult() {
 		System.out.println("Debut Maj result");
 		textResult.setText("ok");
 		new CalibrateSystem(imu.getCalibration(), "/home/gui/paparazzi",
 				"/home/gui/test.data", this.textResult).start();
 	}
-
+	
+	/**
+	 * To have the result
+	 * @return
+	 */
 	public String getResult() {
 		return textResult.getText();
 	}

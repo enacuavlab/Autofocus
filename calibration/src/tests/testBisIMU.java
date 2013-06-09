@@ -20,14 +20,16 @@ public class testBisIMU {
 	System.out.println("filtre");
 	Data data = new Data(t,filtre);
 	System.out.println("data");
-	IMU imu =new IMU(t,data);
+	
 	System.out.println("data");
 	try {
+		IMU imu =new IMU();
 		imu.IvyIdListener();
+		List <Integer> listeId=imu.getList();
 	} catch (IvyException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	List <Integer> listeId=imu.getList();
+
 	}
 }
