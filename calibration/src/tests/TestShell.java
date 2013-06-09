@@ -1,3 +1,6 @@
+/**
+ * Package IHM contents the interface of our application
+ */
 package tests;
 
 import ihm.ShellV2;
@@ -5,7 +8,11 @@ import ihm.ShellV2;
 import javax.swing.SwingUtilities;
 
 
-
+/**
+ * Launch the shell
+ * @author Guillaume
+ *
+ */
 public class TestShell {
 
 	public static void main(String[] args) {
