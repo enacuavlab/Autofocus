@@ -1,7 +1,6 @@
-/**
- * Package IHM contents the interface of our application
- */
 package tests;
+
+
 
 import ihm.Shell;
 
