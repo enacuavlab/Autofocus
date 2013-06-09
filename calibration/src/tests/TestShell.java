@@ -3,7 +3,7 @@
  */
 package tests;
 
-import ihm.ShellV2;
+import ihm.Shell;
 
 import javax.swing.SwingUtilities;
 
@@ -20,7 +20,7 @@ public class TestShell {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				// On crée une nouvelle instance de notre JDialog
-				ShellV2 shell = new ShellV2();
+				Shell shell = new Shell();
 				shell.setVisible(true);// On la rend visible
 				// test.run();
 			}

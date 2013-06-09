@@ -44,7 +44,7 @@ import common.TypeCalibration;
  * @author Guillaume
  * @version 2.0
  */
-public class ShellV2 extends JFrame {
+public class Shell extends JFrame {
 	/**
 	 * Options Button to choose the type of the calibration
 	 */
@@ -99,7 +99,7 @@ public class ShellV2 extends JFrame {
 	/**
 	 * 
 	 */
-	private ShellV2 me = null;
+	private Shell me = null;
 
 	/**
 	 * 
@@ -110,7 +110,7 @@ public class ShellV2 extends JFrame {
 	 * Constructor which initialises the window with options Button and the
 	 * cardlayout used.
 	 */
-	public ShellV2() {
+	public Shell() {
 		super();
 		// Shell
 		me = this;

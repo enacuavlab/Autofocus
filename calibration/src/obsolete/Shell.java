@@ -1,7 +1,6 @@
 package obsolete;
 
 import fr.dgac.ivy.IvyException;
-import iddrone.IvyIdListener;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;

@@ -20,9 +20,9 @@ public class Result extends JDialog {
 	private JButton btnReturn, btnCopy, btnContinue;
 	TextTransfer transfer = new TextTransfer();
 	private IMU imu;
-	private ShellV2 parent;
+	private Shell parent;
 
-	public Result(ShellV2 parent, String title, boolean modal, IMU imu) {
+	public Result(Shell parent, String title, boolean modal, IMU imu) {
 		super(parent, title, modal);
 		this.parent = parent;
 		this.imu = imu;

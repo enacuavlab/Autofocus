@@ -1,4 +1,4 @@
-package iddrone;
+package obsolete;
 
 /**
  * Ivy client that allows user to know if the IMU is connected to the bus
