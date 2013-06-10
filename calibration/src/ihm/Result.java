@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -26,7 +27,7 @@ public class Result extends JDialog {
 	/**
 	 * Where there is the result
 	 */
-	private JTextArea textResult;
+	private JTextArea textResultCopy, textResult;
 	/**
 	 * Button for different actions : Return home, Copy the result, Continue the
 	 * calibration
@@ -45,6 +46,8 @@ public class Result extends JDialog {
 	 */
 	private Shell parent;
 
+	
+	
 	/**
 	 * 
 	 * @param parent
@@ -60,7 +63,7 @@ public class Result extends JDialog {
 		this.parent = parent;
 		this.imu = imu;
 		// The size of the JDialog
-		this.setSize(550, 270);
+		this.setSize(550, 320);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -78,25 +81,41 @@ public class Result extends JDialog {
 		// The log file
 		imu.getLog().print(System.getenv("HOME") + "/test.data");
 		// Text where the result appears
+		textResultCopy = new JTextArea();
+		textResultCopy.setEditable(false);
+		textResultCopy.setLineWrap(true);
+		textResultCopy.setBackground(Color.WHITE);
+		textResultCopy.setBounds(10, 120, 530, 110);
+
+		panel.add(textResultCopy);
+		
 		textResult = new JTextArea();
 		textResult.setEditable(false);
-		textResult.setLineWrap(true);
 		textResult.setBackground(Color.WHITE);
-		textResult.setBounds(10, 10, 530, 180);
-
+		textResult.setBounds(10, 30, 530, 50);
 		panel.add(textResult);
-
+		
+		JLabel labelPrec = new JLabel();
+		JLabel labelInst = new JLabel();
+		labelPrec.setText("Accuracy");
+		labelInst.setText("Copy in the Airframe of your drone");
+		labelPrec.setBounds(10, 10, 100, 20);
+		labelInst.setBounds(10,90,300,20);
+		panel.add(labelInst);
+		panel.add(labelPrec);
+		
+		
 		btnReturn = new JButton("Return Home");
 		btnCopy = new JButton("Copy");
 		btnContinue = new JButton("Continue");
 
-		btnCopy.setBounds(20, 200, 140, 30);
-		btnReturn.setBounds(390, 200, 140, 30);
-		btnContinue.setBounds(205, 200, 140, 30);
+		btnCopy.setBounds(20, 250, 140, 30);
+		btnReturn.setBounds(390, 250, 140, 30);
+		btnContinue.setBounds(205, 250, 140, 30);
 
 		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				transfer.setClipboardContents(textResult.getText());
+				transfer.setClipboardContents(textResultCopy.getText());
 			}
 		});
 
@@ -130,10 +149,8 @@ public class Result extends JDialog {
 	 * Update the result
 	 */
 	public void majResult() {
-		System.out.println("Debut Maj result");
-		textResult.setText("ok");
 		new CalibrateSystem(imu.getCalibration(), "/home/gui/paparazzi",
-				"/home/gui/test.data", this.textResult).start();
+				"/home/gui/test.data", this.textResultCopy, this.textResult).start();
 	}
 
 	/**

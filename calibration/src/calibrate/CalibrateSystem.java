@@ -97,7 +97,7 @@ public class CalibrateSystem extends Thread {
 			}
 
 			try {
-				parameters = line.toString().substring(112);
+				parameters = line.toString().substring(0);
 			} catch (Exception e) {
 				parameters = "not enough data";
 			}
