@@ -83,6 +83,7 @@ public class FilterSphere extends Filter {
 					new Runnable() {
 						public void run() {
 						s.update(radius, center, window.toArray(a)[0],v);
+						System.out.println(window);
 						}
 					});
 		}
