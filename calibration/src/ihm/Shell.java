@@ -322,6 +322,39 @@ public class Shell extends JFrame {
 		gbcReload.gridx = 3;
 		gbcReload.gridy = 1;
 		panelNorth.add(reload, gbcReload);
+		reload.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if (panel.isVisible()){
+					try {
+						imu.IvyIdListener();
+						ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
+						if (!l.isEmpty()) {
+							for (Integer i : l) {
+								combo.addItem(i.toString());
+							}
+						}
+						imu.stopIdListener();
+					} catch (IvyException eivy) {
+						eivy.printStackTrace();
+					}
+					addcomboMod(panelMod,panel);
+				}
+				else {
+					try {
+						imu.IvyIdListener();
+						ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
+						if (!l.isEmpty()) {
+							for (Integer i : l) {
+								combo.addItem(i.toString());
+							}
+						}
+						imu.stopIdListener();
+					} catch (IvyException eivy) {
+						eivy.printStackTrace();
+					}
+				}
+			}
+		});
 		
 		
 		// Label with the drone's name
