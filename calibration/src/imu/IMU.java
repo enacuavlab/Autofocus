@@ -93,6 +93,7 @@ public class IMU implements IvyMessageListener {
 	 */
 	public IMU(JLabel label) throws IvyException {
 		this.label=label;
+		label.setBackground(Color.red);
 		this.log = null;
 		idDrone = -1;
 		// this.data=data;
