@@ -1,22 +1,23 @@
-Cette application est conçu pour s'utiliser avec Paparazzi pour l'installer : http://paparazzi.enac.fr/wiki/Getting_Started
+Cette application est conï¿½u pour s'utiliser avec Paparazzi pour l'installer : http://paparazzi.enac.fr/wiki/Getting_Started
 
-Voici les étapes pour tester notre application sans drone: 
+Le code que nous vous fournissons est utilisable avec Paparazzi installÃ© et un drone donc si vous vous procurez Paparazzi, un drone, un modem vous pourrez utiliser directement notre application sans aucune modification.
+Pour vos tests, voici les Ã©tapes pour tester notre application sans drone: 
 
 1)Copier le fichier 13_05_29__10_15_23.data et 13_04_03__13_49_35.data fourni dans /paparazzi/var/logs/
 
-2)Aller dans note code -> Shell puis dans la fonction initialise() au deux premières lignes décommenter pour activer les boutons Accelerometers et Magnetometers (s'active d'eux même lors de la detection de données Raw sur le bus mais impossible sans drone)
+2)Aller dans note code -> Shell puis dans la fonction initialise() au deux premiï¿½res lignes dï¿½commenter pour activer les boutons Accelerometers et Magnetometers (s'active d'eux mï¿½me lors de la detection de donnï¿½es Raw sur le bus mais impossible sans drone)
  
-3)Dans le code -> StartUp , désactiver les commandes autour de Sender (simule l'envoi de messages sur le bus) et commenter imu.ListenIMU(...)
+3)Dans le code -> StartUp , dï¿½sactiver les commandes autour de Sender (simule l'envoi de messages sur le bus) et commenter imu.ListenIMU(...)
 
-4)Lancer Paparazzi, selectionner Microjet dans la combobox A/C puis dans Session sélectionner Simulation puis exécuter
+4)Lancer Paparazzi, selectionner Microjet dans la combobox A/C puis dans Session sï¿½lectionner Simulation puis exï¿½cuter
 
-5)Lancer notre application (Lancer TestShell) et sélectionner l'id du drone lancé (Vous devriez voir 5 : id du Microjet) ce qui lancera deux panels indiquant le nom et les modes du drone
+5)Lancer notre application (Lancer TestShell) et sï¿½lectionner l'id du drone lancï¿½ (Vous devriez voir 5 : id du Microjet) ce qui lancera deux panels indiquant le nom et les modes du drone
 
-6)Vous pouvez vous amusez à changer les modes du drone
+6)Vous pouvez vous amusez ï¿½ changer les modes du drone
 (Pour voir si le mode change : aller dans la gcs -> en bas au milieu selectionner Settings et dans telemetry A/P vous pouvez voir le mode du drone)
 
-(Si vous n'avez pas installé Paparazzi, vous ne pourrez pas tester 3-4-5 mais vous pourrez testez tout de même la vue de la calibration des accéléromètres et des magnétomètres si dans StartUp et Sender vous indiquez le chemin du fichier 13_05_29__10_15_23.data) 
+(Si vous n'avez pas installï¿½ Paparazzi, vous ne pourrez pas tester 3-4-5 mais vous pourrez testez tout de mï¿½me la vue de la calibration des accï¿½lï¿½romï¿½tres et des magnï¿½tomï¿½tres si dans StartUp et Sender vous indiquez le chemin du fichier 13_05_29__10_15_23.data) 
 
 7) Appuyer sur le bouton de votre choix et vous verrez le test
 
-(Obsolete comme son nom l'indique est obsolete et sera retiré dans la version finale de notre application)
+(Obsolete comme son nom l'indique est obsolete et sera retirï¿½ dans la version finale de notre application)
