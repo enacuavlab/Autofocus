@@ -46,8 +46,16 @@ public class CalibrateSystem extends Thread {
 	/**
 	 * the textArea to print to
 	 */
-	JTextArea result;
-
+	private JTextArea result;
+	/**
+	 * the textArea with result
+	 */
+	private JTextArea resultCopy;
+	/**
+	 * The accuracy of the mesure
+	 */
+	private String prec;
+	
 	/**
 	 * Initialize the values of the attributes
 	 * 
@@ -56,14 +64,17 @@ public class CalibrateSystem extends Thread {
 	 * @param logName
 	 * @param result
 	 *            the textArea to print to
+	 * @param  textResult
+	 * 				the textArea with results
 	 */
 	public CalibrateSystem(TypeCalibration t, String paparazziHome,
-			String logName, JTextArea result) {
+			String logName, JTextArea result, JTextArea textResult) {
 		type = t;
 		ppzHome = paparazziHome;
 		this.logName = logName;
 		this.parameters = "calcul en cours";
 		this.result = result;
+		this.resultCopy = textResult;
 	}
 
 	/**
@@ -97,7 +108,8 @@ public class CalibrateSystem extends Thread {
 			}
 
 			try {
-				parameters = line.toString().substring(0);
+				prec = line.toString().substring(0,107);
+				parameters = line.toString().substring(107);
 			} catch (Exception e) {
 				parameters = "not enough data";
 			}
@@ -129,6 +141,7 @@ public class CalibrateSystem extends Thread {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				result.setText(parameters);
+				resultCopy.setText(prec);
 			}
 		});
 		try {
@@ -158,8 +171,9 @@ public class CalibrateSystem extends Thread {
 			IOException {
 		try {
 			JTextArea t = new JTextArea();
+			JTextArea tx = new JTextArea();
 			new CalibrateSystem(TypeCalibration.MAGNETOMETER,
-					"/home/gui/paparazzi", "/home/gui/test.data", t).run();
+					"/home/gui/paparazzi", "/home/gui/test.data", t, tx).run();
 			GUIHelper.showOnFrame(t, "test");
 		} finally {
 			System.out.println("done");
