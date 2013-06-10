@@ -43,11 +43,11 @@ public class StartUp {
 					panelDessin.validate();
 				}
 			});
- 			imu.ListenIMU(data, t, prlog);//Comment for test
+ 			//imu.ListenIMU(data, t, prlog);//Comment for test
 			
 			
 			//For test
-			/*Sender s;
+			Sender s;
 			try {
 				s = new Sender(System.getenv("HOME") +
 						"/paparazzi/var/logs/13_05_29__10_15_23.data");
@@ -63,7 +63,7 @@ public class StartUp {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/
+			}
 			
 
 	}
@@ -79,7 +79,7 @@ public class StartUp {
 			int Accl) {
 		final Sphere sp = new Sphere(5, 5);
 		final AffichAccel affAccel = new AffichAccel(sp);
-		FilterAccel filtre = new FilterAccel(40, t, 300, 20, affAccel);
+		FilterAccel filtre = new FilterAccel(40, t, 300, 150, affAccel);
 		Data data = new Data(t, filtre);
 		PrintLog prlog = new PrintLog();
 		// GUIHelper.showOnFrame(sp.getAffichage(), "test");
