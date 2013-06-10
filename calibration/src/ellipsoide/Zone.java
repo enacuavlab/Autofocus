@@ -171,23 +171,23 @@ public class Zone {
 		double yc_y = y_coord - y_center;
 		double den1 = Math.sqrt(Math.pow(xc_x, 2) + Math.pow(yc_y, 2));
 		if (den1 != 0) {
-			if (xc_x > 0 && yc_y > 0) {
+			if (xc_x >= 0 && yc_y >= 0) {
 				alpha = Math.asin(xc_x / den1);
-				return (alpha >= longAngleBegin && alpha <= longAngleEnd);
+				return (alpha > longAngleBegin && alpha < longAngleEnd);
 			}
-			if (xc_x < 0 && yc_y > 0) {
+			if (xc_x <= 0 && yc_y >= 0) {
 				alpha = Math.asin(-xc_x / den1) + (Math.PI / 2);
-				return (alpha >= longAngleBegin && alpha <= longAngleEnd); 
+				return (alpha > longAngleBegin && alpha < longAngleEnd); 
 			}
 
-			if (xc_x > 0 && yc_y < 0) {
+			if (xc_x >= 0 && yc_y <= 0) {
 				alpha = Math.asin(xc_x / den1) - (Math.PI / 2);
-				return (alpha >= longAngleBegin && alpha <= longAngleEnd);
+				return (alpha > longAngleBegin && alpha < longAngleEnd);
 					// System.out.println(alpha + "number 3");
 			}
-			if (xc_x < 0 && yc_y < 0) {
+			if (xc_x <= 0 && yc_y <= 0) {
 				alpha = Math.asin(-xc_x / den1) - (Math.PI);
-				return (alpha >= longAngleBegin && alpha <= longAngleEnd);			
+				return (alpha > longAngleBegin && alpha < longAngleEnd);			
 			}
 			return false;
 
@@ -220,7 +220,7 @@ public class Zone {
 		double zc_z = z_coord - z_center;
 		if (den != 0) {
 			alpha = Math.atan(zc_z / den);
-			return (alpha <= latAngleHigh && alpha >= latAngleLow);
+			return (alpha < latAngleHigh && alpha > latAngleLow);
 		} else {
 			return false;
 		}

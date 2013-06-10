@@ -112,26 +112,29 @@ public class Sphere {
 	 */
 	public void update(double radius, VecteurFiltrable<Double> newcenter,
 			VecteurFiltrable<Double> v, VecteurFiltrable<Double> vcourant) {
-		if (((Vecteur) v).isEqual(vcourant)){
+		System.out.println("[" + v.getX() + v.getY() + v.getZ() + "],["
+				+ vcourant.getX() + vcourant.getY() + vcourant.getZ() + "]");
+		if (((Vecteur) v).isEqual(vcourant)) {
 			System.out.println("egal");
+
 		}
+		updateVecCourant(vcourant);
 		if (v.isCorrect()) {
 			lvector.add(v);
-		}
-		if ((Math.abs(center.getX() - newcenter.getX()) > error)
-				|| (Math.abs(center.getY() - newcenter.getY()) > error)
-				|| (Math.abs(center.getZ() - newcenter.getZ()) > error)) {
-			this.radius = radius;
-			this.center = newcenter;
-			this.surfaceSphere = 4 * Math.PI * Math.pow(radius, 2);
-			updateAllZone();
-			updateVecCourant(vcourant);
-			
-			affichage.majZone();
-		} else {
-			update(v);
-			updateVecCourant(vcourant);
-			affichage.affiche();
+
+			if ((Math.abs(center.getX() - newcenter.getX()) > error)
+					|| (Math.abs(center.getY() - newcenter.getY()) > error)
+					|| (Math.abs(center.getZ() - newcenter.getZ()) > error)
+					|| (Math.abs(this.radius - radius) > error)) {
+				this.radius = radius;
+				this.center = newcenter;
+				this.surfaceSphere = 4 * Math.PI * Math.pow(radius, 2);
+				updateAllZone();
+				affichage.majZone();
+			} else {
+				update(v);
+				affichage.affiche();
+			}
 		}
 	}
 
@@ -150,10 +153,12 @@ public class Sphere {
 	private void createZone() {
 		for (int i = 0; i < longitude; i++) {
 			for (int j = 0; j < latitude; j++) {
-				lzone.add(new Zone((Math.PI / latitude) * j - Math.PI / 2,
-						(Math.PI / latitude) * (j + 1) - Math.PI / 2,
-						((2 * Math.PI) / longitude) * i - Math.PI,
-						((2 * Math.PI) / longitude) * (i + 1) - Math.PI));
+				lzone.add(new Zone((Math.PI / latitude) * ((double) j)
+						- Math.PI / 2.0, (Math.PI / latitude)
+						* ((double) (j + 1)) - Math.PI / 2.0,
+						((2.0 * Math.PI) / longitude) * ((double) i) - Math.PI,
+						((2.0 * Math.PI) / longitude) * ((double) (i + 1))
+								- Math.PI));
 			}
 		}
 	}
@@ -186,18 +191,18 @@ public class Sphere {
 	 */
 	protected void update(VecteurFiltrable<Double> v) {
 		boolean b = false;
-		int i=0;
+		int i = 0;
 		ListIterator<Zone> j = lzone.listIterator();
 		Zone temp;
-		while (/*!b &&*/ j.hasNext()) {
+		while (/* !b && */j.hasNext()) {
 			temp = j.next();
-			if (b = temp.isIn(v, center)){
-				i+=1;
+			if (b = temp.isIn(v, center)) {
+				i += 1;
 			}
 		}
-		//if (i>1){
+		// if (i>1){
 		System.out.println(i);
-		//}
+		// }
 	}
 
 	/**
@@ -211,16 +216,16 @@ public class Sphere {
 		int i = 0;
 		ListIterator<Zone> j = lzone.listIterator();
 		Zone temp;
-		while (/*!b &&*/ j.hasNext()) {
+		while (/* !b && */j.hasNext()) {
 			temp = j.next();
 			if (b = temp.updateZoneCourante(vcourant, center)) {
 				zoneCourante = temp;
-				i+=1;
+				i += 1;
 			}
 		}
-		//if(i>1){
-		System.out.println("      "+i);
-		//}
+		// if(i>1){
+		System.out.println("      " + i);
+		// }
 	}
 
 	/**
