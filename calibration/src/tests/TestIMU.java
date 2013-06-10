@@ -26,7 +26,7 @@ public class TestIMU {
 	
 	public static void main(String args[]) throws IvyException, InterruptedException {
 		TypeCalibration t = TypeCalibration.ACCELEROMETER;
-		final Sphere sp = new Sphere(20,10);
+		final Sphere sp = new Sphere(15,5);
 		final AffichAccel affAccel = new AffichAccel(sp);
 		FilterAccel filtre = new FilterAccel(40, t, 200, 15, affAccel);
 		//System.out.println("filtre");

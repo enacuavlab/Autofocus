@@ -171,28 +171,11 @@ public class Zone {
 		double yc_y = y_coord - y_center;
 		double den1 = Math.sqrt(Math.pow(xc_x, 2) + Math.pow(yc_y, 2));
 		if (den1 != 0) {
-			if (xc_x >= 0 && yc_y >= 0) {
-				alpha = Math.asin(xc_x / den1);
-				return (alpha > longAngleBegin && alpha < longAngleEnd);
-			}
-			if (xc_x <= 0 && yc_y >= 0) {
-				alpha = Math.asin(-xc_x / den1) + (Math.PI / 2);
-				return (alpha > longAngleBegin && alpha < longAngleEnd); 
-			}
-
-			if (xc_x >= 0 && yc_y <= 0) {
-				alpha = Math.asin(xc_x / den1) - (Math.PI / 2);
-				return (alpha > longAngleBegin && alpha < longAngleEnd);
-					// System.out.println(alpha + "number 3");
-			}
-			if (xc_x <= 0 && yc_y <= 0) {
-				alpha = Math.asin(-xc_x / den1) - (Math.PI);
-				return (alpha > longAngleBegin && alpha < longAngleEnd);			
-			}
-			return false;
-
-		} else
-			return false;
+			alpha = Math.acos(xc_x / den1)
+					* Math.signum(Math.asin(yc_y / den1));
+			return (alpha > longAngleBegin && alpha < longAngleEnd);
+		} else{
+			return false; }
 	}
 
 	/**
@@ -283,14 +266,15 @@ public class Zone {
 	 */
 	public void calculateSurface(double radius, double surfaceS) {
 		surfaceSphere = surfaceS;
-//		System.out.println("surfaceSphere " + surfaceSphere);
+		// System.out.println("surfaceSphere " + surfaceSphere);
 		surface = Math.pow(radius, 2) * (latAngleHigh - latAngleLow)
 				* Math.abs(Math.sin(longAngleEnd) - Math.sin(longAngleBegin));
 
 	}
-/**
- * @return String 
- */
+
+	/**
+	 * @return String
+	 */
 	public String toString() {
 		ListIterator<Point2D> j = listContour.listIterator();
 		String str = "";
@@ -299,10 +283,12 @@ public class Zone {
 		}
 		return str;
 	}
-/**
- * Test functions
- * @param args
- */
+
+	/**
+	 * Test functions
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// test de l'angle theta du repère sphérique
 		Zone zone1 = new Zone(0, Math.PI / 2, 0, Math.PI / 2);
