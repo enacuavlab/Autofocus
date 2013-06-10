@@ -44,7 +44,7 @@ public class Sphere {
 	/**
 	 * error of the previous center of the sphere tolerated
 	 */
-	private final double error = 20.0;
+	private final double error = 50.0;
 	/**
 	 * The display of the sphere
 	 */

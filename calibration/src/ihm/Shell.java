@@ -154,38 +154,48 @@ public class Shell extends JFrame {
 
 		// For test
 		btnAccelero.setEnabled(true);
-		//btnMagneto.setEnabled(true);
+		btnMagneto.setEnabled(true);
 
-		// IMU
-		try {
-			imu = new IMU();
-		} catch (IvyException e) {
-			JOptionPane.showMessageDialog(null, "Ivy Bus problem" + name,
-					"Error Bus ", JOptionPane.ERROR_MESSAGE);
-		}
+		
 		// Activate option buttons
 		activateButton(type);
 
 		// Panel title
 		JPanel panelTitle = new JPanel();
+		panelTitle.setLayout((null));
 		Border borderTitle = BorderFactory.createBevelBorder(
 				BevelBorder.LOWERED, Color.black, Color.white);
 		panelTitle.setBackground(Color.LIGHT_GRAY);
 		panelTitle.setBorder(borderTitle);
 		panelTitle.setPreferredSize(new Dimension(widthWindow, 100));
 		getContentPane().add(panelTitle, "North");
-		title = new JLabel("<html><br>Home</html>");
+		title = new JLabel("<html>Home</html>");
+		title.setBounds(600, 35, 400, 40);
 		title.setFont(new Font("Calibri", Font.BOLD, 28));
+		JLabel labelIndImu = new JLabel();
+		labelIndImu.setBounds(0,30, 150, 20);
+		labelIndImu.setText("Uav's presence : ");
+		JLabel labelImu = new JLabel();
+		labelImu.setBounds(120, 30,20, 20);
+		labelImu.setOpaque(true);
+		panelTitle.add(labelImu);
+		panelTitle.add(labelIndImu);
 		panelTitle.add(title);
-
+		// IMU
+				try {
+					imu = new IMU(labelImu);
+				} catch (IvyException e) {
+					JOptionPane.showMessageDialog(null, "Ivy Bus problem" + name,
+							"Error Bus ", JOptionPane.ERROR_MESSAGE);
+				}
 		// Panel which contains comboBox for the id choice
 		JPanel panelNorth = new JPanel();
 		panelHome.add(panelNorth, BorderLayout.NORTH);
 		panelNorth.setPreferredSize(new Dimension(widthWindow, 100));
 		GridBagLayout gblPanelNorth = new GridBagLayout();
-		gblPanelNorth.columnWidths = new int[] { 300, 300, 30 };
+		gblPanelNorth.columnWidths = new int[] { 300, 300, 10,10,10 };
 		gblPanelNorth.rowHeights = new int[] { 40, 40, 40 };
-		gblPanelNorth.columnWeights = new double[] { 0.0, 0.0, 1.0 };
+		gblPanelNorth.columnWeights = new double[] { 0.0, 0.0, 1.0 , 5.0 , 20.0};
 		gblPanelNorth.rowWeights = new double[] { 0.0, 0.0 };
 		panelNorth.setLayout(gblPanelNorth);
 
@@ -304,7 +314,16 @@ public class Shell extends JFrame {
 		gbcComboBox.gridx = 2;
 		gbcComboBox.gridy = 1;
 		panelNorth.add(combo, gbcComboBox);
-
+		
+		JButton reload = new JButton("Reload");
+		GridBagConstraints gbcReload = new GridBagConstraints();
+		gbcReload.anchor = GridBagConstraints.WEST;
+		gbcReload.insets = new Insets(0, 0, 5, 5);
+		gbcReload.gridx = 3;
+		gbcReload.gridy = 1;
+		panelNorth.add(reload, gbcReload);
+		
+		
 		// Label with the drone's name
 		final JLabel dronesName = new JLabel();
 		dronesName.setBounds(273, 35, 114, 29);
@@ -600,7 +619,7 @@ public class Shell extends JFrame {
 	public void backHome() {
 		imu.deleteDataLog();
 		TypeCalibration t = imu.getCalibration();
-		if (t.equals(TypeCalibration.ACCELEROMETER)) {
+		if (t .equals(TypeCalibration.ACCELEROMETER)) {
 			panelAccl.remove(0);
 			panelAccl.remove(1);
 			btnAccelero.addActionListener(ac1);
@@ -610,9 +629,12 @@ public class Shell extends JFrame {
 			panelMag.remove(1);
 			btnMagneto.addActionListener(ac2);
 			btnAccelero.setEnabled(true);
-		} else
+		}
+		else {
 			panelGyro.removeAll();
-		btnGyro.addActionListener(ac3);
+			btnGyro.addActionListener(ac3);
+		}
+		title.setText("Home");
 		cl.show(content, listContent[0]);
 	}
 	
