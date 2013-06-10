@@ -112,6 +112,9 @@ public class Sphere {
 	 */
 	public void update(double radius, VecteurFiltrable<Double> newcenter,
 			VecteurFiltrable<Double> v, VecteurFiltrable<Double> vcourant) {
+		if (((Vecteur) v).isEqual(vcourant)){
+			System.out.println("egal");
+		}
 		if (v.isCorrect()) {
 			lvector.add(v);
 		}
@@ -123,7 +126,7 @@ public class Sphere {
 			this.surfaceSphere = 4 * Math.PI * Math.pow(radius, 2);
 			updateAllZone();
 			updateVecCourant(vcourant);
-
+			
 			affichage.majZone();
 		} else {
 			update(v);

@@ -15,7 +15,7 @@ import filtre.VecteurFiltrable;
 /**
  * Class to store the data given by IMU
  * 
- * @author Alinoé
+ * @author Alinoï¿½
  * 
  */
 public class Vecteur extends Vector3D implements VecteurFiltrable<Double> {
@@ -124,6 +124,15 @@ public class Vecteur extends Vector3D implements VecteurFiltrable<Double> {
 	 */
 	public boolean equals(VecteurFiltrable<Double> test) {
 		return super.equals(test);
+	}
+
+	public boolean isEqual(VecteurFiltrable<Double> v) {
+		if (v.getX()==this.getX()&&v.getY()==this.getY()&&v.getZ()==this.getZ()){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 }

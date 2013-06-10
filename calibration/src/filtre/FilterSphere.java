@@ -82,7 +82,7 @@ public class FilterSphere extends Filter {
 			SwingUtilities.invokeLater(
 					new Runnable() {
 						public void run() {
-						s.update(radius, center, window.toArray(a)[0],v);
+						s.update(radius, center, window.toArray(a)[windowSize-1],v);
 						}
 					});
 		}

@@ -93,7 +93,7 @@ public class FilterAccel extends Filter {
 						new Runnable() {
 							public void run() {
 								affAccel.update(rayon, center, 
-										window.toArray(a)[windowSize - 1],
+										window.toArray(a)[0],
 										v,nbCorrectVect);
 							}
 						});
