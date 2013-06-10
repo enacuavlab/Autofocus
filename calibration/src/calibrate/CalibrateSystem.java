@@ -108,22 +108,10 @@ public class CalibrateSystem extends Thread {
 			}
 
 			try {
-				prec = line.toString().substring(0,107);
-				parameters = line.toString().substring(107);
+				prec = line.toString().substring(0);
+				//parameters = line.toString().substring(107);
 			} catch (Exception e) {
 				parameters = "not enough data";
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			parameters = "Unable to parse";
-		}
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					process.getErrorStream()));
-			String l = "";
-			while ((l = reader.readLine()) != null) {
-				// Traitement du flux de sortie de l'application
-				System.out.println(l);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
