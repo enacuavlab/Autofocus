@@ -328,7 +328,7 @@ public class Shell extends JFrame {
 		// Users choose their id drone
 		combo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (combo.getSelectedItem().toString() == " ") {
+				if (combo.getSelectedItem().toString().equals(" ")) {
 					panel.setVisible(false);
 					panelMod.setVisible(false);
 				} else {
@@ -600,12 +600,12 @@ public class Shell extends JFrame {
 	public void backHome() {
 		imu.deleteDataLog();
 		TypeCalibration t = imu.getCalibration();
-		if (t == TypeCalibration.ACCELEROMETER) {
+		if (t.equals(TypeCalibration.ACCELEROMETER)) {
 			panelAccl.remove(0);
 			panelAccl.remove(1);
 			btnAccelero.addActionListener(ac1);
 			btnMagneto.setEnabled(true);
-		} else if (t == TypeCalibration.MAGNETOMETER) {
+		} else if (t.equals(TypeCalibration.MAGNETOMETER)) {
 			panelMag.remove(0);
 			panelMag.remove(1);
 			btnMagneto.addActionListener(ac2);
