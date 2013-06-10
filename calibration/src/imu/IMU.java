@@ -3,12 +3,14 @@
  */
 package imu;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import calibrate.PrintLog;
@@ -89,8 +91,8 @@ public class IMU implements IvyMessageListener {
 	 * 
 	 * @throws IvyException
 	 */
-	public IMU() throws IvyException {
-		this.label = null;
+	public IMU(JLabel label) throws IvyException {
+		this.label=label;
 		this.log = null;
 		idDrone = -1;
 		// this.data=data;
@@ -119,15 +121,19 @@ public class IMU implements IvyMessageListener {
 	 * @param data
 	 * @param calibration
 	 */
-	public void ListenIMU(final Data data, final TypeCalibration calibration,final PrintLog log,final JLabel label) {
+	public void ListenIMU(final Data data, final TypeCalibration calibration,final PrintLog log) {
 		try {
-			this.label=label;
+
 			this.log=log;
 			this.data = data;
 			this.calibration = calibration;
 			final Timer timer = new Timer(1000,new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
-					label.setText("false");
+					SwingUtilities.invokeLater( new Runnable() {
+						public void run() {
+							label.setBackground(Color.red);
+						}
+					});
 				}
 			});
 			
@@ -152,7 +158,11 @@ public class IMU implements IvyMessageListener {
 											: " IMU_ACCEL_RAW") + " " + args[0]
 									+ " " + args[1] + " " + args[2]);
 							timer.restart();
-							label.setText("true");
+							SwingUtilities.invokeLater( new Runnable() {
+								public void run() {
+									label.setBackground(Color.green);
+								}
+							});
 				}
 			});
 
