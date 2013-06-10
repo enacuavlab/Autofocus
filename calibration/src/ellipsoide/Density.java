@@ -6,7 +6,7 @@ package ellipsoide;
 /**
  * Store the number of points over the surface of a zone
  * 
- * @author Alinoé
+ * @author Alinoï¿½
  * 
  */
 public class Density {
@@ -44,14 +44,14 @@ public class Density {
 	 */
 	public void updateDensity(double surfaceSphere, double surfaceZone) {
 		nb += 1;
-		System.out.print("[" + surfaceSphere + surfaceZone + "]");
+		//System.out.print("[" + surfaceSphere + surfaceZone + "]");
 		double temp = (surfaceSphere * nb * nbMaxColor) / (surfaceZone * nbMax);
 		if (temp > nbMaxColor) {
 			colorParameter = nbMaxColor;
 		} else {
 			colorParameter = (int) temp;
 		}
-		System.out.println(colorParameter);
+		//System.out.println(colorParameter);
 	}
 
 	/**

@@ -183,12 +183,18 @@ public class Sphere {
 	 */
 	protected void update(VecteurFiltrable<Double> v) {
 		boolean b = false;
+		int i=0;
 		ListIterator<Zone> j = lzone.listIterator();
 		Zone temp;
-		while (!b && j.hasNext()) {
+		while (/*!b &&*/ j.hasNext()) {
 			temp = j.next();
-			b = temp.isIn(v, center);
+			if (b = temp.isIn(v, center)){
+				i+=1;
+			}
 		}
+		//if (i>1){
+		System.out.println(i);
+		//}
 	}
 
 	/**
@@ -199,13 +205,19 @@ public class Sphere {
 	 */
 	protected void updateVecCourant(VecteurFiltrable<Double> vcourant) {
 		boolean b = false;
+		int i = 0;
 		ListIterator<Zone> j = lzone.listIterator();
 		Zone temp;
-		while (!b && j.hasNext()) {
+		while (/*!b &&*/ j.hasNext()) {
 			temp = j.next();
-			b = temp.updateZoneCourante(vcourant, center);
-			zoneCourante = temp;
+			if (b = temp.updateZoneCourante(vcourant, center)) {
+				zoneCourante = temp;
+				i+=1;
+			}
 		}
+		//if(i>1){
+		System.out.println("      "+i);
+		//}
 	}
 
 	/**

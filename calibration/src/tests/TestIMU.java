@@ -2,6 +2,7 @@ package tests;
 
 import imu.IMU;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -28,11 +29,12 @@ public class TestIMU {
 		final Sphere sp = new Sphere(20,10);
 		final AffichAccel affAccel = new AffichAccel(sp);
 		FilterAccel filtre = new FilterAccel(40, t, 200, 15, affAccel);
-		System.out.println("filtre");
+		//System.out.println("filtre");
 		Data data = new Data(t, filtre);
 		PrintLog prlog = new PrintLog();
-		System.out.println("data");
-		IMU imu = new IMU();
+		//System.out.println("data");
+		JLabel label = new JLabel();
+		IMU imu = new IMU(label);
 		final JPanel panelDessin = new JPanel();
 		final JPanel panelInst = new JPanel();
 		final JPanel panelBar = new JPanel();
@@ -44,7 +46,7 @@ public class TestIMU {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				panelDessin.add(affAccel.getSphere().getAffichage());
-				System.out.println("apres add");
+				//System.out.println("apres add");
 				panelDessin.validate();
 				panelInst.add(affAccel.getLabel());
 				panelInst.validate();
@@ -55,8 +57,8 @@ public class TestIMU {
 
 		try {
 			Sender s = new Sender(
-					"/home/gui/paparazzi/var/logs/13_04_03__13_49_35.data");
-			System.out.println("sender");
+					"/home/paparazzi/var/logs/13_04_03__13_49_35.data");
+			//System.out.println("sender");
 			s.start();
 			s.join();
 			s.arret();
@@ -68,6 +70,6 @@ public class TestIMU {
 			e1.printStackTrace();
 		}
 
-		System.out.println("fin");
+		//System.out.println("fin");
 	}
 }
