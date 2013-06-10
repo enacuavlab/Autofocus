@@ -73,6 +73,7 @@ public class CalibrateSystem extends Thread {
 		ppzHome = paparazziHome;
 		this.logName = logName;
 		this.parameters = "calcul en cours";
+		this.prec = "indisponible";
 		this.result = result;
 		this.resultCopy = textResult;
 	}
@@ -108,8 +109,8 @@ public class CalibrateSystem extends Thread {
 			}
 
 			try {
-				prec = line.toString().substring(0);
-				//parameters = line.toString().substring(107);
+				prec = line.toString().substring(0,109);
+				parameters = line.toString().substring(109);
 			} catch (Exception e) {
 				parameters = "not enough data";
 			}
@@ -144,6 +145,7 @@ public class CalibrateSystem extends Thread {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				result.setText(parameters);
+				resultCopy.setText(prec);
 			}
 		});
 	}
