@@ -18,7 +18,11 @@ import fr.dgac.ivy.IvyMessageListener;
 
 /**
  * This is the class that links the calibrating program to the IVY bus in order
- * to get the RAW_DATA messages.
+ * to:
+ * - get the RAW_DATA messages on the ivy bus.
+ * - get the drone ID and telemetry mode.
+ * - set the telemetry mode of the drone.
+ * 
  * 
  * @author Florent GERVAIS
  */
