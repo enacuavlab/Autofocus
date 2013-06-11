@@ -151,7 +151,7 @@ public class Sphere {
 	 */
 	private void createZone() {
 		for (int i = 0; i < longitude; i++) {
-			for (int j = 0; j < latitude; j++) {
+			for (int j = 1; j < latitude-1; j++) {
 				lzone.add(new Zone((Math.PI / latitude) * ((double) j)
 						- Math.PI / 2.0, (Math.PI / latitude)
 						* ((double) (j + 1)) - Math.PI / 2.0,
@@ -160,6 +160,10 @@ public class Sphere {
 								- Math.PI));
 			}
 		}
+		lzone.add(new Zone((Math.PI / latitude) * ((double) (latitude -1))
+						- Math.PI / 2.0,Math.PI/2.0,-Math.PI,Math.PI));
+		lzone.add(new Zone(-Math.PI/2.0,(Math.PI / latitude)
+				 - Math.PI / 2.0,-Math.PI,Math.PI));
 	}
 
 	/**
