@@ -131,6 +131,13 @@ public class AffichAccel extends JPanel{
 			final int nbCorrectOK){
 		sp.update(radius, newcenter, v, vcourant);
 		setValueProgressBar(nbCorrectOK);
+		int value = progressBar.getValue();
+		if (value > 0) {
+			if (value == 100) {
+				inst.setText("Change the position of your drone and maintain");
+			}
+			else inst.setText("Continue to maintain the position");
+		}
 	}
 
 	/**
