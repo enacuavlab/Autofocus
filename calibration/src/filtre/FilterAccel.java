@@ -38,10 +38,6 @@ public class FilterAccel extends Filter {
 		 * reinitialization of the progress bar
 		 */
 		private int thresholdWrong;
-		/**Total number of vector
-		 * 
-		 */
-		private int nbVect;
 
 		/**
 		 * Creates a filter who plots the vector in a two dimensional window (simple
@@ -88,16 +84,12 @@ public class FilterAccel extends Filter {
 					minZ = (int) v.getZ();
 			}
 			else nbWrongVect++;
-			if (true) {
-				rayon = (int)v.getZ();
-				center =new Vecteur(v.getX(),v.getY(),0);
-			} else {
+
 			rayon = (maxX - minX > maxY - minY ? (maxX - minX > maxZ - minZ ? maxX
 					- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
 					- minY : maxZ - minZ));
 			center = new Vecteur((maxX + minX) / 2, (maxY + minY) / 2,
 					(maxZ + minZ) / 2);
-			}
 			if (!(window.remainingCapacity() > 0)) {
 				SwingUtilities.invokeLater(
 						new Runnable() {
