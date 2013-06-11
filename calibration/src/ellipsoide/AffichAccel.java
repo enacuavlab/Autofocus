@@ -146,7 +146,7 @@ public class AffichAccel extends JPanel{
 	 */
 	public void changedStates() {
 		setValueProgressBar(0);
-		inst.setText("Maintain your drone in a stable position not yet explored");	
+		inst.setText("Maintain your drone in a stable position");	
 	}
 
 	/**
