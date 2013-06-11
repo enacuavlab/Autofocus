@@ -92,10 +92,10 @@ public class FilterAccel extends Filter {
 			nbWrongVect++;
 			nbVec++;
 		}
-		if ( nbVec < 500) {
+		if ( nbVec < 500 ) {
 			rayon = (int)(maxZ.getZ());
 			center = new Vecteur(maxX.getX(),maxY.getY(),0);
-		}
+		} else {
 		rayon = (int)(maxX.getX() - minX.getX() > maxY.getY() - minY.getY() ? (maxX
 				.getX() - minX.getX() > maxZ.getZ() - minZ.getZ() ? maxX.getX()
 				- minX.getX() : maxZ.getZ() - minZ.getZ()) : (maxY.getY()
@@ -104,6 +104,7 @@ public class FilterAccel extends Filter {
 				);
 		center = new Vecteur((maxX.getX() + minX.getX()) / 2, (maxY.getY() + minY.getY()) / 2,
 				(maxZ.getZ() + minZ.getZ()) / 2);
+		}
 		if (!(window.remainingCapacity() > 0)) {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {

@@ -242,6 +242,7 @@ public class IMU implements IvyMessageListener {
 							// System.out.println("indexTelemetry"+
 							// indexTelemetry);
 							telemetryMode = args[1].split(",")[indexTelemetry - 2];
+							System.out.println(args[1]);
 						// it is considered that the two first DL_SETTINGS of
 						// the .XML of
 						// the drone are unused
