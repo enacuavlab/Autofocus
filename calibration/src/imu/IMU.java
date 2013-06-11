@@ -272,12 +272,6 @@ public class IMU implements IvyMessageListener {
 	public void IvyIdListener() throws IvyException {
 		bus.bindMsg("^([0-9]+) [A-Za-z0-9]", new IvyMessageListener() {
 			public void receive(IvyClient arg0, String[] args) {
-				try {
-					Thread.sleep(20);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				if (!listeId.contains(Integer.valueOf(args[0]))) {
 					listeId.add(Integer.valueOf(args[0]));
 				}
