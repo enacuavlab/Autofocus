@@ -88,7 +88,7 @@ public class FilterAccel extends Filter {
 					minZ = (int) v.getZ();
 			}
 			else nbWrongVect++;
-			if (nbVect < 500) {
+			if (true) {
 				rayon = (int)v.getZ();
 				center =new Vecteur(v.getX(),v.getY(),0);
 			} else {
