@@ -326,13 +326,28 @@ public class Shell extends JFrame {
 			public void actionPerformed(ActionEvent e){
 				if (panel.isVisible()){
 					try {
+						System.out.println("Panelnom visible");
+						combo.removeAllItems();
+						combo.addItem(" ");
 						imu.IvyIdListener();
 						ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
+						//A supprimer
+						for (Integer j : l) {
+							System.out.println("element : " + l.get(j));
+						}
+						System.out.println("id : " + id);
+						
+						if (!l.contains((Integer)id)){
+							System.out.println("ne contient pas id");
+							panelMod.setVisible(false);
+							panel.setVisible(false);
+						}
 						if (!l.isEmpty()) {
 							for (Integer i : l) {
 								combo.addItem(i.toString());
 							}
 						}
+						
 						imu.stopIdListener();
 					} catch (IvyException eivy) {
 						eivy.printStackTrace();
@@ -340,7 +355,11 @@ public class Shell extends JFrame {
 					addcomboMod(panelMod,panel);
 				}
 				else {
+					
 					try {
+						System.out.println("pas visible");
+						combo.removeAllItems();
+						combo.addItem(" ");
 						imu.IvyIdListener();
 						ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
 						if (!l.isEmpty()) {
@@ -441,7 +460,9 @@ public class Shell extends JFrame {
 			}
 			// Detect the current mod
 			imu.IvyRawListener(d.getIndex());
-			int modeActuel = imu.getTelemetryMode();
+			int modeActuel= 0 ;
+			modeActuel = imu.getTelemetryMode();
+			System.out.println(modeActuel);
 			comboMod.setSelectedIndex(modeActuel);
 			// Users can change the current mod
 			comboMod.addActionListener(new ActionListener() {
