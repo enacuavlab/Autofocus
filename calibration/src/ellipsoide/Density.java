@@ -59,6 +59,7 @@ public class Density {
 	 */
 	public void reset() {
 		nb = 0;
+		colorParameter =0;
 	}
 
 	/**

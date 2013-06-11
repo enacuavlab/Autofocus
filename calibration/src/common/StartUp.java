@@ -43,13 +43,13 @@ public class StartUp {
 					panelDessin.validate();
 				}
 			});
- 			imu.ListenIMU(data, t, prlog);//Comment for test
+ 			//imu.ListenIMU(data, t, prlog);//Comment for test
 			
 			
 			//For test
-			/*Sender s;
+			Sender s;
 			try {
-				s = new Sender(System.getenv("HOME") +
+				s = new Sender(System.getenv("HOME") + "/Desktop/" +
 						"/paparazzi/var/logs/13_05_29__10_15_23.data");
 				System.out.println("sender");
 				imu.setId(17);
@@ -63,7 +63,7 @@ public class StartUp {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/
+			}
 			
 
 	}
@@ -89,12 +89,14 @@ public class StartUp {
 				panel.validate();
 			}
 		});
-		imu.ListenIMU(data, t, prlog); //Comment for test
+		//imu.ListenIMU(data, t, prlog); //Comment for test
 		// For test
-		/*Sender s;
+		Sender s;
 		try {
-			s = new Sender(System.getenv("HOME") + 
+			s = new Sender(System.getenv("HOME") +"/Desktop/" +
 					"/paparazzi/var/logs/13_04_03__13_49_35.data");
+			//if launched from PAPARAZZI, should use environment variable
+			//should use PPZ_HOME
 			System.out.println("sender");
 			imu.setId(3);
 			imu.ListenIMU(data, t, prlog);
@@ -107,7 +109,7 @@ public class StartUp {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		
 		
 		

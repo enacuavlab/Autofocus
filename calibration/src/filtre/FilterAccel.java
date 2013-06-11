@@ -52,7 +52,6 @@ public class FilterAccel extends Filter {
 			this.thresholdWrong=thresholdWrong;
 			nbCorrectVect=0;
 			nbWrongVect=0;
-			nbVect = 0;
 			this.affAccel=affAccel;		
 		}
 
