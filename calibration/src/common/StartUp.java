@@ -49,7 +49,7 @@ public class StartUp {
 			//For test
 			Sender s;
 			try {
-				s = new Sender(System.getenv("HOME") +
+				s = new Sender(System.getenv("HOME") + "/Desktop/" +
 						"/paparazzi/var/logs/13_05_29__10_15_23.data");
 				System.out.println("sender");
 				imu.setId(17);
@@ -93,8 +93,10 @@ public class StartUp {
 		// For test
 		Sender s;
 		try {
-			s = new Sender(System.getenv("HOME") + 
+			s = new Sender(System.getenv("HOME") +"/Desktop/" +
 					"/paparazzi/var/logs/13_04_03__13_49_35.data");
+			//if launched from PAPARAZZI, should use environment variable
+			//should use PPZ_HOME
 			System.out.println("sender");
 			imu.setId(3);
 			imu.ListenIMU(data, t, prlog);
