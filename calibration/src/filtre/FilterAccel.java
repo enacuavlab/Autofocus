@@ -83,9 +83,12 @@ public class FilterAccel extends Filter {
 					minZ = (int) v.getZ();
 			}
 			else nbWrongVect++;
-			rayon = (maxX - minX > maxY - minY ? (maxX - minX > maxZ - minZ ? maxX
-					- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
-					- minY : maxZ - minZ));
+			rayon = (maxX - minX < maxY - minY ? 
+					(maxX - minX < maxZ - minZ ? 
+							maxX - minX : maxZ - minZ) : 
+								(maxY - minY < maxZ - minZ ? 
+										maxY - minY : maxZ - minZ)
+										);
 			center = new Vecteur((maxX + minX) / 2, (maxY + minY) / 2,
 					(maxZ + minZ) / 2);
 			if (!(window.remainingCapacity() > 0)) {
