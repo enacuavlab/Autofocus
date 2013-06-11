@@ -106,6 +106,7 @@ public class Shell extends JFrame {
 	 */
 	private final int widthWindow = 1600, heightWindow = 800;
 
+
 	/**
 	 * Constructor which initialises the window with options Button and the
 	 * cardlayout used.
@@ -484,10 +485,12 @@ public class Shell extends JFrame {
 							e1.printStackTrace();
 						}
 						// Test if their is Raw Data send by the IMU
+						
 						if (imu.isRawOnBus()) {
 							btnAccelero.setEnabled(true);
 							btnMagneto.setEnabled(true);
 						}
+						
 
 					}
 				}
