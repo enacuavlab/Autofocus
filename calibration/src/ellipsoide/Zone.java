@@ -266,10 +266,10 @@ public class Zone {
 	 */
 	public void calculateSurface(double radius, double surfaceS) {
 		surfaceSphere = surfaceS;
-		// System.out.println("surfaceSphere " + surfaceSphere);
-		surface = Math.pow(radius, 2) * (latAngleHigh - latAngleLow)
-				* Math.abs(Math.sin(longAngleEnd) - Math.sin(longAngleBegin));
-
+		
+		surface = Math.pow(radius, 2) * (longAngleEnd - longAngleBegin)
+				* Math.abs(Math.cos(latAngleHigh +Math.PI/2.0) - Math.cos(latAngleLow+Math.PI/2.0));
+		System.out.println(surface +" " + surfaceSphere);
 	}
 
 	/**
