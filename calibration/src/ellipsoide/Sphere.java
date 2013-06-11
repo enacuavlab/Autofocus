@@ -130,8 +130,7 @@ public class Sphere {
 				updateVecCourant(vcourant);
 				affichage.affiche();
 			}
-		}
-		else{
+		} else {
 			updateVecCourant(vcourant);
 			affichage.affiche();
 		}
@@ -151,7 +150,7 @@ public class Sphere {
 	 */
 	private void createZone() {
 		for (int i = 0; i < longitude; i++) {
-			for (int j = 0; j < latitude; j++) {
+			for (int j = 1; j < latitude-1; j++) {
 				lzone.add(new Zone((Math.PI / latitude) * ((double) j)
 						- Math.PI / 2.0, (Math.PI / latitude)
 						* ((double) (j + 1)) - Math.PI / 2.0,
@@ -160,6 +159,10 @@ public class Sphere {
 								- Math.PI));
 			}
 		}
+			lzone.add(new Zone((Math.PI / latitude) * ((double) (latitude-1))
+					- Math.PI / 2.0, Math.PI / 2.0,- Math.PI, Math.PI));
+			lzone.add(new Zone(-Math.PI / 2.0,(Math.PI / latitude)
+					 - Math.PI / 2.0,- Math.PI, Math.PI));
 	}
 
 	/**
@@ -190,18 +193,12 @@ public class Sphere {
 	 */
 	protected void update(VecteurFiltrable<Double> v) {
 		boolean b = false;
-		int i = 0;
 		ListIterator<Zone> j = lzone.listIterator();
 		Zone temp;
-		while (/* !b && */j.hasNext()) {
+		while (!b && j.hasNext()) {
 			temp = j.next();
-			if (b = temp.isIn(v, center)) {
-				i += 1;
-			}
+			b = temp.isIn(v, center);
 		}
-		// if (i>1){
-		System.out.println(i);
-		// }
 	}
 
 	/**
@@ -212,19 +209,14 @@ public class Sphere {
 	 */
 	protected void updateVecCourant(VecteurFiltrable<Double> vcourant) {
 		boolean b = false;
-		int i = 0;
 		ListIterator<Zone> j = lzone.listIterator();
 		Zone temp;
-		while (/* !b && */j.hasNext()) {
+		while (!b && j.hasNext()) {
 			temp = j.next();
 			if (b = temp.updateZoneCourante(vcourant, center)) {
 				zoneCourante = temp;
-				i += 1;
 			}
 		}
-		// if(i>1){
-		System.out.println("      " + i);
-		// }
 	}
 
 	/**
