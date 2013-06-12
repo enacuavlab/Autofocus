@@ -32,7 +32,7 @@ public class FilterSphere extends Filter {
 	 */
 	public FilterSphere(int windowSize, TypeCalibration type) {
 		super(windowSize, type);
-		s = new Sphere(20, 10);
+		s = new Sphere(20, 10, 800);
 	}
 
 	/**

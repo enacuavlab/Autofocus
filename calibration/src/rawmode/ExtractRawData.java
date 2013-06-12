@@ -14,9 +14,16 @@ public class ExtractRawData {
 	private Element racine;
 	// permet de sotcker l'index de la telemetry
 	private int indexTelemetry = 0;
+	private List<String> idMode;
 
 	public ExtractRawData(String name) throws IOException {
 		parse(name);
+		try {
+			idMode = extract();
+		} catch (IncorrectXmlException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -106,9 +113,12 @@ public class ExtractRawData {
 	 * function use to get the number of the node named telemetry_mode_Main
 	 * 
 	 * @return number of the node Telemetry_Mode_MAIN;
+	 * @throws IncorrectXmlException 
 	 */
-	public int getIndex() {
-		return indexTelemetry;
+	public int getIndex() throws IncorrectXmlException {
+		if (indexTelemetry >= 2) {
+			return indexTelemetry;
+		} else throw new IncorrectXmlException();
 	}
 
 	public static void main(String args[]) {

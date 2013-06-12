@@ -63,7 +63,7 @@ public class Result extends JDialog {
 		this.parent = parent;
 		this.imu = imu;
 		// The size of the JDialog
-		this.setSize(550, 320);
+		this.setSize(550, 420);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -85,7 +85,7 @@ public class Result extends JDialog {
 		textResultCopy.setEditable(false);
 		textResultCopy.setLineWrap(true);
 		textResultCopy.setBackground(Color.WHITE);
-		textResultCopy.setBounds(10, 120, 530, 110);
+		textResultCopy.setBounds(10, 120, 530, 210);
 
 		panel.add(textResultCopy);
 		
@@ -109,9 +109,9 @@ public class Result extends JDialog {
 		btnCopy = new JButton("Copy");
 		btnContinue = new JButton("Continue");
 
-		btnCopy.setBounds(20, 250, 140, 30);
-		btnReturn.setBounds(390, 250, 140, 30);
-		btnContinue.setBounds(205, 250, 140, 30);
+		btnCopy.setBounds(20, 350, 140, 30);
+		btnReturn.setBounds(390, 350, 140, 30);
+		btnContinue.setBounds(205, 350, 140, 30);
 
 		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

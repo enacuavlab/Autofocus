@@ -53,6 +53,10 @@ public class Zone {
 	 */
 	private double surfaceSphere;
 	/**
+	 * nbMaxPoints number of points on the surface of the sphere to get the right calibration
+	 */
+	private int nbPointsMax;
+	/**
 	 * The density of points over the zone
 	 */
 	private Density density;
@@ -77,15 +81,17 @@ public class Zone {
 	 *            minimum longitude delimiting the zone
 	 * @param long_angle_end
 	 *            maximum longitude delimiting the zone
+	 * @param nbMaxPoints number of points on the surface of the sphere to get the right calibration
 	 */
 	public Zone(double lat_angle_low, double lat_angle_high,
-			double long_angle_begin, double long_angle_end) {
+			double long_angle_begin, double long_angle_end,int nbPointsMax) {
+		this.nbPointsMax = nbPointsMax;
 		this.latAngleLow = lat_angle_low;
 		this.latAngleHigh = lat_angle_high;
 		this.longAngleBegin = long_angle_begin;
 		this.longAngleEnd = long_angle_end;
 		listContour = new ArrayList<Point2D>();
-		density = new Density();
+		density = new Density(nbPointsMax);
 		surface = 1;
 		surfaceSphere = 1;
 	}
@@ -291,13 +297,13 @@ public class Zone {
 	 */
 	public static void main(String[] args) {
 		// test de l'angle theta du repère sphérique
-		Zone zone1 = new Zone(0, Math.PI / 2, 0, Math.PI / 2);
+		Zone zone1 = new Zone(0, Math.PI / 2, 0, Math.PI / 2,800);
 		if (zone1.is_in_long(3, 2, 1, 1)) { // doit etre dans la zone
 			System.out.println("le point est bien dans la zone");
 		} else {
 			System.out.println("le point n'est bizarement pas dans la zone");
 		}
-		Zone zone2 = new Zone(-Math.PI / 2, 0, -Math.PI / 2, 0);
+		Zone zone2 = new Zone(-Math.PI / 2, 0, -Math.PI / 2, 0,800);
 		if (zone1.is_in_long(3, -15, 1, 1)) { // ne doit pas etre dans la
 												// zone
 			System.out.println("le point est bien dans la zone");
@@ -309,7 +315,7 @@ public class Zone {
 		} else {
 			System.out.println("le point n'est bizarement pas dans la zone");
 		}
-		Zone zone3 = new Zone(0, Math.PI / 4, -Math.PI, -Math.PI / 2);
+		Zone zone3 = new Zone(0, Math.PI / 4, -Math.PI, -Math.PI / 2,800);
 		if (zone1.is_in_long(-9, -15, 1, 1)) { // ne doit pas etre dans la
 												// zone
 			System.out.println("le point est bien dans la zone");
@@ -327,7 +333,7 @@ public class Zone {
 		} else {
 			System.out.println("le point n'est bizarement pas dans la zone");
 		}
-		Zone zone4 = new Zone(0, Math.PI / 4, Math.PI / 2, Math.PI);
+		Zone zone4 = new Zone(0, Math.PI / 4, Math.PI / 2, Math.PI,800);
 		if (zone1.is_in_long(-9, 15, 1, 1)) { // ne doit pas etre dans la
 												// zone
 			System.out.println("le point est bien dans la zone");

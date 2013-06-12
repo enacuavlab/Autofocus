@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -25,11 +27,9 @@ import fr.dgac.ivy.IvyMessageListener;
 
 /**
  * This is the class that links the calibrating program to the IVY bus in order
- * to:
- * Warning make a set Id before listening anything else than Id on the bus
- * - get the RAW_DATA messages on the ivy bus.
- * - get the drone ID and telemetry mode.
- * - set the telemetry mode of the drone.
+ * to: Warning make a set Id before listening anything else than Id on the bus -
+ * get the RAW_DATA messages on the ivy bus. - get the drone ID and telemetry
+ * mode. - set the telemetry mode of the drone.
  * 
  * 
  * @author Florent GERVAIS
@@ -86,15 +86,15 @@ public class IMU implements IvyMessageListener {
 	 * label that checks the connection of the drone during the calibration
 	 */
 	private JLabel label;
-	
+
 	/**
 	 * allows to get back the right RAW_DATA messages
 	 * 
 	 * @throws IvyException
 	 */
 	public IMU(final JLabel label) throws IvyException {
-		this.label=label;
-		SwingUtilities.invokeLater( new Runnable() {
+		this.label = label;
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				label.setBackground(Color.red);
 			}
@@ -116,22 +116,24 @@ public class IMU implements IvyMessageListener {
 	 * @param data
 	 * @param calibration
 	 */
-	public void ListenIMU(final Data data, final TypeCalibration calibration,final PrintLog log) {
+	public void ListenIMU(final Data data, final TypeCalibration calibration,
+			final PrintLog log) {
+		System.out.println("listenIMU");
 		try {
 
-			this.log=log;
+			this.log = log;
 			this.data = data;
 			this.calibration = calibration;
-			final Timer timer = new Timer(2000,new ActionListener(){
+			final Timer timer = new Timer(2000, new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					SwingUtilities.invokeLater( new Runnable() {
+					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							label.setBackground(Color.red);
 						}
 					});
 				}
 			});
-			
+
 			// build the regexp according to parameters
 			StringBuffer regexp = new StringBuffer("^");
 			regexp.append(idDrone);
@@ -144,20 +146,18 @@ public class IMU implements IvyMessageListener {
 			String test = regexp.toString();
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-							data.store(Integer.valueOf(args[0]),
-									Integer.valueOf(args[1]),
-									Integer.valueOf(args[2]));
-							log.add(idDrone
-									+ (TypeCalibration.MAGNETOMETER
-											.equals(calibration) ? " IMU_MAG_RAW"
-											: " IMU_ACCEL_RAW") + " " + args[0]
-									+ " " + args[1] + " " + args[2]);
-							timer.restart();
-							SwingUtilities.invokeLater( new Runnable() {
-								public void run() {
-									label.setBackground(Color.green);
-								}
-							});
+					data.store(Integer.valueOf(args[0]),
+							Integer.valueOf(args[1]), Integer.valueOf(args[2]));
+					log.add(idDrone
+							+ (TypeCalibration.MAGNETOMETER.equals(calibration) ? " IMU_MAG_RAW"
+									: " IMU_ACCEL_RAW") + " " + args[0] + " "
+							+ args[1] + " " + args[2]);
+					timer.restart();
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							label.setBackground(Color.green);
+						}
+					});
 				}
 			});
 
@@ -201,6 +201,12 @@ public class IMU implements IvyMessageListener {
 		regexp.append(" ([\\-]*[0-9]+)");
 		String test = regexp.toString();
 		bus.unBindMsg(test);
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				label.setBackground(Color.red);
+			}
+		});
+		System.out.println("stoplistenIMU");
 	}
 
 	/**
@@ -209,12 +215,39 @@ public class IMU implements IvyMessageListener {
 	 * @param indexTelemetry
 	 *            the position of the telemetrymode in the settings.xml of the
 	 *            drone
-	 * @param idDrone id of the drone needed to listen the RAW_DATA messages 
+	 * @param id
+	 * @param btnAccelero
+	 * @param btnMagneto
+	 * @param comboMod 
+	 * @param idDrone
+	 *            id of the drone needed to listen the RAW_DATA messages
 	 * @throws IvyException
 	 */
-	public void IvyRawListener(final int indexTelemetry) throws IvyException {
-		this.idDrone=idDrone;
-		bus.bindMsg("^" + idDrone + " .*RAW(.*)",
+	public void IvyRawListener(final int indexTelemetry,
+			final JButton btnMagneto, final JButton btnAccelero, int id, final JComboBox comboMod)
+			throws IvyException {
+		System.out.println("Ivyraw");
+		final Timer timer = new Timer(2000, new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						btnMagneto.setEnabled(false);
+						btnAccelero.setEnabled(false);
+					}
+				});
+			}
+		});
+		bus.bindMsg("^" + idDrone + ".*", new IvyMessageListener() {
+			public void receive(IvyClient arg0, String[] args) {
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						label.setBackground(Color.green);
+					}
+				});
+
+			}
+		});
+		bus.bindMsg("^" + idDrone + " IMU_[A-Z]+_RAW(.*)",
 				new IvyMessageListener() {
 					public void receive(IvyClient arg0, String[] args) {
 						try {
@@ -224,12 +257,14 @@ public class IMU implements IvyMessageListener {
 							e.printStackTrace();
 						}
 						rawOnBus = true;
-						SwingUtilities.invokeLater( new Runnable() {
+						timer.restart();
+						SwingUtilities.invokeLater(new Runnable() {
 							public void run() {
-								label.setBackground(Color.green);
+								btnMagneto.setEnabled(true);
+								btnAccelero.setEnabled(true);
 							}
 						});
-						
+
 					}
 				});
 		bus.bindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)",
@@ -239,7 +274,15 @@ public class IMU implements IvyMessageListener {
 								Integer.valueOf(idDrone)))
 							// System.out.println("indexTelemetry"+
 							// indexTelemetry);
-							telemetryMode = args[1].split(",")[indexTelemetry - 1];
+							telemetryMode = args[1].split(",")[indexTelemetry - 2];
+							//comboMod.setSelectedIndex(Double.valueOf(telemetryMode).intValue());
+							//comboMod.repaint();
+							try {
+								Thread.sleep(20);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						// it is considered that the two first DL_SETTINGS of
 						// the .XML of
 						// the drone are unused
@@ -251,8 +294,16 @@ public class IMU implements IvyMessageListener {
 	 * stop the reading of the rawlistener on the bus
 	 */
 	public void stopIvyRawListener() {
-		bus.unBindMsg("^" + idDrone + " .*RAW(.*)");
-		bus.unBindMsg("^" + idDrone + " DL_VALUES ([0-9]+) (.*)");
+		bus.unBindMsg("^" + idDrone + " IMU_[A-Z]+_RAW(.*)");
+		bus.unBindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)");
+		rawOnBus = false;
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				label.setBackground(Color.red);
+			}
+		});
+		bus.unBindMsg("^" + idDrone + ".*");
+		System.out.println("stopIvyraw");
 	}
 
 	/**
@@ -276,6 +327,7 @@ public class IMU implements IvyMessageListener {
 				}
 			}
 		});
+		System.out.println("IdListen");
 	}
 
 	/*
@@ -296,17 +348,19 @@ public class IMU implements IvyMessageListener {
 		}
 		return listeId;
 	}
+
 	/**
 	 * thanks to that method it is possible to reset the listeId
 	 */
 	public void resetListeId() {
 		listeId.clear();
 	}
-	
+
 	/**
 	 * return the number of the telemetry mode
 	 * 
 	 * @return the telemetry mode
+	 *  
 	 */
 	public Integer getTelemetryMode() {
 		try {
@@ -317,8 +371,15 @@ public class IMU implements IvyMessageListener {
 		}
 		if (telemetryMode != null) {
 			return Double.valueOf(telemetryMode).intValue();
-		} else
-			return 0;
+		} else return 0;
+			
+	}
+	
+	/**
+	 * Set the id of the drone
+	 */
+	public void setId(int val) {
+		this.idDrone=val;
 	}
 
 	/**
@@ -341,6 +402,7 @@ public class IMU implements IvyMessageListener {
 
 	public void stopIdListener() {
 		bus.unBindMsg("^([0-9]+) [A-Za-z0-9]");
+		System.out.println("stopIdlisten");
 	}
 
 	/**
@@ -352,9 +414,10 @@ public class IMU implements IvyMessageListener {
 	 * @throws IvyException
 	 * @throws InterruptedException
 	 */
-	public void IvyConfigListener(int idDrone) throws GetConfigException, IvyException,
-			InterruptedException {
-		this.idDrone=idDrone;
+	public void IvyConfigListener(int idDrone) throws GetConfigException,
+			IvyException, InterruptedException {
+		System.out.println("Ivyconfig");
+		this.idDrone = idDrone;
 		Thread.sleep(20);
 		sendRequest();
 	}

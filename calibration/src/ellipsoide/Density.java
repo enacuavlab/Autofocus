@@ -29,8 +29,9 @@ public class Density {
 
 	/**
 	 * Initialise nb and colorParameter
+	 * @param nbMaxPoints number of points on the surface of the sphere to get the right calibration
 	 */
-	public Density() {
+	public Density(int nbMaxPoints) {
 		nb = 0;
 		colorParameter = 0;
 	}

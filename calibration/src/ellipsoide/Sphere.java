@@ -55,6 +55,12 @@ public class Sphere {
 	 */
 	private double surfaceSphere;
 	/**
+	 * @param nbMaxPoints
+	 *            number of points on the surface of the sphere to get the right
+	 *            calibration
+	 */
+	private int nbPointsMax;
+	/**
 	 * Current zone
 	 */
 	private Zone zoneCourante;
@@ -66,8 +72,10 @@ public class Sphere {
 	 *            this is the longitude step of 2PI rad
 	 * @param latitude
 	 *            this is the latitude step of PI rad
+	 * @param i
 	 */
-	public Sphere(double longitude, double latitude) {
+	public Sphere(double longitude, double latitude, int nbPointsMax) {
+		this.nbPointsMax=nbPointsMax;
 		this.longitude = longitude;
 		this.latitude = latitude;
 		center = new Vecteur(0, 0, 0);
@@ -150,19 +158,19 @@ public class Sphere {
 	 */
 	private void createZone() {
 		for (int i = 0; i < longitude; i++) {
-			for (int j = 1; j < latitude-1; j++) {
+			for (int j = 1; j < latitude - 1; j++) {
 				lzone.add(new Zone((Math.PI / latitude) * ((double) j)
 						- Math.PI / 2.0, (Math.PI / latitude)
 						* ((double) (j + 1)) - Math.PI / 2.0,
 						((2.0 * Math.PI) / longitude) * ((double) i) - Math.PI,
 						((2.0 * Math.PI) / longitude) * ((double) (i + 1))
-								- Math.PI));
+								- Math.PI,nbPointsMax));
 			}
 		}
-			lzone.add(new Zone((Math.PI / latitude) * ((double) (latitude-1))
-					- Math.PI / 2.0, Math.PI / 2.0,- Math.PI, Math.PI));
-			lzone.add(new Zone(-Math.PI / 2.0,(Math.PI / latitude)
-					 - Math.PI / 2.0,- Math.PI, Math.PI));
+		lzone.add(new Zone((Math.PI / latitude) * ((double) (latitude - 1))
+				- Math.PI / 2.0, Math.PI / 2.0, -Math.PI, Math.PI,nbPointsMax));
+		lzone.add(new Zone(-Math.PI / 2.0,
+				(Math.PI / latitude) - Math.PI / 2.0, -Math.PI, Math.PI,nbPointsMax));
 	}
 
 	/**
@@ -235,7 +243,7 @@ public class Sphere {
 	 */
 
 	public static void main(String[] args) {
-		Sphere s = new Sphere(20, 10);
+		Sphere s = new Sphere(20, 10,800);
 		Vecteur center = new Vecteur(5, 10, 15);
 		Vecteur v = new Vecteur(8, 20, 21);
 		s.update(10.5, center, v, v);

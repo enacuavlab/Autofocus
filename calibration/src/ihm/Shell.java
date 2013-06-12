@@ -18,11 +18,14 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -100,12 +103,18 @@ public class Shell extends JFrame {
 	 * 
 	 */
 	private Shell me = null;
-
 	/**
-	 * 
+	 * Model for the comboBox
+	 */
+	private DefaultComboBoxModel comboModelId , comboModelMod ;
+	/**
+	 * Combo to choose the mod of telemetry
+	 */
+	private JComboBox comboMod;
+	/**
+	 * Size of the window
 	 */
 	private final int widthWindow = 1600, heightWindow = 800;
-
 
 	/**
 	 * Constructor which initialises the window with options Button and the
@@ -154,13 +163,38 @@ public class Shell extends JFrame {
 	private void initialise() {
 
 		// For test
-		//btnAccelero.setEnabled(true);
-		//btnMagneto.setEnabled(true);
+		// btnAccelero.setEnabled(true);
+		// btnMagneto.setEnabled(true);
 
-		
 		// Activate option buttons
 		activateButton(type);
 
+		//id 
+		id = -1;
+		
+		//comboMod
+		comboMod = new JComboBox();
+		comboModelMod = new DefaultComboBoxModel();
+		comboMod.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange()== ItemEvent.SELECTED){
+					try {
+						Integer mod = new Integer(comboMod
+								.getSelectedIndex());
+						imu.sendMode(id, mod.doubleValue());
+					} catch (IvyException e1) {
+						e1.printStackTrace();
+					}
+					// Test if their is Raw Data send by the IMU
+
+					/*if (imu.isRawOnBus()) {
+						btnAccelero.setEnabled(true);
+						btnMagneto.setEnabled(true);
+					}
+					imu.stopIvyRawListener();*/
+				}
+			}
+		});
 		// Panel title
 		JPanel panelTitle = new JPanel();
 		panelTitle.setLayout((null));
@@ -174,29 +208,29 @@ public class Shell extends JFrame {
 		title.setBounds(600, 35, 400, 40);
 		title.setFont(new Font("Calibri", Font.BOLD, 28));
 		JLabel labelIndImu = new JLabel();
-		labelIndImu.setBounds(0,30, 150, 20);
+		labelIndImu.setBounds(0, 30, 150, 20);
 		labelIndImu.setText("Uav's presence : ");
 		JLabel labelImu = new JLabel();
-		labelImu.setBounds(120, 30,20, 20);
+		labelImu.setBounds(120, 30, 20, 20);
 		labelImu.setOpaque(true);
 		panelTitle.add(labelImu);
 		panelTitle.add(labelIndImu);
 		panelTitle.add(title);
 		// IMU
-				try {
-					imu = new IMU(labelImu);
-				} catch (IvyException e) {
-					JOptionPane.showMessageDialog(null, "Ivy Bus problem" + name,
-							"Error Bus ", JOptionPane.ERROR_MESSAGE);
-				}
+		try {
+			imu = new IMU(labelImu);
+		} catch (IvyException e) {
+			JOptionPane.showMessageDialog(null, "Ivy Bus problem" + name,
+					"Error Bus ", JOptionPane.ERROR_MESSAGE);
+		}
 		// Panel which contains comboBox for the id choice
 		JPanel panelNorth = new JPanel();
 		panelHome.add(panelNorth, BorderLayout.NORTH);
 		panelNorth.setPreferredSize(new Dimension(widthWindow, 100));
 		GridBagLayout gblPanelNorth = new GridBagLayout();
-		gblPanelNorth.columnWidths = new int[] { 300, 300, 10,10,10 };
+		gblPanelNorth.columnWidths = new int[] { 300, 300, 10, 10, 10 };
 		gblPanelNorth.rowHeights = new int[] { 40, 40, 40 };
-		gblPanelNorth.columnWeights = new double[] { 0.0, 0.0, 1.0 , 5.0 , 20.0};
+		gblPanelNorth.columnWeights = new double[] { 0.0, 0.0, 1.0, 5.0, 20.0 };
 		gblPanelNorth.rowWeights = new double[] { 0.0, 0.0 };
 		panelNorth.setLayout(gblPanelNorth);
 
@@ -315,7 +349,7 @@ public class Shell extends JFrame {
 		gbcComboBox.gridx = 2;
 		gbcComboBox.gridy = 1;
 		panelNorth.add(combo, gbcComboBox);
-		
+
 		JButton reload = new JButton("Reload");
 		GridBagConstraints gbcReload = new GridBagConstraints();
 		gbcReload.anchor = GridBagConstraints.WEST;
@@ -323,61 +357,55 @@ public class Shell extends JFrame {
 		gbcReload.gridx = 3;
 		gbcReload.gridy = 1;
 		panelNorth.add(reload, gbcReload);
-		reload.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				if (panel.isVisible()){
-					try {
-						for (int j = 1; j< combo.getItemCount() ; j++){
-							combo.remove(j);
-						}
-						imu.
-						imu.IvyIdListener();
-						ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
-						for (int i=0 ; i < l.size() ; i++){
-							System.out.println(" imu list : "+ l.get(i));
-						}
-					
-						
-						if (!l.contains((Integer)id)){
-							System.out.println("ne contient pas id");
-							panelMod.setVisible(false);
-							panel.setVisible(false);
-						}
-						if (!l.isEmpty()) {
-							for (Integer i : l) {
-								combo.addItem(i.toString());
-							}
-						}
-						
-						imu.stopIdListener();
-					} catch (IvyException eivy) {
-						eivy.printStackTrace();
-					}
-					addcomboMod(panelMod,panel);
+		reload.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (id != -1){
+					imu.stopIvyRawListener();
+					imu.setId(-1);
 				}
-				else {
-					
+				
+				if (panel.isVisible()) {
 					try {
-						for (int j = 1; j< combo.getItemCount() ; j++){
-							combo.remove(j);
-						}
 						imu.IvyIdListener();
-						ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
+						ArrayList<Integer> l = (ArrayList<Integer>) imu
+								.getList();
+						l.add(0, -1);
+						comboModelId.removeAllElements();
+						
 						if (!l.isEmpty()) {
 							for (Integer i : l) {
-								combo.addItem(i.toString());
+								comboModelId.addElement((Integer) i);
+							}
+						}
+						combo.setModel(comboModelId);
+						imu.stopIdListener();
+					} catch (IvyException eivy) {
+						eivy.printStackTrace();
+					}
+					addcomboMod(panelMod, panel);
+				} else {
+
+					try {
+
+						imu.IvyIdListener();
+						ArrayList<Integer> l = (ArrayList<Integer>) imu
+								.getList();
+						l.add(0, -1);
+						comboModelId.removeAllElements();
+						if (!l.isEmpty()) {
+							for (Integer i : l) {
+								comboModelId.addElement((Integer) i);
 							}
 						}
 						imu.stopIdListener();
 					} catch (IvyException eivy) {
 						eivy.printStackTrace();
 					}
-					
+
 				}
 			}
 		});
-		
-		
+
 		// Label with the drone's name
 		final JLabel dronesName = new JLabel();
 		dronesName.setBounds(273, 35, 114, 29);
@@ -385,53 +413,60 @@ public class Shell extends JFrame {
 		panel.add(dronesName);
 
 		// Add drone id detected
-		combo.addItem(" ");
+		comboModelId = new DefaultComboBoxModel();
 		try {
 			imu.IvyIdListener();
 			ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
+			//l.add(0, -1);
 			if (!l.isEmpty()) {
 				for (Integer i : l) {
-					combo.addItem(i.toString());
+					comboModelId.addElement((Integer) i);
 				}
 			}
+			combo.setModel(comboModelId);
 			imu.stopIdListener();
 		} catch (IvyException eivy) {
 			eivy.printStackTrace();
 		}
 		// Users choose their id drone
-		combo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (combo.getSelectedItem().toString().equals(" ")) {
-					panel.setVisible(false);
-					panelMod.setVisible(false);
-				} else {
-					id = Integer.parseInt(combo.getSelectedItem().toString());
-					imu.setId(id);
-					try {
-						// Get name and url of the drone
-						imu.IvyConfigListener();
-						name = imu.getAcName();
-						url = imu.getSettingsURL();
-						label.setText("<html>The selected id drone name ( id : "
-								+ Integer.toString(id) + " ) is : </html>");
-						dronesName.setText(name);
-						panel.setVisible(true);
-						// To change drone mod
-						addcomboMod(panelMod, panel);
-					} catch (GetConfigException eConf) {
-						// Check lack of communication
-						combo.setSelectedItem(" ");
-						JOptionPane
-								.showMessageDialog(
-										null,
-										"Bus problem, check if ground station is launched ",
-										"Bus error", JOptionPane.ERROR_MESSAGE);
-					} catch (IvyException e1) {
-						e1.printStackTrace();
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
+		combo.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
 
+					if ((Integer) combo.getSelectedItem() == -1) {
+						panel.setVisible(false);
+						panelMod.setVisible(false);
+					} else {
+						id = Integer.parseInt(combo.getSelectedItem()
+								.toString());
+						try {
+							// Get name and url of the drone
+							imu.IvyConfigListener(id);
+							name = imu.getAcName();
+							url = imu.getSettingsURL();
+							label.setText("<html>The selected id drone name ( id : "
+									+ Integer.toString(id) + " ) is : </html>");
+							dronesName.setText(name);
+							panel.setVisible(true);
+							panelMod.setVisible(true);
+							// To change drone mod
+							addcomboMod(panelMod, panel);
+						} catch (GetConfigException eConf) {
+							// Check lack of communication
+							combo.setSelectedItem(" ");
+							JOptionPane
+									.showMessageDialog(
+											null,
+											"Bus problem, check if ground station is launched ",
+											"Bus error",
+											JOptionPane.ERROR_MESSAGE);
+						} catch (IvyException e1) {
+							e1.printStackTrace();
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+
+					}
 				}
 			}
 		});
@@ -447,49 +482,29 @@ public class Shell extends JFrame {
 				"Please choose the mod of your drone called " + name + " :");
 		labelMod.setBounds(60, 45, 385, 42);
 		panelMod.add(labelMod);
-		final JComboBox comboMod = new JComboBox();
+		
+		
 		comboMod.setBounds(105, 124, 284, 24);
 		panelMod.add(comboMod);
+		comboModelMod.removeAllElements();
 		try {
 			// Detect all the available mods of the drone
 			ExtractRawData d = new ExtractRawData(url);
+			// Detect the current mod
+			
 			List<String> listMod = d.extract();
-			panelMod.setVisible(true);
 			if (!listMod.isEmpty()) {
 				for (String i : listMod) {
-					comboMod.addItem(i.toString());
+					comboModelMod.addElement(i.toString());
 				}
 			}
-			// Detect the current mod
-			imu.IvyRawListener(d.getIndex());
-			int modeActuel= 0 ;
-			modeActuel = imu.getTelemetryMode();
-			System.out.println(modeActuel);
-			//comboMod.setSelectedIndex(modeActuel);
+			comboMod.setModel(comboModelMod);
+			imu.IvyRawListener(d.getIndex(),btnMagneto,btnAccelero,id,comboMod);
+			
+			
+			comboMod.setSelectedIndex(imu.getTelemetryMode());
 			// Users can change the current mod
-			comboMod.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (comboMod.getSelectedItem().toString() != " ") {
-						// ("C:\\Users\\Alino�\\Desktop\\settings_booz2.xml");
-						try {
-							Integer mod = new Integer(comboMod
-									.getSelectedIndex());
-							imu.sendMode(id, mod.doubleValue());
-						} catch (IvyException e1) {
-							e1.printStackTrace();
-						}
-						// Test if their is Raw Data send by the IMU
-						
-						if (imu.isRawOnBus()) {
-							btnAccelero.setEnabled(true);
-							btnMagneto.setEnabled(true);
-						}
-						imu.stopIvyRawListener();
-
-					}
-				}
-			});
-
+			
 		} catch (IOException e) {
 			panelMod.setVisible(false);
 			labelMod.setText("");
@@ -674,28 +689,60 @@ public class Shell extends JFrame {
 	/**
 	 * Allow to return to the home panel
 	 */
-	public void backHome() {
+	public void backHome(){
 		imu.deleteDataLog();
 		TypeCalibration t = imu.getCalibration();
-		if (t .equals(TypeCalibration.ACCELEROMETER)) {
+		if (t.equals(TypeCalibration.ACCELEROMETER)) {
 			panelAccl.remove(0);
 			panelAccl.remove(1);
 			btnAccelero.addActionListener(ac1);
-			btnMagneto.setEnabled(true);
+			/*btnMagneto.setEnabled(true);
+			btnAccelero.setEnabled(true);*/
+			ExtractRawData d;
+			try {
+				d = new ExtractRawData(url);
+				System.out.println(url);
+				imu.IvyRawListener(d.getIndex(),btnMagneto,btnAccelero,id,comboMod);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IvyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IncorrectXmlException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		} else if (t.equals(TypeCalibration.MAGNETOMETER)) {
 			panelMag.remove(0);
 			panelMag.remove(1);
 			btnMagneto.addActionListener(ac2);
-			btnAccelero.setEnabled(true);
-		}
-		else {
+			ExtractRawData d;
+			try {
+				d = new ExtractRawData(url);
+				imu.IvyRawListener(d.getIndex(),btnMagneto,btnAccelero,id,comboMod);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IvyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IncorrectXmlException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			/*btnAccelero.setEnabled(true);
+			btnMagneto.setEnabled(true);*/
+		} else {
 			panelGyro.removeAll();
 			btnGyro.addActionListener(ac3);
 		}
 		title.setText("Home");
 		cl.show(content, listContent[0]);
 	}
-	
+
 	/**
 	 * Make an actionListener according to the type of the calibration
 	 * 
@@ -713,10 +760,12 @@ public class Shell extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (mod.equals("Accl")) {
 				modAccelero();
+				imu.stopIvyRawListener();
 				Thread model = new Thread() {
 					public void run() {
 						@SuppressWarnings("unused")
-						StartUp start = new StartUp(TypeCalibration.ACCELEROMETER, panelAccl, id,
+						StartUp start = new StartUp(
+								TypeCalibration.ACCELEROMETER, panelAccl, id,
 								imu, 1);
 
 					}
@@ -725,10 +774,12 @@ public class Shell extends JFrame {
 
 			} else if (mod.equals("Mag")) {
 				modMagneto();
+				imu.stopIvyRawListener();
 				Thread model = new Thread() {
 					public void run() {
 						@SuppressWarnings("unused")
-						StartUp start = new StartUp(TypeCalibration.MAGNETOMETER,panelDessinMag,
+						StartUp start = new StartUp(
+								TypeCalibration.MAGNETOMETER, panelDessinMag,
 								id, imu);
 
 					}
@@ -739,8 +790,6 @@ public class Shell extends JFrame {
 			}
 		}
 	}
-
-	
 
 	/**
 	 * 

@@ -107,10 +107,12 @@ public class CalibrateSystem extends Thread {
 				line.append(l);
 				line.append(newline);
 			}
-
+			String[] aline;
 			try {
-				prec = line.toString().substring(0,109);
-				parameters = line.toString().substring(109);
+				aline = line.toString().split("<");
+				prec = aline[0];
+				parameters = "<" + aline[1] + "<" + aline[2] + "<" + aline[3]
+						+ "<" + aline[4] + "<" + aline[5] + "<" + aline[6];
 			} catch (Exception e) {
 				parameters = "not enough data";
 			}

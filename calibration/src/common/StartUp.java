@@ -33,7 +33,7 @@ public class StartUp {
 	 * @param imu
 	 */
 	public StartUp(TypeCalibration t ,final JPanel panelDessin, int id, IMU imu) {
-			final Sphere sp = new Sphere(5, 5);
+			final Sphere sp = new Sphere(5, 5, 800);
 			FilterSphere filtre = new FilterSphere(sp, 10, t);
 			Data data = new Data(t, filtre);
 			PrintLog prlog = new PrintLog();
@@ -78,7 +78,7 @@ public class StartUp {
 	 */
 	public StartUp(TypeCalibration t, final JPanel panel, int id, IMU imu,
 			int Accl) {
-		final Sphere sp = new Sphere(5, 5);
+		final Sphere sp = new Sphere(10, 5, 1000);
 		final AffichAccel affAccel = new AffichAccel(sp);
 		FilterAccel filtre = new FilterAccel(40, t, 300, 150, affAccel);
 		Data data = new Data(t, filtre);

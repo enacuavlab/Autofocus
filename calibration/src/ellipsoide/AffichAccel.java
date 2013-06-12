@@ -70,6 +70,8 @@ public class AffichAccel extends JPanel{
 		inst.setEditable(false);
 		inst.setBounds(20, 20, 280, 280);
 		inst.setLineWrap(true);
+		inst.setText("Maintain your drone in a stable position");
+
 
 		panelInst.add(inst);
 		labelPhoto = new JLabel();
@@ -134,7 +136,9 @@ public class AffichAccel extends JPanel{
 		int value = progressBar.getValue();
 		if (value > 0) {
 			if (value == 100) {
+				
 				inst.setText("Change the position of your drone and maintain");
+	
 			}
 			else inst.setText("Continue to maintain the position");
 		}
@@ -146,8 +150,7 @@ public class AffichAccel extends JPanel{
 	 */
 	public void changedStates() {
 		setValueProgressBar(0);
-		
-		inst.setText("Maintain your drone in a stable position");	
+			
 	}
 
 	/**
