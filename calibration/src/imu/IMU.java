@@ -232,6 +232,12 @@ public class IMU implements IvyMessageListener {
 							e.printStackTrace();
 						}
 						rawOnBus = true;
+						SwingUtilities.invokeLater( new Runnable() {
+							public void run() {
+								label.setBackground(Color.green);
+							}
+						});
+						
 					}
 				});
 		bus.bindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)",
