@@ -270,6 +270,7 @@ public class IMU implements IvyMessageListener {
 	 * @throws IvyException
 	 */
 	public void IvyIdListener() throws IvyException {
+		listeId.clear();
 		bus.bindMsg("^([0-9]+) [A-Za-z0-9]", new IvyMessageListener() {
 			public void receive(IvyClient arg0, String[] args) {
 				if (!listeId.contains(Integer.valueOf(args[0]))) {
@@ -297,6 +298,9 @@ public class IMU implements IvyMessageListener {
 		}
 		return listeId;
 	}
+	/**
+	 * thanks to that method it is possible to reset the listeId
+	 */
 	public void resetListeId() {
 		listeId.clear();
 	}
