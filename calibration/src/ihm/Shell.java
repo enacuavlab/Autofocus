@@ -154,8 +154,8 @@ public class Shell extends JFrame {
 	private void initialise() {
 
 		// For test
-		btnAccelero.setEnabled(true);
-		btnMagneto.setEnabled(true);
+		//btnAccelero.setEnabled(true);
+		//btnMagneto.setEnabled(true);
 
 		
 		// Activate option buttons
@@ -327,22 +327,16 @@ public class Shell extends JFrame {
 			public void actionPerformed(ActionEvent e){
 				if (panel.isVisible()){
 					try {
-						System.out.println("Panelnom visible");
-						System.out.println("nb item : " + combo.getItemCount());
 						for (int j = 1; j< combo.getItemCount() ; j++){
 							combo.remove(j);
 						}
-						//A supprimer
-						for (int j = 0; j< combo.getItemCount() ; j++){
-							System.out.println(" combo list : " + combo.getItemAt(j));
-						}
+						imu.
 						imu.IvyIdListener();
 						ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
 						for (int i=0 ; i < l.size() ; i++){
 							System.out.println(" imu list : "+ l.get(i));
 						}
-						//A supprimer
-						System.out.println("id : " + id);
+					
 						
 						if (!l.contains((Integer)id)){
 							System.out.println("ne contient pas id");
@@ -490,7 +484,7 @@ public class Shell extends JFrame {
 							btnAccelero.setEnabled(true);
 							btnMagneto.setEnabled(true);
 						}
-						
+						imu.stopIvyRawListener();
 
 					}
 				}
