@@ -417,7 +417,7 @@ public class Shell extends JFrame {
 		try {
 			imu.IvyIdListener();
 			ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
-			//l.add(0, -1);
+			l.add(0, -1);
 			if (!l.isEmpty()) {
 				for (Integer i : l) {
 					comboModelId.addElement((Integer) i);
