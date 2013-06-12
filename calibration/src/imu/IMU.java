@@ -212,7 +212,7 @@ public class IMU implements IvyMessageListener {
 	 * @param idDrone id of the drone needed to listen the RAW_DATA messages 
 	 * @throws IvyException
 	 */
-	public void IvyRawListener(final int indexTelemetry,final int idDrone) throws IvyException {
+	public void IvyRawListener(final int indexTelemetry) throws IvyException {
 		this.idDrone=idDrone;
 		bus.bindMsg("^" + idDrone + " .*RAW(.*)",
 				new IvyMessageListener() {
@@ -352,8 +352,9 @@ public class IMU implements IvyMessageListener {
 	 * @throws IvyException
 	 * @throws InterruptedException
 	 */
-	public void IvyConfigListener() throws GetConfigException, IvyException,
+	public void IvyConfigListener(int idDrone) throws GetConfigException, IvyException,
 			InterruptedException {
+		this.idDrone=idDrone;
 		Thread.sleep(20);
 		sendRequest();
 	}
