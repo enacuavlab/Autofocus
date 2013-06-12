@@ -149,8 +149,8 @@ public class Result extends JDialog {
 	 * Update the result
 	 */
 	public void majResult() {
-		new CalibrateSystem(imu.getCalibration(), "/home/gui/paparazzi",
-				"/home/gui/test.data", this.textResultCopy, this.textResult).start();
+		new CalibrateSystem(imu.getCalibration(), System.getenv("HOME") + "/Desktop/paparazzi",
+				"/home/gui/test.data", this.textResultCopy, this.textResult).start(); //use paparazzi home normally
 	}
 
 	/**

@@ -106,6 +106,7 @@ public class Shell extends JFrame {
 	 */
 	private final int widthWindow = 1600, heightWindow = 800;
 
+
 	/**
 	 * Constructor which initialises the window with options Button and the
 	 * cardlayout used.
@@ -153,8 +154,8 @@ public class Shell extends JFrame {
 	private void initialise() {
 
 		// For test
-		//btnAccelero.setEnabled(true);
-		//btnMagneto.setEnabled(true);
+		btnAccelero.setEnabled(true);
+		btnMagneto.setEnabled(true);
 
 		
 		// Activate option buttons
@@ -327,14 +328,20 @@ public class Shell extends JFrame {
 				if (panel.isVisible()){
 					try {
 						System.out.println("Panelnom visible");
-						combo.removeAllItems();
-						combo.addItem(" ");
+						System.out.println("nb item : " + combo.getItemCount());
+						for (int j = 1; j< combo.getItemCount() ; j++){
+							combo.remove(j);
+						}
+						//A supprimer
+						for (int j = 0; j< combo.getItemCount() ; j++){
+							System.out.println(" combo list : " + combo.getItemAt(j));
+						}
 						imu.IvyIdListener();
 						ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
-						//A supprimer
-						for (Integer j : l) {
-							System.out.println("element : " + l.get(j));
+						for (int i=0 ; i < l.size() ; i++){
+							System.out.println(" imu list : "+ l.get(i));
 						}
+						//A supprimer
 						System.out.println("id : " + id);
 						
 						if (!l.contains((Integer)id)){
@@ -357,9 +364,9 @@ public class Shell extends JFrame {
 				else {
 					
 					try {
-						System.out.println("pas visible");
-						combo.removeAllItems();
-						combo.addItem(" ");
+						for (int j = 1; j< combo.getItemCount() ; j++){
+							combo.remove(j);
+						}
 						imu.IvyIdListener();
 						ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
 						if (!l.isEmpty()) {
@@ -371,6 +378,7 @@ public class Shell extends JFrame {
 					} catch (IvyException eivy) {
 						eivy.printStackTrace();
 					}
+					
 				}
 			}
 		});
@@ -463,7 +471,7 @@ public class Shell extends JFrame {
 			int modeActuel= 0 ;
 			modeActuel = imu.getTelemetryMode();
 			System.out.println(modeActuel);
-			comboMod.setSelectedIndex(modeActuel);
+			//comboMod.setSelectedIndex(modeActuel);
 			// Users can change the current mod
 			comboMod.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -477,10 +485,12 @@ public class Shell extends JFrame {
 							e1.printStackTrace();
 						}
 						// Test if their is Raw Data send by the IMU
+						
 						if (imu.isRawOnBus()) {
 							btnAccelero.setEnabled(true);
 							btnMagneto.setEnabled(true);
 						}
+						
 
 					}
 				}
