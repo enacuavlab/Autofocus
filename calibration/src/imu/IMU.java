@@ -111,17 +111,6 @@ public class IMU implements IvyMessageListener {
 	}
 
 	/**
-	 * store the id of the drone that will be used to get the right data on the
-	 * bus
-	 * 
-	 * @param id
-	 *            drone id
-	 */
-	public void setId(int id) {
-		idDrone = id;
-	}
-
-	/**
 	 * method called to listen the RAW DATA messages on the IVY bus
 	 * 
 	 * @param data
