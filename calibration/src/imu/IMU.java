@@ -132,7 +132,7 @@ public class IMU implements IvyMessageListener {
 			this.log=log;
 			this.data = data;
 			this.calibration = calibration;
-			final Timer timer = new Timer(1000,new ActionListener(){
+			final Timer timer = new Timer(2000,new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
 					SwingUtilities.invokeLater( new Runnable() {
 						public void run() {
@@ -222,7 +222,7 @@ public class IMU implements IvyMessageListener {
 	 * @throws IvyException
 	 */
 	public void IvyRawListener(final int indexTelemetry) throws IvyException {
-		bus.bindMsg("^" + idDrone + " [A-Za-z0-9_]+RAW(.*)",
+		bus.bindMsg("^" + idDrone + " .*RAW(.*)",
 				new IvyMessageListener() {
 					public void receive(IvyClient arg0, String[] args) {
 						try {
@@ -253,7 +253,7 @@ public class IMU implements IvyMessageListener {
 	 * stop the reading of the rawlistener on the bus
 	 */
 	public void stopIvyRawListener() {
-		bus.unBindMsg("^" + idDrone + " [A-Za-z0-9_]+RAW(.*)");
+		bus.unBindMsg("^" + idDrone + " .*RAW(.*)");
 		bus.unBindMsg("^" + idDrone + " DL_VALUES ([0-9]+) (.*)");
 	}
 
