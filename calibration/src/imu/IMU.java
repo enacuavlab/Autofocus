@@ -26,6 +26,7 @@ import fr.dgac.ivy.IvyMessageListener;
 /**
  * This is the class that links the calibrating program to the IVY bus in order
  * to:
+ * Warning make a set Id before listening anything else than Id on the bus
  * - get the RAW_DATA messages on the ivy bus.
  * - get the drone ID and telemetry mode.
  * - set the telemetry mode of the drone.
@@ -219,9 +220,11 @@ public class IMU implements IvyMessageListener {
 	 * @param indexTelemetry
 	 *            the position of the telemetrymode in the settings.xml of the
 	 *            drone
+	 * @param idDrone id of the drone needed to listen the RAW_DATA messages 
 	 * @throws IvyException
 	 */
-	public void IvyRawListener(final int indexTelemetry) throws IvyException {
+	public void IvyRawListener(final int indexTelemetry,final int idDrone) throws IvyException {
+		this.idDrone=idDrone;
 		bus.bindMsg("^" + idDrone + " .*RAW(.*)",
 				new IvyMessageListener() {
 					public void receive(IvyClient arg0, String[] args) {
