@@ -297,7 +297,10 @@ public class IMU implements IvyMessageListener {
 		}
 		return listeId;
 	}
-
+	public void resetListeId() {
+		listeId.clear();
+	}
+	
 	/**
 	 * return the number of the telemetry mode
 	 * 
