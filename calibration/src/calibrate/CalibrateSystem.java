@@ -16,10 +16,12 @@ import javax.swing.SwingUtilities;
 
 import common.TypeCalibration;
 import tests.GUIHelper;
+
 /**
  * Uses the system call in order to get the results of the calibration
+ * 
  * @author Guillaume
- *
+ * 
  */
 public class CalibrateSystem extends Thread {
 
@@ -55,7 +57,7 @@ public class CalibrateSystem extends Thread {
 	 * The accuracy of the mesure
 	 */
 	private String prec;
-	
+
 	/**
 	 * Initialize the values of the attributes
 	 * 
@@ -64,8 +66,8 @@ public class CalibrateSystem extends Thread {
 	 * @param logName
 	 * @param result
 	 *            the textArea to print to
-	 * @param  textResult
-	 * 				the textArea with results
+	 * @param textResult
+	 *            the textArea with results
 	 */
 	public CalibrateSystem(TypeCalibration t, String paparazziHome,
 			String logName, JTextArea result, JTextArea textResult) {
@@ -88,13 +90,12 @@ public class CalibrateSystem extends Thread {
 	private void calibrates() throws InterruptedException, IOException {
 		String newline = System.getProperty("line.separator");
 		Runtime runtime = Runtime.getRuntime();
-		final Process process = runtime
-				.exec("python "
-						+ ppzHome
-						+ "/sw/tools/calibration/calibrate.py "
-						+ "-s "
-						+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL "
-								: "MAG ") + logName);
+		final Process process = runtime.exec("python "
+				+ ppzHome
+				+ "/sw/tools/calibration/calibrate.py "
+				+ "-s "
+				+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL "
+						: "MAG ") + logName);
 
 		// Consommation de la sortie standard
 		try {
@@ -108,17 +109,17 @@ public class CalibrateSystem extends Thread {
 				line.append(newline);
 			}
 			String[] aline;
-			try {
-				aline = line.toString().split("<");
-				prec = aline[0];
-				parameters = "<" + aline[1] + "<" + aline[2] + "<" + aline[3]
-						+ "<" + aline[4] + "<" + aline[5] + "<" + aline[6];
-			} catch (Exception e) {
-				parameters = "not enough data";
-			}
+			aline = line.toString().split("<");
+			prec = aline[0];
+			parameters = "<" + aline[1] + "<" + aline[2] + "<" + aline[3] + "<"
+					+ aline[4] + "<" + aline[5] + "<" + aline[6];
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			parameters = "Unable to parse";
+		} catch (ArrayIndexOutOfBoundsException e) {
+			e.printStackTrace();
+			parameters = "no data";
 		}
 	}
 

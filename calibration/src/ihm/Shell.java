@@ -26,6 +26,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -369,9 +370,9 @@ public class Shell extends JFrame {
 						imu.IvyIdListener();
 						ArrayList<Integer> l = (ArrayList<Integer>) imu
 								.getList();
-						l.add(0, -1);
+					
 						comboModelId.removeAllElements();
-						
+						comboModelId.addElement(" ");
 						if (!l.isEmpty()) {
 							for (Integer i : l) {
 								comboModelId.addElement((Integer) i);
@@ -390,8 +391,8 @@ public class Shell extends JFrame {
 						imu.IvyIdListener();
 						ArrayList<Integer> l = (ArrayList<Integer>) imu
 								.getList();
-						l.add(0, -1);
 						comboModelId.removeAllElements();
+						comboModelId.addElement(" ");
 						if (!l.isEmpty()) {
 							for (Integer i : l) {
 								comboModelId.addElement((Integer) i);
@@ -417,7 +418,8 @@ public class Shell extends JFrame {
 		try {
 			imu.IvyIdListener();
 			ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
-			l.add(0, -1);
+			//l.add(0, -1);
+			comboModelId.addElement(" ");
 			if (!l.isEmpty()) {
 				for (Integer i : l) {
 					comboModelId.addElement((Integer) i);
@@ -433,7 +435,7 @@ public class Shell extends JFrame {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 
-					if ((Integer) combo.getSelectedItem() == -1) {
+					if (combo.getSelectedItem().equals(" ")) {
 						panel.setVisible(false);
 						panelMod.setVisible(false);
 					} else {
@@ -501,8 +503,9 @@ public class Shell extends JFrame {
 			comboMod.setModel(comboModelMod);
 			imu.IvyRawListener(d.getIndex(),btnMagneto,btnAccelero,id,comboMod);
 			
-			
-			comboMod.setSelectedIndex(imu.getTelemetryMode());
+			int modeActual = imu.getTelemetryMode();
+			System.out.println("mode : " + modeActual);
+			comboMod.setSelectedIndex(modeActual);
 			// Users can change the current mod
 			
 		} catch (IOException e) {
@@ -529,7 +532,11 @@ public class Shell extends JFrame {
 	 */
 	private void modAccelero() {
 		// Remove actionListener to prevent a new action during the calibration
+		imu.stopIvyRawListener();
+		btnAccelero.setEnabled(true);
+		btnMagneto.removeActionListener(ac2);
 		btnAccelero.removeActionListener(ac1);
+	
 		// Accelerometers Calibration
 		type = "Accl";
 		// Show panelAccl
@@ -541,14 +548,29 @@ public class Shell extends JFrame {
 		title.setText("<html><br>Accelerometers Calibration</html>");
 		// Add Quit Stop and Return Button
 		addButton(panelAccl);
+		panelAccl.repaint();
 
 		JPanel panelNorth = new JPanel();
-		panelNorth.setPreferredSize(new Dimension(1600, 75));
+		panelNorth.setPreferredSize(new Dimension(1600, 130));
 		panelNorth.setLayout(null);
 		JLabel inst = new JLabel();
 		inst.setBounds(375, 0, 500, 75);
 		inst.setText("<html>Follow the directions on the screen</html>");
 		panelNorth.add(inst);
+		JPanel panelPhoto = new JPanel();
+		panelPhoto.setLayout(null);
+		panelPhoto.setBounds(700,0, 500, 130);
+		JLabel instPhoto = new JLabel();
+		instPhoto.setOpaque(true);
+		instPhoto.setText("Try to obtain the same image");
+		instPhoto.setFont(new Font("Calibri", Font.ITALIC, 10));
+		instPhoto.setBounds(225,10,160,20);
+		panelPhoto.add(instPhoto);
+		JLabel photo = new JLabel();
+		photo.setIcon(new ImageIcon("Image/sphereAccel.png"));
+		photo.setBounds(205,-10, 250, 180);
+		panelPhoto.add(photo);
+		panelNorth.add(panelPhoto);
 		panelAccl.add(panelNorth, BorderLayout.NORTH, 0);
 		JPanel panelCenter = new JPanel();
 		panelCenter.setLayout(null);
@@ -559,18 +581,21 @@ public class Shell extends JFrame {
 	 * Function to add some elements in order to make magnetometers calibration
 	 */
 	private void modMagneto() {
+		imu.stopIvyRawListener();
 		// Remove actionListener to prevent a new action during the calibration
-		btnMagneto.removeActionListener(ac2);
+		/*btnAccelero.removeActionListener(ac1);
+		btnMagneto.removeActionListener(ac2);*/
 		// Magnetometers calibration
 		type = "Mag";
 		// Show panelMag
 		cl.show(content, listContent[2]);
 		// Disable the other buttons
-		btnAccelero.setEnabled(false);
-		btnGyro.setEnabled(false);
+		/*btnAccelero.setEnabled(false);
+		btnGyro.setEnabled(false);*/
 		title.setText("<html><br>Magnetometers Calibration</html>");
 		// Add quit , return and stop buttons
 		addButton(panelMag);
+		panelMag.repaint();
 		// Directions
 		JPanel panelNorth = new JPanel();
 		panelNorth.setPreferredSize(new Dimension(widthWindow, 100));
@@ -655,9 +680,12 @@ public class Shell extends JFrame {
 				// Remove some components of the panel
 				panel.remove(0);
 				panel.remove(1);
+				panel.removeAll();
 				// Remove elements of the panelHome to have an empty panelHome
 				panelHome.removeAll();
 				panelHome.repaint();
+				btnMagneto.setEnabled(false);
+				btnAccelero.setEnabled(false);
 				cl.show(content, listContent[0]);
 				initialise();
 			}
@@ -696,6 +724,7 @@ public class Shell extends JFrame {
 			panelAccl.remove(0);
 			panelAccl.remove(1);
 			btnAccelero.addActionListener(ac1);
+			btnMagneto.addActionListener(ac2);
 			/*btnMagneto.setEnabled(true);
 			btnAccelero.setEnabled(true);*/
 			ExtractRawData d;
@@ -717,6 +746,7 @@ public class Shell extends JFrame {
 		} else if (t.equals(TypeCalibration.MAGNETOMETER)) {
 			panelMag.remove(0);
 			panelMag.remove(1);
+			btnAccelero.addActionListener(ac1);
 			btnMagneto.addActionListener(ac2);
 			ExtractRawData d;
 			try {
@@ -760,7 +790,6 @@ public class Shell extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (mod.equals("Accl")) {
 				modAccelero();
-				imu.stopIvyRawListener();
 				Thread model = new Thread() {
 					public void run() {
 						@SuppressWarnings("unused")
@@ -774,7 +803,6 @@ public class Shell extends JFrame {
 
 			} else if (mod.equals("Mag")) {
 				modMagneto();
-				imu.stopIvyRawListener();
 				Thread model = new Thread() {
 					public void run() {
 						@SuppressWarnings("unused")

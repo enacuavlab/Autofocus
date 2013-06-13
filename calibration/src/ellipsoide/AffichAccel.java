@@ -4,6 +4,7 @@
 package ellipsoide;
 
 import java.awt.Dimension;
+import java.awt.Image;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -62,7 +63,7 @@ public class AffichAccel extends JPanel{
 		this.add(progressBar);
 		sp.getAffichage().setBounds(0, 0, 800, 400);
 		this.add(sp.getAffichage());
-		panelInst=new JPanel();
+		panelInst = new JPanel();
 		panelInst.setLayout(null);
 		panelInst.setBounds(850, 50, 320, 420);
 		this.add(panelInst);
@@ -71,8 +72,10 @@ public class AffichAccel extends JPanel{
 		inst.setBounds(20, 20, 280, 280);
 		inst.setLineWrap(true);
 		inst.setText("Maintain your drone in a stable position");
-
-
+		
+		
+		
+		
 		panelInst.add(inst);
 		labelPhoto = new JLabel();
 		labelPhoto.setBounds(20, 20, 280, 100);

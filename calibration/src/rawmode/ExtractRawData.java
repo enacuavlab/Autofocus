@@ -63,18 +63,18 @@ public class ExtractRawData {
 	private String infoNoeud() throws IncorrectXmlException {
 		try {
 			Iterator<Element> i = racine.getChildren("dl_settings").iterator();
-			indexTelemetry++;
 			i = i.next().getChildren("dl_settings").iterator();
-			indexTelemetry++;
 			Element temp = i.next();
 			String res = "";
-			if (temp.getAttribute("name").getValue().equals("Telemetry")) {
-				i = temp.getChildren("dl_setting").iterator();
-				while (i.hasNext()) {
-					res = res + i.next().getAttribute("values").getValue();
-				}
+			while (!(temp.getAttribute("name").getValue().equals("Telemetry"))) {
+				temp = i.next();
+				indexTelemetry++;
 			}
-			return res;
+			i = temp.getChildren("dl_setting").iterator();
+			while (i.hasNext()) {
+				res = res + i.next().getAttribute("values").getValue();
+			}
+		return res;
 		} catch (Exception e) {
 			throw new IncorrectXmlException("lecture du fichier", e);
 		}
@@ -116,7 +116,7 @@ public class ExtractRawData {
 	 * @throws IncorrectXmlException 
 	 */
 	public int getIndex() throws IncorrectXmlException {
-		if (indexTelemetry >= 2) {
+		if (indexTelemetry >= 0) {
 			return indexTelemetry;
 		} else throw new IncorrectXmlException();
 	}

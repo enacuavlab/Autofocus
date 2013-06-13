@@ -79,7 +79,8 @@ public class Result extends JDialog {
 		this.getContentPane().add(panel);
 		panel.setLayout(null);
 		// The log file
-		imu.getLog().print(System.getenv("HOME") + "/test.data");
+		System.out.println(System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data");
+		imu.getLog().print(System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data");
 		// Text where the result appears
 		textResultCopy = new JTextArea();
 		textResultCopy.setEditable(false);
@@ -149,8 +150,11 @@ public class Result extends JDialog {
 	 * Update the result
 	 */
 	public void majResult() {
-		new CalibrateSystem(imu.getCalibration(), System.getenv("HOME") + "/paparazzi",
-				System.getenv("HOME") + "/test.data", this.textResultCopy, this.textResult).start(); //use paparazzi home normally
+		new CalibrateSystem(imu.getCalibration(),
+				System.getenv("PAPARAZZI_HOME"),
+				System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data", 
+				this.textResultCopy,
+				this.textResult).start(); //use paparazzi home normally
 	}
 
 	/**
