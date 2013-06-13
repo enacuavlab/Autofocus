@@ -341,8 +341,6 @@ public class IMU implements IvyMessageListener {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				label.setBackground(Color.red);
-				btnMagneto.setEnabled(false);
-				btnAccelero.setEnabled(false);
 			}
 		});
 		bus.unBindMsg("^" + idDrone + ".*");

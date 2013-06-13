@@ -3,6 +3,8 @@
  */
 package ellipsoide;
 
+import ihm.ScreenHelper;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,17 +18,13 @@ import javax.swing.JPanel;
 
 /**
  * The class responsible of displaying the sphere
- * @author Alinoé
+ * @author Alinoï¿½
  *
  */
 public class AffichSphere extends JPanel {
 
-	/**
-	 * Size of the canvas and translation factor for display
-	 */
-	private final int height = 800;
-	private final int width = 1000;
-	private final int translateFactor = 200;
+	private ScreenHelper screen;
+
 	/**
 	 * New stroke used to emphasize the zone on the sphere currently
 	 * being plotted
@@ -57,17 +55,6 @@ public class AffichSphere extends JPanel {
 		this.repaint();
 	}
 
-	/**
-	 * The geometric function used to get the sphere correctly displayed on the canvas
-	 * 
-	 * @param x the integer to transform into the right form
-	 * @return the new value of the integer
-	 */
-	private int transform(int x) {
-		float res;
-		res = ((float) x / (float)s.getRayon() ) * 100 + translateFactor;
-		return (int) res;
-	}
 
 	/** 
 	 * The main method, it repaint all the zones according to
@@ -80,7 +67,7 @@ public class AffichSphere extends JPanel {
 		super.paintComponents(g);
 		//defines the canvas
 		Graphics2D g2d = (Graphics2D) g;
-		g.clearRect(0, 0, height, width);
+		g.clearRect(0, 0, super.getHeight(), super.getWidth());
 		List<Point2D> points;
 		//useful store structure
 		int n = zones.get(1).getListContour().size();
@@ -92,9 +79,9 @@ public class AffichSphere extends JPanel {
 			i = 0;
 			points = z.getListContour();
 			for (Point2D p : points) {
-				xPoints[i] = transform((int)p.getX())+translateFactor;
-				yPoints[i] = transform((int)p.getY());
-				//System.out.println("test : " + s.getRayon() + " -> " + xPoints[i] + " : " + yPoints[i]);
+				xPoints[i] = (int)((p.getX()/s.getRayon())*(float)super.getWidth() + (float)super.getWidth()/2);
+				yPoints[i] = (int)((p.getY()/s.getRayon())*(float)super.getHeight() + (float)super.getHeight()/2);
+				System.out.println("test : " + s.getRayon() + " ->1 " + xPoints[i] + " : " + yPoints[i]);
 				i++;
 			}
 			g.setColor(new Color(255-z.getDensity().getColor(),z.getDensity().getColor(),0));
@@ -105,9 +92,9 @@ public class AffichSphere extends JPanel {
 		i = 0;
 		points = temp.getListContour();
 		for (Point2D p : points) {
-			xPoints[i] = transform((int)p.getX())+translateFactor;
-			yPoints[i] = transform((int)p.getY());
-			//System.out.println("test : " + s.getRayon() + " -> " + xPoints[i] + " : " + yPoints[i]);
+			xPoints[i] = (int)((p.getX()/s.getRayon())*super.getWidth() + super.getWidth()/2);
+			yPoints[i] = (int)((p.getY()/s.getRayon())*super.getHeight() + super.getHeight()/2);
+			System.out.println("test : " + s.getRayon() + " -> " + xPoints[i] + " : " + yPoints[i]);
 			i++;
 		}
 		g.setColor(Color.yellow);
@@ -125,8 +112,7 @@ public class AffichSphere extends JPanel {
 	 * @param s the sphere to draw
 	 */
 	public AffichSphere(Sphere s) {
-		setPreferredSize(new Dimension(height, width));
-		setBackground(java.awt.Color.RED);
+		screen = new ScreenHelper();
 		this.s = s;
 		majZone();
 	}

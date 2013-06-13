@@ -14,6 +14,10 @@ import data.Vecteur;
 
 public class Filter {
 
+	/**type de la calibration
+	 * 
+	 */
+	private TypeCalibration type;
 	/**Maximum and minimum on each directions used to update the sphere
 	 * 
 	 */
@@ -50,13 +54,8 @@ public class Filter {
 	 * @param t
 	 */
 	public Filter(int windowSize,TypeCalibration t) {
-		if (t.equals(TypeCalibration.ACCELEROMETER)){
-			noiseThreshold = 3.5;
-		}
-		if(t.equals(TypeCalibration.MAGNETOMETER)){
-			noiseThreshold = 60;
-		}
-		
+		this.noiseThreshold=100; //start value
+		this.type = t;
 		this.windowSize = windowSize;
 		window = new SlidingWindow<VecteurFiltrable<Double>>(windowSize);
 		variables = null;
@@ -138,7 +137,11 @@ public class Filter {
 				- minY : maxZ - minZ));
 		center = new Vecteur((maxX + minX) / 2, (maxY + minY) / 2,
 				(maxZ + minZ) / 2);
-		noiseThreshold=(float)rayon/100 * 2;
+		if (TypeCalibration.ACCELEROMETER.equals(this.type)) {
+			noiseThreshold=(float)rayon/100 * 2;
+		} else {
+			noiseThreshold=(float)rayon/100 * 5;
+		}
 	}
 
 
