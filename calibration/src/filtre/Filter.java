@@ -6,6 +6,7 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 
 import common.TypeCalibration;
+import data.Vecteur;
 
 /**Mother class of all filter use to discriminates vector
  * according to their noise factor
@@ -13,6 +14,27 @@ import common.TypeCalibration;
 
 public class Filter {
 
+	/**Maximum and minimum on each directions used to update the sphere
+	 * 
+	 */
+	private int maxX = 0;
+	private int minX = 0;
+	private int maxY = 0;
+	private int minY = 0;
+	private int maxZ = 0;
+	private int minZ = 0;
+	protected int rayon = 0;
+	/**The center of the sphere*/
+	protected Vecteur center = new Vecteur(0, 0, 0);
+	protected int nbCorrectVect=0;
+	/**The number of vector discarded used 
+	 * to reinitialize the progress bar
+	 */
+	protected int nbWrongVect=0;
+	/**The threshold that trigger the 
+	 * reinitialization of the progress bar
+	 */
+	
 	/**The array used to store data, generates medium and standard deviation*/
 	protected ArrayList<DescriptiveStatistics> variables;
 	/**The size of the sliding window of the filter*/
@@ -94,6 +116,30 @@ public class Filter {
 			}
 			this.add(v);
 		}
+		if (v.isCorrect()) {
+			nbCorrectVect++;
+			if (v.getX() > maxX)
+				maxX = (int) v.getX();
+			if (v.getY() > maxY)
+				maxY = (int) v.getY();
+			if (v.getZ() > maxZ)
+				maxZ = (int) v.getZ();
+			if (v.getX() < minX)
+				minX = (int) v.getX();
+			if (v.getY() < minY)
+				minY = (int) v.getY();
+			if (v.getZ() < minZ)
+				minZ = (int) v.getZ();
+		}
+		else nbWrongVect++;
+
+		rayon = (maxX - minX > maxY - minY ? (maxX - minX > maxZ - minZ ? maxX
+				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
+				- minY : maxZ - minZ));
+		center = new Vecteur((maxX + minX) / 2, (maxY + minY) / 2,
+				(maxZ + minZ) / 2);
+		noiseThreshold=(float)rayon/100 * 2;
 	}
+
 
 }
