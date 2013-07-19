@@ -1,2 +1,8 @@
+
 Manifest-Version: 1.0
+
+=======
+Manifest-Version: 1.0
+Main-class: main.Main
+Class-Path: ./commons-math3-3.2.jar ./ddogleg.jar ./EJML.jar ./ivy-java.jar ./jdom-2.0.5.jar
 

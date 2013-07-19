@@ -275,7 +275,7 @@ public class Zone {
 		
 		surface = Math.pow(radius, 2) * (longAngleEnd - longAngleBegin)
 				* Math.abs(Math.cos(latAngleHigh +Math.PI/2.0) - Math.cos(latAngleLow+Math.PI/2.0));
-		System.out.println(surface +" " + surfaceSphere);
+		//System.out.println(surface +" " + surfaceSphere);
 	}
 
 	/**

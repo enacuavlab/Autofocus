@@ -107,7 +107,7 @@ public class Shell extends JFrame {
 	/**
 	 * Model for the comboBox
 	 */
-	private DefaultComboBoxModel comboModelId , comboModelMod ;
+	private DefaultComboBoxModel comboModelId, comboModelMod;
 	/**
 	 * Combo to choose the mod of telemetry
 	 */
@@ -115,7 +115,7 @@ public class Shell extends JFrame {
 	/**
 	 * Size of the window
 	 */
-	private final int widthWindow = 1600, heightWindow = 800;
+	private ScreenHelper screen;
 
 	/**
 	 * Constructor which initialises the window with options Button and the
@@ -126,7 +126,8 @@ public class Shell extends JFrame {
 		// Shell
 		me = this;
 		setTitle("Autofocus");
-		setSize(widthWindow, heightWindow);
+		screen = new ScreenHelper();
+		setSize(screen.convertX(1600), screen.convertY(800));
 		setLocationRelativeTo(null);
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -164,35 +165,33 @@ public class Shell extends JFrame {
 	private void initialise() {
 
 		// For test
-		// btnAccelero.setEnabled(true);
-		// btnMagneto.setEnabled(true);
+		 btnAccelero.setEnabled(true);
+		 btnMagneto.setEnabled(true);
 
 		// Activate option buttons
 		activateButton(type);
 
-		//id 
+		// id
 		id = -1;
-		
-		//comboMod
+
+		// comboMod
 		comboMod = new JComboBox();
 		comboModelMod = new DefaultComboBoxModel();
 		comboMod.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange()== ItemEvent.SELECTED){
+				if (e.getStateChange() == ItemEvent.SELECTED) {
 					try {
-						Integer mod = new Integer(comboMod
-								.getSelectedIndex());
+						Integer mod = new Integer(comboMod.getSelectedIndex());
 						imu.sendMode(id, mod.doubleValue());
 					} catch (IvyException e1) {
 						e1.printStackTrace();
 					}
 					// Test if their is Raw Data send by the IMU
 
-					/*if (imu.isRawOnBus()) {
-						btnAccelero.setEnabled(true);
-						btnMagneto.setEnabled(true);
-					}
-					imu.stopIvyRawListener();*/
+					/*
+					 * if (imu.isRawOnBus()) { btnAccelero.setEnabled(true);
+					 * btnMagneto.setEnabled(true); } imu.stopIvyRawListener();
+					 */
 				}
 			}
 		});
@@ -203,16 +202,21 @@ public class Shell extends JFrame {
 				BevelBorder.LOWERED, Color.black, Color.white);
 		panelTitle.setBackground(Color.LIGHT_GRAY);
 		panelTitle.setBorder(borderTitle);
-		panelTitle.setPreferredSize(new Dimension(widthWindow, 100));
+		panelTitle.setPreferredSize(new Dimension(screen.convertX(1600), screen
+				.convertY(100)));
 		getContentPane().add(panelTitle, "North");
 		title = new JLabel("<html>Home</html>");
-		title.setBounds(600, 35, 400, 40);
+		title.setBounds(screen.convertX(600), screen.convertY(35),
+				screen.convertX(400), screen.convertY(40));
 		title.setFont(new Font("Calibri", Font.BOLD, 28));
 		JLabel labelIndImu = new JLabel();
-		labelIndImu.setBounds(0, 30, 150, 20);
+		labelIndImu.setBounds(0, screen.convertY(30), screen.convertX(150),
+				screen.convertY(20));
 		labelIndImu.setText("Uav's presence : ");
+		labelIndImu.setFont(new Font("Calibri", Font.PLAIN, screen.convertX(14)));
 		JLabel labelImu = new JLabel();
-		labelImu.setBounds(120, 30, 20, 20);
+		labelImu.setBounds(screen.convertX(120), screen.convertY(30),
+				screen.convertX(20), screen.convertY(20));
 		labelImu.setOpaque(true);
 		panelTitle.add(labelImu);
 		panelTitle.add(labelIndImu);
@@ -227,10 +231,14 @@ public class Shell extends JFrame {
 		// Panel which contains comboBox for the id choice
 		JPanel panelNorth = new JPanel();
 		panelHome.add(panelNorth, BorderLayout.NORTH);
-		panelNorth.setPreferredSize(new Dimension(widthWindow, 100));
+		panelNorth.setPreferredSize(new Dimension(screen.convertX(1600), screen
+				.convertY(100)));
 		GridBagLayout gblPanelNorth = new GridBagLayout();
-		gblPanelNorth.columnWidths = new int[] { 300, 300, 10, 10, 10 };
-		gblPanelNorth.rowHeights = new int[] { 40, 40, 40 };
+		gblPanelNorth.columnWidths = new int[] { screen.convertX(300),
+				screen.convertX(300), screen.convertX(10), screen.convertX(10),
+				screen.convertX(10) };
+		gblPanelNorth.rowHeights = new int[] { screen.convertY(40),
+				screen.convertY(40), screen.convertY(40) };
 		gblPanelNorth.columnWeights = new double[] { 0.0, 0.0, 1.0, 5.0, 20.0 };
 		gblPanelNorth.rowWeights = new double[] { 0.0, 0.0 };
 		panelNorth.setLayout(gblPanelNorth);
@@ -245,14 +253,16 @@ public class Shell extends JFrame {
 		Border borderName = BorderFactory.createRaisedBevelBorder();
 		panelName.setBorder(borderName);
 		panelName.setBackground(new Color(202, 205, 236));
-		panelName.setBounds(275, 38, 508, 99);
+		panelName.setBounds(screen.convertX(275), screen.convertY(38),
+				screen.convertX(508), screen.convertY(99));
 		panelCenter.add(panelName);
 		panelName.setLayout(null);
 		panelName.setVisible(false);
 
 		// Contains the name of the drone
 		JLabel labelName = new JLabel();
-		labelName.setBounds(106, 12, 138, 60);
+		labelName.setBounds(screen.convertX(106), screen.convertY(12),
+				screen.convertX(138), screen.convertY(60));
 		panelName.add(labelName);
 
 		// Panel_mod
@@ -260,7 +270,8 @@ public class Shell extends JFrame {
 		JPanel panelMod = new JPanel();
 		panelMod.setBackground(new Color(202, 205, 236));
 		panelMod.setForeground(Color.BLACK);
-		panelMod.setBounds(275, 213, 508, 177);
+		panelMod.setBounds(screen.convertX(275), screen.convertY(213),
+				screen.convertX(508), screen.convertY(177));
 		panelMod.setBorder(borderMod);
 		panelCenter.add(panelMod);
 		panelMod.setVisible(false);
@@ -336,7 +347,8 @@ public class Shell extends JFrame {
 	 */
 	private void addcombo_id(JPanel panelNorth, final JPanel panel,
 			final JLabel label, final JPanel panelMod) {
-		JLabel labelId = new JLabel("Choose id of your drone");
+		JLabel labelId = new JLabel("Choose the ID of your drone");
+		labelId.setFont(new Font("Calibri", Font.BOLD, screen.convertX(14)));
 		GridBagConstraints gbcLabelId = new GridBagConstraints();
 		gbcLabelId.insets = new Insets(0, 0, 5, 5);
 		gbcLabelId.anchor = GridBagConstraints.EAST;
@@ -360,17 +372,17 @@ public class Shell extends JFrame {
 		panelNorth.add(reload, gbcReload);
 		reload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (id != -1){
+				if (id != -1) {
 					imu.stopIvyRawListener();
 					imu.setId(-1);
 				}
-				
+
 				if (panel.isVisible()) {
 					try {
 						imu.IvyIdListener();
 						ArrayList<Integer> l = (ArrayList<Integer>) imu
 								.getList();
-					
+
 						comboModelId.removeAllElements();
 						comboModelId.addElement(" ");
 						if (!l.isEmpty()) {
@@ -409,7 +421,8 @@ public class Shell extends JFrame {
 
 		// Label with the drone's name
 		final JLabel dronesName = new JLabel();
-		dronesName.setBounds(273, 35, 114, 29);
+		dronesName.setBounds(screen.convertX(273), screen.convertY(35),
+				screen.convertX(114), screen.convertY(29));
 		dronesName.setBackground(Color.WHITE);
 		panel.add(dronesName);
 
@@ -418,7 +431,7 @@ public class Shell extends JFrame {
 		try {
 			imu.IvyIdListener();
 			ArrayList<Integer> l = (ArrayList<Integer>) imu.getList();
-			//l.add(0, -1);
+			// l.add(0, -1);
 			comboModelId.addElement(" ");
 			if (!l.isEmpty()) {
 				for (Integer i : l) {
@@ -446,8 +459,9 @@ public class Shell extends JFrame {
 							imu.IvyConfigListener(id);
 							name = imu.getAcName();
 							url = imu.getSettingsURL();
-							label.setText("<html>The selected id drone name ( id : "
+							label.setText("<html>The drone name ( ID : "
 									+ Integer.toString(id) + " ) is : </html>");
+							label.setFont(new Font("Calibri", Font.PLAIN , screen.convertX(14)));
 							dronesName.setText(name);
 							panel.setVisible(true);
 							panelMod.setVisible(true);
@@ -481,19 +495,21 @@ public class Shell extends JFrame {
 	 */
 	private void addcomboMod(JPanel panelMod, JPanel panelName) {
 		final JLabel labelMod = new JLabel(
-				"Please choose the mod of your drone called " + name + " :");
-		labelMod.setBounds(60, 45, 385, 42);
+				"Please choose the telemetry mode of drone " + name + " :");
+		labelMod.setFont(new Font("Calibri" , Font.PLAIN , screen.convertX(14)));
+		labelMod.setBounds(screen.convertX(60), screen.convertY(45),
+				screen.convertX(385), screen.convertY(42));
 		panelMod.add(labelMod);
-		
-		
-		comboMod.setBounds(105, 124, 284, 24);
+
+		comboMod.setBounds(screen.convertX(105), screen.convertY(124),
+				screen.convertX(284), screen.convertY(24));
 		panelMod.add(comboMod);
 		comboModelMod.removeAllElements();
 		try {
 			// Detect all the available mods of the drone
 			ExtractRawData d = new ExtractRawData(url);
 			// Detect the current mod
-			
+
 			List<String> listMod = d.extract();
 			if (!listMod.isEmpty()) {
 				for (String i : listMod) {
@@ -501,18 +517,19 @@ public class Shell extends JFrame {
 				}
 			}
 			comboMod.setModel(comboModelMod);
-			imu.IvyRawListener(d.getIndex(),btnMagneto,btnAccelero,id,comboMod);
-			
+			imu.IvyRawListener(d.getIndex(), btnMagneto, btnAccelero, id,
+					comboMod);
+
 			int modeActual = imu.getTelemetryMode();
 			System.out.println("mode : " + modeActual);
 			comboMod.setSelectedIndex(modeActual);
 			// Users can change the current mod
-			
+
 		} catch (IOException e) {
 			panelMod.setVisible(false);
 			labelMod.setText("");
 			panelName.setVisible(false);
-			JOptionPane.showMessageDialog(null, "Drone's name incorrect : "
+			JOptionPane.showMessageDialog(null, "Drone name incorrect : "
 					+ name, "Error name", JOptionPane.ERROR_MESSAGE);
 
 		} catch (IncorrectXmlException e) {
@@ -536,7 +553,7 @@ public class Shell extends JFrame {
 		btnAccelero.setEnabled(true);
 		btnMagneto.removeActionListener(ac2);
 		btnAccelero.removeActionListener(ac1);
-	
+
 		// Accelerometers Calibration
 		type = "Accl";
 		// Show panelAccl
@@ -545,30 +562,36 @@ public class Shell extends JFrame {
 		btnMagneto.setEnabled(false);
 		btnGyro.setEnabled(false);
 
-		title.setText("<html><br>Accelerometers Calibration</html>");
+		title.setText("<html><br>Accelerometer Calibration</html>");
 		// Add Quit Stop and Return Button
 		addButton(panelAccl);
 		panelAccl.repaint();
 
 		JPanel panelNorth = new JPanel();
-		panelNorth.setPreferredSize(new Dimension(1600, 130));
+		panelNorth.setPreferredSize(new Dimension(screen.convertX(1600), screen
+				.convertY(130)));
 		panelNorth.setLayout(null);
 		JLabel inst = new JLabel();
-		inst.setBounds(375, 0, 500, 75);
+		inst.setBounds(screen.convertX(375), 0, screen.convertY(500),
+				screen.convertY(75));
 		inst.setText("<html>Follow the directions on the screen</html>");
+		inst.setFont(new Font("Calibri", Font.PLAIN , screen.convertX(14)));
 		panelNorth.add(inst);
 		JPanel panelPhoto = new JPanel();
 		panelPhoto.setLayout(null);
-		panelPhoto.setBounds(700,0, 500, 130);
+		panelPhoto.setBounds(screen.convertX(700), 0, screen.convertX(500),
+				screen.convertY(130));
 		JLabel instPhoto = new JLabel();
 		instPhoto.setOpaque(true);
 		instPhoto.setText("Try to obtain the same image");
-		instPhoto.setFont(new Font("Calibri", Font.ITALIC, 10));
-		instPhoto.setBounds(225,10,160,20);
+		instPhoto.setFont(new Font("Calibri", Font.ITALIC, screen.convertX(10)));
+		instPhoto.setBounds(screen.convertX(225), screen.convertY(10),
+				screen.convertX(160), screen.convertY(20));
 		panelPhoto.add(instPhoto);
 		JLabel photo = new JLabel();
 		photo.setIcon(new ImageIcon("Image/sphereAccel.png"));
-		photo.setBounds(205,-10, 250, 180);
+		photo.setBounds(screen.convertX(205), screen.convertY(-10),
+				screen.convertX(250), screen.convertY(180));
 		panelPhoto.add(photo);
 		panelNorth.add(panelPhoto);
 		panelAccl.add(panelNorth, BorderLayout.NORTH, 0);
@@ -583,27 +606,49 @@ public class Shell extends JFrame {
 	private void modMagneto() {
 		imu.stopIvyRawListener();
 		// Remove actionListener to prevent a new action during the calibration
-		/*btnAccelero.removeActionListener(ac1);
-		btnMagneto.removeActionListener(ac2);*/
+		/*
+		 * btnAccelero.removeActionListener(ac1);
+		 * btnMagneto.removeActionListener(ac2);
+		 */
 		// Magnetometers calibration
 		type = "Mag";
 		// Show panelMag
 		cl.show(content, listContent[2]);
 		// Disable the other buttons
-		/*btnAccelero.setEnabled(false);
-		btnGyro.setEnabled(false);*/
-		title.setText("<html><br>Magnetometers Calibration</html>");
+		/*
+		 * btnAccelero.setEnabled(false); btnGyro.setEnabled(false);
+		 */
+		title.setText("<html><br>Magnetometer Calibration</html>");
 		// Add quit , return and stop buttons
 		addButton(panelMag);
 		panelMag.repaint();
 		// Directions
 		JPanel panelNorth = new JPanel();
-		panelNorth.setPreferredSize(new Dimension(widthWindow, 100));
+		panelNorth.setPreferredSize(new Dimension(screen.convertX(1600), screen
+				.convertY(130)));
 		panelNorth.setLayout(null);
 		JLabel inst = new JLabel();
-		inst.setBounds(315, 15, 500, 75);
-		inst.setText("<html><br><br>Rotate the drone in all directions in order to fill red areas</html>");
+		inst.setBounds(screen.convertX(315), screen.convertY(15),
+				screen.convertX(500), screen.convertY(75));
+		inst.setText("<html><br><br>Rotate the drone in all directions in order to fill the red areas</html>");
 		panelNorth.add(inst);
+		JPanel panelPhoto = new JPanel();
+		panelPhoto.setLayout(null);
+		panelPhoto.setBounds(screen.convertX(700), 0, screen.convertY(500),
+				screen.convertX(130));
+		JLabel instPhoto = new JLabel();
+		instPhoto.setOpaque(true);
+		instPhoto.setText("Try to obtain the same image");
+		instPhoto.setFont(new Font("Calibri", Font.ITALIC, screen.convertX(10)));
+		instPhoto.setBounds(screen.convertX(225), screen.convertY(10),
+				screen.convertX(160), screen.convertY(20));
+		panelPhoto.add(instPhoto);
+		JLabel photo = new JLabel();
+		photo.setIcon(new ImageIcon("Image/sphereMag.png"));
+		photo.setBounds(screen.convertX(205), screen.convertY(-10),
+				screen.convertX(250), screen.convertY(180));
+		panelPhoto.add(photo);
+		panelNorth.add(panelPhoto);
 		panelMag.add(panelNorth, BorderLayout.NORTH, 0);
 
 		JPanel panelCenter = new JPanel();
@@ -611,7 +656,8 @@ public class Shell extends JFrame {
 		panelMag.add(panelCenter, BorderLayout.CENTER, 1);
 		// Panel which contains the sphere
 		panelDessinMag = new JPanel();
-		panelDessinMag.setBounds(125, 0, 775, 425);
+		panelDessinMag.setBounds(screen.convertX(125), 0, screen.convertX(775),
+				screen.convertY(425));
 		panelCenter.add(panelDessinMag);
 	}
 
@@ -627,7 +673,7 @@ public class Shell extends JFrame {
 		cl.show(content, listContent[3]);
 		btnAccelero.setEnabled(false);
 		btnMagneto.setEnabled(false);
-		title.setText("<html><br>Gyrometers Calibration</html>");
+		title.setText("<html><br>Gyrometer Calibration</html>");
 	}
 
 	/**
@@ -638,9 +684,12 @@ public class Shell extends JFrame {
 		panel.add(panelSouthCenter, BorderLayout.SOUTH);
 		panelSouthCenter.setPreferredSize(new Dimension(1600, 50));
 		GridBagLayout gblPanelSouthCenter = new GridBagLayout();
-		gblPanelSouthCenter.columnWidths = new int[] { 300, 300, 300, 30, 100,
-				50, 100, 100 };
-		gblPanelSouthCenter.rowHeights = new int[] { 0, 25, 25 };
+		gblPanelSouthCenter.columnWidths = new int[] { screen.convertX(300),
+				screen.convertX(300), screen.convertX(300),
+				screen.convertX(30), screen.convertX(100), screen.convertX(50),
+				screen.convertX(100), screen.convertX(100) };
+		gblPanelSouthCenter.rowHeights = new int[] { 0, screen.convertY(25),
+				screen.convertY(25) };
 		gblPanelSouthCenter.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0, 0.0 };
 		gblPanelSouthCenter.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
@@ -717,21 +766,24 @@ public class Shell extends JFrame {
 	/**
 	 * Allow to return to the home panel
 	 */
-	public void backHome(){
+	public void backHome() {
 		imu.deleteDataLog();
 		TypeCalibration t = imu.getCalibration();
 		if (t.equals(TypeCalibration.ACCELEROMETER)) {
 			panelAccl.remove(0);
 			panelAccl.remove(1);
+			panelAccl.removeAll();
 			btnAccelero.addActionListener(ac1);
 			btnMagneto.addActionListener(ac2);
-			/*btnMagneto.setEnabled(true);
-			btnAccelero.setEnabled(true);*/
+			/*
+			 * btnMagneto.setEnabled(true); btnAccelero.setEnabled(true);
+			 */
 			ExtractRawData d;
 			try {
 				d = new ExtractRawData(url);
 				System.out.println(url);
-				imu.IvyRawListener(d.getIndex(),btnMagneto,btnAccelero,id,comboMod);
+				imu.IvyRawListener(d.getIndex(), btnMagneto, btnAccelero, id,
+						comboMod);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -742,16 +794,18 @@ public class Shell extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		} else if (t.equals(TypeCalibration.MAGNETOMETER)) {
 			panelMag.remove(0);
 			panelMag.remove(1);
+			panelMag.removeAll();
 			btnAccelero.addActionListener(ac1);
 			btnMagneto.addActionListener(ac2);
 			ExtractRawData d;
 			try {
 				d = new ExtractRawData(url);
-				imu.IvyRawListener(d.getIndex(),btnMagneto,btnAccelero,id,comboMod);
+				imu.IvyRawListener(d.getIndex(), btnMagneto, btnAccelero, id,
+						comboMod);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -762,9 +816,10 @@ public class Shell extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			/*btnAccelero.setEnabled(true);
-			btnMagneto.setEnabled(true);*/
+
+			/*
+			 * btnAccelero.setEnabled(true); btnMagneto.setEnabled(true);
+			 */
 		} else {
 			panelGyro.removeAll();
 			btnGyro.addActionListener(ac3);

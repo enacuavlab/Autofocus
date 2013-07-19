@@ -46,8 +46,8 @@ public class Result extends JDialog {
 	 */
 	private Shell parent;
 
-	
-	
+	private ScreenHelper screen;
+
 	/**
 	 * 
 	 * @param parent
@@ -62,8 +62,9 @@ public class Result extends JDialog {
 		super(parent, title, modal);
 		this.parent = parent;
 		this.imu = imu;
+		screen = new ScreenHelper();
 		// The size of the JDialog
-		this.setSize(550, 420);
+		this.setSize(screen.convertX(550), screen.convertY(420));
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -79,40 +80,48 @@ public class Result extends JDialog {
 		this.getContentPane().add(panel);
 		panel.setLayout(null);
 		// The log file
-		System.out.println(System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data");
-		imu.getLog().print(System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data");
+		System.out.println(System.getenv("PAPARAZZI_HOME")
+				+ "/var/logs/calibration.data");
+		imu.getLog().print(
+				System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data");
 		// Text where the result appears
 		textResultCopy = new JTextArea();
 		textResultCopy.setEditable(false);
 		textResultCopy.setLineWrap(true);
 		textResultCopy.setBackground(Color.WHITE);
-		textResultCopy.setBounds(10, 120, 530, 210);
+		textResultCopy.setBounds(screen.convertX(10), screen.convertY(120),
+				screen.convertX(530), screen.convertY(210));
 
 		panel.add(textResultCopy);
-		
+
 		textResult = new JTextArea();
 		textResult.setEditable(false);
 		textResult.setBackground(Color.WHITE);
-		textResult.setBounds(10, 30, 530, 50);
+		textResult.setBounds(screen.convertX(10), screen.convertY(30),
+				screen.convertX(530), screen.convertY(50));
 		panel.add(textResult);
-		
+
 		JLabel labelPrec = new JLabel();
 		JLabel labelInst = new JLabel();
 		labelPrec.setText("Accuracy");
 		labelInst.setText("Copy in the Airframe of your drone");
-		labelPrec.setBounds(10, 10, 100, 20);
-		labelInst.setBounds(10,90,300,20);
+		labelPrec.setBounds(screen.convertX(10), screen.convertY(10),
+				screen.convertX(100), screen.convertY(20));
+		labelInst.setBounds(screen.convertX(10), screen.convertY(90),
+				screen.convertX(300), screen.convertY(20));
 		panel.add(labelInst);
 		panel.add(labelPrec);
-		
-		
+
 		btnReturn = new JButton("Return Home");
 		btnCopy = new JButton("Copy");
 		btnContinue = new JButton("Continue");
 
-		btnCopy.setBounds(20, 350, 140, 30);
-		btnReturn.setBounds(390, 350, 140, 30);
-		btnContinue.setBounds(205, 350, 140, 30);
+		btnCopy.setBounds(screen.convertX(20), screen.convertY(350),
+				screen.convertX(140), screen.convertY(30));
+		btnReturn.setBounds(screen.convertX(390), screen.convertY(350),
+				screen.convertX(140), screen.convertY(30));
+		btnContinue.setBounds(screen.convertX(205), screen.convertY(350),
+				screen.convertX(140), screen.convertY(30));
 
 		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -152,9 +161,9 @@ public class Result extends JDialog {
 	public void majResult() {
 		new CalibrateSystem(imu.getCalibration(),
 				System.getenv("PAPARAZZI_HOME"),
-				System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data", 
-				this.textResultCopy,
-				this.textResult).start(); //use paparazzi home normally
+				System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data",
+				this.textResultCopy, this.textResult).start(); // use paparazzi
+																// home normally
 	}
 
 	/**

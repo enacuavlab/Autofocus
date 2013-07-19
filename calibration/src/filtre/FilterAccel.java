@@ -49,7 +49,6 @@ public class FilterAccel extends Filter {
 		public void add(final VecteurFiltrable<Double> v) {
 			final Vecteur a[] = new Vecteur[windowSize];
 			super.add(v);
-
 			if (!(window.remainingCapacity() > 0)) {
 				SwingUtilities.invokeLater(
 						new Runnable() {
