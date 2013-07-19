@@ -16,7 +16,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import java.awt.GridLayout;
@@ -32,6 +31,8 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.CardLayout;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Window.Type;
 
 public class Shell2 {
 
@@ -41,6 +42,11 @@ public class Shell2 {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -65,6 +71,7 @@ public class Shell2 {
 	 */
 	private void initialize() {
 		frmCalibrate = new JFrame();
+		frmCalibrate.setFont(new Font("Arial", Font.PLAIN, 12));
 		frmCalibrate.setTitle("Calibrate");
 		frmCalibrate.setBounds(100, 100, 675, 550);
 		frmCalibrate.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,8 +81,7 @@ public class Shell2 {
 		frmCalibrate.getContentPane().add(menuSide, BorderLayout.WEST);
 		menuSide.setBorder(new LineBorder(Color.GRAY));
 		menuSide.setLayout(new MigLayout("", "[183px,grow 230]", "[41px][46px][46px][][][][][]"));
-		menuSide.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtpnChooseAMode, btnNewButton, btnNewButton_1}));
-		
+	
 		JTextPane txtpnChooseAMode = new JTextPane();
 		txtpnChooseAMode.setAlignmentY(Component.TOP_ALIGNMENT);
 		txtpnChooseAMode.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -158,6 +164,9 @@ public class Shell2 {
 		
 		JPanel magneto = new JPanel();
 		panel.add(magneto, "name_282348376234515");
-		frmCalibrate.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{welcome}));
+		
+		JPanel accelero = new JPanel();
+		panel.add(accelero, "name_5925458635449");
+		frmCalibrate.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{frmCalibrate.getContentPane(), menuSide, txtpnChooseAMode, btnNewButton_1, btnNewButton, presentIcon, panel_2, txtpnUavsPresent, panel, welcome, separator, txtpnFillTheField, lblNewLabel, comboBox, lblChooseModeSending, comboBox_1, magneto, accelero}));
 	}
 }
