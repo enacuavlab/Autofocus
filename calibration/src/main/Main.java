@@ -2,9 +2,7 @@ package main;
 
 
 
-import ihm.Shell;
-
-import javax.swing.SwingUtilities;
+import src.ihm.Shell;
 
 
 /**
