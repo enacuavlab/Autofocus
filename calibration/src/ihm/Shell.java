@@ -186,12 +186,6 @@ public class Shell extends JFrame {
 					} catch (IvyException e1) {
 						e1.printStackTrace();
 					}
-					// Test if their is Raw Data send by the IMU
-
-					/*
-					 * if (imu.isRawOnBus()) { btnAccelero.setEnabled(true);
-					 * btnMagneto.setEnabled(true); } imu.stopIvyRawListener();
-					 */
 				}
 			}
 		});

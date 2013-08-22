@@ -1,40 +1,45 @@
 package ihm;
 
+import imu.Aircraft;
+import imu.IMU;
+
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JSeparator;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.CardLayout;
+
+import net.miginfocom.swing.MigLayout;
+
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Window.Type;
 
 public class Shell2 {
+
+	/**
+	 * IMU object to handle the other part of the control
+	 * 
+	 */
+	private IMU imu;
 
 	private JFrame frmCalibrate;
 
@@ -42,11 +47,6 @@ public class Shell2 {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -63,6 +63,7 @@ public class Shell2 {
 	 * Create the application.
 	 */
 	public Shell2() {
+		startImu();
 		initialize();
 	}
 
@@ -86,7 +87,7 @@ public class Shell2 {
 		txtpnChooseAMode.setAlignmentY(Component.TOP_ALIGNMENT);
 		txtpnChooseAMode.setAlignmentX(Component.LEFT_ALIGNMENT);
 		txtpnChooseAMode.setEditable(false);
-		txtpnChooseAMode.setBackground(UIManager.getColor("Button.background"));
+		txtpnChooseAMode.setBackground(UIManager.getColor("Button.light"));
 		txtpnChooseAMode.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtpnChooseAMode.setText("Choose a mode of calibration");
 		menuSide.add(txtpnChooseAMode, "cell 0 0,grow");
@@ -145,22 +146,52 @@ public class Shell2 {
 		welcome.add(txtpnFillTheField, "cell 1 0");
 		txtpnFillTheField.setEditable(false);
 		txtpnFillTheField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtpnFillTheField.setBackground(UIManager.getColor("Button.background"));
+		txtpnFillTheField.setBackground(UIManager.getColor("Button.light"));
 		txtpnFillTheField.setText("Fill the fileds according to the UAV you want to calibrate properties");
 		
 		JLabel lblNewLabel = new JLabel("Name of the UAV");
 		welcome.add(lblNewLabel, "cell 1 2,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox<Aircraft> comboBox = new JComboBox<Aircraft>();
+
+
+		imu.setAcCombo(comboBox);
 		welcome.add(comboBox, "cell 1 3,grow");
 		
 		JLabel lblChooseModeSending = new JLabel("Choose mode sending RAW data");
 		lblChooseModeSending.setHorizontalAlignment(SwingConstants.CENTER);
 		welcome.add(lblChooseModeSending, "cell 1 5,grow");
 		
-		JComboBox comboBox_1 = new JComboBox();
+		final JComboBox<String> comboBox_1 = new JComboBox<String>();
 		welcome.add(comboBox_1, "cell 1 6,grow");
+		
+		comboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				comboBox_1.setModel(new DefaultComboBoxModel<String>(
+						((Aircraft)comboBox.getSelectedItem()).getModes().toArray(new String[1]))
+						);
+			}
+		});
+		
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				System.out.println("selected");
+				if (arg0.getStateChange() == ItemEvent.SELECTED) {
+					try {
+						comboBox_1.setModel(new DefaultComboBoxModel<String>(
+								((Aircraft) arg0.getItem()).getModes().toArray(new String[1])
+								)
+							); 
+					} catch (Exception e) {
+						System.out.println("Failure downcasting to aircraft");
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
 		
 		JPanel magneto = new JPanel();
 		panel.add(magneto, "name_282348376234515");
@@ -169,4 +200,12 @@ public class Shell2 {
 		panel.add(accelero, "name_5925458635449");
 		frmCalibrate.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{frmCalibrate.getContentPane(), menuSide, txtpnChooseAMode, btnNewButton_1, btnNewButton, presentIcon, panel_2, txtpnUavsPresent, panel, welcome, separator, txtpnFillTheField, lblNewLabel, comboBox, lblChooseModeSending, comboBox_1, magneto, accelero}));
 	}
+
+	/**
+	 * Start the IMU, physical control part (outside GUI)
+	 */
+	private void startImu() {
+		imu = new IMU();
+	}
+
 }

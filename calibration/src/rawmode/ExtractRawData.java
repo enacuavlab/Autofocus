@@ -37,6 +37,7 @@ public class ExtractRawData {
 			SAXBuilder sxb = new SAXBuilder();
 			// On creee un nouveau document JDOM avec en argument le fichier XML
 			// Le parsing est termine ;
+			System.out.println(toParse);
 			File doc = new File(toParse);
 			document = sxb.build(doc);
 		} catch (JDOMException e) {
@@ -72,7 +73,7 @@ public class ExtractRawData {
 			}
 			i = temp.getChildren("dl_setting").iterator();
 			while (i.hasNext()) {
-				res = res + i.next().getAttribute("values").getValue();
+				res = res + i.next().getAttribute("values").getValue() +  "\\|";
 			}
 		return res;
 		} catch (Exception e) {
