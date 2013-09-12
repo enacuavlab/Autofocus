@@ -52,10 +52,7 @@ public class Zone {
 	 * The surface of the Sphere
 	 */
 	private double surfaceSphere;
-	/**
-	 * nbMaxPoints number of points on the surface of the sphere to get the right calibration
-	 */
-	private int nbPointsMax;
+
 	/**
 	 * The density of points over the zone
 	 */
@@ -85,7 +82,6 @@ public class Zone {
 	 */
 	public Zone(double lat_angle_low, double lat_angle_high,
 			double long_angle_begin, double long_angle_end,int nbPointsMax) {
-		this.nbPointsMax = nbPointsMax;
 		this.latAngleLow = lat_angle_low;
 		this.latAngleHigh = lat_angle_high;
 		this.longAngleBegin = long_angle_begin;

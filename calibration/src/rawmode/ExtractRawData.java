@@ -2,11 +2,13 @@ package rawmode;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Iterator;
-import org.jdom2.*;
-import org.jdom2.input.*;
+
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 public class ExtractRawData {
 
@@ -14,12 +16,11 @@ public class ExtractRawData {
 	private Element racine;
 	// permet de sotcker l'index de la telemetry
 	private int indexTelemetry = 0;
-	private List<String> idMode;
 
 	public ExtractRawData(String name) throws IOException {
 		parse(name);
 		try {
-			idMode = extract();
+			extract();
 		} catch (IncorrectXmlException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,7 +38,6 @@ public class ExtractRawData {
 			SAXBuilder sxb = new SAXBuilder();
 			// On creee un nouveau document JDOM avec en argument le fichier XML
 			// Le parsing est termine ;
-			System.out.println(toParse);
 			File doc = new File(toParse);
 			document = sxb.build(doc);
 		} catch (JDOMException e) {
@@ -73,7 +73,7 @@ public class ExtractRawData {
 			}
 			i = temp.getChildren("dl_setting").iterator();
 			while (i.hasNext()) {
-				res = res + i.next().getAttribute("values").getValue() +  "\\|";
+				res = res + i.next().getAttribute("values").getValue() +  '|';
 			}
 		return res;
 		} catch (Exception e) {

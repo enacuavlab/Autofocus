@@ -7,15 +7,13 @@ import java.io.InputStreamReader;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+import common.TypeCalibration;
 /**
  * Implements version of the calibration algorithm using a system call
  * 
  * @author Alino�
  * 
  */
-
-import common.TypeCalibration;
-import tests.GUIHelper;
 
 /**
  * Uses the system call in order to get the results of the calibration
@@ -153,24 +151,6 @@ public class CalibrateSystem extends Thread {
 		});
 	}
 
-	/**
-	 * Test Function
-	 * 
-	 * @param args
-	 * @throws InterruptedException
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws InterruptedException,
-			IOException {
-		try {
-			JTextArea t = new JTextArea();
-			JTextArea tx = new JTextArea();
-			new CalibrateSystem(TypeCalibration.MAGNETOMETER,
-					"/home/gui/paparazzi", "/home/gui/test.data", t, tx).run();
-			GUIHelper.showOnFrame(t, "test");
-		} finally {
-			System.out.println("done");
-		}
-	}
+
 
 }

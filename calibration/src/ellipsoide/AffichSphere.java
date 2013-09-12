@@ -3,11 +3,8 @@
  */
 package ellipsoide;
 
-import ihm.ScreenHelper;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
@@ -23,7 +20,6 @@ import javax.swing.JPanel;
  */
 public class AffichSphere extends JPanel {
 
-	private ScreenHelper screen;
 
 	/**
 	 * New stroke used to emphasize the zone on the sphere currently
@@ -105,17 +101,6 @@ public class AffichSphere extends JPanel {
 		}
 	}
 
-	/**
-	 * The method used to creates the class.
-	 * Only defines the canvas and defines the zones
-	 * 
-	 * @param s the sphere to draw
-	 */
-	public AffichSphere(Sphere s) {
-		screen = new ScreenHelper();
-		this.s = s;
-		majZone();
-	}
 
 	/**
 	 * Number used to serialize, not yet used.

@@ -86,7 +86,6 @@ public class Sphere {
 		createZone();
 		ListIterator<Zone> j = lzone.listIterator();
 		zoneCourante = j.next();
-		affichage = new AffichSphere(this);
 	}
 
 	/**

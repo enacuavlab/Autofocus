@@ -15,8 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import calibrate.CalibrateSystem;
-
 /**
  * Show the result of the calibration in a JDialog
  * 
@@ -40,11 +38,11 @@ public class Result extends JDialog {
 	/**
 	 * IMU
 	 */
-	private IMU imu;
+	//private IMU imu;
 	/**
 	 * To know where the JDialog must be shown
 	 */
-	private Shell parent;
+	//private Shell2 parent;
 
 	private ScreenHelper screen;
 
@@ -58,10 +56,10 @@ public class Result extends JDialog {
 	 * @param imu
 	 *            the imu
 	 */
-	public Result(Shell parent, String title, boolean modal, IMU imu) {
-		super(parent, title, modal);
-		this.parent = parent;
-		this.imu = imu;
+	public Result(Shell2 parent, String title, boolean modal, IMU imu) {
+		//super(parent, title, modal);
+		//this.parent = parent;
+		//this.imu = imu;
 		screen = new ScreenHelper();
 		// The size of the JDialog
 		this.setSize(screen.convertX(550), screen.convertY(420));
@@ -82,8 +80,8 @@ public class Result extends JDialog {
 		// The log file
 		System.out.println(System.getenv("PAPARAZZI_HOME")
 				+ "/var/logs/calibration.data");
-		imu.getLog().print(
-				System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data");
+		//imu.getLog().print(
+		//		System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data");
 		// Text where the result appears
 		textResultCopy = new JTextArea();
 		textResultCopy.setEditable(false);
@@ -132,13 +130,13 @@ public class Result extends JDialog {
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				parent.backHome();
+				//parent.backHome();
 			}
 		});
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				imu.ListenIMU(imu.getData(), imu.getCalibration(), imu.getLog());
+				//imu.ListenIMU(imu.getData(), imu.getCalibration(), imu.getLog());
 			}
 		});
 
@@ -159,10 +157,10 @@ public class Result extends JDialog {
 	 * Update the result
 	 */
 	public void majResult() {
-		new CalibrateSystem(imu.getCalibration(),
-				System.getenv("PAPARAZZI_HOME"),
-				System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data",
-				this.textResultCopy, this.textResult).start(); // use paparazzi
+		//new CalibrateSystem(imu.getCalibration(),
+		//		System.getenv("PAPARAZZI_HOME"),
+		//		System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data",
+		//		this.textResultCopy, this.textResult).start(); // use paparazzi
 																// home normally
 	}
 
