@@ -226,14 +226,14 @@ public class Shell2 {
 		welcome.add(lblNewLabel, "cell 1 2,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		final JComboBox<Aircraft> comboBox = new JComboBox<Aircraft>();
+		final JComboBox comboBox = new JComboBox();
 		welcome.add(comboBox, "cell 1 3,grow");
 
 		JLabel lblChooseModeSending = new JLabel("Choose mode sending RAW data");
 		lblChooseModeSending.setHorizontalAlignment(SwingConstants.CENTER);
 		welcome.add(lblChooseModeSending, "cell 1 5,grow");
 
-		final JComboBox<String> comboBox_1 = new JComboBox<String>();
+		final JComboBox comboBox_1 = new JComboBox();
 		welcome.add(comboBox_1, "cell 1 6,grow");
 
 		// Listeners for all panels
@@ -293,7 +293,7 @@ public class Shell2 {
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				comboBox_1.setModel(new DefaultComboBoxModel<String>(
+				comboBox_1.setModel(new DefaultComboBoxModel(
 						((Aircraft) comboBox.getSelectedItem()).getModes()
 								.toArray(new String[1])));
 			}
@@ -320,7 +320,7 @@ public class Shell2 {
 				System.out.println("selected");
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
 					try {
-						comboBox_1.setModel(new DefaultComboBoxModel<String>(
+						comboBox_1.setModel(new DefaultComboBoxModel(
 								((Aircraft) arg0.getItem()).getModes().toArray(
 										new String[1])));
 					} catch (Exception e) {
