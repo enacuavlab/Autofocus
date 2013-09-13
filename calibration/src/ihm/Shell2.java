@@ -2,6 +2,7 @@ package ihm;
 
 import imu.Aircraft;
 import imu.IMU;
+import imu.IMUtest;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -33,6 +34,8 @@ import javax.swing.border.LineBorder;
 import net.miginfocom.swing.MigLayout;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import ellipsoide.AffichSphere;
 
 public class Shell2 {
 
@@ -97,6 +100,11 @@ public class Shell2 {
 		menuSide.add(txtpnChooseAMode, "cell 0 0,grow");
 
 		JButton btnNewButton_1 = new JButton("Accelerometers");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		menuSide.add(btnNewButton_1, "cell 0 1,grow");
 
 		JButton btnNewButton = new JButton("Magnetometers");
@@ -113,40 +121,83 @@ public class Shell2 {
 		txtpnUavsPresent.setEditable(false);
 		txtpnUavsPresent.setBackground(UIManager.getColor("Button.background"));
 		txtpnUavsPresent.setText("UAV's presence");
+
+		final JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.RED);
+
+		JTextPane txtpnCorrectTelemetryMode = new JTextPane();
+		txtpnCorrectTelemetryMode.setText("Correct telemetry mode");
 		GroupLayout gl_presentIcon = new GroupLayout(presentIcon);
 		gl_presentIcon.setHorizontalGroup(gl_presentIcon.createParallelGroup(
 				Alignment.LEADING).addGroup(
 				gl_presentIcon
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 18,
+						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 24,
 								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(txtpnUavsPresent,
 								GroupLayout.PREFERRED_SIZE,
 								GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(541, Short.MAX_VALUE)));
-		gl_presentIcon.setVerticalGroup(gl_presentIcon.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_presentIcon
-						.createSequentialGroup()
-						.addGap(14)
+						.addGap(18)
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 25,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(txtpnCorrectTelemetryMode,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(470, Short.MAX_VALUE)));
+		gl_presentIcon
+				.setVerticalGroup(gl_presentIcon
+						.createParallelGroup(Alignment.LEADING)
 						.addGroup(
 								gl_presentIcon
-										.createParallelGroup(Alignment.LEADING,
-												false)
-										.addComponent(panel_2,
-												Alignment.TRAILING,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addComponent(txtpnUavsPresent,
-												Alignment.TRAILING,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-						.addGap(14)));
+										.createSequentialGroup()
+										.addGap(14)
+										.addGroup(
+												gl_presentIcon
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_presentIcon
+																		.createSequentialGroup()
+																		.addComponent(
+																				txtpnCorrectTelemetryMode,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addContainerGap())
+														.addGroup(
+																gl_presentIcon
+																		.createSequentialGroup()
+																		.addGroup(
+																				gl_presentIcon
+																						.createParallelGroup(
+																								Alignment.TRAILING)
+																						.addComponent(
+																								panel_1,
+																								Alignment.LEADING,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addGroup(
+																								Alignment.LEADING,
+																								gl_presentIcon
+																										.createParallelGroup(
+																												Alignment.TRAILING,
+																												false)
+																										.addComponent(
+																												panel_2,
+																												Alignment.LEADING,
+																												GroupLayout.DEFAULT_SIZE,
+																												GroupLayout.DEFAULT_SIZE,
+																												Short.MAX_VALUE)
+																										.addComponent(
+																												txtpnUavsPresent,
+																												Alignment.LEADING)))
+																		.addGap(14)))));
 		presentIcon.setLayout(gl_presentIcon);
 
 		JPanel panel = new JPanel();
@@ -215,10 +266,30 @@ public class Shell2 {
 					System.out.println("comboBox AC vide");
 				}
 			}
+
+			public void aircraftRawOn(Aircraft ac) {
+				try {
+					if (comboBox.getSelectedItem().equals(ac)) {
+						panel_1.setBackground(new Color(0, 255, 0));
+					}
+				} catch (Exception e) {
+					System.out.println("comboBox AC vide");
+				}
+			}
+			
+			public void aircraftRawOff(Aircraft ac) {
+				try {
+					if (comboBox.getSelectedItem().equals(ac)) {
+						panel_1.setBackground(new Color(255, 0, 0));
+					}
+				} catch (Exception e) {
+					System.out.println("comboBox AC vide");
+				}
+			}
 		});
 
 		// Listeners for welcome
-		
+
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -232,9 +303,11 @@ public class Shell2 {
 			public void aircraftConnected(Aircraft ac) {
 				comboBox.insertItemAt(ac, ac.getId());
 			}
+
 			public void aircraftModChanged(Aircraft ac) {
 				try {
 					comboBox_1.setSelectedIndex(ac.getMode());
+					IMUtest.main(new String[1]);
 				} catch (Exception e) {
 					System.out.println("comboBox mode vide");
 					ac.setMode(0);
@@ -261,7 +334,7 @@ public class Shell2 {
 		// start the discovering of all connected aircraft
 		imu.listenAllAc();
 
-		JPanel magneto = new JPanel();
+		JPanel magneto = new AffichSphere();
 		panel.add(magneto, "name_282348376234515");
 
 		JPanel accelero = new JPanel();
@@ -280,5 +353,4 @@ public class Shell2 {
 	private void startImu() {
 		imu = new IMU();
 	}
-
 }

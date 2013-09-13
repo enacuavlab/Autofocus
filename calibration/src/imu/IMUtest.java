@@ -6,6 +6,9 @@ package imu;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +46,7 @@ public class IMUtest implements IvyMessageListener {
 	/**
 	 * the bus used by the drone
 	 */
-	private Ivy bus;
+	private static Ivy bus;
 	/**
 	 * the idDrone currently used for the calibration
 	 */
@@ -247,7 +250,7 @@ public class IMUtest implements IvyMessageListener {
 	 */
 	public void IvyRawListener(final int indexTelemetry,
 			final JButton btnMagneto, final JButton btnAccelero, int id,
-			final JComboBox comboMod) throws IvyException {
+			final JComboBox<String> comboMod) throws IvyException {
 		System.out.println("Ivyraw");
 		/**if (timerbtn == null) {
 			timerbtn = new Timer(2000, new ActionListener() {
@@ -561,5 +564,43 @@ public class IMUtest implements IvyMessageListener {
 	public PrintLog getLog() {
 		return log;
 
+	}
+	
+	public static void main(String args[]) {
+		String filePath = "/home/alinoe/workspace/autofocus/calibration/Logs/13_04_03__13_49_35.data";
+		
+		bus = new Ivy("IMU", "IMU Ready", null);
+		try {
+			bus.start(null);
+		} catch (IvyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		try{
+			// Création du flux bufférisé sur un FileReader, immédiatement suivi par un 
+			// try/finally, ce qui permet de ne fermer le flux QUE s'il le reader
+			// est correctement instancié (évite les NullPointerException)
+			BufferedReader buff = new BufferedReader(new FileReader(filePath));
+		 
+			try {
+				String line;
+				// Lecture du fichier ligne par ligne. Cette boucle se termine
+				// quand la méthode retourne la valeur null.
+				while ((line = buff.readLine()) != null) {
+					bus.sendMsg(line.substring(7));
+					//faites ici votre traitement
+				}
+			} catch (IvyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				// dans tous les cas, on ferme nos flux
+					buff.close();
+			}
+		} catch (IOException ioe) {
+			// erreur de fermeture des flux
+			System.out.println("Erreur --" + ioe.toString());
+		}
 	}
 }

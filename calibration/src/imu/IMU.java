@@ -66,7 +66,19 @@ public class IMU {
 			imuL.aircraftConnected(ac);
 		}
 	}
+	
+	protected void fireAircraftRawOn(Aircraft ac) {
+		for (IMUListener imuL : this.getIMUListeners()) {
+			imuL.aircraftRawOn(ac);
+		}
+	}
 
+	protected void fireAircraftRawOff(Aircraft ac) {
+		for (IMUListener imuL : this.getIMUListeners()) {
+			imuL.aircraftRawOff(ac);
+		}
+	}
+	
 	protected void fireAircraftModChanged(Aircraft ac) {
 		for (IMUListener imuL : this.getIMUListeners()) {
 			imuL.aircraftModChanged(ac);
@@ -129,9 +141,6 @@ public class IMU {
 											args[1].split(",")[ac
 																.getIndexTelemetry()])
 														.intValue()) ) {
-								System.out.println("set mode at "
-										+ args[1].split(",")[ac
-												.getIndexTelemetry()]);
 								ac.setMode(Double.valueOf(
 										args[1].split(",")[ac
 												.getIndexTelemetry()])
@@ -148,6 +157,32 @@ public class IMU {
 							// of
 							// the .XML of
 							// the drone are unused
+						}
+					});
+			//Creates timer to check raw
+			timerRaw.put(new Integer(acId), new Timer(2000,
+					new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							fireAircraftRawOff(ac);
+							ac.setRaw(false);
+							System.out.println(ac + " has stopped emit raw data");
+						}
+					}));
+			//Creates associated listener
+			bus.bindMsg("^" + acId + " IMU_[A-Z]+_RAW(.*)",
+					new IvyMessageListener() {
+						public void receive(IvyClient arg0, String[] args) {
+							try {
+								Thread.sleep(20);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							if (!ac.getIsRawData()) {
+								ac.setRaw(true);
+								fireAircraftRawOn(ac);
+							}
+							timerRaw.get(acId).restart();
 						}
 					});
 		} catch (InterruptedException e) {
@@ -260,16 +295,17 @@ public class IMU {
 		}
 		acL = new HashSet<Aircraft>();
 		timerPresence = new Hashtable<Integer, Timer>();
+		timerRaw = new Hashtable<Integer, Timer>();
 	}
 
 	/** Test method */
 	public static void main(String args[]) {
 		new IMU();
-		String test = new String("^ground" + " DL_VALUES ([0-9]+) (.*)");
+		String test = new String("(.*)");// + " IMU_[A-Z]+_RAW(.*)");
 		try {
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-					System.out.println(args[0] + " " + args[1]);
+					System.out.println(args[0]);
 				}
 			});
 		} catch (IvyException e) {
