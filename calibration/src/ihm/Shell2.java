@@ -99,23 +99,25 @@ public class Shell2 {
 		txtpnChooseAMode.setText("Choose a mode of calibration");
 		menuSide.add(txtpnChooseAMode, "cell 0 0,grow");
 
-		JButton btnNewButton_1 = new JButton("Accelerometers");
+		final JButton btnNewButton_1 = new JButton("Accelerometers");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
+		btnNewButton_1.setEnabled(false);
 		menuSide.add(btnNewButton_1, "cell 0 1,grow");
 
-		JButton btnNewButton = new JButton("Magnetometers");
+		final JButton btnNewButton = new JButton("Magnetometers");
 		menuSide.add(btnNewButton, "cell 0 2,grow");
+		btnNewButton.setEnabled(false);
 
 		JPanel presentIcon = new JPanel();
 		frmCalibrate.getContentPane().add(presentIcon, BorderLayout.NORTH);
 		presentIcon.setBorder(new LineBorder(Color.GRAY));
 
 		final JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(0, 255, 0));
+		panel_2.setBackground(new Color(255, 0, 0));
 
 		JTextPane txtpnUavsPresent = new JTextPane();
 		txtpnUavsPresent.setEditable(false);
@@ -271,6 +273,7 @@ public class Shell2 {
 				try {
 					if (comboBox.getSelectedItem().equals(ac)) {
 						panel_1.setBackground(new Color(0, 255, 0));
+						
 					}
 				} catch (Exception e) {
 					System.out.println("comboBox AC vide");
@@ -290,27 +293,51 @@ public class Shell2 {
 
 		// Listeners for welcome
 
-		comboBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				comboBox_1.setModel(new DefaultComboBoxModel(
-						((Aircraft) comboBox.getSelectedItem()).getModes()
-								.toArray(new String[1])));
-			}
-		});
-
 		imu.addIMUListener(new IMUAdaptater() {
 			public void aircraftConnected(Aircraft ac) {
-				comboBox.insertItemAt(ac, ac.getId());
+				comboBox.addItem(ac);
 			}
+			
+			public void aircraftRawOn(Aircraft ac) {
+				try {
+					if (comboBox.getSelectedItem().equals(ac)) {
+						btnNewButton.setEnabled(true);
+						btnNewButton_1.setEnabled(true);
+						
+					}
+				} catch (Exception e) {
+					System.out.println("comboBox AC vide");
+				}
+			}
+			
+			public void aircraftRawOff(Aircraft ac) {
+				try {
+					if (comboBox.getSelectedItem().equals(ac)) {
+						btnNewButton.setEnabled(false);
+						btnNewButton_1.setEnabled(false);
+						
+					}
+				} catch (Exception e) {
+					System.out.println("comboBox AC vide");
+				}
+			}
+			
+			public void aircraftExited(Aircraft ac) {
+				if (ac.equals(comboBox.getSelectedItem())) {
+					comboBox_1.setModel(new DefaultComboBoxModel<String>());
+					panel_2.setBackground(Color.RED);
+				}
+				comboBox.removeItem(ac);
+			}	
 
 			public void aircraftModChanged(Aircraft ac) {
 				try {
-					comboBox_1.setSelectedIndex(ac.getMode());
-					IMUtest.main(new String[1]);
+					if (comboBox.getSelectedItem().equals(ac)) {
+						comboBox_1.setSelectedIndex(ac.getMode());
+						IMUtest.main(new String[1]);
+					}
 				} catch (Exception e) {
 					System.out.println("comboBox mode vide");
-					ac.setMode(0);
 				}
 			}
 		});
@@ -320,12 +347,26 @@ public class Shell2 {
 				System.out.println("selected");
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
 					try {
+						panel_2.setBackground(Color.GREEN);
 						comboBox_1.setModel(new DefaultComboBoxModel(
 								((Aircraft) arg0.getItem()).getModes().toArray(
 										new String[1])));
 					} catch (Exception e) {
 						System.out.println("Failure downcasting to aircraft");
 						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
+		comboBox_1.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				System.out.println("mode selected");
+				if (arg0.getStateChange() == ItemEvent.SELECTED) {
+					try {
+						imu.changeAcMode(comboBox_1.getSelectedIndex(), (Aircraft) comboBox.getSelectedItem());
+					} catch (Exception e) {
+						System.out.println("Incorrect mode or mode comboBox empty");
 					}
 				}
 			}

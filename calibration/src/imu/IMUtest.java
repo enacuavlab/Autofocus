@@ -567,7 +567,7 @@ public class IMUtest implements IvyMessageListener {
 	}
 	
 	public static void main(String args[]) {
-		String filePath = "~/workspace/autofocus/calibration/Logs/13_04_03__13_49_35.data";
+		String filePath = "/home/alinoe/workspace/autofocus/calibration/Logs/13_04_03__13_49_35.data";
 		
 		bus = new Ivy("IMU", "IMU Ready", null);
 		try {

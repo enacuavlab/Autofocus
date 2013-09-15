@@ -24,6 +24,8 @@ public class Aircraft {
 	private List<String> modes;
 	/**index telemetry for dlvalues messages*/
 	private int indexTelemetry;
+	/**indicates if connected or not*/
+	private boolean connected;
 	
 	/**create the aircraft, no default constructor
 	 * 
@@ -40,6 +42,15 @@ public class Aircraft {
 		this.modes = new ArrayList<String>(modes);
 		System.out.println(modes);
 		this.indexTelemetry = indexTelemetry;
+		this.connected = false;
+	}
+	
+	public boolean isConnected() {
+		return connected;
+	}
+	
+	public void connected(boolean b) {
+		this.connected = b;
 	}
 	
 	public boolean equals(Aircraft ac) {

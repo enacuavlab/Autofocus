@@ -61,7 +61,8 @@ public class IMU {
 		return listeners.getListeners(IMUListener.class);
 	}
 
-	protected void fireAircraftConnected(Aircraft ac) {
+	protected void fireAircraftConnected(final Aircraft ac) {
+		timerPresence.get(ac.getId()).start();
 		for (IMUListener imuL : this.getIMUListeners()) {
 			imuL.aircraftConnected(ac);
 		}
@@ -86,13 +87,14 @@ public class IMU {
 	}
 
 	protected void fireAircraftExited(Aircraft ac) {
+		timerPresence.get(ac.getId()).stop();
 		for (IMUListener imuL : this.getIMUListeners()) {
 			imuL.aircraftExited(ac);
 		}
 	}
 
 	private Aircraft buildAc(final int acId, int reqid) {
-		final Aircraft ac = new Aircraft("", 0, "", 0, new ArrayList<String>(),
+		final Aircraft ac = new Aircraft("", acId, "", 0, new ArrayList<String>(),
 				0);
 		try {
 			bus.bindMsgOnce(("^" + reqid + " " + "[A-Za-z0-9]+ CONFIG (.*)"),
@@ -127,8 +129,11 @@ public class IMU {
 			timerPresence.put(new Integer(acId), new Timer(2000,
 					new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							fireAircraftExited(ac);
-							System.out.println(ac + " has exited");
+							if (ac.isConnected()) {
+								fireAircraftExited(ac);
+								ac.connected(false);
+								System.out.println(ac + " has exited");
+							}
 						}
 					}));
 			// add a listener to the telemetry mode of the aircraft
@@ -199,6 +204,10 @@ public class IMU {
 			String test = new String("^" + acId);
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
+					if (!ac.isConnected()) {
+						fireAircraftConnected(ac);
+						ac.connected(true);
+					}
 					timerPresence.get(acId).restart();
 				}
 			});
@@ -207,8 +216,13 @@ public class IMU {
 			e.printStackTrace();
 		}
 		System.out.println("new aircraft built");
-		this.fireAircraftConnected(ac);
 		return ac;
+	}
+	
+	public void deleteAc(Aircraft ac) {
+		bus.unBindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)");
+		bus.unBindMsg("^" + ac.getId() + " IMU_[A-Z]+_RAW(.*)");
+		bus.unBindMsg("^" + ac.getId());
 	}
 
 	/** Method used to keep update the list of all connected aicraft */
@@ -279,12 +293,36 @@ public class IMU {
 		bus.unBindMsg("^ground NEW_AIRCRAFT ([0-9]*)");
 		bus.unBindMsg("^ground AIRCRAFT_DIE ([0-9]*)");
 		bus.unBindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)");
+		for (Aircraft ac : acL) {
+			deleteAc(ac);
+		}
+	}
+	
+	public void stopListenAllId(Aircraft acToSave) {
+		bus.unBindMsg("^ground NEW_AIRCRAFT ([0-9]*)");
+		bus.unBindMsg("^ground AIRCRAFT_DIE ([0-9]*)");
+		bus.unBindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)");
+		for (Aircraft ac : acL) {
+			if (!ac.equals(acToSave)) {
+				deleteAc(ac);
+			}
+		}
 	}
 
 	public Aircraft[] getAcs() {
 		return acL.toArray(new Aircraft[1]);
 	}
 
+	public void changeAcMode(int mode, Aircraft ac) {
+		ac.setMode(mode);
+		try {
+			bus.sendMsg("calibrate DL_SETTING " + ac.getId() + " 0 " + mode);
+		} catch (IvyException e) {
+			System.out.println("failed sending new mode");
+			e.printStackTrace();
+		}
+	}
+	
 	public IMU() {
 		bus = new Ivy("IMU", "IMU Ready", null);
 		try {
@@ -301,7 +339,7 @@ public class IMU {
 	/** Test method */
 	public static void main(String args[]) {
 		new IMU();
-		String test = new String("(.*)");// + " IMU_[A-Z]+_RAW(.*)");
+		String test = new String("^ground NEW_AIRCRAFT ([0-9]*)");// + " IMU_[A-Z]+_RAW(.*)");
 		try {
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
