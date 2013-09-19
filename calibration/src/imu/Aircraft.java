@@ -109,7 +109,7 @@ public class Aircraft {
 	/** get is raw data
 	 * 
 	 */
-	boolean getIsRawData() {
+	public boolean getIsRawData() {
 		return isRaw;
 	}
 	

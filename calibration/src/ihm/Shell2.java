@@ -100,11 +100,7 @@ public class Shell2 {
 		menuSide.add(txtpnChooseAMode, "cell 0 0,grow");
 
 		final JButton btnNewButton_1 = new JButton("Accelerometers");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
+
 		btnNewButton_1.setEnabled(false);
 		menuSide.add(btnNewButton_1, "cell 0 1,grow");
 
@@ -202,11 +198,13 @@ public class Shell2 {
 																		.addGap(14)))));
 		presentIcon.setLayout(gl_presentIcon);
 
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		frmCalibrate.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setBorder(new LineBorder(Color.GRAY));
 		panel.setLayout(new CardLayout(0, 0));
 
+
+		
 		JPanel welcome = new JPanel();
 		panel.add(welcome, "name_281529050503524");
 		welcome.setLayout(new MigLayout("",
@@ -240,19 +238,13 @@ public class Shell2 {
 
 		// Listeners for all panels
 
-		// Creates a timer to check presence
-		timerPresence = new Timer(3000, new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panel_2.setBackground(new Color(0, 255, 0));
-			}
-		});
-
 		imu.addIMUListener(new IMUAdaptater() {
 			public void aircraftExited(Aircraft ac) {
 				try {
 					if (comboBox.getSelectedItem().equals(ac)) {
 						panel_2.setBackground(new Color(255, 0, 0));
-						timerPresence.restart();
+						btnNewButton.setEnabled(false);
+						btnNewButton_1.setEnabled(false);
 					}
 				} catch (Exception e) {
 					System.out.println("comboBox AC vide");
@@ -263,6 +255,11 @@ public class Shell2 {
 				try {
 					if (comboBox.getSelectedItem().equals(ac)) {
 						panel_2.setBackground(new Color(0, 255, 0));
+						if (ac.getIsRawData()) {
+							panel_1.setBackground(Color.GREEN);
+							btnNewButton.setEnabled(true);
+							btnNewButton_1.setEnabled(true);
+						}
 					}
 				} catch (Exception e) {
 					System.out.println("comboBox AC vide");
@@ -296,6 +293,17 @@ public class Shell2 {
 		imu.addIMUListener(new IMUAdaptater() {
 			public void aircraftConnected(Aircraft ac) {
 				comboBox.addItem(ac);
+				if (ac.equals(comboBox.getSelectedItem())) {
+					try {
+						panel_2.setBackground(Color.GREEN);
+						comboBox_1.setModel(new DefaultComboBoxModel(
+								(ac.getModes().toArray(
+										new String[1]))));
+					} catch (Exception e) {
+						System.out.println("Failure in getting modes");
+						e.printStackTrace();
+					}
+				}
 			}
 			
 			public void aircraftRawOn(Aircraft ac) {
@@ -325,7 +333,6 @@ public class Shell2 {
 			public void aircraftExited(Aircraft ac) {
 				if (ac.equals(comboBox.getSelectedItem())) {
 					comboBox_1.setModel(new DefaultComboBoxModel<String>());
-					panel_2.setBackground(Color.RED);
 				}
 				comboBox.removeItem(ac);
 			}	
@@ -351,6 +358,15 @@ public class Shell2 {
 						comboBox_1.setModel(new DefaultComboBoxModel(
 								((Aircraft) arg0.getItem()).getModes().toArray(
 										new String[1])));
+						if (((Aircraft) arg0.getItem()).getIsRawData()) {
+							panel_1.setBackground(Color.GREEN);
+							btnNewButton.setEnabled(true);
+							btnNewButton_1.setEnabled(true);
+						}  else {
+							panel_1.setBackground(Color.RED);
+							btnNewButton.setEnabled(false);
+							btnNewButton_1.setEnabled(false);
+						}
 					} catch (Exception e) {
 						System.out.println("Failure downcasting to aircraft");
 						e.printStackTrace();
@@ -375,8 +391,9 @@ public class Shell2 {
 		// start the discovering of all connected aircraft
 		imu.listenAllAc();
 
-		JPanel magneto = new AffichSphere();
-		panel.add(magneto, "name_282348376234515");
+		final JPanel magneto= new JPanel();
+		panel.add(magneto, "mag");
+		magneto.setBackground(Color.RED);
 
 		JPanel accelero = new JPanel();
 		panel.add(accelero, "name_5925458635449");
@@ -386,6 +403,13 @@ public class Shell2 {
 						presentIcon, panel_2, txtpnUavsPresent, panel, welcome,
 						separator, txtpnFillTheField, lblNewLabel, comboBox,
 						lblChooseModeSending, comboBox_1, magneto, accelero }));
+		
+		//Listeners on button to switch to calibration
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				((CardLayout) panel.getLayout()).show(panel,"mag");
+			}
+		});
 	}
 
 	/**

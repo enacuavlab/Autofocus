@@ -219,7 +219,7 @@ public class IMU {
 		return ac;
 	}
 	
-	public void deleteAc(Aircraft ac) {
+	public static void deleteAc(Aircraft ac) {
 		bus.unBindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)");
 		bus.unBindMsg("^" + ac.getId() + " IMU_[A-Z]+_RAW(.*)");
 		bus.unBindMsg("^" + ac.getId());
@@ -244,6 +244,8 @@ public class IMU {
 					for (Aircraft ac : acL) {
 						if (ac.getId() == Integer.valueOf(args[0]).intValue()) {
 							res = i;
+							fireAircraftExited(ac);
+							IMU.deleteAc(ac);
 						}
 						i++;
 					}
