@@ -55,6 +55,7 @@ public class Shell2 {
 	
 	private TypeCalibration type;
 
+	private PrintLog log = new PrintLog();
 	/**
 	 * Launch the application.
 	 */
@@ -113,11 +114,11 @@ public class Shell2 {
 		menuSide.add(btnNewButton, "cell 0 2,grow");
 		btnNewButton.setEnabled(false);
 		
-		JButton btnResults = new JButton("Results");
+		final JButton btnResults = new JButton("Results");
 		btnResults.setVisible(false);
 		btnResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				new Result("Results",true,log);
 			}
 		});
 		menuSide.add(btnResults, "cell 0 10 1 2,grow");
@@ -426,9 +427,9 @@ public class Shell2 {
 				type = TypeCalibration.MAGNETOMETER;
 				FilterSphere filtre = new FilterSphere(s,40,type);
 				Data data = new Data(filtre,type);
-				PrintLog log = new PrintLog();
 				imu.ListenRaw(data, type, log, ((Aircraft) comboBox.getSelectedItem()).getId());
 				((CardLayout) panel.getLayout()).show(panel,"mag");
+				btnResults.setVisible(true);
 			}
 		});
 	}

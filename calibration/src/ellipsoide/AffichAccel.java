@@ -4,7 +4,6 @@
 package ellipsoide;
 
 import filtre.VecteurFiltrable;
-import ihm.ScreenHelper;
 
 import java.awt.Dimension;
 
@@ -29,7 +28,6 @@ public class AffichAccel extends JPanel{
 	 */
 	private static final long serialVersionUID = -1632196092075420985L;
 
-	private ScreenHelper screen = new ScreenHelper();
 	private Sphere sp;
 	/**
 	 * ProgressBar which represents the amount of correct vectors collected on
@@ -56,26 +54,20 @@ public class AffichAccel extends JPanel{
 	 */
 	
 	public AffichAccel(Sphere s){
-		this.setPreferredSize(new Dimension(screen.convertX(1000),screen.convertY(600)));
 		this.setLayout(null);
 		sp=s;
 		progressBar=new JProgressBar(0,100);
-		progressBar.setBounds(screen.convertX(240),screen.convertY(400), screen.convertX(300), screen.convertY(25));
 		this.add(progressBar);
-		sp.getAffichage().setBounds(0, 0, screen.convertX(800), screen.convertY(400));
 		this.add(sp.getAffichage());
 		panelInst = new JPanel();
 		panelInst.setLayout(null);
-		panelInst.setBounds(screen.convertX(850), screen.convertY(50), screen.convertX(320), screen.convertY(420));
 		this.add(panelInst);
 		inst = new JTextArea();
 		inst.setEditable(false);
-		inst.setBounds(screen.convertX(20), screen.convertY(20), screen.convertX(280), screen.convertY(280));
 		inst.setLineWrap(true);
 		inst.setText("Maintain your drone in a stable position");	
 		panelInst.add(inst);
 		labelPhoto = new JLabel();
-		labelPhoto.setBounds(screen.convertX(20), screen.convertY(20), screen.convertX(280), screen.convertY(100));
 		panelInst.add(labelPhoto);
 	}
 
