@@ -132,9 +132,7 @@ public class Filter {
 		}
 		else nbWrongVect++;
 
-		rayon = (maxX - minX > maxY - minY ? (maxX - minX > maxZ - minZ ? maxX
-				- minX : maxZ - minZ) : (maxY - minY > maxZ - minZ ? maxY
-				- minY : maxZ - minZ));
+		rayon = (max(maxX,maxY,maxZ) + max(abs(minX),abs(minY),abs(minZ)))/2;
 		center = new Vecteur((maxX + minX) / 2, (maxY + minY) / 2,
 				(maxZ + minZ) / 2);
 		if (TypeCalibration.ACCELEROMETER.equals(this.type)) {
@@ -143,6 +141,15 @@ public class Filter {
 			noiseThreshold=(float)rayon/100 * 5;
 		}
 	}
+	
+	private int abs(int m) {
+		return (m < 0 ? -m : m);
+	}
 
-
+	private int max(int x, int y, int z) {
+		if (x>y && x>z) {return x;}
+		if (y>x && y>z) {return y;}
+		if (z>x && z>y) {return z;}
+		else return x;
+	}
 }

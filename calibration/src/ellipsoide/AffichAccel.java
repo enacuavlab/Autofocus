@@ -52,7 +52,7 @@ public class AffichAccel extends JPanel{
 
 	/**
 	 * Create the sphere and the layout of the accelerometer's view
-	 * @param s the sphere to display
+	 * s the sphere to display
 	 */
 	
 	public AffichAccel(Sphere s){

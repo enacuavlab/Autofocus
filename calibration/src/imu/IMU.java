@@ -12,6 +12,11 @@ import javax.swing.Timer;
 import javax.swing.event.EventListenerList;
 
 import rawmode.ExtractRawData;
+import calibrate.PrintLog;
+
+import common.TypeCalibration;
+
+import data.Data;
 import fr.dgac.ivy.Ivy;
 import fr.dgac.ivy.IvyClient;
 import fr.dgac.ivy.IvyException;
@@ -311,6 +316,45 @@ public class IMU {
 		}
 	}
 
+	/**
+	 * method called to listen the RAW DATA messages on the IVY bus
+	 * 
+	 * @param data
+	 * @param calibration
+	 */
+	public void ListenRaw(final Data data, final TypeCalibration calibration,
+			final PrintLog log, final int idDrone) {
+		System.out.println("listenRaw for " + idDrone);
+		try {
+
+			// build the regexp according to parameters
+			StringBuffer regexp = new StringBuffer("^");
+			regexp.append(idDrone);
+			regexp.append(TypeCalibration.MAGNETOMETER.equals(calibration) ? " IMU_MAG_RAW"
+					: " IMU_ACCEL_RAW");
+
+			regexp.append(" ([\\-]*[0-9]+)");
+			regexp.append(" ([\\-]*[0-9]+)");
+			regexp.append(" ([\\-]*[0-9]+)");
+			String test = regexp.toString();
+			bus.bindMsg(test, new IvyMessageListener() {
+				public void receive(IvyClient arg0, final String args[]) {
+					data.store(Integer.valueOf(args[0]),
+							Integer.valueOf(args[1]), Integer.valueOf(args[2]));
+					log.add(idDrone
+							+ (TypeCalibration.MAGNETOMETER.equals(calibration) ? " IMU_MAG_RAW"
+									: " IMU_ACCEL_RAW") + " " + args[0] + " "
+							+ args[1] + " " + args[2]);
+				}
+			});
+
+		} catch (Exception e) {
+			System.out.println("Erreur d'initialisation d'IMU");
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public Aircraft[] getAcs() {
 		return acL.toArray(new Aircraft[1]);
 	}
@@ -341,7 +385,7 @@ public class IMU {
 	/** Test method */
 	public static void main(String args[]) {
 		new IMU();
-		String test = new String("^ground NEW_AIRCRAFT ([0-9]*)");// + " IMU_[A-Z]+_RAW(.*)");
+		String test = new String("(.*)");// + " IMU_[A-Z]+_RAW(.*)");
 		try {
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {

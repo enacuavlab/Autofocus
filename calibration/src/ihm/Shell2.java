@@ -27,7 +27,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
@@ -35,7 +34,14 @@ import net.miginfocom.swing.MigLayout;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+import calibrate.PrintLog;
+
+import common.TypeCalibration;
+
+import data.Data;
 import ellipsoide.AffichSphere;
+import ellipsoide.Sphere;
+import filtre.FilterSphere;
 
 public class Shell2 {
 
@@ -46,8 +52,8 @@ public class Shell2 {
 	private IMU imu;
 
 	private JFrame frmCalibrate;
-
-	private Timer timerPresence;
+	
+	private TypeCalibration type;
 
 	/**
 	 * Launch the application.
@@ -87,8 +93,7 @@ public class Shell2 {
 		JPanel menuSide = new JPanel();
 		frmCalibrate.getContentPane().add(menuSide, BorderLayout.WEST);
 		menuSide.setBorder(new LineBorder(Color.GRAY));
-		menuSide.setLayout(new MigLayout("", "[183px,grow 230]",
-				"[41px][46px][46px][][][][][]"));
+		menuSide.setLayout(new MigLayout("", "[183px,grow 230]", "[41px][46px][46px][][][][][][][][][]"));
 
 		JTextPane txtpnChooseAMode = new JTextPane();
 		txtpnChooseAMode.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -107,6 +112,15 @@ public class Shell2 {
 		final JButton btnNewButton = new JButton("Magnetometers");
 		menuSide.add(btnNewButton, "cell 0 2,grow");
 		btnNewButton.setEnabled(false);
+		
+		JButton btnResults = new JButton("Results");
+		btnResults.setVisible(false);
+		btnResults.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		menuSide.add(btnResults, "cell 0 10 1 2,grow");
 
 		JPanel presentIcon = new JPanel();
 		frmCalibrate.getContentPane().add(presentIcon, BorderLayout.NORTH);
@@ -226,14 +240,14 @@ public class Shell2 {
 		welcome.add(lblNewLabel, "cell 1 2,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		final JComboBox comboBox = new JComboBox();
+		final JComboBox<Aircraft> comboBox = new JComboBox<Aircraft>();
 		welcome.add(comboBox, "cell 1 3,grow");
 
 		JLabel lblChooseModeSending = new JLabel("Choose mode sending RAW data");
 		lblChooseModeSending.setHorizontalAlignment(SwingConstants.CENTER);
 		welcome.add(lblChooseModeSending, "cell 1 5,grow");
 
-		final JComboBox comboBox_1 = new JComboBox();
+		final JComboBox<String> comboBox_1 = new JComboBox<String>();
 		welcome.add(comboBox_1, "cell 1 6,grow");
 
 		// Listeners for all panels
@@ -296,7 +310,7 @@ public class Shell2 {
 				if (ac.equals(comboBox.getSelectedItem())) {
 					try {
 						panel_2.setBackground(Color.GREEN);
-						comboBox_1.setModel(new DefaultComboBoxModel(
+						comboBox_1.setModel(new DefaultComboBoxModel<String>(
 								(ac.getModes().toArray(
 										new String[1]))));
 					} catch (Exception e) {
@@ -355,7 +369,7 @@ public class Shell2 {
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
 					try {
 						panel_2.setBackground(Color.GREEN);
-						comboBox_1.setModel(new DefaultComboBoxModel(
+						comboBox_1.setModel(new DefaultComboBoxModel<String>(
 								((Aircraft) arg0.getItem()).getModes().toArray(
 										new String[1])));
 						if (((Aircraft) arg0.getItem()).getIsRawData()) {
@@ -391,9 +405,11 @@ public class Shell2 {
 		// start the discovering of all connected aircraft
 		imu.listenAllAc();
 
-		final JPanel magneto= new JPanel();
+		final Sphere s = new Sphere(10, 10, 800);
+		final AffichSphere magneto = new AffichSphere(s);
 		panel.add(magneto, "mag");
-		magneto.setBackground(Color.RED);
+		System.out.println( "" + magneto.getWidth() + " " + magneto.getHeight());
+
 
 		JPanel accelero = new JPanel();
 		panel.add(accelero, "name_5925458635449");
@@ -407,6 +423,11 @@ public class Shell2 {
 		//Listeners on button to switch to calibration
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				type = TypeCalibration.MAGNETOMETER;
+				FilterSphere filtre = new FilterSphere(s,40,type);
+				Data data = new Data(filtre,type);
+				PrintLog log = new PrintLog();
+				imu.ListenRaw(data, type, log, ((Aircraft) comboBox.getSelectedItem()).getId());
 				((CardLayout) panel.getLayout()).show(panel,"mag");
 			}
 		});

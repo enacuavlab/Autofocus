@@ -30,10 +30,10 @@ public class Data {
 	private List<Vecteur> list = new LinkedList<Vecteur>();
 	/**
 	 * Constructor for data
-	 * @param calibration current typecalibration
 	 * @param filt current filtre
+	 * @param calibration current typecalibration
 	 */
-	public Data(TypeCalibration calibration, Filter filt) {
+	public Data(Filter filt, TypeCalibration calibration) {
 		this.calib = calibration;
 		this.filtre = filt;
 	}

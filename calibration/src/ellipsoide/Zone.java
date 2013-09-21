@@ -78,10 +78,12 @@ public class Zone {
 	 *            minimum longitude delimiting the zone
 	 * @param long_angle_end
 	 *            maximum longitude delimiting the zone
-	 * @param nbMaxPoints number of points on the surface of the sphere to get the right calibration
+	 * @param nbMaxPoints
+	 *            number of points on the surface of the sphere to get the right
+	 *            calibration
 	 */
 	public Zone(double lat_angle_low, double lat_angle_high,
-			double long_angle_begin, double long_angle_end,int nbPointsMax) {
+			double long_angle_begin, double long_angle_end, int nbPointsMax) {
 		this.latAngleLow = lat_angle_low;
 		this.latAngleHigh = lat_angle_high;
 		this.longAngleBegin = long_angle_begin;
@@ -176,8 +178,9 @@ public class Zone {
 			alpha = Math.acos(xc_x / den1)
 					* Math.signum(Math.asin(yc_y / den1));
 			return (alpha > longAngleBegin && alpha < longAngleEnd);
-		} else{
-			return false; }
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -221,39 +224,47 @@ public class Zone {
 	public void maj_list_contour(double rad) {
 		listContour.clear();
 		double radius = rad;
-		double x;
-		double racineDeux = Math.sqrt(2);
-		double y = radius * Math.sqrt(2) * Math.sin(latAngleLow);
+
 		double step_longitude = (longAngleEnd - longAngleBegin)
 				/ nbPointsByLine;
-		double step_latitude = (latAngleHigh - latAngleLow) / nbPointsByLine;
-		double temp;
+		double step_latitude = (latAngleHigh - latAngleLow) / 2
+				/ nbPointsByLine;
+
+		double lat;
+		double lon;
+
+		double cstx = 2 * Math.sqrt(2) / Math.PI / 3 * radius;
+		double csty = Math.sqrt(2) / 3 * radius;
+		// we divide by 3 in order to obtain a result ranging in -1;1 at all
+		// times before multiplying by the radius
+
+		// bottom of the zone
 		for (int i = 0; i < nbPointsByLine; i++) {
-			listContour.add(new Point2D.Double(
-					(radius * 2 * racineDeux / Math.PI)
-							* (longAngleBegin + step_longitude * i)
-							* Math.cos(latAngleLow), y));
+			lat = latAngleLow;
+			lon = longAngleBegin + step_longitude * i;
+			listContour.add(new Point2D.Double((cstx * lon * Math.cos(lat)),
+					(csty * Math.sin(lat))));
 		}
-		x = radius * (2 * Math.sqrt(2) / Math.PI) * (longAngleEnd);
+		// right side of the zone
 		for (int i = 0; i < nbPointsByLine; i++) {
-			temp = i * step_latitude;
-			listContour.add(new Point2D.Double(
-					x * Math.cos(latAngleLow + temp), radius * racineDeux
-							* Math.sin(latAngleLow + temp)));
+			lat = latAngleLow + i * step_latitude;
+			lon = longAngleEnd;
+			listContour.add(new Point2D.Double((cstx * lon * Math.cos(lat)),
+					(csty * Math.sin(lat))));
 		}
-		y = radius * Math.sqrt(2) * Math.sin(latAngleHigh);
+		// top of the zone
 		for (int i = 0; i < nbPointsByLine; i++) {
-			listContour.add(new Point2D.Double(
-					(radius * 2 * racineDeux / Math.PI)
-							* (longAngleEnd - step_longitude * i)
-							* Math.cos(latAngleHigh), y));
+			lat = latAngleHigh;
+			lon = longAngleEnd - step_longitude * i; //minus to get along the zone in the right order
+			listContour.add(new Point2D.Double((cstx * lon * Math.cos(lat)),
+					(csty * Math.sin(lat))));
 		}
-		x = radius * (2 * Math.sqrt(2) / Math.PI) * (longAngleBegin);
+		// left side of the zone
 		for (int i = 0; i < nbPointsByLine; i++) {
-			temp = i * step_latitude;
-			listContour.add(new Point2D.Double(x
-					* Math.cos(latAngleHigh - temp), radius * racineDeux
-					* Math.sin(latAngleHigh - temp)));
+			lat = latAngleHigh - i * step_latitude; //minus to get along the zone in the right order
+			lon = longAngleBegin;
+			listContour.add(new Point2D.Double((cstx * lon * Math.cos(lat)),
+					(csty * Math.sin(lat))));
 		}
 	}
 
@@ -268,10 +279,12 @@ public class Zone {
 	 */
 	public void calculateSurface(double radius, double surfaceS) {
 		surfaceSphere = surfaceS;
-		
-		surface = Math.pow(radius, 2) * (longAngleEnd - longAngleBegin)
-				* Math.abs(Math.cos(latAngleHigh +Math.PI/2.0) - Math.cos(latAngleLow+Math.PI/2.0));
-		//System.out.println(surface +" " + surfaceSphere);
+
+		surface = Math.pow(radius, 2)
+				* (longAngleEnd - longAngleBegin)
+				* Math.abs(Math.cos(latAngleHigh + Math.PI / 2.0)
+						- Math.cos(latAngleLow + Math.PI / 2.0));
+		// System.out.println(surface +" " + surfaceSphere);
 	}
 
 	/**
@@ -293,13 +306,13 @@ public class Zone {
 	 */
 	public static void main(String[] args) {
 		// test de l'angle theta du repère sphérique
-		Zone zone1 = new Zone(0, Math.PI / 2, 0, Math.PI / 2,800);
+		Zone zone1 = new Zone(0, Math.PI / 2, 0, Math.PI / 2, 800);
 		if (zone1.is_in_long(3, 2, 1, 1)) { // doit etre dans la zone
 			System.out.println("le point est bien dans la zone");
 		} else {
 			System.out.println("le point n'est bizarement pas dans la zone");
 		}
-		Zone zone2 = new Zone(-Math.PI / 2, 0, -Math.PI / 2, 0,800);
+		Zone zone2 = new Zone(-Math.PI / 2, 0, -Math.PI / 2, 0, 800);
 		if (zone1.is_in_long(3, -15, 1, 1)) { // ne doit pas etre dans la
 												// zone
 			System.out.println("le point est bien dans la zone");
@@ -311,7 +324,7 @@ public class Zone {
 		} else {
 			System.out.println("le point n'est bizarement pas dans la zone");
 		}
-		Zone zone3 = new Zone(0, Math.PI / 4, -Math.PI, -Math.PI / 2,800);
+		Zone zone3 = new Zone(0, Math.PI / 4, -Math.PI, -Math.PI / 2, 800);
 		if (zone1.is_in_long(-9, -15, 1, 1)) { // ne doit pas etre dans la
 												// zone
 			System.out.println("le point est bien dans la zone");
@@ -329,7 +342,7 @@ public class Zone {
 		} else {
 			System.out.println("le point n'est bizarement pas dans la zone");
 		}
-		Zone zone4 = new Zone(0, Math.PI / 4, Math.PI / 2, Math.PI,800);
+		Zone zone4 = new Zone(0, Math.PI / 4, Math.PI / 2, Math.PI, 800);
 		if (zone1.is_in_long(-9, 15, 1, 1)) { // ne doit pas etre dans la
 												// zone
 			System.out.println("le point est bien dans la zone");

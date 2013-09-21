@@ -234,7 +234,13 @@ public class Sphere {
 	protected int getRayon() {
 		return (int) radius;
 	}
-
+	
+	/** Display setter
+	 * 
+	 */
+	public void setDisplay(AffichSphere as) {
+		this.affichage = as;
+	}
 	/**
 	 * Test functions of the class
 	 * 
