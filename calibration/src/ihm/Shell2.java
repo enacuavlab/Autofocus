@@ -116,11 +116,7 @@ public class Shell2 {
 		
 		final JButton btnResults = new JButton("Results");
 		btnResults.setVisible(false);
-		btnResults.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				new Result("Results",true,log);
-			}
-		});
+
 		menuSide.add(btnResults, "cell 0 10 1 2,grow");
 
 		JPanel presentIcon = new JPanel();
@@ -410,7 +406,12 @@ public class Shell2 {
 		final AffichSphere magneto = new AffichSphere(s);
 		panel.add(magneto, "mag");
 		System.out.println( "" + magneto.getWidth() + " " + magneto.getHeight());
-
+		btnResults.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				imu.stopListenRaw(type, log, ((Aircraft) comboBox.getSelectedItem()).getId());
+				new Result("Results",true,log).majResult();
+			}
+		});
 
 		JPanel accelero = new JPanel();
 		panel.add(accelero, "name_5925458635449");
