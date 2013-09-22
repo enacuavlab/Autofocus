@@ -1,6 +1,5 @@
 package imu;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.EventListenerList;
 
@@ -76,12 +74,14 @@ public class IMU {
 	}
 	
 	protected void fireAircraftRawOn(Aircraft ac) {
+		timerRaw.get(ac.getId()).start();
 		for (IMUListener imuL : this.getIMUListeners()) {
 			imuL.aircraftRawOn(ac);
 		}
 	}
 
 	protected void fireAircraftRawOff(Aircraft ac) {
+		timerRaw.get(ac.getId()).stop();
 		for (IMUListener imuL : this.getIMUListeners()) {
 			imuL.aircraftRawOff(ac);
 		}
@@ -175,9 +175,11 @@ public class IMU {
 			timerRaw.put(new Integer(acId), new Timer(2000,
 					new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							fireAircraftRawOff(ac);
-							ac.setRaw(false);
-							System.out.println(ac + " has stopped emit raw data");
+							if (ac.getIsRawData()) {
+								fireAircraftRawOff(ac);
+								ac.setRaw(false);
+								System.out.println(ac + " has stopped emit raw data");
+							}
 						}
 					}));
 			//Creates associated listener
@@ -226,10 +228,13 @@ public class IMU {
 		return ac;
 	}
 	
-	public static void deleteAc(Aircraft ac) {
+	public void deleteAc(Aircraft ac) {
 		bus.unBindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)");
 		bus.unBindMsg("^" + ac.getId() + " IMU_[A-Z]+_RAW(.*)");
 		bus.unBindMsg("^" + ac.getId());
+		timerPresence.get(ac.getId()).stop();
+		timerRaw.get(ac.getId()).stop();
+		acL.remove(ac);
 	}
 
 	/** Method used to keep update the list of all connected aicraft */
@@ -252,7 +257,6 @@ public class IMU {
 						if (ac.getId() == Integer.valueOf(args[0]).intValue()) {
 							res = i;
 							fireAircraftExited(ac);
-							IMU.deleteAc(ac);
 						}
 						i++;
 					}

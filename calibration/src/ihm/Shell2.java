@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -18,6 +19,7 @@ import java.awt.event.ItemListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -94,7 +96,7 @@ public class Shell2 {
 		JPanel menuSide = new JPanel();
 		frmCalibrate.getContentPane().add(menuSide, BorderLayout.WEST);
 		menuSide.setBorder(new LineBorder(Color.GRAY));
-		menuSide.setLayout(new MigLayout("", "[183px,grow 230]", "[41px][46px][46px][][][][][][][][][]"));
+		menuSide.setLayout(new MigLayout("", "[183px,grow 230]", "[41px][46px][46px][41px][46px][46px][][][][][][]"));
 
 		JTextPane txtpnChooseAMode = new JTextPane();
 		txtpnChooseAMode.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -115,9 +117,14 @@ public class Shell2 {
 		btnNewButton.setEnabled(false);
 		
 		final JButton btnResults = new JButton("Results");
-		btnResults.setVisible(false);
-
-		menuSide.add(btnResults, "cell 0 10 1 2,grow");
+		btnResults.setVisible(true);
+		btnResults.setEnabled(false);
+		menuSide.add(btnResults, "cell 0 4,grow");
+		
+		final JButton btnHome = new JButton("Home");
+		btnHome.setVisible(true);
+		btnHome.setEnabled(false);
+		menuSide.add(btnHome, "cell 0 5,grow");
 
 		JPanel presentIcon = new JPanel();
 		frmCalibrate.getContentPane().add(presentIcon, BorderLayout.NORTH);
@@ -136,77 +143,69 @@ public class Shell2 {
 
 		JTextPane txtpnCorrectTelemetryMode = new JTextPane();
 		txtpnCorrectTelemetryMode.setText("Correct telemetry mode");
+		
+		final JPanel panel_3 = new JPanel() {
+			private static final long serialVersionUID = 1L;
+
+			public void paint(java.awt.Graphics g) {
+				if (TypeCalibration.MAGNETOMETER.equals(type)) {
+				    ImageIcon icon = new ImageIcon(this.getClass().getResource("sphereAccel.png"));
+				    super.paint(g);
+				    Graphics2D g2d = (Graphics2D) g;
+				    g2d.drawImage(icon.getImage(), super.getWidth(), super.getHeight(), null);
+				} else if (TypeCalibration.ACCELEROMETER.equals(type)) {
+				    ImageIcon icon = new ImageIcon(this.getClass().getResource("../../Image/sphereAccel.png"));
+				    super.paint(g);
+				    Graphics2D g2d = (Graphics2D) g;
+				    g2d.drawImage(icon.getImage(), super.getWidth(), super.getHeight(), null);
+				}
+			};
+		};
+		panel_3.setVisible(false);
+		
+		final JTextPane textPane = new JTextPane();
+		textPane.setText("Try to obtain this image");
+		textPane.setVisible(false);
+		
 		GroupLayout gl_presentIcon = new GroupLayout(presentIcon);
-		gl_presentIcon.setHorizontalGroup(gl_presentIcon.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_presentIcon
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 24,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(txtpnUavsPresent,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 25,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(txtpnCorrectTelemetryMode,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(470, Short.MAX_VALUE)));
-		gl_presentIcon
-				.setVerticalGroup(gl_presentIcon
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_presentIcon
-										.createSequentialGroup()
-										.addGap(14)
-										.addGroup(
-												gl_presentIcon
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_presentIcon
-																		.createSequentialGroup()
-																		.addComponent(
-																				txtpnCorrectTelemetryMode,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addContainerGap())
-														.addGroup(
-																gl_presentIcon
-																		.createSequentialGroup()
-																		.addGroup(
-																				gl_presentIcon
-																						.createParallelGroup(
-																								Alignment.TRAILING)
-																						.addComponent(
-																								panel_1,
-																								Alignment.LEADING,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addGroup(
-																								Alignment.LEADING,
-																								gl_presentIcon
-																										.createParallelGroup(
-																												Alignment.TRAILING,
-																												false)
-																										.addComponent(
-																												panel_2,
-																												Alignment.LEADING,
-																												GroupLayout.DEFAULT_SIZE,
-																												GroupLayout.DEFAULT_SIZE,
-																												Short.MAX_VALUE)
-																										.addComponent(
-																												txtpnUavsPresent,
-																												Alignment.LEADING)))
-																		.addGap(14)))));
+		gl_presentIcon.setHorizontalGroup(
+			gl_presentIcon.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_presentIcon.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txtpnUavsPresent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(txtpnCorrectTelemetryMode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
+					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_presentIcon.setVerticalGroup(
+			gl_presentIcon.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_presentIcon.createSequentialGroup()
+					.addGap(14)
+					.addGroup(gl_presentIcon.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_presentIcon.createSequentialGroup()
+							.addComponent(textPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(gl_presentIcon.createParallelGroup(Alignment.LEADING)
+							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+							.addGroup(gl_presentIcon.createSequentialGroup()
+								.addComponent(txtpnCorrectTelemetryMode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap())
+							.addGroup(gl_presentIcon.createSequentialGroup()
+								.addGroup(gl_presentIcon.createParallelGroup(Alignment.LEADING)
+									.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+									.addGroup(gl_presentIcon.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(txtpnUavsPresent, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addGap(14)))))
+		);
 		presentIcon.setLayout(gl_presentIcon);
 
 		final JPanel panel = new JPanel();
@@ -217,7 +216,7 @@ public class Shell2 {
 
 		
 		JPanel welcome = new JPanel();
-		panel.add(welcome, "name_281529050503524");
+		panel.add(welcome, "welcome");
 		welcome.setLayout(new MigLayout("",
 				"[100px,grow 200][276px,grow 400][100px,grow 200]",
 				"[46px][][41px][46px][][41px][46px]"));
@@ -259,6 +258,7 @@ public class Shell2 {
 					}
 				} catch (Exception e) {
 					System.out.println("comboBox AC vide");
+					panel_2.setBackground(new Color(255, 0, 0));
 				}
 			}
 
@@ -307,6 +307,7 @@ public class Shell2 {
 				if (ac.equals(comboBox.getSelectedItem())) {
 					try {
 						panel_2.setBackground(Color.GREEN);
+						Thread.sleep(20);
 						comboBox_1.setModel(new DefaultComboBoxModel<String>(
 								(ac.getModes().toArray(
 										new String[1]))));
@@ -409,7 +410,7 @@ public class Shell2 {
 		btnResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				imu.stopListenRaw(type, log, ((Aircraft) comboBox.getSelectedItem()).getId());
-				new Result("Results",true,log).majResult();
+				new Result("Results",true,log,imu);
 			}
 		});
 
@@ -429,10 +430,27 @@ public class Shell2 {
 				FilterSphere filtre = new FilterSphere(s,40,type);
 				Data data = new Data(filtre,type);
 				imu.ListenRaw(data, type, log, ((Aircraft) comboBox.getSelectedItem()).getId());
+				imu.stopListenAllId((Aircraft) comboBox.getSelectedItem());
 				((CardLayout) panel.getLayout()).show(panel,"mag");
-				btnResults.setVisible(true);
+				btnResults.setEnabled(true);
+				btnHome.setEnabled(true);
+				panel_3.setVisible(true);
+				textPane.setVisible(true);
 			}
 		});
+		
+		btnHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				imu.stopListenRaw(TypeCalibration.MAGNETOMETER, log, ((Aircraft) comboBox.getSelectedItem()).getId());
+				imu.stopListenAllId();
+				comboBox.removeAllItems();
+				imu.listenAllAc();
+				btnNewButton.setEnabled(false);
+				btnNewButton_1.setEnabled(false);
+				((CardLayout) panel.getLayout()).show(panel,"welcome");
+			}
+		});
+		
 	}
 
 	/**

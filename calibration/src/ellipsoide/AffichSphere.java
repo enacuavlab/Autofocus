@@ -13,8 +13,6 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import filtre.FilterSphere;
-
 /**
  * The class responsible of displaying the sphere
  * @author Alino�

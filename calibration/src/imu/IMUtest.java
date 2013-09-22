@@ -249,8 +249,7 @@ public class IMUtest implements IvyMessageListener {
 	 * @throws IvyException
 	 */
 	public void IvyRawListener(final int indexTelemetry,
-			final JButton btnMagneto, final JButton btnAccelero, int id,
-			final JComboBox comboMod) throws IvyException {
+			final JButton btnMagneto, final JButton btnAccelero, int id) throws IvyException {
 		System.out.println("Ivyraw");
 		/**if (timerbtn == null) {
 			timerbtn = new Timer(2000, new ActionListener() {
@@ -589,6 +588,12 @@ public class IMUtest implements IvyMessageListener {
 				// quand la méthode retourne la valeur null.
 				while ((line = buff.readLine()) != null) {
 					bus.sendMsg(line.substring(7));
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					//faites ici votre traitement
 				}
 			} catch (IvyException e) {
