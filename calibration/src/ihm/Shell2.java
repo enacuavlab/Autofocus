@@ -10,7 +10,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -41,8 +41,10 @@ import calibrate.PrintLog;
 import common.TypeCalibration;
 
 import data.Data;
+import ellipsoide.AffichAccel;
 import ellipsoide.AffichSphere;
 import ellipsoide.Sphere;
+import filtre.FilterAccel;
 import filtre.FilterSphere;
 
 public class Shell2 {
@@ -54,10 +56,11 @@ public class Shell2 {
 	private IMU imu;
 
 	private JFrame frmCalibrate;
-	
+
 	private TypeCalibration type;
 
 	private PrintLog log = new PrintLog();
+
 	/**
 	 * Launch the application.
 	 */
@@ -96,7 +99,8 @@ public class Shell2 {
 		JPanel menuSide = new JPanel();
 		frmCalibrate.getContentPane().add(menuSide, BorderLayout.WEST);
 		menuSide.setBorder(new LineBorder(Color.GRAY));
-		menuSide.setLayout(new MigLayout("", "[183px,grow 230]", "[41px][46px][46px][41px][46px][46px][][][][][][]"));
+		menuSide.setLayout(new MigLayout("", "[183px,grow 230]",
+				"[41px][46px][46px][41px][46px][46px][][][][][][]"));
 
 		JTextPane txtpnChooseAMode = new JTextPane();
 		txtpnChooseAMode.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -115,12 +119,12 @@ public class Shell2 {
 		final JButton btnNewButton = new JButton("Magnetometers");
 		menuSide.add(btnNewButton, "cell 0 2,grow");
 		btnNewButton.setEnabled(false);
-		
+
 		final JButton btnResults = new JButton("Results");
 		btnResults.setVisible(true);
 		btnResults.setEnabled(false);
 		menuSide.add(btnResults, "cell 0 4,grow");
-		
+
 		final JButton btnHome = new JButton("Home");
 		btnHome.setVisible(true);
 		btnHome.setEnabled(false);
@@ -143,69 +147,98 @@ public class Shell2 {
 
 		JTextPane txtpnCorrectTelemetryMode = new JTextPane();
 		txtpnCorrectTelemetryMode.setText("Correct telemetry mode");
-		
-		final JPanel panel_3 = new JPanel() {
-			private static final long serialVersionUID = 1L;
 
-			public void paint(java.awt.Graphics g) {
-				if (TypeCalibration.MAGNETOMETER.equals(type)) {
-				    ImageIcon icon = new ImageIcon(this.getClass().getResource("sphereAccel.png"));
-				    super.paint(g);
-				    Graphics2D g2d = (Graphics2D) g;
-				    g2d.drawImage(icon.getImage(), super.getWidth(), super.getHeight(), null);
-				} else if (TypeCalibration.ACCELEROMETER.equals(type)) {
-				    ImageIcon icon = new ImageIcon(this.getClass().getResource("../../Image/sphereAccel.png"));
-				    super.paint(g);
-				    Graphics2D g2d = (Graphics2D) g;
-				    g2d.drawImage(icon.getImage(), super.getWidth(), super.getHeight(), null);
-				}
-			};
-		};
+		final JLabel panel_3 = new JLabel();
 		panel_3.setVisible(false);
-		
+
 		final JTextPane textPane = new JTextPane();
 		textPane.setText("Try to obtain this image");
 		textPane.setVisible(false);
-		
+
 		GroupLayout gl_presentIcon = new GroupLayout(presentIcon);
-		gl_presentIcon.setHorizontalGroup(
-			gl_presentIcon.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_presentIcon.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(txtpnUavsPresent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(txtpnCorrectTelemetryMode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(textPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
-					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		gl_presentIcon.setVerticalGroup(
-			gl_presentIcon.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_presentIcon.createSequentialGroup()
-					.addGap(14)
-					.addGroup(gl_presentIcon.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_presentIcon.createSequentialGroup()
-							.addComponent(textPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(gl_presentIcon.createParallelGroup(Alignment.LEADING)
-							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-							.addGroup(gl_presentIcon.createSequentialGroup()
-								.addComponent(txtpnCorrectTelemetryMode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap())
-							.addGroup(gl_presentIcon.createSequentialGroup()
-								.addGroup(gl_presentIcon.createParallelGroup(Alignment.LEADING)
-									.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-									.addGroup(gl_presentIcon.createParallelGroup(Alignment.TRAILING, false)
-										.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(txtpnUavsPresent, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-								.addGap(14)))))
-		);
+		gl_presentIcon.setHorizontalGroup(gl_presentIcon.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_presentIcon
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 24,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtpnUavsPresent,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 25,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(txtpnCorrectTelemetryMode,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(textPane, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 90,
+								GroupLayout.PREFERRED_SIZE).addGap(62)));
+		gl_presentIcon
+				.setVerticalGroup(gl_presentIcon
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_presentIcon
+										.createSequentialGroup()
+										.addGap(14)
+										.addGroup(
+												gl_presentIcon
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addComponent(
+																panel_3,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addGroup(
+																gl_presentIcon
+																		.createSequentialGroup()
+																		.addGroup(
+																				gl_presentIcon
+																						.createParallelGroup(
+																								Alignment.TRAILING)
+																						.addComponent(
+																								textPane,
+																								Alignment.LEADING,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addGroup(
+																								Alignment.LEADING,
+																								gl_presentIcon
+																										.createParallelGroup(
+																												Alignment.LEADING,
+																												false)
+																										.addComponent(
+																												txtpnCorrectTelemetryMode,
+																												GroupLayout.PREFERRED_SIZE,
+																												GroupLayout.DEFAULT_SIZE,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addComponent(
+																												panel_2,
+																												GroupLayout.DEFAULT_SIZE,
+																												GroupLayout.DEFAULT_SIZE,
+																												Short.MAX_VALUE)
+																										.addComponent(
+																												txtpnUavsPresent,
+																												GroupLayout.PREFERRED_SIZE,
+																												GroupLayout.DEFAULT_SIZE,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addComponent(
+																												panel_1,
+																												GroupLayout.DEFAULT_SIZE,
+																												GroupLayout.DEFAULT_SIZE,
+																												Short.MAX_VALUE)))
+																		.addContainerGap()))));
 		presentIcon.setLayout(gl_presentIcon);
 
 		final JPanel panel = new JPanel();
@@ -213,8 +246,6 @@ public class Shell2 {
 		panel.setBorder(new LineBorder(Color.GRAY));
 		panel.setLayout(new CardLayout(0, 0));
 
-
-		
 		JPanel welcome = new JPanel();
 		panel.add(welcome, "welcome");
 		welcome.setLayout(new MigLayout("",
@@ -281,13 +312,13 @@ public class Shell2 {
 				try {
 					if (comboBox.getSelectedItem().equals(ac)) {
 						panel_1.setBackground(new Color(0, 255, 0));
-						
+
 					}
 				} catch (Exception e) {
 					System.out.println("comboBox AC vide");
 				}
 			}
-			
+
 			public void aircraftRawOff(Aircraft ac) {
 				try {
 					if (comboBox.getSelectedItem().equals(ac)) {
@@ -309,54 +340,55 @@ public class Shell2 {
 						panel_2.setBackground(Color.GREEN);
 						Thread.sleep(20);
 						comboBox_1.setModel(new DefaultComboBoxModel<String>(
-								(ac.getModes().toArray(
-										new String[1]))));
+								(ac.getModes().toArray(new String[1]))));
 					} catch (Exception e) {
 						System.out.println("Failure in getting modes");
 						e.printStackTrace();
 					}
 				}
 			}
-			
+
 			public void aircraftRawOn(Aircraft ac) {
 				try {
 					if (comboBox.getSelectedItem().equals(ac)) {
 						btnNewButton.setEnabled(true);
 						btnNewButton_1.setEnabled(true);
-						
+
 					}
 				} catch (Exception e) {
 					System.out.println("comboBox AC vide");
 				}
 			}
-			
+
 			public void aircraftRawOff(Aircraft ac) {
 				try {
 					if (comboBox.getSelectedItem().equals(ac)) {
 						btnNewButton.setEnabled(false);
 						btnNewButton_1.setEnabled(false);
-						
+
 					}
 				} catch (Exception e) {
 					System.out.println("comboBox AC vide");
 				}
 			}
-			
+
 			public void aircraftExited(Aircraft ac) {
 				if (ac.equals(comboBox.getSelectedItem())) {
 					comboBox_1.setModel(new DefaultComboBoxModel<String>());
 				}
 				comboBox.removeItem(ac);
-			}	
+			}
 
 			public void aircraftModChanged(Aircraft ac) {
 				try {
 					if (comboBox.getSelectedItem().equals(ac)) {
 						comboBox_1.setSelectedIndex(ac.getMode());
-						IMUtest.main(new String[1]);
 					}
 				} catch (Exception e) {
 					System.out.println("comboBox mode vide");
+					comboBox_1.setModel(new DefaultComboBoxModel<String>(
+							((Aircraft) comboBox.getSelectedItem()).getModes()
+									.toArray(new String[1])));
 				}
 			}
 		});
@@ -367,6 +399,7 @@ public class Shell2 {
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
 					try {
 						panel_2.setBackground(Color.GREEN);
+						Thread.sleep(20);
 						comboBox_1.setModel(new DefaultComboBoxModel<String>(
 								((Aircraft) arg0.getItem()).getModes().toArray(
 										new String[1])));
@@ -374,7 +407,7 @@ public class Shell2 {
 							panel_1.setBackground(Color.GREEN);
 							btnNewButton.setEnabled(true);
 							btnNewButton_1.setEnabled(true);
-						}  else {
+						} else {
 							panel_1.setBackground(Color.RED);
 							btnNewButton.setEnabled(false);
 							btnNewButton_1.setEnabled(false);
@@ -386,15 +419,23 @@ public class Shell2 {
 				}
 			}
 		});
-		
+
 		comboBox_1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				System.out.println("mode selected");
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
 					try {
-						imu.changeAcMode(comboBox_1.getSelectedIndex(), (Aircraft) comboBox.getSelectedItem());
+						imu.changeAcMode(comboBox_1.getSelectedIndex(),
+								(Aircraft) comboBox.getSelectedItem());
+						new Thread(new Runnable() {
+							public void run() {
+								System.out.println("envoi des RAW");
+								IMUtest.main(new String[1]);
+							}
+						}).start();
 					} catch (Exception e) {
-						System.out.println("Incorrect mode or mode comboBox empty");
+						System.out
+								.println("Incorrect mode or mode comboBox empty");
 					}
 				}
 			}
@@ -405,52 +446,107 @@ public class Shell2 {
 
 		final Sphere s = new Sphere(10, 10, 800);
 		final AffichSphere magneto = new AffichSphere(s);
-		panel.add(magneto, "mag");
-		System.out.println( "" + magneto.getWidth() + " " + magneto.getHeight());
+		
+		final Result results = new Result("Results", true, log, imu);
+		
 		btnResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				imu.stopListenRaw(type, log, ((Aircraft) comboBox.getSelectedItem()).getId());
-				new Result("Results",true,log,imu);
+				imu.stopListenRaw(type, log,
+						((Aircraft) comboBox.getSelectedItem()).getId());
+				results.getCalib();
 			}
 		});
 
-		JPanel accelero = new JPanel();
-		panel.add(accelero, "name_5925458635449");
+		final AffichSphere accelS = new AffichSphere(s);
+		s.setDisplay(accelS);
+		final AffichAccel accelero = new AffichAccel(s);
+
+		panel.add("accel",accelero);
+		panel.add("mag",magneto);
+		
 		frmCalibrate.setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[] { frmCalibrate.getContentPane(), menuSide,
 						txtpnChooseAMode, btnNewButton_1, btnNewButton,
 						presentIcon, panel_2, txtpnUavsPresent, panel, welcome,
 						separator, txtpnFillTheField, lblNewLabel, comboBox,
 						lblChooseModeSending, comboBox_1, magneto, accelero }));
-		
-		//Listeners on button to switch to calibration
+
+		// Listeners on button to switch to calibration
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				type = TypeCalibration.MAGNETOMETER;
-				FilterSphere filtre = new FilterSphere(s,40,type);
-				Data data = new Data(filtre,type);
-				imu.ListenRaw(data, type, log, ((Aircraft) comboBox.getSelectedItem()).getId());
+				ImageIcon icon = new ImageIcon(this.getClass().getResource(
+						"sphereMag.png"));
+				icon.setImage(icon.getImage().getScaledInstance(90, 50,
+						Image.SCALE_SMOOTH));
+				panel_3.setIcon(icon);
+				FilterSphere filtre = new FilterSphere(s, 40, type);
+				Data data = new Data(filtre, type);
+				imu.ListenRaw(data, type, log,
+						((Aircraft) comboBox.getSelectedItem()).getId());
 				imu.stopListenAllId((Aircraft) comboBox.getSelectedItem());
-				((CardLayout) panel.getLayout()).show(panel,"mag");
+				results.setData(data);
+				results.setType(type);
+				results.setId(((Aircraft) comboBox.getSelectedItem()).getId());
+				s.setDisplay(magneto);
+				((CardLayout) panel.getLayout()).show(panel, "mag");
+				btnNewButton.setEnabled(false);
+				btnNewButton_1.setEnabled(false);
 				btnResults.setEnabled(true);
 				btnHome.setEnabled(true);
 				panel_3.setVisible(true);
 				textPane.setVisible(true);
 			}
 		});
-		
+
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				type = TypeCalibration.ACCELEROMETER;
+				ImageIcon icon = new ImageIcon(this.getClass().getResource(
+						"sphereAccel.png"));
+				System.out.println((int) panel_3.getPreferredSize().getWidth());
+				icon.setImage(icon.getImage().getScaledInstance(90, 50,
+						Image.SCALE_SMOOTH));
+				panel_3.setIcon(icon);
+				FilterAccel filtre = new FilterAccel(40, type, 100, 40,
+						accelero);
+				Data data = new Data(filtre, type);
+				imu.ListenRaw(data, type, log,
+						((Aircraft) comboBox.getSelectedItem()).getId());
+				imu.stopListenAllId((Aircraft) comboBox.getSelectedItem());
+				results.setData(data);
+				results.setType(type);
+				results.setId(((Aircraft) comboBox.getSelectedItem()).getId());
+				s.setDisplay(accelS);
+				((CardLayout) panel.getLayout()).show(panel, "accel");
+				btnNewButton.setEnabled(false);
+				btnNewButton_1.setEnabled(false);
+				btnResults.setEnabled(true);
+				btnHome.setEnabled(true);
+				panel_3.setVisible(true);
+				textPane.setVisible(true);
+			}
+		});
+
 		btnHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				imu.stopListenRaw(TypeCalibration.MAGNETOMETER, log, ((Aircraft) comboBox.getSelectedItem()).getId());
+				imu.stopListenRaw(TypeCalibration.MAGNETOMETER, log,
+						((Aircraft) comboBox.getSelectedItem()).getId());
+				imu.stopListenRaw(TypeCalibration.ACCELEROMETER, log,
+						((Aircraft) comboBox.getSelectedItem()).getId());
 				imu.stopListenAllId();
 				comboBox.removeAllItems();
 				imu.listenAllAc();
 				btnNewButton.setEnabled(false);
 				btnNewButton_1.setEnabled(false);
-				((CardLayout) panel.getLayout()).show(panel,"welcome");
+				btnResults.setEnabled(false);
+				btnHome.setEnabled(false);
+				panel_3.setVisible(false);
+				textPane.setVisible(false);
+				((CardLayout) panel.getLayout()).show(panel, "welcome");
 			}
 		});
-		
+
 	}
 
 	/**

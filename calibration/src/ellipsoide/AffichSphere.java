@@ -5,6 +5,7 @@ package ellipsoide;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
@@ -63,7 +64,7 @@ public class AffichSphere extends JPanel {
 		//defines the canvas
 		Graphics2D g2d = (Graphics2D) g;
 		g.clearRect(0, 0, super.getHeight(), super.getWidth());
-		System.out.println(s.getRayon() + " : " + super.getHeight() + " : " + super.getWidth());
+		//System.out.println(s.getRayon() + " : " + super.getHeight() + " : " + super.getWidth());
 		List<Point2D> points;
 		//useful store structure
 		int n = zones.get(1).getListContour().size();
@@ -121,6 +122,5 @@ public class AffichSphere extends JPanel {
 	public AffichSphere(Sphere s) {
 		this.s = s;
 		this.zones = s.getZones();
-		s.setDisplay(this);
 	}
 }

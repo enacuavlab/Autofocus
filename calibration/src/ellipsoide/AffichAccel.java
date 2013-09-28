@@ -3,9 +3,9 @@
  */
 package ellipsoide;
 
-import filtre.VecteurFiltrable;
-
-import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridBagLayout;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -13,6 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
+
+import filtre.VecteurFiltrable;
+import net.miginfocom.swing.MigLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
 
 
 /**
@@ -54,21 +61,23 @@ public class AffichAccel extends JPanel{
 	 */
 	
 	public AffichAccel(Sphere s){
-		this.setLayout(null);
 		sp=s;
-		progressBar=new JProgressBar(0,100);
-		this.add(progressBar);
-		this.add(sp.getAffichage());
+		
+		setLayout(new MigLayout("", "[200px][][200px]", "[286px][][14px]"));
 		panelInst = new JPanel();
-		panelInst.setLayout(null);
-		this.add(panelInst);
+		panelInst.setBackground(Color.WHITE);
+		this.add(panelInst, "cell 2 0,alignx right,grow");
+		panelInst.setLayout(new MigLayout("", "[200px]", "[131px] [200px]"));
 		inst = new JTextArea();
 		inst.setEditable(false);
 		inst.setLineWrap(true);
-		inst.setText("Maintain your drone in a stable position");	
-		panelInst.add(inst);
+		inst.setText("Maintain your drone in a stable position");
+		panelInst.add(inst, "cell 0 0,growx,aligny center");
 		labelPhoto = new JLabel();
-		panelInst.add(labelPhoto);
+		panelInst.add(labelPhoto, "cell 0 1,grow");
+		progressBar=new JProgressBar(0,100);
+		this.add(progressBar, "cell 0 1 3 1,growx,aligny top");
+		this.add(sp.getAffichage(),"cell 0 0, alignx left, grow");
 	}
 
 	/**
@@ -128,7 +137,6 @@ public class AffichAccel extends JPanel{
 		int value = progressBar.getValue();
 		if (value > 0) {
 			if (value == 100) {
-				
 				inst.setText("Change the position of your drone and maintain");
 	
 			}

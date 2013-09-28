@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+import com.sun.servicetag.SystemEnvironment;
+
 import common.TypeCalibration;
 /**
  * Implements version of the calibration algorithm using a system call
@@ -21,7 +23,7 @@ import common.TypeCalibration;
  * @author Guillaume
  * 
  */
-public class CalibrateSystem extends Thread {
+public class CalibrateSystem {
 
 	/**
 	 * Allows to determine the string to launch the extern program
@@ -89,12 +91,11 @@ public class CalibrateSystem extends Thread {
 		String newline = System.getProperty("line.separator");
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec("python "
-				+ ppzHome
+				+ "/home/alinoe/paparazzi"
 				+ "/sw/tools/calibration/calibrate.py "
 				+ "-s "
 				+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL "
 						: "MAG ") + logName);
-
 		// Consommation de la sortie standard
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -113,10 +114,8 @@ public class CalibrateSystem extends Thread {
 					+ aline[4] + "<" + aline[5] + "<" + aline[6];
 			
 		} catch (IOException e) {
-			e.printStackTrace();
 			parameters = "Unable to parse";
 		} catch (ArrayIndexOutOfBoundsException e) {
-			e.printStackTrace();
 			parameters = "no data";
 		}
 	}
@@ -126,7 +125,6 @@ public class CalibrateSystem extends Thread {
 	 * 
 	 * @return String
 	 */
-	@Override
 	public void run() {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -137,11 +135,11 @@ public class CalibrateSystem extends Thread {
 		try {
 			calibrates();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("can't get python script to calibrate");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("can't get result file to calibrate");
+		} catch (Exception e) {
+			System.out.println("can't get calibration");
 		}
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -150,7 +148,4 @@ public class CalibrateSystem extends Thread {
 			}
 		});
 	}
-
-
-
 }

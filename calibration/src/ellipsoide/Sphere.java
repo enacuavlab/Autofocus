@@ -119,7 +119,6 @@ public class Sphere {
 	 */
 	public void update(double radius, VecteurFiltrable<Double> newcenter,
 			VecteurFiltrable<Double> v, VecteurFiltrable<Double> vcourant) {
-
 		if (v.isCorrect()) {
 			lvector.add(v);
 			if ((Math.abs(center.getX() - newcenter.getX()) > error)

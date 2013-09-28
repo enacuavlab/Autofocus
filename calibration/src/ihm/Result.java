@@ -22,6 +22,7 @@ import calibrate.CalibrateSystem;
 import calibrate.PrintLog;
 
 import common.TypeCalibration;
+import data.Data;
 /**
  * Show the result of the calibration in a JDialog
  * 
@@ -34,6 +35,13 @@ public class Result extends JDialog {
 	 * 
 	 */
 	final private IMU imu;
+	private Data data;
+	private TypeCalibration type = TypeCalibration.MAGNETOMETER;
+	private PrintLog log;
+	private int idDrone;
+	private CalibrateSystem calib;
+	private JTextArea textPaneAccuracy;
+	private JTextArea textPaneResults;
 	
 	/**
 	 * 
@@ -45,16 +53,16 @@ public class Result extends JDialog {
 	 * @param imu
 	 *            the imu
 	 */
-	public Result(String title, boolean modal, PrintLog log, IMU imu) {
+	public Result(String title, boolean modal, final PrintLog log, final IMU imu) {
 		super();
+		this.log = log;
 		this.imu = imu;
 		this.setTitle("Results");
 		// The size of the JDialog
+		this.setBounds(100, 100, 400, 500);
 		this.setLocationRelativeTo(null);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		initialise(log);
-		this.setPreferredSize(getMaximumSize());
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.rowHeights = new int[] {30, 40, 120, 40, 120, 40, 0};
@@ -70,7 +78,7 @@ public class Result extends JDialog {
 		gbc_lblNewLabel.gridy = 1;
 		getContentPane().add(lblNewLabel, gbc_lblNewLabel);
 		
-		JTextArea textPaneResults = new JTextArea();
+		textPaneResults = new JTextArea();
 		textPaneResults.setEditable(false);
 		GridBagConstraints gbc_textPane = new GridBagConstraints();
 		gbc_textPane.insets = new Insets(0, 0, 5, 0);
@@ -86,7 +94,7 @@ public class Result extends JDialog {
 		gbc_lblNewLabel_1.gridy = 3;
 		getContentPane().add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		JTextArea textPaneAccuracy = new JTextArea();
+		textPaneAccuracy = new JTextArea();
 		textPaneAccuracy.setEditable(false);
 		GridBagConstraints gbc_textPane_1 = new GridBagConstraints();
 		gbc_textPane_1.insets = new Insets(0, 0, 5, 0);
@@ -105,35 +113,50 @@ public class Result extends JDialog {
 		JButton btnNewButton_1 = new JButton("Continue");
 		panel.add(btnNewButton_1);
 		
-		JButton btnNewButton = new JButton("Home");
-		panel.add(btnNewButton);
+		this.setVisible(false);
 		
+		btnNewButton_1.addActionListener( new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+					imu.ListenRaw(data, type, log, idDrone);
+			}
+		});
+
+	}
+
+	public void getCalib() {
+		this.setVisible(true);
 		//Update the results displayed
+		log.print("/home/alinoe/paparazzi" + "/var/logs/calibration.data");
 		new CalibrateSystem(
-				TypeCalibration.MAGNETOMETER, "/home/alinoe/paparazzi",
+				type, "/home/alinoe/paparazzi",
 				"/home/alinoe/paparazzi" + "/var/logs/calibration.data",
-				textPaneResults, textPaneAccuracy).start();
-		
+				textPaneResults, textPaneAccuracy).run();
+
 		/*new CalibrateSystem(
 		TypeCalibration.MAGNETOMETER, System.getenv("PAPARAZZI_HOME"),
 		System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data",
 		this.textResultCopy, this.textResult).start(); // use paparazzi
 		// home normally*/
-		
-		this.setVisible(true);
 	}
 
-	/**
-	 * Initialise the JDialog
-	 */
-	public void initialise(PrintLog log) {
-		// The log file
-			log.print("/home/alinoe/paparazzi" + "/var/logs/calibration.data");
-
+	/**set the data in order to be able to begin the raw collect again*/
+	public void setData(Data d) {
+		this.data = d;
 	}
-
-
-
+	
+	/**set the type of the current calibration*/
+	public void setType(TypeCalibration t) {
+		this.type = t;
+	}
+	
+	public void setId(int id) {
+		this.idDrone = id;
+	}
+	
+	public static void main(String[] args) {
+		new Result("test", true, new PrintLog(), new IMU()).setVisible(true);
+	}
 	/**
 	 * 
 	 */
