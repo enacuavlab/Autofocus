@@ -3,9 +3,7 @@
  */
 package ellipsoide;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagLayout;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -14,12 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 
-import filtre.VecteurFiltrable;
 import net.miginfocom.swing.MigLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
+import filtre.VecteurFiltrable;
 
 
 /**
