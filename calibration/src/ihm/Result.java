@@ -34,12 +34,10 @@ public class Result extends JDialog {
 	/**Used to command for the listeners
 	 * 
 	 */
-	final private IMU imu;
 	private Data data;
 	private TypeCalibration type = TypeCalibration.MAGNETOMETER;
 	private PrintLog log;
 	private int idDrone;
-	private CalibrateSystem calib;
 	private JTextArea textPaneAccuracy;
 	private JTextArea textPaneResults;
 	
@@ -56,7 +54,6 @@ public class Result extends JDialog {
 	public Result(String title, boolean modal, final PrintLog log, final IMU imu) {
 		super();
 		this.log = log;
-		this.imu = imu;
 		this.setTitle("Results");
 		// The size of the JDialog
 		this.setBounds(100, 100, 400, 500);
@@ -127,17 +124,11 @@ public class Result extends JDialog {
 	public void getCalib() {
 		this.setVisible(true);
 		//Update the results displayed
-		log.print("/home/alinoe/paparazzi" + "/var/logs/calibration.data");
+		log.print(System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data");
 		new CalibrateSystem(
-				type, "/home/alinoe/paparazzi",
-				"/home/alinoe/paparazzi" + "/var/logs/calibration.data",
+				type, System.getenv("PAPARAZZI_HOME"),
+				System.getenv("PAPARAZZI_HOME")+"/var/logs/calibration.data",
 				textPaneResults, textPaneAccuracy).run();
-
-		/*new CalibrateSystem(
-		TypeCalibration.MAGNETOMETER, System.getenv("PAPARAZZI_HOME"),
-		System.getenv("PAPARAZZI_HOME") + "/var/logs/calibration.data",
-		this.textResultCopy, this.textResult).start(); // use paparazzi
-		// home normally*/
 	}
 
 	/**set the data in order to be able to begin the raw collect again*/

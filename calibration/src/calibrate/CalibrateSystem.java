@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import com.sun.servicetag.SystemEnvironment;
-
 import common.TypeCalibration;
 /**
  * Implements version of the calibration algorithm using a system call
@@ -91,7 +89,7 @@ public class CalibrateSystem {
 		String newline = System.getProperty("line.separator");
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec("python "
-				+ "/home/alinoe/paparazzi"
+				+ ppzHome
 				+ "/sw/tools/calibration/calibrate.py "
 				+ "-s "
 				+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL "

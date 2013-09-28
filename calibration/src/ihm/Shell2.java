@@ -2,7 +2,6 @@ package ihm;
 
 import imu.Aircraft;
 import imu.IMU;
-import imu.IMUtest;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -427,12 +426,6 @@ public class Shell2 {
 					try {
 						imu.changeAcMode(comboBox_1.getSelectedIndex(),
 								(Aircraft) comboBox.getSelectedItem());
-						new Thread(new Runnable() {
-							public void run() {
-								System.out.println("envoi des RAW");
-								IMUtest.main(new String[1]);
-							}
-						}).start();
 					} catch (Exception e) {
 						System.out
 								.println("Incorrect mode or mode comboBox empty");
