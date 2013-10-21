@@ -45,6 +45,7 @@ import ellipsoide.AffichSphere;
 import ellipsoide.Sphere;
 import filtre.FilterAccel;
 import filtre.FilterSphere;
+import java.awt.SystemColor;
 
 public class Shell2 {
 
@@ -64,6 +65,11 @@ public class Shell2 {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -138,7 +144,7 @@ public class Shell2 {
 
 		JTextPane txtpnUavsPresent = new JTextPane();
 		txtpnUavsPresent.setEditable(false);
-		txtpnUavsPresent.setBackground(UIManager.getColor("Button.background"));
+		txtpnUavsPresent.setBackground(SystemColor.windowBorder);
 		txtpnUavsPresent.setText("UAV's presence");
 
 		final JPanel panel_1 = new JPanel();
@@ -352,7 +358,6 @@ public class Shell2 {
 					if (comboBox.getSelectedItem().equals(ac)) {
 						btnNewButton.setEnabled(true);
 						btnNewButton_1.setEnabled(true);
-
 					}
 				} catch (Exception e) {
 					System.out.println("comboBox AC vide");
@@ -437,7 +442,7 @@ public class Shell2 {
 		// start the discovering of all connected aircraft
 		imu.listenAllAc();
 
-		final Sphere s = new Sphere(10, 10, 800);
+		final Sphere s = new Sphere(7, 7, 100);
 		final AffichSphere magneto = new AffichSphere(s);
 		
 		final Result results = new Result("Results", true, log, imu);
@@ -501,7 +506,7 @@ public class Shell2 {
 				icon.setImage(icon.getImage().getScaledInstance(90, 50,
 						Image.SCALE_SMOOTH));
 				panel_3.setIcon(icon);
-				FilterAccel filtre = new FilterAccel(40, type, 100, 40,
+				FilterAccel filtre = new FilterAccel(100, type, 200, 40,
 						accelero);
 				Data data = new Data(filtre, type);
 				imu.ListenRaw(data, type, log,
@@ -536,6 +541,7 @@ public class Shell2 {
 				btnHome.setEnabled(false);
 				panel_3.setVisible(false);
 				textPane.setVisible(false);
+				s.clean();
 				((CardLayout) panel.getLayout()).show(panel, "welcome");
 			}
 		});

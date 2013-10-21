@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.EventListenerList;
 
@@ -345,8 +346,12 @@ public class IMU {
 			String test = regexp.toString();
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-					data.store(Integer.valueOf(args[0]),
-							Integer.valueOf(args[1]), Integer.valueOf(args[2]));
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							data.store(Integer.valueOf(args[0]),
+									Integer.valueOf(args[1]), Integer.valueOf(args[2]));
+						}
+					});
 					log.add(idDrone
 							+ (TypeCalibration.MAGNETOMETER.equals(calibration) ? " IMU_MAG_RAW"
 									: " IMU_ACCEL_RAW") + " " + args[0] + " "

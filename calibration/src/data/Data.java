@@ -51,9 +51,11 @@ public class Data {
 		filtre.add(vec);
 
 			}
+	
 	public List<Vecteur> getVecteur(){
 		return list;
 	}
+	
 	public String toString() {
 		return list.toString();
 	}

@@ -88,6 +88,13 @@ public class Sphere {
 		zoneCourante = j.next();
 	}
 
+	public void clean() {
+		lvector = new ArrayList<VecteurFiltrable<Double>>();
+		lzone = new ArrayList<Zone>();
+		createZone();
+		ListIterator<Zone> j = lzone.listIterator();
+		zoneCourante = j.next();
+	}
 	/**
 	 * getter of the display
 	 * 
