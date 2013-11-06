@@ -128,7 +128,7 @@ public class Result extends JDialog {
 		new CalibrateSystem(
 				type, System.getenv("PAPARAZZI_HOME"),
 				System.getenv("PAPARAZZI_HOME")+"/var/logs/calibration.data",
-				textPaneResults, textPaneAccuracy).run();
+				textPaneResults, textPaneAccuracy);
 	}
 
 	/**set the data in order to be able to begin the raw collect again*/

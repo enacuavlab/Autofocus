@@ -45,12 +45,10 @@ public class Data {
  */
 	public void store(double xRaw, double yRaw, double zRaw) {
 		Vecteur vec = new Vecteur(xRaw, yRaw, zRaw);
-		//System.out.println(vec);
 		vec.setType(calib);
 		list.add(vec);
 		filtre.add(vec);
-
-			}
+}
 	
 	public List<Vecteur> getVecteur(){
 		return list;

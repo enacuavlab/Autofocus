@@ -1,17 +1,20 @@
 /**Package grouping all classes used to filter data*/
 package filtre;
 
+import java.util.Date;
+
 import javax.swing.SwingUtilities;
 
 import common.TypeCalibration;
-import data.Vecteur;
 
+import data.Vecteur;
 import ellipsoide.Sphere;
 
 public class FilterSphere extends Filter {
 
-	/**Data of the sphere, max and min of each axis
-	 * center, radius and the sphere
+	/**
+	 * Data of the sphere, max and min of each axis center, radius and the
+	 * sphere
 	 */
 	private Sphere s;
 
@@ -49,16 +52,21 @@ public class FilterSphere extends Filter {
 	 */
 	@Override
 	public void add(final VecteurFiltrable<Double> v) {
-		final Vecteur a[] = new Vecteur[windowSize];
+		new Thread(new Runnable() {
+			public void run() {
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						s.updateCourant(v);
+					}
+				});
+			}
+		}).start();
 		super.add(v);
+		final Vecteur a[] = new Vecteur[windowSize];
 		if (!(window.remainingCapacity() > 0)) {
-			SwingUtilities.invokeLater(
-					new Runnable() {
-						public void run() {
-						s.update(rayon, center, window.toArray(a)[0],v);
-						}
-					});
+			s.update(rayon, center, window.toArray(a)[0], v);
 		}
+
 		// System.out.println(center);
 	}
 

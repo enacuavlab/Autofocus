@@ -91,22 +91,26 @@ public class Filter {
 	 * updates the window
 	 * @param v
 	 */
-	public void add(VecteurFiltrable<Double> v) {
-		Collection<Double> toAdd = v.setArray();
-		Iterator<Double> a = toAdd.iterator();
+	public void add(final VecteurFiltrable<Double> v) {
+		//Collection<Double> toAdd = v.setArray();
+		//Iterator<Double> a = toAdd.iterator();
 		if (variables != null) {
 			//System.out.println("variables non null");
 			Iterator<DescriptiveStatistics> d = variables.iterator();
-			while (a.hasNext() && d.hasNext()) {
+			d.next().addValue(v.getX());
+			d.next().addValue(v.getY());
+			d.next().addValue(v.getZ());
+			/*while (a.hasNext() && d.hasNext()) {
 				d.next().addValue(a.next());
 				//System.out.println("ajoute les donnees");
-			}
+			}*/
 			window.add(v);
 			for (VecteurFiltrable<Double> vec : window){
 				update(vec);
 			}
 			//System.out.println("ajout d'un vecteur");
 		} else {
+			Collection<Double> toAdd = v.setArray();
 			//System.out.println("cree variabless");
 			this.variables = new ArrayList<DescriptiveStatistics>(toAdd.size());
 			for (int i = 0; i < toAdd.size(); i++) {

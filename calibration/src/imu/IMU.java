@@ -3,12 +3,12 @@ package imu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.EventListenerList;
 
@@ -35,7 +35,7 @@ public class IMU {
 	final Integer reqid = 42;
 	/** used to update the presence of any aircraft */
 	private Hashtable<Integer, Timer> timerPresence;
-	/** used to update Raw presence for every aircraft*/
+	/** used to update Raw presence for every aircraft */
 	private Hashtable<Integer, Timer> timerRaw;
 
 	/** Method returning name list */
@@ -73,7 +73,7 @@ public class IMU {
 			imuL.aircraftConnected(ac);
 		}
 	}
-	
+
 	protected void fireAircraftRawOn(Aircraft ac) {
 		timerRaw.get(ac.getId()).start();
 		for (IMUListener imuL : this.getIMUListeners()) {
@@ -87,7 +87,7 @@ public class IMU {
 			imuL.aircraftRawOff(ac);
 		}
 	}
-	
+
 	protected void fireAircraftModChanged(Aircraft ac) {
 		for (IMUListener imuL : this.getIMUListeners()) {
 			imuL.aircraftModChanged(ac);
@@ -102,8 +102,8 @@ public class IMU {
 	}
 
 	private Aircraft buildAc(final int acId, int reqid) {
-		final Aircraft ac = new Aircraft("", acId, "", 0, new ArrayList<String>(),
-				0);
+		final Aircraft ac = new Aircraft("", acId, "", 0,
+				new ArrayList<String>(), 0);
 		try {
 			bus.bindMsgOnce(("^" + reqid + " " + "[A-Za-z0-9]+ CONFIG (.*)"),
 					new IvyMessageListener() {
@@ -149,11 +149,10 @@ public class IMU {
 					new IvyMessageListener() {
 						public void receive(IvyClient arg0, String[] args) {
 							if (Integer.valueOf(args[0]).equals(
-									Integer.valueOf(acId)) &&
-									ac.getMode() != (Double.valueOf(
-											args[1].split(",")[ac
-																.getIndexTelemetry()])
-														.intValue()) ) {
+									Integer.valueOf(acId))
+									&& ac.getMode() != (Double.valueOf(args[1]
+											.split(",")[ac.getIndexTelemetry()])
+											.intValue())) {
 								ac.setMode(Double.valueOf(
 										args[1].split(",")[ac
 												.getIndexTelemetry()])
@@ -172,18 +171,19 @@ public class IMU {
 							// the drone are unused
 						}
 					});
-			//Creates timer to check raw
+			// Creates timer to check raw
 			timerRaw.put(new Integer(acId), new Timer(2000,
 					new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							if (ac.getIsRawData()) {
 								fireAircraftRawOff(ac);
 								ac.setRaw(false);
-								System.out.println(ac + " has stopped emit raw data");
+								System.out.println(ac
+										+ " has stopped emit raw data");
 							}
 						}
 					}));
-			//Creates associated listener
+			// Creates associated listener
 			bus.bindMsg("^" + acId + " IMU_[A-Z]+_RAW(.*)",
 					new IvyMessageListener() {
 						public void receive(IvyClient arg0, String[] args) {
@@ -228,7 +228,7 @@ public class IMU {
 		System.out.println("new aircraft built");
 		return ac;
 	}
-	
+
 	public void deleteAc(Aircraft ac) {
 		bus.unBindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)");
 		bus.unBindMsg("^" + ac.getId() + " IMU_[A-Z]+_RAW(.*)");
@@ -311,7 +311,7 @@ public class IMU {
 			deleteAc(ac);
 		}
 	}
-	
+
 	public void stopListenAllId(Aircraft acToSave) {
 		bus.unBindMsg("^ground NEW_AIRCRAFT ([0-9]*)");
 		bus.unBindMsg("^ground AIRCRAFT_DIE ([0-9]*)");
@@ -346,25 +346,20 @@ public class IMU {
 			String test = regexp.toString();
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-					SwingUtilities.invokeLater(new Runnable() {
-						public void run() {
 							data.store(Integer.valueOf(args[0]),
 									Integer.valueOf(args[1]), Integer.valueOf(args[2]));
-						}
-					});
-					log.add(idDrone
+							log.add(idDrone
 							+ (TypeCalibration.MAGNETOMETER.equals(calibration) ? " IMU_MAG_RAW"
 									: " IMU_ACCEL_RAW") + " " + args[0] + " "
 							+ args[1] + " " + args[2]);
 				}
 			});
-
 		} catch (Exception e) {
 			System.out.println("Erreur d'initialisation d'IMU");
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * unbind the imu from data messages
 	 * 
@@ -385,8 +380,7 @@ public class IMU {
 		bus.unBindMsg(test);
 		System.out.println("stoplistenRAW");
 	}
-	
-	
+
 	public Aircraft[] getAcs() {
 		return acL.toArray(new Aircraft[1]);
 	}
@@ -400,7 +394,7 @@ public class IMU {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public IMU() {
 		bus = new Ivy("IMU", "IMU Ready", null);
 		try {

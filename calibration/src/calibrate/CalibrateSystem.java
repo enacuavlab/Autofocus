@@ -21,7 +21,7 @@ import common.TypeCalibration;
  * @author Guillaume
  * 
  */
-public class CalibrateSystem {
+public class CalibrateSystem extends Thread{
 
 	/**
 	 * Allows to determine the string to launch the extern program

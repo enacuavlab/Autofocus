@@ -66,20 +66,17 @@ public class Shell2 {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+			UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Shell2 window = new Shell2();
-					window.frmCalibrate.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		try {
+			Shell2 window = new Shell2();
+			window.frmCalibrate.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -444,9 +441,9 @@ public class Shell2 {
 
 		final Sphere s = new Sphere(7, 7, 100);
 		final AffichSphere magneto = new AffichSphere(s);
-		
+
 		final Result results = new Result("Results", true, log, imu);
-		
+
 		btnResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				imu.stopListenRaw(type, log,
@@ -459,9 +456,9 @@ public class Shell2 {
 		s.setDisplay(accelS);
 		final AffichAccel accelero = new AffichAccel(s);
 
-		panel.add("accel",accelero);
-		panel.add("mag",magneto);
-		
+		panel.add("accel", accelero);
+		panel.add("mag", magneto);
+
 		frmCalibrate.setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[] { frmCalibrate.getContentPane(), menuSide,
 						txtpnChooseAMode, btnNewButton_1, btnNewButton,

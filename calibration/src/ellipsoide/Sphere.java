@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.swing.SwingUtilities;
+
 import data.Vecteur;
 import filtre.VecteurFiltrable;
 
@@ -75,7 +77,7 @@ public class Sphere {
 	 * @param i
 	 */
 	public Sphere(double longitude, double latitude, int nbPointsMax) {
-		this.nbPointsMax=nbPointsMax;
+		this.nbPointsMax = nbPointsMax;
 		this.longitude = longitude;
 		this.latitude = latitude;
 		center = new Vecteur(0, 0, 0);
@@ -89,12 +91,16 @@ public class Sphere {
 	}
 
 	public void clean() {
+		center = new Vecteur(0, 0, 0);
+		radius = 0;
+		surfaceSphere = 0;
 		lvector = new ArrayList<VecteurFiltrable<Double>>();
 		lzone = new ArrayList<Zone>();
 		createZone();
 		ListIterator<Zone> j = lzone.listIterator();
 		zoneCourante = j.next();
 	}
+
 	/**
 	 * getter of the display
 	 * 
@@ -124,8 +130,10 @@ public class Sphere {
 	 * @param vcourant
 	 *            current vector
 	 */
-	public void update(double radius, VecteurFiltrable<Double> newcenter,
-			VecteurFiltrable<Double> v, VecteurFiltrable<Double> vcourant) {
+	public void update(final double radius,
+			final VecteurFiltrable<Double> newcenter,
+			final VecteurFiltrable<Double> v,
+			final VecteurFiltrable<Double> vcourant) {
 		if (v.isCorrect()) {
 			lvector.add(v);
 			if ((Math.abs(center.getX() - newcenter.getX()) > error)
@@ -136,17 +144,19 @@ public class Sphere {
 				this.center = newcenter;
 				this.surfaceSphere = 4 * Math.PI * Math.pow(radius, 2);
 				updateAllZone();
-				updateVecCourant(vcourant);
 				affichage.majZone();
 			} else {
 				update(v);
-				updateVecCourant(vcourant);
-				affichage.affiche();
 			}
-		} else {
-			updateVecCourant(vcourant);
-			affichage.affiche();
 		}
+	}
+
+	/**
+	 * Allow to display the zone before checking if the vector is right
+	 */
+	public void updateCourant(VecteurFiltrable<Double> v) {
+		updateVecCourant(v);
+		affichage.affiche();
 	}
 
 	/**
@@ -169,13 +179,14 @@ public class Sphere {
 						* ((double) (j + 1)) - Math.PI / 2.0,
 						((2.0 * Math.PI) / longitude) * ((double) i) - Math.PI,
 						((2.0 * Math.PI) / longitude) * ((double) (i + 1))
-								- Math.PI,nbPointsMax));
+								- Math.PI, nbPointsMax));
 			}
 		}
 		lzone.add(new Zone((Math.PI / latitude) * ((double) (latitude - 1))
-				- Math.PI / 2.0, Math.PI / 2.0, -Math.PI, Math.PI,nbPointsMax));
+				- Math.PI / 2.0, Math.PI / 2.0, -Math.PI, Math.PI, nbPointsMax));
 		lzone.add(new Zone(-Math.PI / 2.0,
-				(Math.PI / latitude) - Math.PI / 2.0, -Math.PI, Math.PI,nbPointsMax));
+				(Math.PI / latitude) - Math.PI / 2.0, -Math.PI, Math.PI,
+				nbPointsMax));
 	}
 
 	/**
@@ -215,7 +226,7 @@ public class Sphere {
 	}
 
 	/**
-	 * Update the currant zone thanks to the last vector received
+	 * Update the current zone thanks to the last vector received
 	 * 
 	 * @param vcourant
 	 *            last vector sent by the IMU
@@ -240,13 +251,15 @@ public class Sphere {
 	protected int getRayon() {
 		return (int) radius;
 	}
-	
-	/** Display setter
+
+	/**
+	 * Display setter
 	 * 
 	 */
 	public void setDisplay(AffichSphere as) {
 		this.affichage = as;
 	}
+
 	/**
 	 * Test functions of the class
 	 * 
@@ -254,7 +267,7 @@ public class Sphere {
 	 */
 
 	public static void main(String[] args) {
-		Sphere s = new Sphere(20, 10,800);
+		Sphere s = new Sphere(20, 10, 800);
 		Vecteur center = new Vecteur(5, 10, 15);
 		Vecteur v = new Vecteur(8, 20, 21);
 		s.update(10.5, center, v, v);
