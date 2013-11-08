@@ -286,6 +286,7 @@ public class Shell2 {
 			public void aircraftExited(Aircraft ac) {
 				try {
 					if (comboBox.getSelectedItem().equals(ac)) {
+						
 						panel_2.setBackground(new Color(255, 0, 0));
 						btnNewButton.setEnabled(false);
 						btnNewButton_1.setEnabled(false);
