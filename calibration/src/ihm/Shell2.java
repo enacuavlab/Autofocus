@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -469,57 +470,85 @@ public class Shell2 {
 		// Listeners on button to switch to calibration
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				type = TypeCalibration.MAGNETOMETER;
-				ImageIcon icon = new ImageIcon(this.getClass().getResource(
-						"sphereMag.png"));
-				icon.setImage(icon.getImage().getScaledInstance(90, 50,
-						Image.SCALE_SMOOTH));
-				panel_3.setIcon(icon);
-				FilterSphere filtre = new FilterSphere(s, 40, type);
-				Data data = new Data(filtre, type);
-				imu.ListenRaw(data, type, log,
-						((Aircraft) comboBox.getSelectedItem()).getId());
-				imu.stopListenAllId((Aircraft) comboBox.getSelectedItem());
-				results.setData(data);
-				results.setType(type);
-				results.setId(((Aircraft) comboBox.getSelectedItem()).getId());
-				s.setDisplay(magneto);
-				((CardLayout) panel.getLayout()).show(panel, "mag");
-				btnNewButton.setEnabled(false);
-				btnNewButton_1.setEnabled(false);
-				btnResults.setEnabled(true);
-				btnHome.setEnabled(true);
-				panel_3.setVisible(true);
-				textPane.setVisible(true);
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								type = TypeCalibration.MAGNETOMETER;
+								ImageIcon icon = new ImageIcon(this.getClass()
+										.getResource("sphereMag.png"));
+								icon.setImage(icon.getImage()
+										.getScaledInstance(90, 50,
+												Image.SCALE_SMOOTH));
+								panel_3.setIcon(icon);
+								FilterSphere filtre = new FilterSphere(s, 40,
+										type);
+								Data data = new Data(filtre, type);
+								imu.ListenRaw(data, type, log,
+										((Aircraft) comboBox.getSelectedItem())
+												.getId());
+								imu.stopListenAllId((Aircraft) comboBox
+										.getSelectedItem());
+								results.setData(data);
+								results.setType(type);
+								results.setId(((Aircraft) comboBox
+										.getSelectedItem()).getId());
+								s.setDisplay(magneto);
+								((CardLayout) panel.getLayout()).show(panel,
+										"mag");
+								btnNewButton.setEnabled(false);
+								btnNewButton_1.setEnabled(false);
+								btnResults.setEnabled(true);
+								btnHome.setEnabled(true);
+								panel_3.setVisible(true);
+								textPane.setVisible(true);
+							}
+						});
+					}
+				}).start();
 			}
 		});
 
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				type = TypeCalibration.ACCELEROMETER;
-				ImageIcon icon = new ImageIcon(this.getClass().getResource(
-						"sphereAccel.png"));
-				System.out.println((int) panel_3.getPreferredSize().getWidth());
-				icon.setImage(icon.getImage().getScaledInstance(90, 50,
-						Image.SCALE_SMOOTH));
-				panel_3.setIcon(icon);
-				FilterAccel filtre = new FilterAccel(100, type, 200, 40,
-						accelero);
-				Data data = new Data(filtre, type);
-				imu.ListenRaw(data, type, log,
-						((Aircraft) comboBox.getSelectedItem()).getId());
-				imu.stopListenAllId((Aircraft) comboBox.getSelectedItem());
-				results.setData(data);
-				results.setType(type);
-				results.setId(((Aircraft) comboBox.getSelectedItem()).getId());
-				s.setDisplay(accelS);
-				((CardLayout) panel.getLayout()).show(panel, "accel");
-				btnNewButton.setEnabled(false);
-				btnNewButton_1.setEnabled(false);
-				btnResults.setEnabled(true);
-				btnHome.setEnabled(true);
-				panel_3.setVisible(true);
-				textPane.setVisible(true);
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								ImageIcon icon = new ImageIcon(this.getClass()
+										.getResource("sphereAccel.png"));
+								System.out.println((int) panel_3
+										.getPreferredSize().getWidth());
+								icon.setImage(icon.getImage()
+										.getScaledInstance(90, 50,
+												Image.SCALE_SMOOTH));
+								panel_3.setIcon(icon);
+								FilterAccel filtre = new FilterAccel(100, type,
+										200, 40, accelero);
+								Data data = new Data(filtre, type);
+								imu.ListenRaw(data, type, log,
+										((Aircraft) comboBox.getSelectedItem())
+												.getId());
+								imu.stopListenAllId((Aircraft) comboBox
+										.getSelectedItem());
+								results.setData(data);
+								results.setType(type);
+								results.setId(((Aircraft) comboBox
+										.getSelectedItem()).getId());
+								s.setDisplay(accelS);
+								((CardLayout) panel.getLayout()).show(panel,
+										"accel");
+								btnNewButton.setEnabled(false);
+								btnNewButton_1.setEnabled(false);
+								btnResults.setEnabled(true);
+								btnHome.setEnabled(true);
+								panel_3.setVisible(true);
+								textPane.setVisible(true);
+							}
+						});
+					}
+				}).start();
 			}
 		});
 
