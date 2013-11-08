@@ -283,138 +283,249 @@ public class Shell2 {
 		// Listeners for all panels
 
 		imu.addIMUListener(new IMUAdaptater() {
-			public void aircraftExited(Aircraft ac) {
-				try {
-					if (comboBox.getSelectedItem().equals(ac)) {
-						
-						panel_2.setBackground(new Color(255, 0, 0));
-						btnNewButton.setEnabled(false);
-						btnNewButton_1.setEnabled(false);
+
+			public void aircraftExited(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									if (comboBox.getSelectedItem().equals(ac)) {
+
+										panel_2.setBackground(new Color(255, 0,
+												0));
+										btnNewButton.setEnabled(false);
+										btnNewButton_1.setEnabled(false);
+									}
+								} catch (Exception e) {
+									System.out.println("comboBox AC vide");
+									panel_2.setBackground(new Color(255, 0, 0));
+								}
+							}
+						});
 					}
-				} catch (Exception e) {
-					System.out.println("comboBox AC vide");
-					panel_2.setBackground(new Color(255, 0, 0));
-				}
+				}).run();
 			}
 
-			public void aircraftConnected(Aircraft ac) {
-				try {
-					if (comboBox.getSelectedItem().equals(ac)) {
-						panel_2.setBackground(new Color(0, 255, 0));
-						if (ac.getIsRawData()) {
-							panel_1.setBackground(Color.GREEN);
-							btnNewButton.setEnabled(true);
-							btnNewButton_1.setEnabled(true);
-						}
+			public void aircraftConnected(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									if (comboBox.getSelectedItem().equals(ac)) {
+										panel_2.setBackground(new Color(0, 255,
+												0));
+										if (ac.getIsRawData()) {
+											panel_1.setBackground(Color.GREEN);
+											btnNewButton.setEnabled(true);
+											btnNewButton_1.setEnabled(true);
+										}
+									}
+								} catch (Exception e) {
+									System.out.println("comboBox AC vide");
+								}
+							}
+						});
 					}
-				} catch (Exception e) {
-					System.out.println("comboBox AC vide");
-				}
+				}).run();
 			}
 
-			public void aircraftRawOn(Aircraft ac) {
-				try {
-					if (comboBox.getSelectedItem().equals(ac)) {
-						panel_1.setBackground(new Color(0, 255, 0));
+			public void aircraftRawOn(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									if (comboBox.getSelectedItem().equals(ac)) {
+										panel_1.setBackground(new Color(0, 255,
+												0));
 
+									}
+								} catch (Exception e) {
+									System.out.println("comboBox AC vide");
+								}
+							}
+						});
 					}
-				} catch (Exception e) {
-					System.out.println("comboBox AC vide");
-				}
+				}).run();
 			}
 
-			public void aircraftRawOff(Aircraft ac) {
-				try {
-					if (comboBox.getSelectedItem().equals(ac)) {
-						panel_1.setBackground(new Color(255, 0, 0));
+			public void aircraftRawOff(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									if (comboBox.getSelectedItem().equals(ac)) {
+										panel_1.setBackground(new Color(255, 0,
+												0));
+									}
+								} catch (Exception e) {
+									System.out.println("comboBox AC vide");
+								}
+							}
+						});
 					}
-				} catch (Exception e) {
-					System.out.println("comboBox AC vide");
-				}
+				}).run();
 			}
 		});
 
 		// Listeners for welcome
 
 		imu.addIMUListener(new IMUAdaptater() {
-			public void aircraftConnected(Aircraft ac) {
-				comboBox.addItem(ac);
-				if (ac.equals(comboBox.getSelectedItem())) {
-					try {
-						panel_2.setBackground(Color.GREEN);
-						Thread.sleep(20);
-						comboBox_1.setModel(new DefaultComboBoxModel<String>(
-								(ac.getModes().toArray(new String[1]))));
-					} catch (Exception e) {
-						System.out.println("Failure in getting modes");
-						e.printStackTrace();
+			public void aircraftConnected(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								comboBox.addItem(ac);
+								if (ac.equals(comboBox.getSelectedItem())) {
+									try {
+										panel_2.setBackground(Color.GREEN);
+										Thread.sleep(20);
+										comboBox_1
+												.setModel(new DefaultComboBoxModel<String>(
+														(ac.getModes()
+																.toArray(new String[1]))));
+									} catch (Exception e) {
+										System.out
+												.println("Failure in getting modes");
+										e.printStackTrace();
+									}
+								}
+							}
+						});
 					}
-				}
+				}).run();
 			}
 
-			public void aircraftRawOn(Aircraft ac) {
+			public void aircraftRawOn(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									if (comboBox.getSelectedItem().equals(ac)) {
+										btnNewButton.setEnabled(true);
+										btnNewButton_1.setEnabled(true);
+									}
+								} catch (Exception e) {
+									System.out.println("comboBox AC vide");
+								}
+							}
+						});
+					}
+				}).run();
+			}
+
+			public void aircraftRawOff(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									if (comboBox.getSelectedItem().equals(ac)) {
+										btnNewButton.setEnabled(false);
+										btnNewButton_1.setEnabled(false);
+
+									}
+								} catch (Exception e) {
+									System.out.println("comboBox AC vide");
+								}
+							}
+						});
+					}
+				}).run();
+			}
+
+			public void aircraftExited(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								if (ac.equals(comboBox.getSelectedItem())) {
+									comboBox_1
+											.setModel(new DefaultComboBoxModel<String>());
+								}
+								comboBox.removeItem(ac);
+							}
+						});
+					}
+				}).run();
+			}
+
+			public void aircraftModChanged(final Aircraft ac) {
 				try {
 					if (comboBox.getSelectedItem().equals(ac)) {
-						btnNewButton.setEnabled(true);
-						btnNewButton_1.setEnabled(true);
-					}
-				} catch (Exception e) {
-					System.out.println("comboBox AC vide");
-				}
-			}
-
-			public void aircraftRawOff(Aircraft ac) {
-				try {
-					if (comboBox.getSelectedItem().equals(ac)) {
-						btnNewButton.setEnabled(false);
-						btnNewButton_1.setEnabled(false);
-
-					}
-				} catch (Exception e) {
-					System.out.println("comboBox AC vide");
-				}
-			}
-
-			public void aircraftExited(Aircraft ac) {
-				if (ac.equals(comboBox.getSelectedItem())) {
-					comboBox_1.setModel(new DefaultComboBoxModel<String>());
-				}
-				comboBox.removeItem(ac);
-			}
-
-			public void aircraftModChanged(Aircraft ac) {
-				try {
-					if (comboBox.getSelectedItem().equals(ac)) {
-						comboBox_1.setSelectedIndex(ac.getMode());
+						new Thread(new Runnable() {
+							public void run() {
+								SwingUtilities.invokeLater(new Runnable() {
+									public void run() {
+										comboBox_1.setSelectedIndex(ac
+												.getMode());
+									}
+								});
+							}
+						}).run();
 					}
 				} catch (Exception e) {
 					System.out.println("comboBox mode vide");
-					comboBox_1.setModel(new DefaultComboBoxModel<String>(
-							((Aircraft) comboBox.getSelectedItem()).getModes()
-									.toArray(new String[1])));
+					new Thread(new Runnable() {
+						public void run() {
+							SwingUtilities.invokeLater(new Runnable() {
+								public void run() {
+									comboBox_1
+											.setModel(new DefaultComboBoxModel<String>(
+													((Aircraft) comboBox
+															.getSelectedItem())
+															.getModes()
+															.toArray(
+																	new String[1])));
+								}
+							});
+						}
+					}).run();
 				}
 			}
 		});
 
 		comboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
+			public void itemStateChanged(final ItemEvent arg0) {
 				System.out.println("selected");
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
 					try {
-						panel_2.setBackground(Color.GREEN);
-						Thread.sleep(20);
-						comboBox_1.setModel(new DefaultComboBoxModel<String>(
-								((Aircraft) arg0.getItem()).getModes().toArray(
-										new String[1])));
-						if (((Aircraft) arg0.getItem()).getIsRawData()) {
-							panel_1.setBackground(Color.GREEN);
-							btnNewButton.setEnabled(true);
-							btnNewButton_1.setEnabled(true);
-						} else {
-							panel_1.setBackground(Color.RED);
-							btnNewButton.setEnabled(false);
-							btnNewButton_1.setEnabled(false);
-						}
+						new Thread(new Runnable() {
+							public void run() {
+								SwingUtilities.invokeLater(new Runnable() {
+									public void run() {
+										panel_2.setBackground(Color.GREEN);
+										try {
+											Thread.sleep(20);
+										} catch (Exception e) {
+											e.printStackTrace();
+										}
+										comboBox_1
+												.setModel(new DefaultComboBoxModel<String>(
+														((Aircraft) arg0
+																.getItem())
+																.getModes()
+																.toArray(
+																		new String[1])));
+										if (((Aircraft) arg0.getItem())
+												.getIsRawData()) {
+											panel_1.setBackground(Color.GREEN);
+											btnNewButton.setEnabled(true);
+											btnNewButton_1.setEnabled(true);
+										} else {
+											panel_1.setBackground(Color.RED);
+											btnNewButton.setEnabled(false);
+											btnNewButton_1.setEnabled(false);
+										}
+									}
+								});
+							}
+						}).run();
 					} catch (Exception e) {
 						System.out.println("Failure downcasting to aircraft");
 						e.printStackTrace();
@@ -562,14 +673,23 @@ public class Shell2 {
 				imu.stopListenAllId();
 				comboBox.removeAllItems();
 				imu.listenAllAc();
-				btnNewButton.setEnabled(false);
-				btnNewButton_1.setEnabled(false);
-				btnResults.setEnabled(false);
-				btnHome.setEnabled(false);
-				panel_3.setVisible(false);
-				textPane.setVisible(false);
-				s.clean();
-				((CardLayout) panel.getLayout()).show(panel, "welcome");
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								btnNewButton.setEnabled(false);
+								btnNewButton_1.setEnabled(false);
+								btnResults.setEnabled(false);
+								btnHome.setEnabled(false);
+								panel_3.setVisible(false);
+								textPane.setVisible(false);
+								s.clean();
+								((CardLayout) panel.getLayout()).show(panel,
+										"welcome");
+							}
+						});
+					}
+				}).run();
 			}
 		});
 
