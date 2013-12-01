@@ -9,7 +9,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -66,7 +65,7 @@ public class AffichSphere extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g.clearRect(0, 0, super.getHeight(), super.getWidth());
 		//System.out.println(s.getRayon() + " : " + super.getHeight() + " : " + super.getWidth());
-		/*List<Point2D> points;
+		List<Point2D> points;
 		//useful store structure
 		int n = zones.get(1).getListContour().size();
 		int xPoints[] = new int[n];
@@ -92,14 +91,12 @@ public class AffichSphere extends JPanel {
 				g2d.drawPolygon(xPoints, yPoints, n);
 				} catch (Exception e) {
 				}
-		}*/
+		}
 		//Draws the current zone
 		Zone temp = s.getZoneCurrent();
-		int i = 0;
-		List<Point2D>points = temp.getListContour();
-		int n = zones.get(1).getListContour().size();
-		int xPoints[] = new int[n];
-		int yPoints[] = new int[n];
+		points = temp.getListContour();
+		i = 0;
+		n = zones.get(1).getListContour().size();
 		for (Point2D p : points) {
 			xPoints[i] = (int)((p.getX()/(float)s.getRayon())*(float)super.getWidth()/2 + (float)super.getWidth()/2);
 			yPoints[i] = (int)((p.getY()/(float)s.getRayon())*(float)super.getHeight()/2 + (float)super.getHeight()/2);

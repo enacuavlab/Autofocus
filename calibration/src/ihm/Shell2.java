@@ -7,9 +7,9 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -26,9 +26,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
@@ -46,8 +46,12 @@ import ellipsoide.AffichSphere;
 import ellipsoide.Sphere;
 import filtre.FilterAccel;
 import filtre.FilterSphere;
-import java.awt.SystemColor;
 
+/** Responsible of all display tasks except the display of sphere or magnetometer display
+ * 
+ * @author alinoe
+ *
+ */
 public class Shell2 {
 
 	/**

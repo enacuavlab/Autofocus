@@ -120,8 +120,6 @@ public class CalibrateSystem extends Thread{
 
 	/**
 	 * Update the string displayed in the textArea
-	 * 
-	 * @return String
 	 */
 	public void run() {
 		SwingUtilities.invokeLater(new Runnable() {

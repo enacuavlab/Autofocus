@@ -78,7 +78,7 @@ public class Zone {
 	 *            minimum longitude delimiting the zone
 	 * @param long_angle_end
 	 *            maximum longitude delimiting the zone
-	 * @param nbMaxPoints
+	 * @param nbPointsMax
 	 *            number of points on the surface of the sphere to get the right
 	 *            calibration
 	 */
@@ -140,7 +140,7 @@ public class Zone {
 	 *            vector that is tested to be in the area
 	 * @param center
 	 *            center of the ellipsoid
-	 * @return
+	 * @return the result of the test
 	 */
 	public boolean isIn(VecteurFiltrable<Double> v,
 			VecteurFiltrable<Double> center) {
@@ -166,7 +166,7 @@ public class Zone {
 	 *            x center coordinate of the ellipsoid
 	 * @param y_center
 	 *            y center coordinate of the ellipsoid
-	 * @return
+	 * @return the result of the test
 	 */
 	private boolean is_in_long(double x_coord, double y_coord, double x_center,
 			double y_center) {
@@ -198,7 +198,7 @@ public class Zone {
 	 *            y center coordinate of the ellipsoid
 	 * @param z_center
 	 *            z center coordinate of the ellipsoids
-	 * @return
+	 * @return the result of the test
 	 */
 	private boolean is_in_lat(double x_coord, double y_coord, double z_coord,
 			double x_center, double y_center, double z_center) {
@@ -218,7 +218,7 @@ public class Zone {
 	 * this function convert the 3D coordinate into 2D coordinate agreeing to
 	 * the Mollweide projection
 	 * 
-	 * @param radius
+	 * @param rad
 	 *            radius of the sphere needed to represent the 2D points
 	 */
 	public void maj_list_contour(double rad) {

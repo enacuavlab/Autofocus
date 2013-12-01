@@ -41,10 +41,7 @@ public class Result extends JDialog {
 	private JTextArea textPaneAccuracy;
 	private JTextArea textPaneResults;
 	
-	/**
-	 * 
-	 * @param parent
-	 *            the shell
+	/** Builder
 	 * @param title
 	 *            title of the JDialog
 	 * @param modal

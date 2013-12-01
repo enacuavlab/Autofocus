@@ -3,6 +3,12 @@ package ihm;
 import imu.Aircraft;
 import imu.IMUListener;
 
+/** Abstract class to ease the use of the IMU class by providing listener interface
+ * 
+ * @author alinoe
+ *
+ */
+
 public abstract class IMUAdaptater implements IMUListener {
 
 	@Override

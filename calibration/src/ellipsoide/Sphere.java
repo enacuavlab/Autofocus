@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import javax.swing.SwingUtilities;
-
 import data.Vecteur;
 import filtre.VecteurFiltrable;
 
@@ -74,7 +72,8 @@ public class Sphere {
 	 *            this is the longitude step of 2PI rad
 	 * @param latitude
 	 *            this is the latitude step of PI rad
-	 * @param i
+	 * @param nbPointsMax
+	 *            the max number of points on the sphere
 	 */
 	public Sphere(double longitude, double latitude, int nbPointsMax) {
 		this.nbPointsMax = nbPointsMax;

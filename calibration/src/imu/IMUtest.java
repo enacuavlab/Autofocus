@@ -193,7 +193,7 @@ public class IMUtest implements IvyMessageListener {
 	/**
 	 * getter of the type of calibration
 	 * 
-	 * @return
+	 * @return the type of the current calibration
 	 */
 	public TypeCalibration getCalibration() {
 		return calibration;
@@ -239,11 +239,9 @@ public class IMUtest implements IvyMessageListener {
 	 * @param indexTelemetry
 	 *            the position of the telemetrymode in the settings.xml of the
 	 *            drone
-	 * @param id
 	 * @param btnAccelero
 	 * @param btnMagneto
-	 * @param comboMod
-	 * @param idDrone
+	 * @param id
 	 *            id of the drone needed to listen the RAW_DATA messages
 	 * @throws IvyException
 	 */

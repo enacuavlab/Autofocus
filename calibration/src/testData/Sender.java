@@ -19,10 +19,6 @@ public class Sender extends Thread implements IvyMessageListener {
 	 * permit to send a message to the drone in order to set the new telemetry
 	 * mode.
 	 * 
-	 * @param id
-	 *            id of the drone
-	 * @param numbermode
-	 *            mode of telemetry
 	 * @throws IvyException
 	 * @throws InterruptedException
 	 */
@@ -54,7 +50,7 @@ public class Sender extends Thread implements IvyMessageListener {
 
 	public static void main(String args[]){
 		try {
-			Sender s = new Sender("C:\\Users\\Alinoé\\Desktop\\13_05_29__10_15_23.data");
+			Sender s = new Sender("input test file");
 			s.sendRawMessage();
 		} catch (Exception e) {
 			e.printStackTrace();

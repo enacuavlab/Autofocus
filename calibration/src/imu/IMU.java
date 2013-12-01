@@ -22,6 +22,11 @@ import fr.dgac.ivy.IvyClient;
 import fr.dgac.ivy.IvyException;
 import fr.dgac.ivy.IvyMessageListener;
 
+/** This class is in charge of all the communications on the ivy bus
+ * 
+ * @author alinoe
+ *
+ */
 public class IMU {
 
 	/** list of the names of the connected Aircraft */
@@ -46,40 +51,56 @@ public class IMU {
 		return l;
 	}
 
-	/**
-	 * Method to refresh aircraft list
+
+	/**adding a listener for new aircraft connecting
 	 * 
+	 * @param imuL
 	 */
-	public void refresh() {
-
-	}
-
 	public void addIMUListener(IMUListener imuL) {
 		listeners.add(IMUListener.class, imuL);
 	}
 
+	/**adding a listener for new aircraft disconnecting
+	 * 
+	 * @param imuL
+	 */
 	public void removeIMUListener(IMUListener imuL) {
 		listeners.remove(IMUListener.class, imuL);
 	}
 
-	public IMUListener[] getIMUListeners() {
+	/**Used to send to all listeners a connection
+	 * 
+	 */
+	private IMUListener[] getIMUListeners() {
 		return listeners.getListeners(IMUListener.class);
 	}
 
-	protected void fireAircraftConnected(final Aircraft ac) {
+	/**Used to send to all listeners a connection
+	 * 
+	 * @param as
+	 */
+	private void fireAircraftConnected(final Aircraft ac) {
 		timerPresence.get(ac.getId()).start();
 		for (IMUListener imuL : this.getIMUListeners()) {
 			imuL.aircraftConnected(ac);
 		}
 	}
 
-	protected void fireAircraftRawOn(Aircraft ac) {
+	/**Used to send to all listeners a switch to raw mode for an aircraft
+	 * 
+	 * @param ac
+	 */
+	private void fireAircraftRawOn(Aircraft ac) {
 		timerRaw.get(ac.getId()).start();
 		for (IMUListener imuL : this.getIMUListeners()) {
 			imuL.aircraftRawOn(ac);
 		}
 	}
 
+	/**Used to send to all listeners that an aircraft has stopped sending raw
+	 * 
+	 * @param ac
+	 */
 	protected void fireAircraftRawOff(Aircraft ac) {
 		timerRaw.get(ac.getId()).stop();
 		for (IMUListener imuL : this.getIMUListeners()) {
@@ -87,12 +108,20 @@ public class IMU {
 		}
 	}
 
+	/**Used to send to all listeners that an aircraft has changed mode
+	 * 
+	 * @param ac
+	 */
 	protected void fireAircraftModChanged(Aircraft ac) {
 		for (IMUListener imuL : this.getIMUListeners()) {
 			imuL.aircraftModChanged(ac);
 		}
 	}
 
+	/**Used to send to all listeners that an aircraft has left the bus
+	 * 
+	 * @param ac
+	 */
 	protected void fireAircraftExited(Aircraft ac) {
 		timerPresence.get(ac.getId()).stop();
 		for (IMUListener imuL : this.getIMUListeners()) {
@@ -100,6 +129,12 @@ public class IMU {
 		}
 	}
 
+	/**creates a new aircraft in the model
+	 * 
+	 * @param acId
+	 * @param reqid
+	 * @return the built aircraft
+	 */
 	private Aircraft buildAc(final int acId, int reqid) {
 		final Aircraft ac = new Aircraft("", acId, "", 0,
 				new ArrayList<String>(), 0);
@@ -228,6 +263,10 @@ public class IMU {
 		return ac;
 	}
 
+	/** Delete an aircraft when necessary : disconnected or lost
+	 * 
+	 * @param ac
+	 */
 	public void deleteAc(Aircraft ac) {
 		bus.unBindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)");
 		bus.unBindMsg("^" + ac.getId() + " IMU_[A-Z]+_RAW(.*)");
@@ -274,6 +313,9 @@ public class IMU {
 		}
 	}
 
+	/** Update the aircraft list at launch
+	 * 
+	 */
 	public void getAllAc() {
 		final int reqid = 42;
 		try {
@@ -297,11 +339,17 @@ public class IMU {
 		}
 	}
 
+	/** Update the list when asked
+	 * 
+	 */
 	public void listenAllAc() {
 		getAllAc();
 		refreshAllAc();
 	}
 
+	/** Delete all aircraft in the model
+	 * 
+	 */
 	public void stopListenAllId() {
 		bus.unBindMsg("^ground NEW_AIRCRAFT ([0-9]*)");
 		bus.unBindMsg("^ground AIRCRAFT_DIE ([0-9]*)");
@@ -311,6 +359,11 @@ public class IMU {
 		}
 	}
 
+	/** Delete all aircraft in the model except the one given as argument
+	 * used when a calibration mode has been chosen
+	 * 
+	 * @param acToSave
+	 */
 	public void stopListenAllId(Aircraft acToSave) {
 		bus.unBindMsg("^ground NEW_AIRCRAFT ([0-9]*)");
 		bus.unBindMsg("^ground AIRCRAFT_DIE ([0-9]*)");
@@ -380,10 +433,19 @@ public class IMU {
 		System.out.println("stoplistenRAW");
 	}
 
+	/** Return all detected aicraft
+	 * 
+	 * @return list of the aircrafts
+	 */
 	public Aircraft[] getAcs() {
 		return acL.toArray(new Aircraft[1]);
 	}
 
+	/** Change the mode of an aircraft
+	 * 
+	 * @param mode
+	 * @param ac
+	 */
 	public void changeAcMode(int mode, Aircraft ac) {
 		ac.setMode(mode);
 		try {
@@ -394,6 +456,9 @@ public class IMU {
 		}
 	}
 
+	/** the Builder
+	 * 
+	 */
 	public IMU() {
 		bus = new Ivy("IMU", "IMU Ready", null);
 		try {

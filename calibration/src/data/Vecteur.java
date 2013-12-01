@@ -120,7 +120,7 @@ public class Vecteur extends Vector3D implements VecteurFiltrable<Double> {
 	/**
 	 * Test of equality between two vectors
 	 * @param test
-	 * @return
+	 * @return the result of the test
 	 */
 	public boolean equals(VecteurFiltrable<Double> test) {
 		return super.equals(test);

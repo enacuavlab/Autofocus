@@ -91,7 +91,6 @@ public class Aircraft {
 	
 	/** set the value of isRaw
 	 * 
-	 * @return mode
 	 */
 	public void setRaw(boolean b) {
 		isRaw = b;
@@ -114,8 +113,8 @@ public class Aircraft {
 	}
 	
 	/** return the name in order to override tostring
-	 *  @override
 	 */
+	@Override
 	public String toString() {
 		return name;
 	}

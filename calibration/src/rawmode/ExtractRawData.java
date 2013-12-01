@@ -103,7 +103,6 @@ public class ExtractRawData {
 	/**
 	 * main fonction return the possible telemetry modes
 	 * 
-	 * @param toParse
 	 * @return the list of the telemetry modes
 	 */
 	public List<String> extract() throws IncorrectXmlException {

@@ -32,7 +32,6 @@ public class FilterSphere extends Filter {
 	 * Creates a filter who uses the plot given as an argument to plot in a two
 	 * dimensional graph (simple orthogonal projection on xy)
 	 * 
-	 * @param plot
 	 * @param windowSize
 	 * @param type
 	 */
@@ -50,19 +49,19 @@ public class FilterSphere extends Filter {
 	 */
 	@Override
 	public void add(final VecteurFiltrable<Double> v) {
-		new Thread(new Runnable() {
-			public void run() {
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						s.updateCourant(v);
-					}
-				});
-			}
-		}).start();
+		/*
+		 * new Thread(new Runnable() { public void run() {
+		 * SwingUtilities.invokeLater(new Runnable() { public void run() {
+		 * s.updateCourant(v); } }); } }).start();
+		 */
 		super.add(v);
 		final Vecteur a[] = new Vecteur[windowSize];
 		if (!(window.remainingCapacity() > 0)) {
-			s.update(rayon, center, window.toArray(a)[0], v);
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					s.update(rayon, center, window.toArray(a)[0], v);
+				}
+			});
 		}
 
 		// System.out.println(center);
