@@ -49,8 +49,7 @@ This will open the Home window:
 [[image:Test_im.png|800px|Autofocus]]
 
 
-3. Select the drone ID
-The ID should correspond to the ID set in Paparazzi.
+3. Select the drone name
 The name of the drone appears as well as a menu containing the different telemetry modes. 
 
 
