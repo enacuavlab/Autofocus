@@ -1,0 +1,115 @@
+[[Link title]]This software been designed by a group of four ENAC students in for object oriented programming design synthesis exercise, with the goal to offer a user friendly interface for the calibration of the Magnetometer and Accelerometers.
+The software offers real time feedback during the calibration process and indications how to manipulate the IMU during the procedure in order to enhance the quality of the calibration, as well as offering a step by step approach to the whole calibration procedure through a user friendly interface.
+
+The calibration procedure is decomposed in three steps, initialization, measurements and parameter calculation.
+
+==== Initialization ====
+The user is asked to choose the drone ID and to select telemetry mode to transfer RAW_DATA on the Ivy Bus, which will be used for the calibration.
+
+==== Measurement ====
+For an optimal calibration, the IMU should be turned in all direction to cover as much measurement points as possible. However it is difficult to keep track of which sides already have been covered.
+This software offers a real time feedback on the quantity of measurements and their distribution in space.
+
+==== Parameter Calculation ====
+A python file is run to calculate the value of each of the bias and sensitivity of the three axes as well as the standard deviation and mean of each measurement.
+The theory behind the calibration and the python calibrate.py file can be found on the page [[ImuCalibration]]
+== Working Principle ==
+Autofocus creates an Ivy listener that is initialized by the user when setting the drone ID and telemetry mode. The RAW_DATA messages of the drone are filtered and plotted on a sphere that is calculated and updated using the data. This sphere adjusts itself continuously to new points and is displayed in 2D as a flattened sphere. The sphere is divided in zones that change from red to green with increasing measurements in that zone. When enough data has been measured, the user can choose to stop the calibration. This runs the calibration file calibrate.py that uses a temporary log file created with all the RAW_DATA. More information on the parameter calculation can be found on the IMUcalibration page of the ENAC wiki.
+The bias and sensitivity of the three axes are returned in XML format an can easily be copy-pasted into the drone airframe file.
+an exemple of the XML format for the magnetometer:
+{{Box Code|conf/airframes/myplane.xml|
+<source lang="xml">
+  <section name="IMU" prefix="IMU_">
+    <define name="MAG_X_SENS" value="3.17378921476" integer="16"/>
+    <define name="MAG_Y_SENS" value="3.14663275967" integer="16"/>
+    <define name="MAG_Z_SENS" value="3.26531022727" integer="16"/>
+
+    <define name="MAG_X_NEUTRAL" value="2059"/>
+    <define name="MAG_Y_NEUTRAL" value="1944"/>
+    <define name="MAG_Z_NEUTRAL" value="2099"/>
+  </section>
+</source>
+}}
+
+
+==== Accelerometer ====
+The accelerometer measurement is very sensitive to movement, therefore the drone should be placed on a flat stable surface.It is very time consuming to have the drone in a completely stable position for a large number of measurements so turning it in six positions, to have the maximum accelermometer values on the three axes, is sufficient. 
+The interface offers a real time feedback of the data measured and a progress bar shows when enough points are measured for each position. Indications on how to manipulate the drone are also presented.
+ 
+==== Magnetometer ====
+The drone should be turned in all possible directions to have the best possible distribution of data on the sphere. The areas of the sphere turn green as the drone is turned in the right position.
+
+==User Manual==
+1. Launch Paparazzi and execute the drone you want to calibrate.
+
+2. In the Paparazzi center, select: tools -> Calibrate (or something else if you have chosen to call it differently in the installation).
+
+This will open the Home window:
+ 
+[[image:Test_im.png|800px|Autofocus]]
+
+
+3. Select the drone ID
+The ID should correspond to the ID set in Paparazzi.
+The name of the drone appears as well as a menu containing the different telemetry modes. 
+
+
+[[image:test_im.png|800px|Autofocus]]
+
+
+4. Select the telemetry mode that will send RAW_DATA of the IMU over the Ivy Bus. When the right mode is selected, IMU connexion turns yellow and the Accelerometer and Magnetometer buttons are enabled.
+
+[[image:test_im.png|800px|Autofocus]]
+
+5. Select Magnetometer or Accelerometer
+
+The measurment window will open and the measurements will begin.
+
+Explanation of the three buttons:
+
+'''Stop''': pauses the measurements and runs the python file to calculate the calibration parameters.
+
+'''Return''': Returns to Home window.
+
+'''Quit''': Returns to empty Home window.
+
+
+6. Measurements:
+
+'''Accelerometer'''
+Place the drone on a stable surface and keep it immobile until the progress bar is filled completely and the area is green.
+When this is done, the text box on the right gives instructions to move the drone.
+PLace the drone in the six different positions that have the maximum accelerometer values on the three axes, add extra measurements to increase the accuracy.
+A good way to start is to start with two opposite measurement points. For example: the drone facing up and down.
+
+
+'''Magnetometer'''
+The drone does not need to be still to gather usable data, so the drone should be move around slowly to cover all the areas on the sphere.
+A good way to start is to start with two opposite measurement points. For example: the drone facing up and down.
+
+
+7. Press Stop button. This starts the parameter calculation. An XML window containing the 6 parameters, the standard deviation and mean.
+
+
+
+== Installation ==
+
+Download the file autofocus.tar and extract.
+
+Place autofocus.jar and autofocus.sh in /paparazzi/sw/tools/calibration/
+
+In the file ./paparazzi/conf/control-panel.xml
+Add <program name = "name_appearing_in_paparazzi_menu" command = "sw/tools/calibration/autofocus.sh"> in the program section.
+
+{{Box Code|conf/control-panel.xml|
+<source lang="xml">
+ <section name="programs">
+
+	<program name = "Calibrate" command = "sw/tools/calibration/autofocus.sh">
+     ...
+  </section>
+</source>
+}}
+
+
+To run Autofocus execute the .jar file.
