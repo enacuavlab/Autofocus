@@ -1,10 +1,17 @@
 package testData;
 
 import java.util.Iterator;
+import java.util.logging.Logger;
 
-import fr.dgac.ivy.*;
+import fr.dgac.ivy.Ivy;
+import fr.dgac.ivy.IvyClient;
+import fr.dgac.ivy.IvyException;
+import fr.dgac.ivy.IvyMessageListener;
 
 public class Sender extends Thread implements IvyMessageListener {
+
+	private static Logger logger = Logger.getLogger(Sender.class.getName());
+
 	private DataReader dr;
 	private Ivy bus;
 
@@ -23,20 +30,21 @@ public class Sender extends Thread implements IvyMessageListener {
 	 * @throws InterruptedException
 	 */
 	public void sendRawMessage() throws IvyException, InterruptedException {
-		System.out.println("Debut sender");
+		logger.info("starting sending IMU test data...");
 		Iterator<String> i = dr.iterator();
 		String temp = new String();
 		while (i.hasNext()) {
 			temp = i.next();
-			//System.out.println("Sender : " + temp);
 			bus.sendMsg(temp);
 			Thread.sleep(20);
 		}
+		logger.info("stopped sending IMU test data");
 	}
 
 	public void arret() {
 		try {
 			bus.stop();
+			logger.info("stopped sending IMU test data");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -48,23 +56,23 @@ public class Sender extends Thread implements IvyMessageListener {
 
 	}
 
-	public static void main(String args[]){
-		try {
-			Sender s = new Sender("input test file");
-			s.sendRawMessage();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void run() {
 		try {
 			this.sendRawMessage();
-		} catch (Exception e){
-			System.out.println("Sender Error");
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.warning(e.getMessage());
 		}
-		
+
 	}
+
+	// public static void main(String args[]) {
+	// try {
+	// Sender s = new Sender(
+	// "/home/deltadrone3/development/autofocus/calibration/test/calib_prod1_3_droneId_5.data");
+	// s.sendRawMessage();
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
 }

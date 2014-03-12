@@ -3,11 +3,13 @@ package calibrate;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Logger;
 
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import common.TypeCalibration;
+
 /**
  * Implements version of the calibration algorithm using a system call
  * 
@@ -21,7 +23,10 @@ import common.TypeCalibration;
  * @author Guillaume
  * 
  */
-public class CalibrateSystem extends Thread{
+public class CalibrateSystem extends Thread {
+
+	private static Logger logger = Logger.getLogger(CalibrateSystem.class
+			.getName());
 
 	/**
 	 * Allows to determine the string to launch the extern program
@@ -29,14 +34,14 @@ public class CalibrateSystem extends Thread{
 	private TypeCalibration type;
 
 	/**
-	 * To find the place where the calibration script is
-	 */
-	private String ppzHome;
-
-	/**
 	 * The name of the file we pull the parameters of
 	 */
 	private String logName;
+
+	/**
+	 * The script to be executed
+	 */
+	private String paparazziScriptCalibration;
 
 	/**
 	 * The string displayed in the area
@@ -47,14 +52,6 @@ public class CalibrateSystem extends Thread{
 	 * the textArea to print to
 	 */
 	private JTextArea result;
-	/**
-	 * the textArea with result
-	 */
-	private JTextArea resultCopy;
-	/**
-	 * The accuracy of the mesure
-	 */
-	private String prec;
 
 	/**
 	 * Initialize the values of the attributes
@@ -67,15 +64,13 @@ public class CalibrateSystem extends Thread{
 	 * @param textResult
 	 *            the textArea with results
 	 */
-	public CalibrateSystem(TypeCalibration t, String paparazziHome,
-			String logName, JTextArea result, JTextArea textResult) {
+	public CalibrateSystem(TypeCalibration t,
+			String paparazziScriptCalibration, String logName, JTextArea result) {
 		type = t;
-		ppzHome = paparazziHome;
 		this.logName = logName;
+		this.paparazziScriptCalibration = paparazziScriptCalibration;
 		this.parameters = "calcul en cours";
-		this.prec = "indisponible";
 		this.result = result;
-		this.resultCopy = textResult;
 	}
 
 	/**
@@ -88,12 +83,16 @@ public class CalibrateSystem extends Thread{
 	private void calibrates() throws InterruptedException, IOException {
 		String newline = System.getProperty("line.separator");
 		Runtime runtime = Runtime.getRuntime();
-		final Process process = runtime.exec("python "
-				+ ppzHome
-				+ "/sw/tools/calibration/calibrate.py "
-				+ "-s "
+
+		String command = "python "
+				+ paparazziScriptCalibration
+				+ " -s "
 				+ (type.equals(TypeCalibration.ACCELEROMETER) ? "ACCEL "
-						: "MAG ") + logName);
+						: "MAG ") + " -v " + logName;
+		logger.info("executing : " + command);
+		final Process process = runtime.exec(command);
+
+		logger.info("python script result for " + type + " :");
 		// Consommation de la sortie standard
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -105,42 +104,40 @@ public class CalibrateSystem extends Thread{
 				line.append(l);
 				line.append(newline);
 			}
-			String[] aline;
-			aline = line.toString().split("<");
-			prec = aline[0];
-			parameters = "<" + aline[1] + "<" + aline[2] + "<" + aline[3] + "<"
-					+ aline[4] + "<" + aline[5] + "<" + aline[6];
-			
+			parameters = line.toString();
+			logger.info(parameters);
+
 		} catch (IOException e) {
 			parameters = "Unable to parse";
+			logger.warning(e.getMessage());
 		} catch (ArrayIndexOutOfBoundsException e) {
 			parameters = "no data";
+			logger.warning(e.getMessage());
 		}
+		logger.info("end of python script for " + type);
 	}
 
 	/**
 	 * Update the string displayed in the textArea
 	 */
 	public void run() {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				result.setText(parameters);
-				resultCopy.setText(prec);
-			}
-		});
 		try {
 			calibrates();
 		} catch (InterruptedException e) {
-			System.out.println("can't get python script to calibrate");
+			logger.warning("can't get python script to calibrate : "
+					+ e.getMessage());
 		} catch (IOException e) {
-			System.out.println("can't get result file to calibrate");
+			logger.warning(" can't get result file to calibrate : "
+					+ e.getMessage());
 		} catch (Exception e) {
-			System.out.println("can't get calibration");
+			logger.warning(" can't get calibration : " + e.getMessage());
+			e.printStackTrace();
 		}
+
+		// Affichage des résultats
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				result.setText(parameters);
-				resultCopy.setText(prec);
 			}
 		});
 	}
