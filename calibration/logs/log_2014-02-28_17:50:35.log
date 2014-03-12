@@ -1,0 +1,92 @@
+2014-02-28 17:50:35 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod1_3_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-02-28 17:50:36 INFO imu.IMU : new aircraft built with id=5
+2014-02-28 17:50:36 INFO testData.Sender : starting sending IMU test data...
+2014-02-28 17:50:37 WARNING ihm.MainFrame : setSelectedIndex: 3 out of bounds
+2014-02-28 17:50:45 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-02-28 17:50:45 INFO imu.IMU : listening raw datas for drone 5...
+2014-02-28 17:50:45 INFO imu.IMU : IMY mess received  128 -50 -2195
+2014-02-28 17:50:45 INFO filtre.Filter : Filter.add vector 128.0 -50.0 -2195.0
+2014-02-28 17:50:45 INFO imu.IMU : IMY mess received  155 -38 -2029
+2014-02-28 17:50:45 INFO filtre.Filter : Filter.add vector 155.0 -38.0 -2029.0
+2014-02-28 17:50:45 INFO imu.IMU : IMY mess received  274 60 -2091
+2014-02-28 17:50:45 INFO filtre.Filter : Filter.add vector 274.0 60.0 -2091.0
+2014-02-28 17:50:45 INFO imu.IMU : IMY mess received  106 18 -2108
+2014-02-28 17:50:45 INFO filtre.Filter : Filter.add vector 106.0 18.0 -2108.0
+2014-02-28 17:50:45 INFO imu.IMU : IMY mess received  238 -7 -2073
+2014-02-28 17:50:45 INFO filtre.Filter : Filter.add vector 238.0 -7.0 -2073.0
+2014-02-28 17:50:45 INFO imu.IMU : IMY mess received  196 45 -2193
+2014-02-28 17:50:45 INFO filtre.Filter : Filter.add vector 196.0 45.0 -2193.0
+2014-02-28 17:50:45 INFO imu.IMU : IMY mess received  157 4 -2199
+2014-02-28 17:50:45 INFO filtre.Filter : Filter.add vector 157.0 4.0 -2199.0
+2014-02-28 17:50:45 INFO imu.IMU : IMY mess received  251 3 -2109
+2014-02-28 17:50:45 INFO filtre.Filter : Filter.add vector 251.0 3.0 -2109.0
+2014-02-28 17:50:45 INFO imu.IMU : IMY mess received  223 155 -2172
+2014-02-28 17:50:45 INFO filtre.Filter : Filter.add vector 223.0 155.0 -2172.0
+2014-02-28 17:50:46 INFO imu.IMU : IMY mess received  307 55 -1912
+2014-02-28 17:50:46 INFO filtre.Filter : Filter.add vector 307.0 55.0 -1912.0
+2014-02-28 17:50:46 INFO imu.IMU : IMY mess received  186 56 -2199
+2014-02-28 17:50:46 INFO filtre.Filter : Filter.add vector 186.0 56.0 -2199.0
+2014-02-28 17:50:46 INFO imu.IMU : IMY mess received  155 94 -2280
+2014-02-28 17:50:46 INFO filtre.Filter : Filter.add vector 155.0 94.0 -2280.0
+2014-02-28 17:50:46 INFO imu.IMU : IMY mess received  164 79 -2261
+2014-02-28 17:50:46 INFO filtre.Filter : Filter.add vector 164.0 79.0 -2261.0
+2014-02-28 17:50:46 INFO imu.IMU : IMY mess received  254 90 -1953
+2014-02-28 17:50:46 INFO filtre.Filter : Filter.add vector 254.0 90.0 -1953.0
+2014-02-28 17:50:46 INFO imu.IMU : IMY mess received  197 2 -2077
+2014-02-28 17:50:46 INFO filtre.Filter : Filter.add vector 197.0 2.0 -2077.0
+2014-02-28 17:50:46 INFO imu.IMU : IMY mess received  240 134 -1973
+2014-02-28 17:50:46 INFO filtre.Filter : Filter.add vector 240.0 134.0 -1973.0
+2014-02-28 17:50:46 INFO imu.IMU : IMY mess received  189 -88 -2110
+2014-02-28 17:50:46 INFO filtre.Filter : Filter.add vector 189.0 -88.0 -2110.0
+2014-02-28 17:50:46 INFO imu.IMU : IMY mess received  88 78 -2140
+2014-02-28 17:50:46 INFO filtre.Filter : Filter.add vector 88.0 78.0 -2140.0
+2014-02-28 17:50:46 INFO imu.IMU : IMY mess received  349 81 -2011
+2014-02-28 17:50:46 INFO filtre.Filter : Filter.add vector 349.0 81.0 -2011.0
+2014-02-28 17:50:47 INFO imu.IMU : IMY mess received  -22 -98 -1877
+2014-02-28 17:50:47 INFO filtre.Filter : Filter.add vector -22.0 -98.0 -1877.0
+2014-02-28 17:50:47 INFO imu.IMU : IMY mess received  -12 -12 -1842
+2014-02-28 17:50:47 INFO filtre.Filter : Filter.add vector -12.0 -12.0 -1842.0
+2014-02-28 17:50:47 INFO imu.IMU : IMY mess received  210 147 -2144
+2014-02-28 17:50:47 INFO filtre.Filter : Filter.add vector 210.0 147.0 -2144.0
+2014-02-28 17:50:47 INFO imu.IMU : IMY mess received  77 -21 -2091
+2014-02-28 17:50:47 INFO filtre.Filter : Filter.add vector 77.0 -21.0 -2091.0
+2014-02-28 17:50:47 INFO imu.IMU : IMY mess received  -5 81 -2142
+2014-02-28 17:50:47 INFO filtre.Filter : Filter.add vector -5.0 81.0 -2142.0
+2014-02-28 17:50:47 INFO imu.IMU : IMY mess received  -32 65 -2158
+2014-02-28 17:50:47 INFO filtre.Filter : Filter.add vector -32.0 65.0 -2158.0
+2014-02-28 17:50:47 INFO imu.IMU : IMY mess received  164 131 -2069
+2014-02-28 17:50:47 INFO filtre.Filter : Filter.add vector 164.0 131.0 -2069.0
+2014-02-28 17:50:47 INFO imu.IMU : IMY mess received  3 -6 -1900
+2014-02-28 17:50:47 INFO filtre.Filter : Filter.add vector 3.0 -6.0 -1900.0
+2014-02-28 17:50:47 INFO imu.IMU : IMY mess received  -88 61 -2252
+2014-02-28 17:50:47 INFO filtre.Filter : Filter.add vector -88.0 61.0 -2252.0
+2014-02-28 17:50:47 INFO imu.IMU : IMY mess received  54 18 -2085
+2014-02-28 17:50:47 INFO filtre.Filter : Filter.add vector 54.0 18.0 -2085.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  173 88 -2067
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector 173.0 88.0 -2067.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  21 15 -1953
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector 21.0 15.0 -1953.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  -15 34 -2129
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector -15.0 34.0 -2129.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  64 37 -2093
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector 64.0 37.0 -2093.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  83 55 -2095
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector 83.0 55.0 -2095.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  9 111 -1923
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector 9.0 111.0 -1923.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  46 88 -1983
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector 46.0 88.0 -1983.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  78 93 -2220
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector 78.0 93.0 -2220.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  19 47 -2064
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector 19.0 47.0 -2064.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  -45 79 -1932
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector -45.0 79.0 -1932.0
+2014-02-28 17:50:48 INFO imu.IMU : IMY mess received  76 82 -2060
+2014-02-28 17:50:48 INFO filtre.Filter : Filter.add vector 76.0 82.0 -2060.0
+2014-02-28 17:50:49 INFO imu.IMU : IMY mess received  -101 -135 -2069
+2014-02-28 17:50:49 INFO filtre.Filter : Filter.add vector -101.0 -135.0 -2069.0

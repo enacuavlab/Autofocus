@@ -1,0 +1,7 @@
+2014-03-04 18:23:44 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/14_03_04__12_11_22_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-04 18:23:45 INFO imu.IMU : new aircraft built with id=5
+2014-03-04 18:23:46 INFO testData.Sender : starting sending IMU test data...

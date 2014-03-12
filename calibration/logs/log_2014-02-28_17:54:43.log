@@ -1,0 +1,34 @@
+2014-02-28 17:54:43 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod1_3_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-02-28 17:54:45 INFO imu.IMU : new aircraft built with id=5
+2014-02-28 17:54:45 INFO testData.Sender : starting sending IMU test data...
+2014-02-28 17:54:45 WARNING ihm.MainFrame : setSelectedIndex: 3 out of bounds
+2014-02-28 17:54:45 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-02-28 17:54:45 INFO imu.IMU : listening raw datas for drone 5...
+2014-02-28 17:54:45 INFO imu.IMU : IMY mess received  45 -198 -2049
+2014-02-28 17:54:46 INFO imu.IMU : IMY mess received  50 -197 -2045
+2014-02-28 17:54:46 INFO imu.IMU : IMY mess received  51 -204 -2052
+2014-02-28 17:54:46 INFO imu.IMU : IMY mess received  49 -199 -2054
+2014-02-28 17:54:46 INFO imu.IMU : IMY mess received  50 -204 -2047
+2014-02-28 17:54:46 INFO imu.IMU : IMY mess received  48 -197 -2050
+2014-02-28 17:54:46 INFO imu.IMU : IMY mess received  50 -195 -2039
+2014-02-28 17:54:46 INFO imu.IMU : IMY mess received  49 -203 -2044
+2014-02-28 17:54:46 INFO imu.IMU : IMY mess received  46 -197 -2045
+2014-02-28 17:54:46 INFO imu.IMU : IMY mess received  53 -200 -2049
+2014-02-28 17:54:46 INFO imu.IMU : IMY mess received  42 -197 -2030
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  53 -207 -2041
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  50 -194 -2037
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  47 -206 -2036
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  63 -203 -2048
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  46 -201 -2045
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  46 -194 -2034
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  45 -198 -2043
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  53 -206 -2045
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  44 -203 -2048
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  50 -202 -2047
+2014-02-28 17:54:47 INFO imu.IMU : IMY mess received  43 -195 -2049
+2014-02-28 17:54:48 INFO imu.IMU : IMY mess received  49 -194 -2043
+2014-02-28 17:54:48 INFO imu.IMU : IMY mess received  50 -204 -2051

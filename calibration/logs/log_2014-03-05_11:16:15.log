@@ -1,0 +1,8 @@
+2014-03-05 11:16:15 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod1_3_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-05 11:16:17 INFO ellipsoide.Sphere : Sphere.createZone zoneList size=37
+2014-03-05 11:16:18 INFO testData.Sender : starting sending IMU test data...
+2014-03-05 11:16:19 INFO imu.IMU : new aircraft built with id=5

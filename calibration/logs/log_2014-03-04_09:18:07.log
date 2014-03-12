@@ -1,0 +1,33 @@
+2014-03-04 09:18:07 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-04 09:18:08 INFO testData.Sender : starting sending IMU test data...
+2014-03-04 09:18:08 INFO imu.IMU : new aircraft built with id=5
+2014-03-04 09:18:18 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-04 09:18:18 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-04 09:20:01 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-04 09:20:01 INFO ihm.Result : quantité de données insuffisante pour pouvoir calculer une calibration : 1257/2000
+2014-03-04 09:20:02 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-04 09:21:46 INFO testData.Sender : stopped sending IMU test data
+2014-03-04 10:46:48 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-04 10:46:48 INFO calibrate.PrintLog : logs/calibration.data created with 2531 lines
+2014-03-04 10:46:48 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s ACCEL  -v logs/calibration.data
+2014-03-04 10:46:48 INFO calibrate.CalibrateSystem : python script result for ACCELEROMETER :
+2014-03-04 10:46:49 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor ACCEL
+found 2531 records
+Using noise threshold of 40 for filtering.
+remaining 1123 after filtering
+initial guess : avg 11.6163795201 std 1.06974201886
+optimized guess : avg 9.80982433714 std 0.0415117076891
+
+<define name="ACCEL_X_NEUTRAL" value="-621"/>
+<define name="ACCEL_Y_NEUTRAL" value="-16"/>
+<define name="ACCEL_Z_NEUTRAL" value="86"/>
+<define name="ACCEL_X_SENS" value="4.86853693664" integer="16"/>
+<define name="ACCEL_Y_SENS" value="5.22745503713" integer="16"/>
+<define name="ACCEL_Z_SENS" value="4.8155049889" integer="16"/>
+
+2014-03-04 10:46:49 INFO calibrate.CalibrateSystem : end of python script for ACCELEROMETER

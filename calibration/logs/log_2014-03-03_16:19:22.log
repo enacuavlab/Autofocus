@@ -1,0 +1,14 @@
+2014-03-03 16:19:22 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod16_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-03 16:19:24 INFO imu.Aircraft : create new Aircraft with 0 modes
+2014-03-03 16:19:24 INFO testData.Sender : starting sending IMU test data...
+2014-03-03 16:19:24 INFO imu.IMU : new aircraft built with id=5
+2014-03-03 16:19:24 INFO ihm.MainFrame : aircraft 5 connected
+2014-03-03 16:19:24 INFO ihm.MainFrame : mode size=0
+2014-03-03 16:19:24 INFO ihm.MainFrame : aircraftConnected - nb de modes ajoutés : 1
+2014-03-03 16:19:24 INFO ihm.MainFrame : stored mode : null
+2014-03-03 16:19:24 INFO ihm.MainFrame : comboBoxAircraft.addItemListener - nb modes ajoutés : 1
+2014-03-03 16:19:24 WARNING ihm.MainFrame : setSelectedIndex: 2 out of bounds

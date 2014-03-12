@@ -1,0 +1,14 @@
+# Script python à exécuter
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+# Fichier où écrire les résultats de la calibration
+# (à partir duquel seront faits les calculs)
+autofocus_calibration_data=logs/calibration.data
+
+# Fichier de données de test pour simuler une calibration
+# (si vide, aucune donnée de test ne sera envoyée)
+#simulation_calibration_data=test/calib_prod1_3_droneId_5.data
+#simulation_calibration_data=test/calib_prod16_droneId_5.data
+#simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+simulation_calibration_data=test/14_03_04__11_24_51_droneId_5.data
+#simulation_calibration_data=

@@ -1,0 +1,35 @@
+2014-03-06 17:01:04 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/14_03_04__11_25_31_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-06 17:01:05 INFO imu.IMU : new aircraft built with id=5
+2014-03-06 17:01:05 INFO testData.Sender : starting sending IMU test data...
+2014-03-06 17:02:24 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-06 17:02:24 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-06 17:07:51 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-06 17:07:51 INFO calibrate.PrintLog : logs/calibration.data created with 3393 lines
+2014-03-06 17:07:51 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s ACCEL  -v logs/calibration.data
+2014-03-06 17:07:51 INFO calibrate.CalibrateSystem : python script result for ACCELEROMETER :
+2014-03-06 17:07:53 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor ACCEL
+found 3393 records
+Using noise threshold of 40 for filtering.
+remaining 2557 after filtering
+initial guess : avg 12.6084388555 std 1.31066457088
+optimized guess : avg 9.80982664585 std 0.0412380370937
+
+<define name="ACCEL_X_NEUTRAL" value="-602"/>
+<define name="ACCEL_Y_NEUTRAL" value="145"/>
+<define name="ACCEL_Z_NEUTRAL" value="90"/>
+<define name="ACCEL_X_SENS" value="4.89150013597" integer="16"/>
+<define name="ACCEL_Y_SENS" value="5.28997230399" integer="16"/>
+<define name="ACCEL_Z_SENS" value="4.78458653701" integer="16"/>
+
+2014-03-06 17:07:53 INFO calibrate.CalibrateSystem : end of python script for ACCELEROMETER
+2014-03-06 17:07:56 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-06 17:07:57 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-06 17:07:57 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-06 17:07:57 INFO imu.IMU : new aircraft built with id=5
+2014-03-06 17:07:58 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-03-06 17:07:58 INFO imu.IMU : listening raw datas for drone 5...

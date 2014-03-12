@@ -1,0 +1,562 @@
+package ihm;
+
+import imu.Aircraft;
+import imu.IMU;
+import imu.IMUAdaptater;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.logging.Logger;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+
+import net.miginfocom.swing.MigLayout;
+import calibrate.PrintLog;
+
+import common.TypeCalibration;
+
+import data.Data;
+import ellipsoide.Sphere;
+import filtre.FilterAccel;
+import filtre.FilterSphere;
+
+/**
+ * Classe en charge de l'affichage de l'application
+ * 
+ * @author cdouine
+ * 
+ */
+public class MainFrame {
+	private static Logger logger = Logger.getLogger(MainFrame.class.getName());
+
+	private JFrame frmCalibrate;
+	private PrintLog log;
+	private IMU imu;
+	private TypeCalibration type;
+
+	// Buttons du menu
+	private JButton btnAccelerometer;
+	private JButton btnMagnetometer;
+	private JButton btnResults;
+	private JButton btnHome;
+	// Entete
+	private JPanel colorPnUavsPresent;
+	private JPanel colorPnCorrectTelemetryMode;
+	// Panel Accueil
+	private JComboBox<Aircraft> comboBoxAircraft;
+	private JComboBox<String> comboBoxSendingModes;
+
+	public MainFrame(PrintLog log, IMU imu) {
+		this.log = log;
+		this.imu = imu;
+
+		// Initialisation de la fenêtre
+		initialize();
+	}
+
+	private void initialize() {
+		// Initialisation de la forme globale
+		frmCalibrate = new JFrame();
+		frmCalibrate.setFont(new Font("Arial", Font.PLAIN, 12));
+		frmCalibrate.setTitle("Calibrer");
+		frmCalibrate.setBounds(100, 100, 675, 550);
+		frmCalibrate.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCalibrate.getContentPane().setLayout(new BorderLayout(0, 0));
+
+		// Initialisation du menu (à gauche)
+		initializeMenu();
+
+		// Initialisation de l'en-tête (en haut)
+		initializeTop();
+
+		// Initialisation du panneau principal (au centre)
+		// (dans ce panneau sera affiché un des panneaux suivants : accueil,
+		// accéléro, magnéto)
+		final JPanel mainPanel = new JPanel();
+		frmCalibrate.getContentPane().add(mainPanel, BorderLayout.CENTER);
+		mainPanel.setBorder(new LineBorder(Color.GRAY));
+		mainPanel.setLayout(new CardLayout(0, 0));
+
+		// Initialisation du panneau Accueil
+		initializeWelcomePanel(mainPanel);
+
+		// Initialisation des panneaux Magnétomètre et Accéléromètre
+		final Sphere sphere = new Sphere(7, 7, 100);
+		final DrawMagneto panelMagneto = new DrawMagneto(sphere);
+		final DrawAccel panelAccelero = new DrawAccel(sphere);
+
+		mainPanel.add("panelAccelero", panelAccelero);
+		mainPanel.add("panelMagneto", panelMagneto);
+
+		// Initialisation du panneau Résultats
+		final Result results = new Result("Results", true, log, imu);
+
+		// Listeners for all panels
+		addImuListeners();
+		addComboboxListeners();
+		addButtonsListeners(mainPanel, sphere, panelMagneto, panelAccelero,
+				results);
+
+	}
+
+	/**
+	 * Ajoute les listeners sur les boutons
+	 * 
+	 * @param mainPanel
+	 * @param sphere
+	 * @param panelMagneto
+	 * @param panelAccelero
+	 * @param results
+	 */
+	private void addButtonsListeners(final JPanel mainPanel,
+			final Sphere sphere, final DrawMagneto panelMagneto,
+			final DrawAccel panelAccelero, final Result results) {
+		btnResults.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				imu.stopListenRaw(type, log,
+						((Aircraft) comboBoxAircraft.getSelectedItem()).getId());
+				results.getCalib();
+			}
+		});
+
+		// Listeners on button to switch to calibration
+		btnMagnetometer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								logger.info("starting calibration of magnetometer...");
+								type = TypeCalibration.MAGNETOMETER;
+								ImageIcon icon = new ImageIcon(this.getClass()
+										.getResource("sphereMag.png"));
+								icon.setImage(icon.getImage()
+										.getScaledInstance(90, 50,
+												Image.SCALE_SMOOTH));
+								panelMagneto.getImageModel().setIcon(icon);
+								FilterSphere filtre = new FilterSphere(
+										panelMagneto, 40, type);
+								Data data = new Data(filtre);
+								imu.ListenRaw(data, type, log,
+										((Aircraft) comboBoxAircraft
+												.getSelectedItem()).getId());
+								imu.stopListenAllId((Aircraft) comboBoxAircraft
+										.getSelectedItem());
+								results.setData(data);
+								results.setType(type);
+								results.setId(((Aircraft) comboBoxAircraft
+										.getSelectedItem()).getId());
+								((CardLayout) mainPanel.getLayout()).show(
+										mainPanel, "panelMagneto");
+								btnMagnetometer.setEnabled(false);
+								btnAccelerometer.setEnabled(false);
+								btnResults.setEnabled(true);
+								btnHome.setEnabled(true);
+								panelMagneto.getImageModel().setVisible(true);
+								panelMagneto.getLibelleImage().setVisible(true);
+							}
+						});
+					}
+				}).start();
+			}
+		});
+
+		btnAccelerometer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								logger.info("starting calibration of accelerometer...");
+								type = TypeCalibration.ACCELEROMETER;
+								ImageIcon icon = new ImageIcon(this.getClass()
+										.getResource("sphereAccel.png"));
+								icon.setImage(icon.getImage()
+										.getScaledInstance(90, 50,
+												Image.SCALE_SMOOTH));
+								panelAccelero.getImageModel().setIcon(icon);
+								FilterAccel filtre = new FilterAccel(100, type,
+										200, 40, panelAccelero);
+								Data data = new Data(filtre);
+								imu.ListenRaw(data, type, log,
+										((Aircraft) comboBoxAircraft
+												.getSelectedItem()).getId());
+								imu.stopListenAllId((Aircraft) comboBoxAircraft
+										.getSelectedItem());
+								results.setData(data);
+								results.setType(type);
+								results.setId(((Aircraft) comboBoxAircraft
+										.getSelectedItem()).getId());
+								((CardLayout) mainPanel.getLayout()).show(
+										mainPanel, "panelAccelero");
+								btnMagnetometer.setEnabled(false);
+								btnAccelerometer.setEnabled(false);
+								btnResults.setEnabled(true);
+								btnHome.setEnabled(true);
+								panelAccelero.getImageModel().setVisible(true);
+								panelAccelero.getLibelleImage()
+										.setVisible(true);
+							}
+						});
+					}
+				}).start();
+			}
+		});
+
+		btnHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				imu.stopListenRaw(TypeCalibration.MAGNETOMETER, log,
+						((Aircraft) comboBoxAircraft.getSelectedItem()).getId());
+				imu.stopListenRaw(TypeCalibration.ACCELEROMETER, log,
+						((Aircraft) comboBoxAircraft.getSelectedItem()).getId());
+				imu.stopListenAllId();
+				comboBoxAircraft.removeAllItems();
+				imu.listenAllAc();
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								btnMagnetometer.setEnabled(false);
+								btnAccelerometer.setEnabled(false);
+								btnResults.setEnabled(false);
+								btnHome.setEnabled(false);
+								sphere.clean();
+								((CardLayout) mainPanel.getLayout()).show(
+										mainPanel, "welcome");
+							}
+						});
+					}
+				}).run();
+			}
+		});
+	}
+
+	/**
+	 * Ajoute les listeners sur les combobox (choix du drone et type de données)
+	 */
+	private void addComboboxListeners() {
+		comboBoxAircraft.addItemListener(new ItemListener() {
+			public void itemStateChanged(final ItemEvent arg0) {
+				if (arg0.getStateChange() == ItemEvent.SELECTED) {
+					try {
+						new Thread(new Runnable() {
+							public void run() {
+								SwingUtilities.invokeLater(new Runnable() {
+									public void run() {
+										// colorPnUavsPresent
+										// .setBackground(Color.GREEN);
+										// try {
+										// Thread.sleep(20);
+										// } catch (Exception e) {
+										// logger.warning(e.getMessage());
+										// }
+										comboBoxSendingModes
+												.setModel(new DefaultComboBoxModel<String>(
+														((Aircraft) arg0
+																.getItem())
+																.getModes()
+																.toArray(
+																		new String[1])));
+										if (((Aircraft) arg0.getItem())
+												.getIsRawData()) {
+											colorPnCorrectTelemetryMode
+													.setBackground(Color.GREEN);
+											btnMagnetometer.setEnabled(true);
+											btnAccelerometer.setEnabled(true);
+										} else {
+											colorPnCorrectTelemetryMode
+													.setBackground(Color.RED);
+											btnMagnetometer.setEnabled(false);
+											btnAccelerometer.setEnabled(false);
+										}
+									}
+								});
+							}
+						}).run();
+					} catch (Exception e) {
+						logger.warning("Failure downcasting to aircraft");
+						logger.warning(e.getMessage());
+					}
+				}
+			}
+		});
+
+		comboBoxSendingModes.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				logger.info("comboBoxSendingModes.addItemListener "+arg0.getStateChange());
+				if (arg0.getStateChange() == ItemEvent.SELECTED) {
+					logger.info("comboBoxSendingModes.addItemListener "+arg0.getStateChange()+ " selected");
+					try {
+						imu.changeAcMode(
+								comboBoxSendingModes.getSelectedIndex(),
+								(Aircraft) comboBoxAircraft.getSelectedItem());
+					} catch (Exception e) {
+						logger.warning("Incorrect mode or mode comboBox empty");
+						logger.warning(e.getMessage());
+					}
+				}
+			}
+		});
+	}
+
+	/**
+	 * Ajoute les listeners sur l'IMU TODO : à déplacer dans Calibration et
+	 * créer des accès à MainFrame pour modifier l'IHM
+	 */
+	private void addImuListeners() {
+
+		imu.addIMUListener(new IMUAdaptater() {
+
+			public void aircraftConnected(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									comboBoxAircraft.addItem(ac);
+
+									if (ac.equals(comboBoxAircraft
+											.getSelectedItem())) {
+										colorPnUavsPresent
+												.setBackground(Color.GREEN);
+
+									}
+								} catch (Exception e) {
+									logger.warning("aircraftConnected : comboBox AC vide");
+									logger.warning(e.getMessage());
+								}
+							}
+						});
+					}
+				}).run();
+			}
+
+			public void aircraftExited(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									logger.info("aircraft exited " + ac.getId());
+									if (comboBoxAircraft.getSelectedItem()
+											.equals(ac)) {
+										comboBoxSendingModes
+												.setModel(new DefaultComboBoxModel<String>());
+
+										colorPnUavsPresent
+												.setBackground(Color.RED);
+										btnMagnetometer.setEnabled(false);
+										btnAccelerometer.setEnabled(false);
+									}
+								} catch (Exception e) {
+									logger.warning("aircraftExited : comboBox AC vide");
+									logger.warning(e.getMessage());
+									colorPnUavsPresent.setBackground(new Color(
+											255, 0, 0));
+								}
+							}
+						});
+					}
+				}).run();
+			}
+
+			public void aircraftRawOn(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									if (ac.equals(comboBoxAircraft
+											.getSelectedItem())) {
+										colorPnCorrectTelemetryMode
+												.setBackground(Color.GREEN);
+
+										btnMagnetometer.setEnabled(true);
+										btnAccelerometer.setEnabled(true);
+									}
+								} catch (Exception e) {
+									logger.warning("aircraftRawOn : comboBox AC vide");
+									logger.warning(e.getMessage());
+								}
+							}
+						});
+					}
+				}).run();
+			}
+
+			public void aircraftRawOff(final Aircraft ac) {
+				new Thread(new Runnable() {
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									if (ac.equals(comboBoxAircraft
+											.getSelectedItem())) {
+										colorPnCorrectTelemetryMode
+												.setBackground(Color.RED);
+
+										btnMagnetometer.setEnabled(false);
+										btnAccelerometer.setEnabled(false);
+									}
+								} catch (Exception e) {
+									logger.warning("aircraftRawOff : comboBoxAircraft vide");
+									e.printStackTrace();
+								}
+							}
+						});
+					}
+				}).run();
+			}
+
+			public void aircraftModChanged(final Aircraft ac) {
+				try {
+					if (ac.equals(comboBoxAircraft.getSelectedItem())) {
+						new Thread(new Runnable() {
+							public void run() {
+								SwingUtilities.invokeLater(new Runnable() {
+									public void run() {
+										try {
+											comboBoxSendingModes
+													.setSelectedIndex(ac
+															.getMode());
+										} catch (IllegalArgumentException e) {
+											// comboBoxSendingModes
+											// .setSelectedIndex(0);
+											logger.warning(e.getMessage());
+										}
+									}
+								});
+							}
+						}).run();
+					}
+				} catch (Exception e) {
+					logger.warning("aircraftModChanged : comboBoxAircraft vide");
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private void initializeWelcomePanel(final JPanel mainPanel) {
+		final JPanel welcome = new JPanel();
+		mainPanel.add(welcome, "welcome");
+		welcome.setLayout(new MigLayout("",
+				"[100px,grow 200][276px,grow 400][100px,grow 200]",
+				"20[46px][][41px][46px][][41px][46px]"));
+
+		JSeparator separator = new JSeparator();
+		welcome.add(separator, "flowx,cell 0 0,alignx left,aligny top");
+
+		JTextPane txtpnFillTheField = new JTextPane();
+		welcome.add(txtpnFillTheField, "cell 1 0");
+		txtpnFillTheField.setEditable(false);
+		txtpnFillTheField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtpnFillTheField.setBackground(UIManager.getColor("Button.light"));
+		txtpnFillTheField
+				.setText("Complétez les champs selon l'UAV que vous souhaitez calibrer");
+
+		JLabel lblNewLabel = new JLabel("Nom de l'UAV");
+		welcome.add(lblNewLabel, "cell 1 2,grow");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+		comboBoxAircraft = new JComboBox<Aircraft>();
+		welcome.add(comboBoxAircraft, "cell 1 3,grow");
+
+		JLabel lblChooseModeSending = new JLabel(
+				"Choisir un mode d'envoi des données brutes");
+		lblChooseModeSending.setHorizontalAlignment(SwingConstants.CENTER);
+		welcome.add(lblChooseModeSending, "cell 1 5,grow");
+
+		comboBoxSendingModes = new JComboBox<String>();
+		welcome.add(comboBoxSendingModes, "cell 1 6,grow");
+	}
+
+	private void initializeTop() {
+		JPanel topPanel = new JPanel();
+		frmCalibrate.getContentPane().add(topPanel, BorderLayout.NORTH);
+		topPanel.setBorder(new LineBorder(Color.GRAY));
+
+		colorPnUavsPresent = new JPanel();
+		colorPnUavsPresent.setBackground(Color.RED);
+
+		JTextPane txtpnUavsPresent = new JTextPane();
+		txtpnUavsPresent.setEditable(false);
+		txtpnUavsPresent.setOpaque(false);
+		txtpnUavsPresent.setText("présence UAV");
+
+		colorPnCorrectTelemetryMode = new JPanel();
+		colorPnCorrectTelemetryMode.setBackground(Color.RED);
+
+		JTextPane txtpnCorrectTelemetryMode = new JTextPane();
+		txtpnCorrectTelemetryMode.setEditable(false);
+		txtpnCorrectTelemetryMode.setOpaque(false);
+		txtpnCorrectTelemetryMode.setText("Mode de télémétrie correct");
+
+		topPanel.setLayout(new MigLayout("",
+				"[][100px]15[][80px, grow 150]15[50px, grow 150]5[50px]",
+				"[30px]"));
+		topPanel.add(colorPnUavsPresent);
+		topPanel.add(txtpnUavsPresent);
+		topPanel.add(colorPnCorrectTelemetryMode);
+		topPanel.add(txtpnCorrectTelemetryMode);
+	}
+
+	private void initializeMenu() {
+		JPanel menuSide = new JPanel();
+		frmCalibrate.getContentPane().add(menuSide, BorderLayout.WEST);
+		menuSide.setBorder(new LineBorder(Color.GRAY));
+		menuSide.setLayout(new MigLayout("", "[183px,grow 230]",
+				"[20px][46px][46px][41px][46px][46px][][][][][][]"));
+
+		JTextPane txtpnChooseAMode = new JTextPane();
+		txtpnChooseAMode.setAlignmentY(Component.TOP_ALIGNMENT);
+		txtpnChooseAMode.setAlignmentX(Component.CENTER_ALIGNMENT);
+		txtpnChooseAMode.setEditable(false);
+		txtpnChooseAMode.setText("Modes de calibration :");
+		txtpnChooseAMode.setOpaque(false);
+		menuSide.add(txtpnChooseAMode, "cell 0 0,alignx center, growy");
+
+		btnAccelerometer = new JButton("Accéléromètres");
+
+		btnAccelerometer.setEnabled(false);
+		menuSide.add(btnAccelerometer, "cell 0 1,grow");
+
+		btnMagnetometer = new JButton("Magnétomètres");
+		menuSide.add(btnMagnetometer, "cell 0 2,grow");
+		btnMagnetometer.setEnabled(false);
+
+		btnResults = new JButton("Résultats");
+		btnResults.setVisible(true);
+		btnResults.setEnabled(false);
+		menuSide.add(btnResults, "cell 0 4,grow");
+
+		btnHome = new JButton("Retour à l'accueil");
+		btnHome.setVisible(true);
+		btnHome.setEnabled(false);
+		menuSide.add(btnHome, "cell 0 5,grow");
+	}
+
+	public void setVisible(boolean visibility) {
+		this.frmCalibrate.setVisible(visibility);
+	}
+}

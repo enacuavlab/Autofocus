@@ -6,12 +6,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 public class DataReader implements Iterable<String> {
-	
+
+	private static Logger logger = Logger.getLogger(DataReader.class.getName());
+
 	ArrayList<String> lignes = new ArrayList<String>();
-	
-	public DataReader(String arg){
+
+	public DataReader(String arg) {
 		// lecture du fichier texte
 		try {
 			InputStream ips = new FileInputStream(arg);
@@ -19,11 +22,11 @@ public class DataReader implements Iterable<String> {
 			BufferedReader br = new BufferedReader(ipsr);
 			String ligne;
 			while ((ligne = br.readLine()) != null) {
-				lignes.add(ligne.substring(7));
+				lignes.add(ligne.substring(ligne.indexOf(" ") + 1));
 			}
 			br.close();
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			logger.warning(e.getMessage());
 		}
 	}
 

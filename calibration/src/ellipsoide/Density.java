@@ -29,7 +29,10 @@ public class Density {
 
 	/**
 	 * Initialise nb and colorParameter
-	 * @param nbMaxPoints number of points on the surface of the sphere to get the right calibration
+	 * 
+	 * @param nbMaxPoints
+	 *            number of points on the surface of the sphere to get the right
+	 *            calibration
 	 */
 	public Density(int nbMaxPoints) {
 		nb = 0;
@@ -45,14 +48,12 @@ public class Density {
 	 */
 	public void updateDensity(double surfaceSphere, double surfaceZone) {
 		nb += 1;
-		//System.out.print("[" + surfaceSphere + surfaceZone + "]");
 		double temp = (surfaceSphere * nb * nbMaxColor) / (surfaceZone * nbMax);
 		if (temp > nbMaxColor) {
 			colorParameter = nbMaxColor;
 		} else {
 			colorParameter = (int) temp;
 		}
-		//System.out.println(colorParameter);
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class Density {
 	 */
 	public void reset() {
 		nb = 0;
-		colorParameter =0;
+		colorParameter = 0;
 	}
 
 	/**

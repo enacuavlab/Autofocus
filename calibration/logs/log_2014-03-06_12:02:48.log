@@ -1,0 +1,21 @@
+2014-03-06 12:02:48 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-06 12:02:49 INFO imu.IMU : new aircraft built with id=5
+2014-03-06 12:02:49 INFO testData.Sender : starting sending IMU test data...
+2014-03-06 12:02:50 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-06 12:02:50 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-06 12:02:52 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-06 12:02:52 INFO calibrate.PrintLog : logs/calibration.data created with 13 lines
+2014-03-06 12:02:52 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s ACCEL  -v logs/calibration.data
+2014-03-06 12:02:52 INFO calibrate.CalibrateSystem : python script result for ACCELEROMETER :
+2014-03-06 12:02:52 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor ACCEL
+found 13 records
+Using noise threshold of 40 for filtering.
+remaining 0 after filtering
+Error: found zero IMU_ACCEL_RAW measurements for aircraft with id 5 in log file after filtering!
+
+2014-03-06 12:02:52 INFO calibrate.CalibrateSystem : end of python script for ACCELEROMETER

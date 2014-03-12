@@ -3,58 +3,47 @@
  */
 package data;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import common.TypeCalibration;
+import java.util.logging.Logger;
 
 import filtre.Filter;
 
 /**
  * class that permit to store the data sent by the IMU
+ * 
  * @author florent
- *
+ * 
  */
 public class Data {
-	/**
-	 * the current type of calibration
-	 */
-	private TypeCalibration calib;
+
+	private static Logger logger = Logger.getLogger(Data.class.getName());
+
 	/**
 	 * the filter to filter the noise
 	 */
 	private Filter filtre;
-	/**
-	 * the list of vector stored
-	 */
-	private List<Vecteur> list = new LinkedList<Vecteur>();
+
 	/**
 	 * Constructor for data
-	 * @param filt current filtre
-	 * @param calibration current typecalibration
+	 * 
+	 * @param filt
+	 *            current filtre
+	 * @param calibration
+	 *            current typecalibration
 	 */
-	public Data(Filter filt, TypeCalibration calibration) {
-		this.calib = calibration;
+	public Data(Filter filt) {
 		this.filtre = filt;
 	}
-/**
- * method used to store vectors
- * @param xRaw
- * @param yRaw
- * @param zRaw
- */
+
+	/**
+	 * method used to store vectors
+	 * 
+	 * @param xRaw
+	 * @param yRaw
+	 * @param zRaw
+	 */
 	public void store(double xRaw, double yRaw, double zRaw) {
-		Vecteur vec = new Vecteur(xRaw, yRaw, zRaw);
-		vec.setType(calib);
-		list.add(vec);
+		Vector vec = new Vector(xRaw, yRaw, zRaw);
 		filtre.add(vec);
-}
-	
-	public List<Vecteur> getVecteur(){
-		return list;
 	}
-	
-	public String toString() {
-		return list.toString();
-	}
+
 }

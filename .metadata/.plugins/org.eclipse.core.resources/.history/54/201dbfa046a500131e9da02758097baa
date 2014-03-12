@@ -1,0 +1,302 @@
+/**
+ * Classes used to display view of the current calibration
+ */
+package ellipsoide;
+
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.logging.Logger;
+
+import data.IVector;
+
+/**
+ * class which is counting the number of vectors in the right field of the
+ * ellipse. An ellipse is built of different zones. each one must be colored
+ * agreeing with the number of vectors it contains
+ * 
+ * @author GERVAIS florent
+ */
+public class Zone {
+
+	private static Logger logger = Logger.getLogger(Zone.class.getName());
+
+	/**
+	 * Latitude Angle High: The latitude angle defining the highest bound of
+	 * zone variates between -PI/2 and + PI/2
+	 */
+	private double latAngleHigh;
+	/**
+	 * Latitude Angle Low : The latitude angle defining the lowest bound of zone
+	 */
+	private double latAngleLow;
+	/**
+	 * Longitude Angle Begin : The western angle defining the zone
+	 */
+	private double longAngleBegin;// varie entre -PI et +PI
+	/**
+	 * Longitude Angle End : The eastern angle defining the zone
+	 */
+	private double longAngleEnd;
+
+	private double step_longitude;
+	private double step_latitude;
+
+	/**
+	 * The surface of the zone
+	 */
+	private double surface;
+	/**
+	 * The number of points on each boundary of the zone. More or less the
+	 * resolution of the sphere
+	 */
+	private static int NB_POINTS_BY_LINE = 4;
+	/**
+	 * List of the points defining the boundaries of the zone
+	 */
+	private List<Point2D> listContour;
+	/**
+	 * The surface of the Sphere
+	 */
+	private double surfaceSphere;
+
+	/**
+	 * Precalcul de la surface (partie non dépendante du rayon)
+	 */
+	private double surfacePrecalculated;
+
+	/**
+	 * The density of points over the zone
+	 */
+	private Density density;
+
+	/**
+	 * Give the list of the points defining the boundaries
+	 * 
+	 * @return listContour
+	 */
+	public List<Point2D> getListContour() {
+		return listContour;
+	}
+
+	/**
+	 * this constructor create the zone
+	 * 
+	 * @param lat_angle_high
+	 *            maximum latitude delimiting the zone
+	 * @param lat_angle_low
+	 *            minimum latitude delimiting the zone
+	 * @param long_angle_begin
+	 *            minimum longitude delimiting the zone
+	 * @param long_angle_end
+	 *            maximum longitude delimiting the zone
+	 * @param nbPointsMax
+	 *            number of points on the surface of the sphere to get the right
+	 *            calibration
+	 */
+	public Zone(double lat_angle_low, double lat_angle_high,
+			double long_angle_begin, double long_angle_end, int nbPointsMax) {
+		this.latAngleLow = lat_angle_low;
+		this.latAngleHigh = lat_angle_high;
+		this.longAngleBegin = long_angle_begin;
+		this.longAngleEnd = long_angle_end;
+		listContour = new ArrayList<Point2D>();
+		density = new Density(nbPointsMax);
+		surface = 1;
+		surfaceSphere = 1;
+
+		initCalculatedValues();
+	}
+
+	private void initCalculatedValues() {
+		step_longitude = (longAngleEnd - longAngleBegin) / NB_POINTS_BY_LINE;
+		step_latitude = (latAngleHigh - latAngleLow) / 2 / NB_POINTS_BY_LINE;
+
+		surfacePrecalculated = (longAngleEnd - longAngleBegin)
+				* Math.abs(Math.cos(latAngleHigh + Math.PI / 2.0)
+						- Math.cos(latAngleLow + Math.PI / 2.0));
+	}
+
+	/**
+	 * this method reset the zone
+	 */
+	public void reset() {
+		density.reset();
+	}
+
+	/**
+	 * return the density
+	 * 
+	 * @return return
+	 */
+	public Density getDensity() {
+		return density;
+
+	}
+
+	public void updateDensity() {
+		density.updateDensity(surfaceSphere, surface);
+	}
+
+
+	/**
+	 * this method return a boolean : true means that the point is in the area
+	 * 
+	 * @param v
+	 *            vector that is tested to be in the area
+	 * @param center
+	 *            center of the ellipsoid
+	 * @return the result of the test
+	 */
+	public boolean isIn(IVector<Double> v, IVector<Double> center) {
+		if (is_in_lat(v.getX(), v.getY(), v.getZ(), center.getX(),
+				center.getY(), center.getZ())
+				&& is_in_long(v.getX(), v.getY(), center.getX(), center.getY())) {
+			if (v.isCorrect()) {
+				density.updateDensity(surfaceSphere, surface);
+			}
+			return true;
+		} else
+			return false;
+	}
+
+	/**
+	 * this method return true if the vector is in the right longitude area
+	 * 
+	 * @param x_coord
+	 *            x vector coordinate
+	 * @param y_coord
+	 *            y vector coordinate
+	 * @param x_center
+	 *            x center coordinate of the ellipsoid
+	 * @param y_center
+	 *            y center coordinate of the ellipsoid
+	 * @return the result of the test
+	 */
+	private boolean is_in_long(double x_coord, double y_coord, double x_center,
+			double y_center) {
+		double alpha;
+		double xc_x = x_coord - x_center;
+		double yc_y = y_coord - y_center;
+		double den1 = Math.sqrt(Math.pow(xc_x, 2) + Math.pow(yc_y, 2));
+		if (den1 != 0) {
+			alpha = Math.acos(xc_x / den1)
+					* Math.signum(Math.asin(yc_y / den1));
+			return (alpha > longAngleBegin && alpha < longAngleEnd);
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * this method return true if the vector is in the right latitude area
+	 * 
+	 * @param x_coord
+	 *            x vector coordinate
+	 * @param y_coord
+	 *            y vector coordinate
+	 * @param z_coord
+	 *            z vector coordinate
+	 * @param x_center
+	 *            x center coordinate of the ellipsoid
+	 * @param y_center
+	 *            y center coordinate of the ellipsoid
+	 * @param z_center
+	 *            z center coordinate of the ellipsoids
+	 * @return the result of the test
+	 */
+	private boolean is_in_lat(double x_coord, double y_coord, double z_coord,
+			double x_center, double y_center, double z_center) {
+		double alpha;
+		double den = Math.sqrt(Math.pow(x_center - x_coord, 2)
+				+ Math.pow(y_center - y_coord, 2));
+		double zc_z = z_coord - z_center;
+		if (den != 0) {
+			alpha = Math.atan(zc_z / den);
+			return (alpha < latAngleHigh && alpha > latAngleLow);
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * this function convert the 3D coordinate into 2D coordinate agreeing to
+	 * the Mollweide projection
+	 * 
+	 * @param rad
+	 *            radius of the sphere needed to represent the 2D points
+	 */
+	public void maj_list_contour(double radius) {
+		listContour.clear();
+
+		double lat;
+		double lon;
+
+		double cstx = 2 * Math.sqrt(2) / Math.PI / 3 * radius;
+		double csty = Math.sqrt(2) / 3 * radius;
+		// we divide by 3 in order to obtain a result ranging in -1;1 at all
+		// times before multiplying by the radius
+
+		// Note : les zones doivent être créées dans un ordre précis
+
+		// bottom of the zone
+		for (int i = 0; i < NB_POINTS_BY_LINE; i++) {
+			lat = latAngleLow;
+			lon = longAngleBegin + step_longitude * i;
+			addPoint(lat, lon, cstx, csty);
+		}
+		// right side of the zone
+		for (int i = 0; i < NB_POINTS_BY_LINE; i++) {
+			lat = latAngleLow + i * step_latitude;
+			lon = longAngleEnd;
+			addPoint(lat, lon, cstx, csty);
+		}
+		// top of the zone
+		for (int i = 0; i < NB_POINTS_BY_LINE; i++) {
+			lat = latAngleHigh;
+			// minus to get along the zone in the right order
+			lon = longAngleEnd - step_longitude * i;
+			addPoint(lat, lon, cstx, csty);
+		}
+		// left side of the zone
+		for (int i = 0; i < NB_POINTS_BY_LINE; i++) {
+			// minus to get along the zone in the right order
+			lat = latAngleHigh - i * step_latitude;
+			lon = longAngleBegin;
+			addPoint(lat, lon, cstx, csty);
+		}
+	}
+
+	private void addPoint(double lat, double lon, double cstx, double csty) {
+		listContour.add(new Point2D.Double((cstx * lon * Math.cos(lat)),
+				(csty * Math.sin(lat))));
+	}
+
+	/**
+	 * this method calculates the surface of the zone and updates the surface of
+	 * the sphere
+	 * 
+	 * @param radius
+	 *            the actual radius of the sphere
+	 * @param surfaceS
+	 *            the actual surface of the sphere
+	 */
+	public void calculateSurface(double radius, double surfaceS) {
+		surfaceSphere = surfaceS;
+		surface = Math.pow(radius, 2) * surfacePrecalculated;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String toString() {
+		ListIterator<Point2D> j = listContour.listIterator();
+		String str = "";
+		while (j.hasNext()) {
+			str += " " + j.next();
+		}
+		return str;
+	}
+
+}

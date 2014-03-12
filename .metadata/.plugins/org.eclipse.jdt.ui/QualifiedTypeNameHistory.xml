@@ -1,2 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="calibrate.CalibrateSystem"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="calibrate.PrintLog"/>
+<fullyQualifiedTypeName name="com.sun.istack.internal.logging.Logger"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="java.util.logging.Level"/>
+<fullyQualifiedTypeName name="common.AutofocusLogger"/>
+<fullyQualifiedTypeName name="java.util.logging.FileHandler"/>
+<fullyQualifiedTypeName name="java.util.logging.SimpleFormatter"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.util.Properties"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.util.logging.Formatter"/>
+<fullyQualifiedTypeName name="java.util.logging.LogRecord"/>
+<fullyQualifiedTypeName name="java.io.PrintWriter"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.util.logging.ConsoleHandler"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="ellipsoide.AffichSphere"/>
+<fullyQualifiedTypeName name="javax.swing.JPanel"/>
+<fullyQualifiedTypeName name="ellipsoide.AffichAccel"/>
+<fullyQualifiedTypeName name="ellipsoide.Sphere"/>
+<fullyQualifiedTypeName name="javax.swing.GroupLayout.ParallelGroup"/>
+<fullyQualifiedTypeName name="common.LogFormatter"/>
+<fullyQualifiedTypeName name="java.awt.SystemColor"/>
+<fullyQualifiedTypeName name="java.util.logging.Logger"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="javax.swing.JTextArea"/>
+<fullyQualifiedTypeName name="ellipsoide.DrawSphere"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="java.awt.Component"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="rawmode.ExtractRawData"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="java.lang.Deprecated"/>
+<fullyQualifiedTypeName name="com.sun.crypto.provider.DESCipher"/>
+<fullyQualifiedTypeName name="sun.java2d.DestSurfaceProvider"/>
+<fullyQualifiedTypeName name="common.TypeCalibration"/>
+<fullyQualifiedTypeName name="javax.swing.Action"/>
+<fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
+<fullyQualifiedTypeName name="java.awt.Toolkit"/>
+<fullyQualifiedTypeName name="data.Vector"/>
+</qualifiedTypeNameHistroy>

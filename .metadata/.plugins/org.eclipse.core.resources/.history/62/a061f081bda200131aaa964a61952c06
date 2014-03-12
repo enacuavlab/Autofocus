@@ -1,0 +1,112 @@
+package ellipsoide;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
+import java.awt.geom.Point2D;
+import java.util.List;
+import java.util.logging.Logger;
+
+import javax.swing.JPanel;
+
+/**
+ * Classe en charge d'afficher la sphere
+ * 
+ * @author cdouine
+ * 
+ */
+public class DrawSphere extends JPanel {
+
+	private static Logger logger = Logger.getLogger(DrawSphere.class.getName());
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * New stroke used to emphasize the zone on the sphere currently being
+	 * plotted
+	 */
+	private Stroke stroke = new BasicStroke(2f);
+	/**
+	 * The sphere to display
+	 */
+	private Sphere sphere;
+	/**
+	 * The list of the zones belonging to the sphere. It allows us to draw each
+	 * of them at each iteration
+	 */
+	private List<Zone> zones;
+
+	public DrawSphere(Sphere p_sphere) {
+		this.sphere = p_sphere;
+		this.zones = p_sphere.getZones();
+	}
+
+	/**
+	 * The main method, it repaint all the zones according to the new status of
+	 * the sphere
+	 * 
+	 * @param graphics
+	 *            the graphics given by the swing api
+	 */
+	@Override
+	public void paintComponent(Graphics graphics) {
+		super.paintComponents(graphics);
+		// defines the canvas
+		Graphics2D g2d = (Graphics2D) graphics;
+		g2d.clearRect(0, 0, super.getHeight(), super.getWidth());
+
+		List<Point2D> points;
+		// useful store structure
+		int nbrPoints = zones.get(1).getListContour().size();
+
+		// Redraw all the zones
+		for (Zone zone : zones) {
+			points = zone.getListContour();
+			// Couleur rouge ou verte (+/- foncée) selon la densité
+			Color color = new Color(255 - zone.getDensity().getColor(), zone
+					.getDensity().getColor(), 0);
+			drawZone(g2d, points, nbrPoints, color, true);
+		}
+		// Draws the current zone
+		Zone currZone = sphere.getZoneCurrent();
+		points = currZone.getListContour();
+		drawZone(g2d, points, nbrPoints, Color.yellow, false);
+	}
+
+	private void drawZone(Graphics2D g2d, List<Point2D> points, int nbrPoints,
+			Color color, boolean fillPolygon) {
+		int xPoints[] = new int[nbrPoints];
+		int yPoints[] = new int[nbrPoints];
+		int i = 0;
+
+		for (Point2D point : points) {
+			xPoints[i] = (int) ((point.getX() / (float) sphere.getRayon()
+					* (float) super.getWidth() / 2 + (float) super.getWidth() / 2));
+			yPoints[i] = (int) ((point.getY() / (float) sphere.getRayon()
+					* (float) super.getHeight() / 2 + (float) super.getHeight() / 2));
+			i++;
+		}
+		g2d.setColor(color);
+		try {
+			g2d.setStroke(stroke);
+			if (fillPolygon) {
+				g2d.fillPolygon(xPoints, yPoints, nbrPoints);
+			}
+			g2d.drawPolygon(xPoints, yPoints, nbrPoints);
+		} catch (Exception e) {
+			logger.warning(e.getMessage());
+		}
+	}
+
+	/**
+	 * Recalculates all the zones thanks to sphere
+	 */
+	public void majZone() {
+		zones = sphere.getZones();
+	}
+
+}

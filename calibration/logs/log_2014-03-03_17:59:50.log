@@ -1,0 +1,24 @@
+2014-03-03 17:59:51 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod1_3_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-03 17:59:52 INFO imu.IMU : new aircraft built with id=5
+2014-03-03 17:59:52 INFO testData.Sender : starting sending IMU test data...
+2014-03-03 17:59:52 INFO imu.IMU : receiving mode 3
+2014-03-03 17:59:56 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:59:56 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:59:56 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:59:56 INFO imu.IMU : IMU.changeAcMode newMode=3
+2014-03-03 18:00:06 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 18:00:06 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 18:00:06 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 18:00:06 INFO imu.IMU : IMU.changeAcMode newMode=5
+2014-03-03 18:00:09 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 18:00:09 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 18:00:09 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 18:00:09 INFO imu.IMU : IMU.changeAcMode newMode=1
+2014-03-03 18:00:11 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 18:00:11 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 18:00:11 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 18:00:11 INFO imu.IMU : IMU.changeAcMode newMode=3

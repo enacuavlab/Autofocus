@@ -1,0 +1,18 @@
+2014-03-03 16:33:57 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod16_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-03 16:33:59 INFO testData.Sender : starting sending IMU test data...
+2014-03-03 16:33:59 INFO imu.IMU : 1) IMU.buildAcc new aircraft built with id=5
+2014-03-03 16:33:59 WARNING ihm.MainFrame : aircraftRawOn : comboBox AC vide
+2014-03-03 16:33:59 WARNING ihm.MainFrame : null
+2014-03-03 16:33:59 INFO imu.IMU : 5) IMU.buildAc : add mode =default
+2014-03-03 16:33:59 INFO imu.IMU : 5) IMU.buildAc : add mode =minimal
+2014-03-03 16:33:59 INFO imu.IMU : 5) IMU.buildAc : add mode =extremal
+2014-03-03 16:33:59 INFO imu.IMU : 5) IMU.buildAc : add mode =raw_sensors
+2014-03-03 16:33:59 INFO imu.IMU : 5) IMU.buildAc : add mode =default
+2014-03-03 16:33:59 INFO imu.IMU : 5) IMU.buildAc : add mode =debug
+2014-03-03 16:33:59 INFO imu.IMU : 2) IMU.buildAcc fireAircraftConnected
+2014-03-03 16:33:59 INFO ihm.MainFrame : 3) MainFrame.aircraftConnected
+2014-03-03 16:33:59 INFO ihm.MainFrame : comboBoxAircraft.addItemListener - nb modes ajoutés : 6

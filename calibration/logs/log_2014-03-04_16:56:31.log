@@ -1,0 +1,53 @@
+2014-03-04 16:56:31 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-04 16:56:33 INFO imu.IMU : new aircraft built with id=5
+2014-03-04 16:56:33 INFO testData.Sender : starting sending IMU test data...
+2014-03-04 16:56:36 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-04 16:56:36 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-04 16:56:36 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:36 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:36 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:36 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:37 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:38 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:38 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:38 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:38 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:38 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:38 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:38 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:38 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:38 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:38 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:39 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:39 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:39 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:39 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:39 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:39 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:39 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:39 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:39 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:39 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:40 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:40 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:40 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:40 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:40 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:40 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:40 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:40 INFO filtre.Filter : Filter.add noiseThreshold=0.0
+2014-03-04 16:56:40 INFO filtre.Filter : Filter.add noiseThreshold=0.0

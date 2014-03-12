@@ -2,6 +2,8 @@ package imu;
 
 import java.util.EventListener;
 
+import data.Aircraft;
+
 public interface IMUListener extends EventListener {
 	void aircraftModChanged(Aircraft ac) ;
 	void aircraftExited(Aircraft ac);

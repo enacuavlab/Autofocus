@@ -1,0 +1,110 @@
+2014-03-03 18:14:37 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod1_3_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-03 18:14:38 INFO imu.IMU : new aircraft built with id=5
+2014-03-03 18:14:38 INFO testData.Sender : starting sending IMU test data...
+2014-03-03 18:14:42 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-03 18:14:42 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:14:44 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:14:44 INFO calibrate.PrintLog : logs/calibration.data created with 31 lines
+2014-03-03 18:14:44 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s ACCEL  -v logs/calibration.data
+2014-03-03 18:14:44 INFO calibrate.CalibrateSystem : python script result for ACCELEROMETER :
+2014-03-03 18:14:45 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor ACCEL
+found 31 records
+Using noise threshold of 40 for filtering.
+remaining 0 after filtering
+Error: found zero IMU_ACCEL_RAW measurements for aircraft with id 5 in log file after filtering!
+
+2014-03-03 18:14:45 INFO calibrate.CalibrateSystem : end of python script for ACCELEROMETER
+2014-03-03 18:14:47 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:14:50 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:14:50 INFO calibrate.PrintLog : logs/calibration.data created with 64 lines
+2014-03-03 18:14:50 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s ACCEL  -v logs/calibration.data
+2014-03-03 18:14:50 INFO calibrate.CalibrateSystem : python script result for ACCELEROMETER :
+2014-03-03 18:14:50 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor ACCEL
+found 64 records
+Using noise threshold of 40 for filtering.
+remaining 0 after filtering
+Error: found zero IMU_ACCEL_RAW measurements for aircraft with id 5 in log file after filtering!
+
+2014-03-03 18:14:50 INFO calibrate.CalibrateSystem : end of python script for ACCELEROMETER
+2014-03-03 18:14:54 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:14:55 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:14:55 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:14:55 INFO imu.IMU : new aircraft built with id=5
+2014-03-03 18:14:56 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-03-03 18:14:56 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:14:57 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:14:57 INFO calibrate.PrintLog : logs/calibration.data created with 88 lines
+2014-03-03 18:14:57 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:14:57 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:14:57 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 11 records
+Using noise threshold of 1000 for filtering.
+remaining 0 after filtering
+Error: found zero IMU_MAG_RAW measurements for aircraft with id 5 in log file after filtering!
+
+2014-03-03 18:14:57 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:15:01 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:15:03 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:15:03 INFO calibrate.PrintLog : logs/calibration.data created with 122 lines
+2014-03-03 18:15:03 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:15:03 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:15:04 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 45 records
+Using noise threshold of 1000 for filtering.
+remaining 25 after filtering
+
+2014-03-03 18:15:04 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:15:06 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:15:18 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:15:18 INFO calibrate.PrintLog : logs/calibration.data created with 274 lines
+2014-03-03 18:15:18 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:15:18 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:15:18 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 197 records
+Using noise threshold of 1000 for filtering.
+remaining 177 after filtering
+
+2014-03-03 18:15:18 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:15:21 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:15:39 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:15:39 INFO calibrate.PrintLog : logs/calibration.data created with 498 lines
+2014-03-03 18:15:39 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:15:39 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:15:40 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 421 records
+Using noise threshold of 1000 for filtering.
+remaining 401 after filtering
+
+2014-03-03 18:15:40 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:15:41 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:16:52 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:16:52 INFO calibrate.PrintLog : logs/calibration.data created with 1397 lines
+2014-03-03 18:16:52 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:16:52 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:16:53 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 1320 records
+Using noise threshold of 1000 for filtering.
+remaining 1300 after filtering
+
+2014-03-03 18:16:53 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:17:02 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:17:13 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:17:13 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:17:13 INFO imu.IMU : new aircraft built with id=5
+2014-03-03 18:17:15 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-03 18:17:15 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:17:48 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:17:48 INFO calibrate.PrintLog : logs/calibration.data created with 1960 lines
+2014-03-03 18:17:48 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s ACCEL  -v logs/calibration.data
+2014-03-03 18:17:49 INFO calibrate.CalibrateSystem : python script result for ACCELEROMETER :

@@ -1,0 +1,17 @@
+2014-03-04 17:14:59 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-04 17:15:01 INFO imu.IMU : new aircraft built with id=5
+2014-03-04 17:15:01 INFO testData.Sender : starting sending IMU test data...
+2014-03-04 17:15:08 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-04 17:15:08 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-04 17:15:31 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-04 17:15:31 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-04 17:15:31 INFO imu.IMU : new aircraft built with id=5
+2014-03-04 17:15:32 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-03-04 17:15:32 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-04 17:15:49 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-04 17:15:49 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-04 17:15:49 INFO imu.IMU : new aircraft built with id=5

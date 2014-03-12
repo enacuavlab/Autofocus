@@ -1,0 +1,32 @@
+2014-03-05 17:18:21 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-05 17:18:24 WARNING testData.DataReader :  (Aucun fichier ou dossier de ce type)
+2014-03-05 17:18:24 INFO testData.Sender : starting sending IMU test data...
+2014-03-05 17:18:24 INFO testData.Sender : stopped sending IMU test data
+2014-03-05 17:18:26 INFO imu.IMU : new aircraft built with id=5
+2014-03-05 17:19:02 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-05 17:19:02 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-05 17:35:12 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-05 17:35:12 INFO calibrate.PrintLog : logs/calibration.data created with 1157 lines
+2014-03-05 17:35:12 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s ACCEL  -v logs/calibration.data
+2014-03-05 17:35:12 INFO calibrate.CalibrateSystem : python script result for ACCELEROMETER :
+2014-03-05 17:35:13 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor ACCEL
+found 1157 records
+Using noise threshold of 40 for filtering.
+remaining 449 after filtering
+initial guess : avg 12.1116804389 std 1.30594249724
+optimized guess : avg 9.80981910143 std 0.0421258019509
+
+<define name="ACCEL_X_NEUTRAL" value="-610"/>
+<define name="ACCEL_Y_NEUTRAL" value="-13"/>
+<define name="ACCEL_Z_NEUTRAL" value="120"/>
+<define name="ACCEL_X_SENS" value="4.90262330799" integer="16"/>
+<define name="ACCEL_Y_SENS" value="4.87595302002" integer="16"/>
+<define name="ACCEL_Z_SENS" value="4.73217180079" integer="16"/>
+
+2014-03-05 17:35:13 INFO calibrate.CalibrateSystem : end of python script for ACCELEROMETER
+2014-03-05 17:35:29 INFO imu.IMU : listening raw datas for drone 5...

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="320" key="DIALOG_WIDTH"/>
+		<item value="102" key="DIALOG_Y_ORIGIN"/>
+		<item value="439" key="DIALOG_HEIGHT"/>
+		<item value="1075" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
+		<item value="true" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="updateVecCourant" key="selection"/>
+		<list key="findhistory">
+			<item value="updateVecCourant"/>
+			<item value="VecteurFiltrable"/>
+			<item value="VectorFiltrable"/>
+			<item value="Vecteur"/>
+			<item value=" ac.isConnected"/>
+			<item value="textComponent"/>
+			<item value="longitude"/>
+			<item value="zoneCourante"/>
+		</list>
+		<list key="replacehistory">
+			<item value="IVector"/>
+			<item value="Vector"/>
+			<item value="NB_POINTS_BY_LINE"/>
+			<item value=";"/>
+			<item value="&quot;panelMagneto&quot;"/>
+			<item value="&quot;panelAccelero&quot;"/>
+			<item value="getInstructions()"/>
+			<item value="getSphere()"/>
+		</list>
+	</section>
+</section>

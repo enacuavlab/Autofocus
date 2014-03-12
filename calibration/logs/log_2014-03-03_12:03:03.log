@@ -1,0 +1,23 @@
+2014-03-03 12:03:03 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-03 12:03:04 INFO imu.IMU : new aircraft built with id=5
+2014-03-03 12:03:04 INFO testData.Sender : starting sending IMU test data...
+2014-03-03 12:03:04 WARNING ihm.MainFrame : setSelectedIndex: 2 out of bounds
+2014-03-03 12:03:28 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-03 12:03:28 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 12:04:06 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 12:04:06 INFO ihm.Result : quantité de données insuffisante pour pouvoir calculer une calibration : 362/1000
+2014-03-03 12:04:08 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 12:04:51 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 12:04:51 INFO ihm.Result : quantité de données insuffisante pour pouvoir calculer une calibration : 788/1000
+2014-03-03 12:04:53 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 12:05:12 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 12:05:12 INFO ihm.Result : quantité de données insuffisante pour pouvoir calculer une calibration : 977/1000
+2014-03-03 12:05:14 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 12:05:27 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 12:05:27 INFO calibrate.PrintLog : logs/calibration.data created with 1100 lines
+2014-03-03 12:05:27 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s ACCEL  -v logs/calibration.data
+2014-03-03 12:05:27 INFO calibrate.CalibrateSystem : python script result for ACCELEROMETER :

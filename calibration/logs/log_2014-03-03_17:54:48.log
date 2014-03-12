@@ -1,0 +1,89 @@
+2014-03-03 17:54:49 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod1_3_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-03 17:54:49 INFO imu.IMU : new aircraft built with id=5
+2014-03-03 17:54:50 INFO testData.Sender : starting sending IMU test data...
+2014-03-03 17:54:53 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:54:53 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:54:53 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:54:53 INFO imu.IMU : IMU.changeAcMode newMode=1
+2014-03-03 17:54:54 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:54:54 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:54:54 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:54:54 INFO imu.IMU : IMU.changeAcMode newMode=2
+2014-03-03 17:55:16 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:16 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:16 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:55:16 INFO imu.IMU : IMU.changeAcMode newMode=3
+2014-03-03 17:55:17 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:17 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:17 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:55:17 INFO imu.IMU : IMU.changeAcMode newMode=2
+2014-03-03 17:55:19 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:19 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:19 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:55:19 INFO imu.IMU : IMU.changeAcMode newMode=1
+2014-03-03 17:55:19 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:19 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:19 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:55:19 INFO imu.IMU : IMU.changeAcMode newMode=2
+2014-03-03 17:55:43 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:43 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:43 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:55:43 INFO imu.IMU : IMU.changeAcMode newMode=1
+2014-03-03 17:55:44 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:44 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:44 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:55:44 INFO imu.IMU : IMU.changeAcMode newMode=2
+2014-03-03 17:55:45 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:45 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:45 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:55:45 INFO imu.IMU : IMU.changeAcMode newMode=3
+2014-03-03 17:55:46 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:46 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:46 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:55:46 INFO imu.IMU : IMU.changeAcMode newMode=2
+2014-03-03 17:55:47 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:47 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:47 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:55:47 INFO imu.IMU : IMU.changeAcMode newMode=5
+2014-03-03 17:55:47 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:47 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:55:47 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:55:47 INFO imu.IMU : IMU.changeAcMode newMode=2
+2014-03-03 17:56:31 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:56:31 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:56:31 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:56:31 INFO imu.IMU : IMU.changeAcMode newMode=0
+2014-03-03 17:56:31 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:56:31 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:56:31 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:56:31 INFO imu.IMU : IMU.changeAcMode newMode=2
+2014-03-03 17:56:38 INFO imu.IMU : new aircraft detected
+2014-03-03 17:56:38 INFO imu.IMU : new aircraft built with id=5
+2014-03-03 17:56:39 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:56:39 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701
+2014-03-03 17:56:39 INFO ihm.MainFrame : comboBoxSendingModes.addItemListener 701 selected
+2014-03-03 17:56:39 INFO imu.IMU : IMU.changeAcMode newMode=0
+2014-03-03 17:56:40 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-03 17:56:40 INFO ihm.MainFrame : aircraft exited 5
+2014-03-03 17:56:42 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-03 17:56:42 INFO ihm.MainFrame : aircraft exited 5
+2014-03-03 17:56:43 WARNING ihm.MainFrame : setSelectedIndex: 3 out of bounds
+2014-03-03 17:56:44 WARNING ihm.MainFrame : setSelectedIndex: 2 out of bounds
+2014-03-03 17:56:44 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-03 17:56:44 INFO ihm.MainFrame : aircraft exited 5
+2014-03-03 17:56:46 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-03 17:56:46 INFO ihm.MainFrame : aircraft exited 5
+2014-03-03 17:56:48 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-03 17:56:48 INFO ihm.MainFrame : aircraft exited 5
+2014-03-03 17:56:50 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-03 17:56:50 INFO ihm.MainFrame : aircraft exited 5
+2014-03-03 17:56:52 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-03 17:56:52 INFO ihm.MainFrame : aircraft exited 5
+2014-03-03 17:56:54 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-03 17:56:54 INFO ihm.MainFrame : aircraft exited 5
+2014-03-03 17:56:56 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-03 17:56:56 INFO ihm.MainFrame : aircraft exited 5

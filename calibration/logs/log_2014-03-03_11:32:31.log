@@ -1,0 +1,60 @@
+2014-03-03 11:32:31 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-03 11:32:32 INFO imu.IMU : new aircraft built with id=5
+2014-03-03 11:32:32 INFO testData.Sender : starting sending IMU test data...
+2014-03-03 11:32:32 WARNING ihm.MainFrame : setSelectedIndex: 2 out of bounds
+2014-03-03 11:32:36 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-03 11:32:36 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 11:32:36 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:37 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:38 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:39 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:39 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:39 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:39 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:39 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:39 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:39 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:39 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:39 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:39 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:40 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:40 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:40 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:40 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:40 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:40 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:40 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:40 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:40 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:40 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:41 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:41 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:41 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:41 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:41 INFO ellipsoide.SpherePanel : paintComponent height=295 width454
+2014-03-03 11:32:41 INFO ellipsoide.SpherePanel : paintComponent height=295 width454

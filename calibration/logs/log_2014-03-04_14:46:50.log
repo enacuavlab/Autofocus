@@ -1,0 +1,18 @@
+2014-03-04 14:46:50 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-04 14:46:52 INFO testData.Sender : starting sending IMU test data...
+2014-03-04 14:46:52 INFO imu.IMU : new aircraft built with id=5
+2014-03-04 14:47:03 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-04 14:47:03 INFO ihm.MainFrame : aircraft exited 5
+2014-03-04 14:47:04 INFO imu.IMU : new aircraft detected
+2014-03-04 14:47:04 INFO imu.IMU : new aircraft built with id=5
+2014-03-04 14:47:04 WARNING ihm.MainFrame : setSelectedIndex: 0 out of bounds
+2014-03-04 14:47:05 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-04 14:47:05 INFO ihm.MainFrame : aircraft exited 5
+2014-03-04 14:47:07 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-04 14:47:07 INFO ihm.MainFrame : aircraft exited 5
+2014-03-04 14:47:09 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-04 14:47:09 INFO ihm.MainFrame : aircraft exited 5

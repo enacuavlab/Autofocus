@@ -5,12 +5,16 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 public class ExtractRawData {
+
+	private static Logger logger = Logger.getLogger(ExtractRawData.class
+			.getName());
 
 	private org.jdom2.Document document;
 	private Element racine;
@@ -22,8 +26,7 @@ public class ExtractRawData {
 		try {
 			extract();
 		} catch (IncorrectXmlException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		}
 	}
 
@@ -41,7 +44,8 @@ public class ExtractRawData {
 			File doc = new File(toParse);
 			document = sxb.build(doc);
 		} catch (JDOMException e) {
-			System.out.println("Fichier xml non valide");
+			logger.warning("Fichier xml non valide");
+			logger.warning(e.getMessage());
 		}
 		// On initialise un nouvel element racine avec l'element racine du
 		// document.
@@ -53,7 +57,7 @@ public class ExtractRawData {
 	 * 
 	 */
 	public void test() {
-		System.out.println(racine);
+		logger.info(racine.toString());
 	}
 
 	/**
@@ -73,9 +77,9 @@ public class ExtractRawData {
 			}
 			i = temp.getChildren("dl_setting").iterator();
 			while (i.hasNext()) {
-				res = res + i.next().getAttribute("values").getValue() +  '|';
+				res = res + i.next().getAttribute("values").getValue() + '|';
 			}
-		return res;
+			return res;
 		} catch (Exception e) {
 			throw new IncorrectXmlException("lecture du fichier", e);
 		}
@@ -113,12 +117,13 @@ public class ExtractRawData {
 	 * function use to get the number of the node named telemetry_mode_Main
 	 * 
 	 * @return number of the node Telemetry_Mode_MAIN;
-	 * @throws IncorrectXmlException 
+	 * @throws IncorrectXmlException
 	 */
 	public int getIndex() throws IncorrectXmlException {
 		if (indexTelemetry >= 0) {
 			return indexTelemetry;
-		} else throw new IncorrectXmlException();
+		} else
+			throw new IncorrectXmlException();
 	}
 
 	public static void main(String args[]) {
@@ -126,9 +131,9 @@ public class ExtractRawData {
 
 			ExtractRawData d = new ExtractRawData(
 					"C:\\Users\\Alino�\\Desktop\\settings.xml");
-			// System.out.println(d.racine);
-			System.out.println(parseChoice(d.infoNoeud()));
-			System.out.println(d.getIndex());
+			// logger.info(d.racine);
+			logger.info(parseChoice(d.infoNoeud()).toArray().toString());
+			logger.info("" + d.getIndex());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,0 +1,190 @@
+2014-02-28 18:06:04 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod1_3_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-02-28 18:06:06 INFO imu.IMU : new aircraft built with id=5
+2014-02-28 18:06:06 INFO testData.Sender : starting sending IMU test data...
+2014-02-28 18:06:06 WARNING ihm.MainFrame : setSelectedIndex: 3 out of bounds
+2014-02-28 18:06:07 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-02-28 18:06:07 INFO imu.IMU : listening raw datas for drone 5...
+2014-02-28 18:06:07 INFO imu.IMU : IMY mess received  48 -200 -2045
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add window  size=1
+2014-02-28 18:06:07 INFO imu.IMU : IMY mess received  45 -198 -2049
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add window  size=2
+2014-02-28 18:06:07 INFO imu.IMU : IMY mess received  50 -197 -2045
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add window  size=3
+2014-02-28 18:06:07 INFO imu.IMU : IMY mess received  51 -204 -2052
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add window  size=4
+2014-02-28 18:06:07 INFO imu.IMU : IMY mess received  49 -199 -2054
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add window  size=5
+2014-02-28 18:06:07 INFO imu.IMU : IMY mess received  50 -204 -2047
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add window  size=6
+2014-02-28 18:06:07 INFO imu.IMU : IMY mess received  48 -197 -2050
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add window  size=7
+2014-02-28 18:06:07 INFO imu.IMU : IMY mess received  50 -195 -2039
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:07 INFO filtre.FilterSphere : FilterSphere.add window  size=8
+2014-02-28 18:06:08 INFO imu.IMU : IMY mess received  49 -203 -2044
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add window  size=9
+2014-02-28 18:06:08 INFO imu.IMU : IMY mess received  46 -197 -2045
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add window  size=10
+2014-02-28 18:06:08 INFO imu.IMU : IMY mess received  53 -200 -2049
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add window  size=11
+2014-02-28 18:06:08 INFO imu.IMU : IMY mess received  42 -197 -2030
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add window  size=12
+2014-02-28 18:06:08 INFO imu.IMU : IMY mess received  53 -207 -2041
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add window  size=13
+2014-02-28 18:06:08 INFO imu.IMU : IMY mess received  50 -194 -2037
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add window  size=14
+2014-02-28 18:06:08 INFO imu.IMU : IMY mess received  47 -206 -2036
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add window  size=15
+2014-02-28 18:06:08 INFO imu.IMU : IMY mess received  63 -203 -2048
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add window  size=16
+2014-02-28 18:06:08 INFO imu.IMU : IMY mess received  46 -201 -2045
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add window  size=17
+2014-02-28 18:06:08 INFO imu.IMU : IMY mess received  46 -194 -2034
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:08 INFO filtre.FilterSphere : FilterSphere.add window  size=18
+2014-02-28 18:06:09 INFO imu.IMU : IMY mess received  45 -198 -2043
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add window  size=19
+2014-02-28 18:06:09 INFO imu.IMU : IMY mess received  53 -206 -2045
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add window  size=20
+2014-02-28 18:06:09 INFO imu.IMU : IMY mess received  44 -203 -2048
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add window  size=21
+2014-02-28 18:06:09 INFO imu.IMU : IMY mess received  50 -202 -2047
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add window  size=22
+2014-02-28 18:06:09 INFO imu.IMU : IMY mess received  43 -195 -2049
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add window  size=23
+2014-02-28 18:06:09 INFO imu.IMU : IMY mess received  49 -194 -2043
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add window  size=24
+2014-02-28 18:06:09 INFO imu.IMU : IMY mess received  50 -204 -2051
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add window  size=25
+2014-02-28 18:06:09 INFO imu.IMU : IMY mess received  49 -202 -2038
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add window  size=26
+2014-02-28 18:06:09 INFO imu.IMU : IMY mess received  46 -201 -2045
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add window  size=27
+2014-02-28 18:06:09 INFO imu.IMU : IMY mess received  47 -199 -2044
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:09 INFO filtre.FilterSphere : FilterSphere.add window  size=28
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  44 -205 -2043
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=29
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  50 -203 -2057
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=30
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  49 -202 -2038
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=31
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  242 -219 -1935
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=32
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  -30 -204 -2089
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=33
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  86 -194 -2016
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=34
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  54 -197 -2054
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=35
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  50 -201 -2054
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=36
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  44 -200 -2050
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=37
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  52 -201 -2042
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=38
+2014-02-28 18:06:10 INFO imu.IMU : IMY mess received  45 -201 -2049
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:10 INFO filtre.FilterSphere : FilterSphere.add window  size=39
+2014-02-28 18:06:11 INFO imu.IMU : IMY mess received  55 -199 -2043
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -200.0 -2045.0
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:11 INFO imu.IMU : IMY mess received  14 -226 -2060
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add in vector 45.0 -198.0 -2049.0
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:11 INFO imu.IMU : IMY mess received  -79 -194 -2041
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add in vector 50.0 -197.0 -2045.0
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:11 INFO imu.IMU : IMY mess received  25 -204 -2057
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add in vector 51.0 -204.0 -2052.0
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:11 INFO imu.IMU : IMY mess received  26 -287 -2239
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add in vector 49.0 -199.0 -2054.0
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:11 INFO imu.IMU : IMY mess received  377 -208 -2210
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add in vector 50.0 -204.0 -2047.0
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:11 INFO imu.IMU : IMY mess received  134 -142 -2330
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add in vector 48.0 -197.0 -2050.0
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:11 INFO imu.IMU : IMY mess received  200 -35 -2207
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add in vector 50.0 -195.0 -2039.0
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:11 INFO imu.IMU : IMY mess received  139 6 -1821
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add in vector 49.0 -203.0 -2044.0
+2014-02-28 18:06:11 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  300 3 -1858
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 46.0 -197.0 -2045.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  242 -56 -2231
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 53.0 -200.0 -2049.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  283 -101 -2168
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 42.0 -197.0 -2030.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  345 -187 -2422
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 53.0 -207.0 -2041.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  207 -153 -2076
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 50.0 -194.0 -2037.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  376 -224 -2125
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 47.0 -206.0 -2036.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  180 -202 -1908
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 63.0 -203.0 -2048.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  211 -221 -1986
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 46.0 -201.0 -2045.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  310 -186 -2098
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 46.0 -194.0 -2034.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  31 -165 -1782
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 45.0 -198.0 -2043.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:12 INFO imu.IMU : IMY mess received  308 -227 -1879
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add in vector 53.0 -206.0 -2045.0
+2014-02-28 18:06:12 INFO filtre.FilterSphere : FilterSphere.add window  size=40
+2014-02-28 18:06:13 INFO imu.IMU : IMY mess received  132 -242 -1850
+2014-02-28 18:06:13 INFO filtre.FilterSphere : FilterSphere.add in vector 44.0 -203.0 -2048.0
+2014-02-28 18:06:13 INFO filtre.FilterSphere : FilterSphere.add window  size=40

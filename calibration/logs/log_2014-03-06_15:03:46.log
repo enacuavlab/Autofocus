@@ -1,0 +1,94 @@
+2014-03-06 15:03:46 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-06 15:03:47 INFO testData.Sender : starting sending IMU test data...
+2014-03-06 15:03:53 INFO imu.IMU : new aircraft detected
+2014-03-06 15:03:53 INFO imu.IMU : new aircraft built with id=5
+2014-03-06 15:03:57 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-03-06 15:03:58 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-06 15:04:57 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-06 15:04:57 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-06 15:04:57 INFO imu.IMU : new aircraft built with id=5
+2014-03-06 15:04:57 INFO imu.IMU : new aircraft built with id=5
+2014-03-06 15:04:58 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-03-06 15:04:58 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-06 15:04:59 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:04:59 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:01 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:01 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:03 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:03 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:05 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:05 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:07 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:07 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:09 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:09 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:11 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:11 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:13 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:13 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:15 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:15 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:17 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:17 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:19 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:19 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:19 WARNING ihm.MainFrame : setSelectedIndex: 0 out of bounds
+2014-03-06 15:05:21 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:21 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:23 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:23 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:25 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:25 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:27 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:27 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:29 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:29 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:31 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:31 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:33 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:33 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:35 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:35 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:37 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:37 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:39 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:39 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:41 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:41 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:43 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:43 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:45 WARNING ihm.MainFrame : setSelectedIndex: 2 out of bounds
+2014-03-06 15:05:45 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:45 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:47 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:47 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:49 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:49 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:51 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:51 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:53 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:53 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:55 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:55 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:57 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:57 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:05:59 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:05:59 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:06:01 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:06:01 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:06:03 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:06:03 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:06:05 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:06:05 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:06:07 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:06:07 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:06:09 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:06:09 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:06:11 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:06:11 INFO ihm.MainFrame : aircraft exited 5
+2014-03-06 15:06:13 INFO imu.IMU : timer - ac.isConnected=true
+2014-03-06 15:06:13 INFO ihm.MainFrame : aircraft exited 5

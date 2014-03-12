@@ -1,0 +1,31 @@
+2014-03-06 15:06:26 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-06 15:06:27 INFO imu.IMU : new aircraft built with id=5
+2014-03-06 15:06:27 INFO testData.Sender : starting sending IMU test data...
+2014-03-06 15:06:31 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-03-06 15:06:31 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-06 15:08:52 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-06 15:08:52 INFO calibrate.PrintLog : logs/calibration.data created with 1769 lines
+2014-03-06 15:08:52 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-06 15:08:52 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-06 15:08:56 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 1769 records
+Using noise threshold of 1000 for filtering.
+remaining 1749 after filtering
+initial guess : avg 1.0441341826 std 0.091764353473
+optimized guess : avg 0.99956761769 std 0.020789308945
+
+<define name="MAG_X_NEUTRAL" value="20"/>
+<define name="MAG_Y_NEUTRAL" value="-94"/>
+<define name="MAG_Z_NEUTRAL" value="-45"/>
+<define name="MAG_X_SENS" value="3.96890063772" integer="16"/>
+<define name="MAG_Y_SENS" value="4.05259729885" integer="16"/>
+<define name="MAG_Z_SENS" value="4.52752932559" integer="16"/>
+
+2014-03-06 15:08:56 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-06 15:09:08 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-06 15:10:00 INFO testData.Sender : stopped sending IMU test data

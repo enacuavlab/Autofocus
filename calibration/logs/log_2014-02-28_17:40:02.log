@@ -1,0 +1,160 @@
+2014-02-28 17:40:02 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod1_3_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-02-28 17:40:03 INFO imu.IMU : new aircraft built with id=5
+2014-02-28 17:40:03 INFO testData.Sender : starting sending IMU test data...
+2014-02-28 17:40:03 WARNING ihm.MainFrame : setSelectedIndex: 3 out of bounds
+2014-02-28 17:40:04 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-02-28 17:40:04 INFO imu.IMU : listening raw datas for drone 5...
+2014-02-28 17:40:04 INFO imu.IMU : IMY mess received  49 -203 -2044
+2014-02-28 17:40:05 INFO imu.IMU : IMY mess received  46 -197 -2045
+2014-02-28 17:40:05 INFO imu.IMU : IMY mess received  53 -200 -2049
+2014-02-28 17:40:05 INFO imu.IMU : IMY mess received  42 -197 -2030
+2014-02-28 17:40:05 INFO imu.IMU : IMY mess received  53 -207 -2041
+2014-02-28 17:40:05 INFO imu.IMU : IMY mess received  50 -194 -2037
+2014-02-28 17:40:05 INFO imu.IMU : IMY mess received  47 -206 -2036
+2014-02-28 17:40:05 INFO imu.IMU : IMY mess received  63 -203 -2048
+2014-02-28 17:40:05 INFO imu.IMU : IMY mess received  46 -201 -2045
+2014-02-28 17:40:05 INFO imu.IMU : IMY mess received  46 -194 -2034
+2014-02-28 17:40:05 INFO imu.IMU : IMY mess received  45 -198 -2043
+2014-02-28 17:40:06 INFO imu.IMU : IMY mess received  53 -206 -2045
+2014-02-28 17:40:06 INFO imu.IMU : IMY mess received  44 -203 -2048
+2014-02-28 17:40:06 INFO imu.IMU : IMY mess received  50 -202 -2047
+2014-02-28 17:40:06 INFO imu.IMU : IMY mess received  43 -195 -2049
+2014-02-28 17:40:06 INFO imu.IMU : IMY mess received  49 -194 -2043
+2014-02-28 17:40:06 INFO imu.IMU : IMY mess received  50 -204 -2051
+2014-02-28 17:40:06 INFO imu.IMU : IMY mess received  49 -202 -2038
+2014-02-28 17:40:06 INFO imu.IMU : IMY mess received  46 -201 -2045
+2014-02-28 17:40:06 INFO imu.IMU : IMY mess received  47 -199 -2044
+2014-02-28 17:40:06 INFO imu.IMU : IMY mess received  44 -205 -2043
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  50 -203 -2057
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  49 -202 -2038
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  242 -219 -1935
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  -30 -204 -2089
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  86 -194 -2016
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  54 -197 -2054
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  50 -201 -2054
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  44 -200 -2050
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  52 -201 -2042
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  45 -201 -2049
+2014-02-28 17:40:07 INFO imu.IMU : IMY mess received  55 -199 -2043
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  14 -226 -2060
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  -79 -194 -2041
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  25 -204 -2057
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  26 -287 -2239
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  377 -208 -2210
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  134 -142 -2330
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  200 -35 -2207
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  139 6 -1821
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  300 3 -1858
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  242 -56 -2231
+2014-02-28 17:40:08 INFO imu.IMU : IMY mess received  283 -101 -2168
+2014-02-28 17:40:09 INFO imu.IMU : IMY mess received  345 -187 -2422
+2014-02-28 17:40:09 INFO imu.IMU : IMY mess received  207 -153 -2076
+2014-02-28 17:40:09 INFO imu.IMU : IMY mess received  376 -224 -2125
+2014-02-28 17:40:09 INFO imu.IMU : IMY mess received  180 -202 -1908
+2014-02-28 17:40:09 INFO imu.IMU : IMY mess received  211 -221 -1986
+2014-02-28 17:40:09 INFO imu.IMU : IMY mess received  310 -186 -2098
+2014-02-28 17:40:09 INFO imu.IMU : IMY mess received  31 -165 -1782
+2014-02-28 17:40:09 INFO imu.IMU : IMY mess received  308 -227 -1879
+2014-02-28 17:40:09 INFO imu.IMU : IMY mess received  132 -242 -1850
+2014-02-28 17:40:09 INFO imu.IMU : IMY mess received  -98 -110 -1817
+2014-02-28 17:40:09 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-02-28 17:40:09 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-02-28 17:40:10 INFO imu.IMU : new aircraft built with id=5
+2014-02-28 17:40:10 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-02-28 17:40:10 INFO imu.IMU : listening raw datas for drone 5...
+2014-02-28 17:40:10 INFO imu.IMU : IMY mess received  21 -288 -1910
+2014-02-28 17:40:10 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:10 INFO imu.IMU : IMY mess received  -138 -256 -1922
+2014-02-28 17:40:10 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:10 INFO imu.IMU : IMY mess received  -61 -224 -1878
+2014-02-28 17:40:10 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:10 INFO imu.IMU : IMY mess received  -41 -300 -2065
+2014-02-28 17:40:10 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:10 INFO imu.IMU : IMY mess received  -40 -148 -1828
+2014-02-28 17:40:10 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:10 INFO imu.IMU : IMY mess received  -5 -241 -2008
+2014-02-28 17:40:10 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:11 INFO imu.IMU : IMY mess received  124 -191 -1972
+2014-02-28 17:40:11 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:11 INFO imu.IMU : IMY mess received  178 -179 -2198
+2014-02-28 17:40:11 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:11 INFO imu.IMU : IMY mess received  41 -255 -2054
+2014-02-28 17:40:11 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:11 INFO imu.IMU : IMY mess received  153 -208 -2188
+2014-02-28 17:40:11 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:11 INFO imu.IMU : IMY mess received  143 -276 -2016
+2014-02-28 17:40:11 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:11 INFO imu.IMU : IMY mess received  179 -82 -2080
+2014-02-28 17:40:11 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:11 INFO imu.IMU : IMY mess received  128 -50 -2195
+2014-02-28 17:40:11 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:11 INFO imu.IMU : IMY mess received  155 -38 -2029
+2014-02-28 17:40:11 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:11 INFO imu.IMU : IMY mess received  274 60 -2091
+2014-02-28 17:40:11 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:11 INFO imu.IMU : IMY mess received  106 18 -2108
+2014-02-28 17:40:11 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:12 INFO imu.IMU : IMY mess received  238 -7 -2073
+2014-02-28 17:40:12 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:12 INFO imu.IMU : IMY mess received  196 45 -2193
+2014-02-28 17:40:12 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:12 INFO imu.IMU : IMY mess received  157 4 -2199
+2014-02-28 17:40:12 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:12 INFO imu.IMU : IMY mess received  251 3 -2109
+2014-02-28 17:40:12 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:12 INFO imu.IMU : IMY mess received  223 155 -2172
+2014-02-28 17:40:12 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:12 INFO imu.IMU : IMY mess received  307 55 -1912
+2014-02-28 17:40:12 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:12 INFO imu.IMU : IMY mess received  186 56 -2199
+2014-02-28 17:40:12 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:12 INFO imu.IMU : IMY mess received  155 94 -2280
+2014-02-28 17:40:12 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:12 INFO imu.IMU : IMY mess received  164 79 -2261
+2014-02-28 17:40:12 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:12 INFO imu.IMU : IMY mess received  254 90 -1953
+2014-02-28 17:40:12 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  197 2 -2077
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  240 134 -1973
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  189 -88 -2110
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  88 78 -2140
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  349 81 -2011
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  -22 -98 -1877
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  -12 -12 -1842
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  210 147 -2144
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  77 -21 -2091
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  -5 81 -2142
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:13 INFO imu.IMU : IMY mess received  -32 65 -2158
+2014-02-28 17:40:13 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:14 INFO imu.IMU : IMY mess received  164 131 -2069
+2014-02-28 17:40:14 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:14 INFO imu.IMU : IMY mess received  3 -6 -1900
+2014-02-28 17:40:14 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:14 INFO imu.IMU : IMY mess received  -88 61 -2252
+2014-02-28 17:40:14 INFO filtre.FilterSphere : FilterSphere add d=21.0 -288.0 -1910.0
+2014-02-28 17:40:14 INFO imu.IMU : IMY mess received  54 18 -2085
+2014-02-28 17:40:14 INFO filtre.FilterSphere : FilterSphere add d=-138.0 -256.0 -1922.0
+2014-02-28 17:40:14 INFO imu.IMU : IMY mess received  173 88 -2067
+2014-02-28 17:40:14 INFO filtre.FilterSphere : FilterSphere add d=-61.0 -224.0 -1878.0
+2014-02-28 17:40:14 INFO imu.IMU : IMY mess received  21 15 -1953
+2014-02-28 17:40:14 INFO filtre.FilterSphere : FilterSphere add d=-41.0 -300.0 -2065.0
+2014-02-28 17:40:14 INFO imu.IMU : IMY mess received  -15 34 -2129
+2014-02-28 17:40:14 INFO filtre.FilterSphere : FilterSphere add d=-40.0 -148.0 -1828.0
+2014-02-28 17:40:14 INFO imu.IMU : IMY mess received  64 37 -2093
+2014-02-28 17:40:14 INFO filtre.FilterSphere : FilterSphere add d=-5.0 -241.0 -2008.0
+2014-02-28 17:40:14 INFO imu.IMU : IMY mess received  83 55 -2095
+2014-02-28 17:40:14 INFO filtre.FilterSphere : FilterSphere add d=124.0 -191.0 -1972.0

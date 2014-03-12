@@ -1,0 +1,36 @@
+2014-02-28 18:57:21 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_lisa_test_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-02-28 18:57:22 INFO imu.IMU : new aircraft built with id=5
+2014-02-28 18:57:22 INFO testData.Sender : starting sending IMU test data...
+2014-02-28 18:57:24 WARNING ihm.MainFrame : setSelectedIndex: 2 out of bounds
+2014-02-28 18:57:33 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-02-28 18:57:33 INFO imu.IMU : listening raw datas for drone 5...
+2014-02-28 18:58:26 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-02-28 18:58:26 INFO calibrate.PrintLog : logs/calibration.data created with 662 lines
+2014-02-28 18:58:26 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-02-28 18:58:26 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-02-28 18:58:26 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 662 records
+Using noise threshold of 1000 for filtering.
+remaining 642 after filtering
+initial guess : avg 1.01642748776 std 0.10924295275
+optimized guess : avg 0.999398947698 std 0.0245089992601
+
+<define name="MAG_X_NEUTRAL" value="11"/>
+<define name="MAG_Y_NEUTRAL" value="-99"/>
+<define name="MAG_Z_NEUTRAL" value="-43"/>
+<define name="MAG_X_SENS" value="3.91291210294" integer="16"/>
+<define name="MAG_Y_SENS" value="4.00517493798" integer="16"/>
+<define name="MAG_Z_SENS" value="4.53078201302" integer="16"/>
+
+2014-02-28 18:58:26 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-02-28 18:58:29 INFO imu.IMU : listening raw datas for drone 5...
+2014-02-28 18:58:30 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-02-28 18:58:30 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-02-28 18:58:30 INFO imu.IMU : new aircraft built with id=5
+2014-02-28 18:58:31 INFO ihm.MainFrame : starting calibration of accelerometer...
+2014-02-28 18:58:31 INFO imu.IMU : listening raw datas for drone 5...

@@ -1,0 +1,106 @@
+2014-03-03 18:21:23 INFO ihm.Calibration : Properties : 
+autofocus_calibration_data=logs/calibration.data
+simulation_calibration_data=test/calib_prod1_3_droneId_5.data
+paparazzi_script_calibration=paparazzi_calibration/calibrate.py
+
+2014-03-03 18:21:26 INFO imu.IMU : new aircraft built with id=5
+2014-03-03 18:21:26 INFO testData.Sender : starting sending IMU test data...
+2014-03-03 18:21:29 INFO ihm.MainFrame : starting calibration of magnetometer...
+2014-03-03 18:21:30 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:21:52 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:21:53 INFO calibrate.PrintLog : logs/calibration.data created with 288 lines
+2014-03-03 18:21:53 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:21:53 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:21:54 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 288 records
+Using noise threshold of 1000 for filtering.
+remaining 268 after filtering
+
+2014-03-03 18:21:54 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:21:56 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:24:43 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:24:44 INFO calibrate.PrintLog : logs/calibration.data created with 2390 lines
+2014-03-03 18:24:44 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:24:44 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:24:44 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 2390 records
+Using noise threshold of 1000 for filtering.
+remaining 2370 after filtering
+
+2014-03-03 18:24:44 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:24:49 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:25:10 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:25:10 INFO calibrate.PrintLog : logs/calibration.data created with 2647 lines
+2014-03-03 18:25:10 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:25:10 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:25:11 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 2647 records
+Using noise threshold of 1000 for filtering.
+remaining 2627 after filtering
+
+2014-03-03 18:25:11 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:25:11 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:25:44 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:25:44 INFO calibrate.PrintLog : logs/calibration.data created with 3060 lines
+2014-03-03 18:25:44 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:25:44 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:25:45 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 3060 records
+Using noise threshold of 1000 for filtering.
+remaining 3040 after filtering
+
+2014-03-03 18:25:45 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:25:46 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:27:22 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:27:22 INFO calibrate.PrintLog : logs/calibration.data created with 4245 lines
+2014-03-03 18:27:22 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:27:22 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:27:23 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 4245 records
+Using noise threshold of 1000 for filtering.
+remaining 4225 after filtering
+
+2014-03-03 18:27:23 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:29:25 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:29:26 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:29:27 INFO calibrate.PrintLog : logs/calibration.data created with 4268 lines
+2014-03-03 18:29:27 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:29:27 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:29:28 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 4268 records
+Using noise threshold of 1000 for filtering.
+remaining 4248 after filtering
+
+2014-03-03 18:29:28 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:29:31 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:30:32 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:30:32 INFO calibrate.PrintLog : logs/calibration.data created with 5029 lines
+2014-03-03 18:30:32 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:30:32 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:30:33 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 5029 records
+Using noise threshold of 1000 for filtering.
+remaining 5009 after filtering
+
+2014-03-03 18:30:33 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:30:35 INFO imu.IMU : listening raw datas for drone 5...
+2014-03-03 18:31:19 INFO testData.Sender : stopped sending IMU test data
+2014-03-03 18:32:46 WARNING imu.IMU : stopped listening raw datas for drone 5
+2014-03-03 18:32:46 INFO calibrate.PrintLog : logs/calibration.data created with 5573 lines
+2014-03-03 18:32:46 INFO calibrate.CalibrateSystem : executing : python paparazzi_calibration/calibrate.py -s MAG  -v logs/calibration.data
+2014-03-03 18:32:46 INFO calibrate.CalibrateSystem : python script result for MAGNETOMETER :
+2014-03-03 18:32:47 INFO calibrate.CalibrateSystem : Using aircraft id 5
+reading file logs/calibration.data for aircraft 5 and sensor MAG
+found 5573 records
+Using noise threshold of 1000 for filtering.
+remaining 5553 after filtering
+
+2014-03-03 18:32:47 INFO calibrate.CalibrateSystem : end of python script for MAGNETOMETER
+2014-03-03 18:32:48 INFO imu.IMU : listening raw datas for drone 5...
