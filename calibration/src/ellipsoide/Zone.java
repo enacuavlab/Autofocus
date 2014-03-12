@@ -7,8 +7,9 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.logging.Logger;
 
-import filtre.VecteurFiltrable;
+import data.IVector;
 
 /**
  * class which is counting the number of vectors in the right field of the
@@ -18,6 +19,9 @@ import filtre.VecteurFiltrable;
  * @author GERVAIS florent
  */
 public class Zone {
+
+	private static Logger logger = Logger.getLogger(Zone.class.getName());
+
 	/**
 	 * Latitude Angle High: The latitude angle defining the highest bound of
 	 * zone variates between -PI/2 and + PI/2
@@ -35,6 +39,10 @@ public class Zone {
 	 * Longitude Angle End : The eastern angle defining the zone
 	 */
 	private double longAngleEnd;
+
+	private double step_longitude;
+	private double step_latitude;
+
 	/**
 	 * The surface of the zone
 	 */
@@ -43,7 +51,7 @@ public class Zone {
 	 * The number of points on each boundary of the zone. More or less the
 	 * resolution of the sphere
 	 */
-	private int nbPointsByLine = 4;
+	private static int NB_POINTS_BY_LINE = 4;
 	/**
 	 * List of the points defining the boundaries of the zone
 	 */
@@ -52,6 +60,11 @@ public class Zone {
 	 * The surface of the Sphere
 	 */
 	private double surfaceSphere;
+
+	/**
+	 * Precalcul de la surface (partie non dépendante du rayon)
+	 */
+	private double surfacePrecalculated;
 
 	/**
 	 * The density of points over the zone
@@ -92,6 +105,17 @@ public class Zone {
 		density = new Density(nbPointsMax);
 		surface = 1;
 		surfaceSphere = 1;
+
+		initCalculatedValues();
+	}
+
+	private void initCalculatedValues() {
+		step_longitude = (longAngleEnd - longAngleBegin) / NB_POINTS_BY_LINE;
+		step_latitude = (latAngleHigh - latAngleLow) / 2 / NB_POINTS_BY_LINE;
+
+		surfacePrecalculated = (longAngleEnd - longAngleBegin)
+				* Math.abs(Math.cos(latAngleHigh + Math.PI / 2.0)
+						- Math.cos(latAngleLow + Math.PI / 2.0));
 	}
 
 	/**
@@ -99,28 +123,6 @@ public class Zone {
 	 */
 	public void reset() {
 		density.reset();
-	}
-
-	/**
-	 * Thanks to that method we can find the currant zone in order to print the
-	 * current zone
-	 * 
-	 * @param v
-	 *            the currant vector that is actually the last one received by
-	 *            the IMU
-	 * @param center
-	 *            center of the sphere
-	 * @return boolean true when the vector is in this zone
-	 */
-	public boolean updateZoneCourante(VecteurFiltrable<Double> v,
-			VecteurFiltrable<Double> center) {
-		if (is_in_lat(v.getX(), v.getY(), v.getZ(), center.getX(),
-				center.getY(), center.getZ())
-				&& is_in_long(v.getX(), v.getY(), center.getX(), center.getY())) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	/**
@@ -133,26 +135,30 @@ public class Zone {
 
 	}
 
+	public void updateDensity() {
+		density.updateDensity(surfaceSphere, surface);
+	}
+
 	/**
 	 * this method return a boolean : true means that the point is in the area
 	 * 
-	 * @param v
+	 * @param vector
 	 *            vector that is tested to be in the area
 	 * @param center
 	 *            center of the ellipsoid
 	 * @return the result of the test
 	 */
-	public boolean isIn(VecteurFiltrable<Double> v,
-			VecteurFiltrable<Double> center) {
-		if (is_in_lat(v.getX(), v.getY(), v.getZ(), center.getX(),
-				center.getY(), center.getZ())
-				&& is_in_long(v.getX(), v.getY(), center.getX(), center.getY())) {
-			if (v.isCorrect()) {
-				density.updateDensity(surfaceSphere, surface);
-			}
-			return true;
-		} else
-			return false;
+	public boolean containsVector(IVector<Double> vector, IVector<Double> center) {
+		boolean res = false;
+		double distance = Math.sqrt(Math.pow(center.getX() - vector.getX(), 2)
+				+ Math.pow(center.getY() - vector.getY(), 2));
+
+		if (distance != 0) {
+			res = isInLatitude(vector.getZ(), center.getZ(), distance)
+					&& isInLongitude(vector.getX(), vector.getY(),
+							center.getX(), center.getY(), distance);
+		}
+		return res;
 	}
 
 	/**
@@ -166,52 +172,35 @@ public class Zone {
 	 *            x center coordinate of the ellipsoid
 	 * @param y_center
 	 *            y center coordinate of the ellipsoid
+	 * @param distance
+	 *            the distance between the current point and the center
 	 * @return the result of the test
 	 */
-	private boolean is_in_long(double x_coord, double y_coord, double x_center,
-			double y_center) {
-		double alpha;
+	private boolean isInLongitude(double x_coord, double y_coord,
+			double x_center, double y_center, double distance) {
 		double xc_x = x_coord - x_center;
 		double yc_y = y_coord - y_center;
-		double den1 = Math.sqrt(Math.pow(xc_x, 2) + Math.pow(yc_y, 2));
-		if (den1 != 0) {
-			alpha = Math.acos(xc_x / den1)
-					* Math.signum(Math.asin(yc_y / den1));
-			return (alpha > longAngleBegin && alpha < longAngleEnd);
-		} else {
-			return false;
-		}
+		double alpha = Math.acos(xc_x / distance)
+				* Math.signum(Math.asin(yc_y / distance));
+		return (alpha > longAngleBegin && alpha < longAngleEnd);
 	}
 
 	/**
 	 * this method return true if the vector is in the right latitude area
 	 * 
-	 * @param x_coord
-	 *            x vector coordinate
-	 * @param y_coord
-	 *            y vector coordinate
 	 * @param z_coord
 	 *            z vector coordinate
-	 * @param x_center
-	 *            x center coordinate of the ellipsoid
-	 * @param y_center
-	 *            y center coordinate of the ellipsoid
 	 * @param z_center
 	 *            z center coordinate of the ellipsoids
+	 * @param distance
+	 *            the distance between the current point and the center
 	 * @return the result of the test
 	 */
-	private boolean is_in_lat(double x_coord, double y_coord, double z_coord,
-			double x_center, double y_center, double z_center) {
-		double alpha;
-		double den = Math.sqrt(Math.pow(x_center - x_coord, 2)
-				+ Math.pow(y_center - y_coord, 2));
+	private boolean isInLatitude(double z_coord, double z_center,
+			double distance) {
 		double zc_z = z_coord - z_center;
-		if (den != 0) {
-			alpha = Math.atan(zc_z / den);
-			return (alpha < latAngleHigh && alpha > latAngleLow);
-		} else {
-			return false;
-		}
+		double alpha = Math.atan(zc_z / distance);
+		return (alpha < latAngleHigh && alpha > latAngleLow);
 	}
 
 	/**
@@ -221,14 +210,8 @@ public class Zone {
 	 * @param rad
 	 *            radius of the sphere needed to represent the 2D points
 	 */
-	public void maj_list_contour(double rad) {
+	public void majListContour(double radius) {
 		listContour.clear();
-		double radius = rad;
-
-		double step_longitude = (longAngleEnd - longAngleBegin)
-				/ nbPointsByLine;
-		double step_latitude = (latAngleHigh - latAngleLow) / 2
-				/ nbPointsByLine;
 
 		double lat;
 		double lon;
@@ -238,38 +221,43 @@ public class Zone {
 		// we divide by 3 in order to obtain a result ranging in -1;1 at all
 		// times before multiplying by the radius
 
+		// Note : les zones doivent être créées dans un ordre précis
+
 		// bottom of the zone
-		for (int i = 0; i < nbPointsByLine; i++) {
+		for (int i = 0; i < NB_POINTS_BY_LINE; i++) {
 			lat = latAngleLow;
 			lon = longAngleBegin + step_longitude * i;
-			listContour.add(new Point2D.Double((cstx * lon * Math.cos(lat)),
-					(csty * Math.sin(lat))));
+			addPoint(lat, lon, cstx, csty);
 		}
 		// right side of the zone
-		for (int i = 0; i < nbPointsByLine; i++) {
+		for (int i = 0; i < NB_POINTS_BY_LINE; i++) {
 			lat = latAngleLow + i * step_latitude;
 			lon = longAngleEnd;
-			listContour.add(new Point2D.Double((cstx * lon * Math.cos(lat)),
-					(csty * Math.sin(lat))));
+			addPoint(lat, lon, cstx, csty);
 		}
 		// top of the zone
-		for (int i = 0; i < nbPointsByLine; i++) {
+		for (int i = 0; i < NB_POINTS_BY_LINE; i++) {
 			lat = latAngleHigh;
-			lon = longAngleEnd - step_longitude * i; //minus to get along the zone in the right order
-			listContour.add(new Point2D.Double((cstx * lon * Math.cos(lat)),
-					(csty * Math.sin(lat))));
+			// minus to get along the zone in the right order
+			lon = longAngleEnd - step_longitude * i;
+			addPoint(lat, lon, cstx, csty);
 		}
 		// left side of the zone
-		for (int i = 0; i < nbPointsByLine; i++) {
-			lat = latAngleHigh - i * step_latitude; //minus to get along the zone in the right order
+		for (int i = 0; i < NB_POINTS_BY_LINE; i++) {
+			// minus to get along the zone in the right order
+			lat = latAngleHigh - i * step_latitude;
 			lon = longAngleBegin;
-			listContour.add(new Point2D.Double((cstx * lon * Math.cos(lat)),
-					(csty * Math.sin(lat))));
+			addPoint(lat, lon, cstx, csty);
 		}
 	}
 
+	private void addPoint(double lat, double lon, double cstx, double csty) {
+		listContour.add(new Point2D.Double((cstx * lon * Math.cos(lat)),
+				(csty * Math.sin(lat))));
+	}
+
 	/**
-	 * this method calculate the surface of the zone and update the surface of
+	 * this method calculates the surface of the zone and updates the surface of
 	 * the sphere
 	 * 
 	 * @param radius
@@ -279,12 +267,7 @@ public class Zone {
 	 */
 	public void calculateSurface(double radius, double surfaceS) {
 		surfaceSphere = surfaceS;
-
-		surface = Math.pow(radius, 2)
-				* (longAngleEnd - longAngleBegin)
-				* Math.abs(Math.cos(latAngleHigh + Math.PI / 2.0)
-						- Math.cos(latAngleLow + Math.PI / 2.0));
-		// System.out.println(surface +" " + surfaceSphere);
+		surface = Math.pow(radius, 2) * surfacePrecalculated;
 	}
 
 	/**
@@ -297,93 +280,6 @@ public class Zone {
 			str += " " + j.next();
 		}
 		return str;
-	}
-
-	/**
-	 * Test functions
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// test de l'angle theta du repère sphérique
-		Zone zone1 = new Zone(0, Math.PI / 2, 0, Math.PI / 2, 800);
-		if (zone1.is_in_long(3, 2, 1, 1)) { // doit etre dans la zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		Zone zone2 = new Zone(-Math.PI / 2, 0, -Math.PI / 2, 0, 800);
-		if (zone1.is_in_long(3, -15, 1, 1)) { // ne doit pas etre dans la
-												// zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		if (zone2.is_in_long(3, -15, 1, 1)) { // doit etre dans la zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		Zone zone3 = new Zone(0, Math.PI / 4, -Math.PI, -Math.PI / 2, 800);
-		if (zone1.is_in_long(-9, -15, 1, 1)) { // ne doit pas etre dans la
-												// zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		if (zone2.is_in_long(-9, -15, 1, 1)) { // ne doit pas etre dans la
-												// zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		if (zone3.is_in_long(-9, -15, 1, 1)) { // doit etre dans la zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		Zone zone4 = new Zone(0, Math.PI / 4, Math.PI / 2, Math.PI, 800);
-		if (zone1.is_in_long(-9, 15, 1, 1)) { // ne doit pas etre dans la
-												// zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		if (zone2.is_in_long(-9, 15, 1, 1)) { // ne doit pas etre dans la
-												// zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		if (zone3.is_in_long(-9, 15, 1, 1)) { // ne doit pas etre dans la
-												// zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		if (zone4.is_in_long(-9, 15, 1, 1)) { // doit etre dans la zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		// test de l'angle Phi du repère sphérique
-		if (zone1.is_in_lat(16, 15, 12, 1, 1, 1)) { // doit etre dans la zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		if (zone1.is_in_lat(16, 15, -12, 1, 1, 1)) { // ne doit pas etre dans la
-														// zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
-		if (zone2.is_in_lat(16, 15, -12, 1, 1, 1)) { // ne doit pas etre dans la
-														// zone
-			System.out.println("le point est bien dans la zone");
-		} else {
-			System.out.println("le point n'est bizarement pas dans la zone");
-		}
 	}
 
 }

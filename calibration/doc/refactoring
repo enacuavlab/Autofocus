@@ -1,0 +1,30 @@
+Renommage de classes : 
+
+Shell2 --> Calibration
+Vecteur --> Vector
+VecteurFiltrable --> IVector (I stands for Interface)
+AffichAccel --> DrawAccel
+AffichSphere --> DrawMagneto
+FilterSphere --> FilterMagneto
+
+
+Nouvelles classes : 
+
+Draw : classes abstraites avec 2 implémentations : DrawAccel et DrawMagneto
+MainFrame : en charge de l'affichage de la fenêtre principale (extrait de Shell2)
+SpherePanel : en charge d'afficher la sphere
+
+
+Modification des appels de fonction :
+
+cf diagrammes de séquence (v1 = version récupérée, v2 = version après refactoring)
+
+
+Principales modifications apportées :
+
+- générales : ajout d'une gestion de log + d'un fichier de configuration (pour externaliser les liens vers les différents répertoires) + renommage de variables (pour plus de lisibilité)
+- IHM : restructuration des classes gérant l'affichage + quelques modifications mineures d'affichage.
+- classe Sphere : nettoyage des paramètres non utilisés, simplication du code, restructuration pour limiter le nombre de boucles
+
+
+

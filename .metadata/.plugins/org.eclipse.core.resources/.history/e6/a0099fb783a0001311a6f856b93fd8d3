@@ -1,0 +1,119 @@
+package ihm;
+
+import imu.IMU;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Properties;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+
+import testData.Sender;
+import calibrate.PrintLog;
+
+import common.LogFormatter;
+
+/**
+ * Starts the application and initialize what is needed
+ * 
+ * @author alinoe, cdouine
+ * 
+ */
+public class Calibration {
+
+	private static Logger logger = Logger
+			.getLogger(Calibration.class.getName());
+
+	/**
+	 * IMU object to handle the other part of the control
+	 * 
+	 */
+	private IMU imu;
+
+	private PrintLog log = new PrintLog();
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		// try {
+		// UIManager
+		// .setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+		// } catch (Throwable e) {
+		// e.printStackTrace();
+		// }
+		try {
+			// Chargement des proprietes
+			FileInputStream input = new FileInputStream("config.properties");
+			Properties prop = new Properties();
+			prop.load(input);
+
+			// Initialisation du logger
+			initializeLogger(prop);
+
+			// Démarrage de l'application
+			Calibration calibration = new Calibration();
+
+			// Simulation de données de calibration
+			// (uniquement si un fichier est défini dans les properties)
+			String simulationCalibrationData = prop
+					.getProperty("simulation_calibration_data");
+			if (simulationCalibrationData != null
+					&& simulationCalibrationData != "") {
+				Sender s = new Sender(simulationCalibrationData);
+				s.sendRawMessage();
+			}
+
+		} catch (Exception e) {
+			logger.warning(e.getMessage());
+		}
+	}
+
+	/**
+	 * Initialise le logger et log les propriétés courantes
+	 * 
+	 * @param prop
+	 * @throws IOException
+	 */
+	private static void initializeLogger(Properties prop) throws IOException {
+		Date date = Calendar.getInstance().getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		FileHandler fileHandler = new FileHandler("logs/log_"
+				+ format.format(date) + ".log");
+		LogFormatter formatter = new LogFormatter();
+		fileHandler.setFormatter(formatter);
+		Logger.getLogger("").addHandler(fileHandler);
+
+		// Log des propriétés
+		String properties = "Properties : "
+				+ System.getProperty("line.separator");
+		for (Object key : prop.keySet()) {
+			properties += ((String) key + "=" + prop.getProperty((String) key))
+					+ System.getProperty("line.separator");
+		}
+		logger.info(properties);
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Calibration() {
+		startImu();
+
+		MainFrame window = new MainFrame(log, imu);
+		window.setVisible(true);
+
+		// start the discovering of all connected aircraft
+		imu.listenAllAc();
+	}
+
+	/**
+	 * Start the IMU, physical control part (outside GUI)
+	 */
+	private void startImu() {
+		imu = new IMU();
+	}
+}

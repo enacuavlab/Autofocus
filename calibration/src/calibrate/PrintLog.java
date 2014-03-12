@@ -2,27 +2,41 @@ package calibrate;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
-/**Stores the messages used during calibration.
+/**
+ * Stores the messages used during calibration.
+ * 
  * @author Alino�
  */
 
 public class PrintLog {
 
-	/**Data to store all the messages.
-	 */
-	private ArrayList<String> lines = new ArrayList<String>();
+	private static Logger logger = Logger.getLogger(PrintLog.class.getName());
 
-	/**Store a new line in the object.
-	 *
-	 * @param line to add
+	/**
+	 * Data to store all the messages.
+	 */
+	private List<String> lines = new ArrayList<String>();
+
+	/**
+	 * Store a new line in the object.
+	 * 
+	 * @param line
+	 *            to add
 	 */
 	public final void add(final String line) {
 		lines.add(line);
 	}
 
-	/**Creates the log file.
-	 *
+	public int dataSize() {
+		return lines.size();
+	}
+
+	/**
+	 * Creates the log file.
+	 * 
 	 * @param fileName
 	 */
 	public final void print(final String fileName) {
@@ -35,18 +49,9 @@ public class PrintLog {
 				fs.write(nl);
 			}
 			fs.close();
+			logger.info(fileName + " created with " + lines.size() + " lines");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			logger.warning(e.getMessage());
 		}
-	}
-	
-	/**Test function of the class.
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		PrintLog test = new PrintLog();
-		test.add("ok");
-		test.print("C:\\Users\\Alino�\\ok.txt");
 	}
 }

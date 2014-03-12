@@ -4,8 +4,32 @@
 		<item value="251" key="DIALOG_Y_ORIGIN"/>
 		<item value="498" key="DIALOG_X_ORIGIN"/>
 	</section>
+	<section name="org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog">
+		<item value="false" key="ShowDerived"/>
+		<item value="true" key="ShowStatusLine"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;workingSet workingSetName=&quot;&quot;/&gt;" key="WorkingSet"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History&gt;&#x0A;&lt;historyRootNode&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/testData/Sender.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/data/Data.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/ihm/Calibration.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/calibrate/CalibrateSystem.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/calibrate/PrintLog.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/ihm/MainFrame.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/ellipsoide/Sphere.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/data/Vector.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/config.properties&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/testData/TestTransformFile.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/ihm/Result.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/doc/imu/IMU.html&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/calibration/src/imu/IMU.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;/historyRootNode&gt;&#x0A;&lt;/History&gt;" key="History"/>
+		<section name="DialogBoundsSettings">
+			<item value="606" key="DIALOG_WIDTH"/>
+			<item value="53" key="DIALOG_Y_ORIGIN"/>
+			<item value="180" key="DIALOG_X_ORIGIN"/>
+			<item value="587" key="DIALOG_HEIGHT"/>
+			<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+		</section>
+	</section>
+	<section name="ExternalProjectImportWizard">
+		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+	</section>
 	<section name="WORKBENCH_SETTINGS">
 		<list key="ENABLED_TRANSFERS">
 		</list>
+	</section>
+	<section name="CleanDialogSettings">
+		<item value="567" key="DIALOG_WIDTH"/>
+		<item value="265" key="DIALOG_Y_ORIGIN"/>
+		<item value="711" key="DIALOG_X_ORIGIN"/>
+		<item value="403" key="DIALOG_HEIGHT"/>
+		<item value="false" key="TOGGLE_SELECTED"/>
 	</section>
 </section>

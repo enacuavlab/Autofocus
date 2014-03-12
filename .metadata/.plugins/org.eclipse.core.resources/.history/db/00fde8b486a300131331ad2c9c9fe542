@@ -1,0 +1,181 @@
+package ihm;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.util.logging.Logger;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+
+import net.miginfocom.swing.MigLayout;
+import data.IVector;
+import ellipsoide.Sphere;
+
+/**
+ * Gère les affichages des calibrations
+ * 
+ * @author cdouine
+ * 
+ */
+public abstract class Draw extends JPanel {
+
+	private static Logger logger = Logger.getLogger(Draw.class.getName());
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The sphere to display
+	 */
+	private Sphere sphere;
+	/**
+	 * ProgressBar which represents the amount of correct vectors collected on
+	 * the current position
+	 */
+	private JProgressBar progressBar;
+
+	private JTextArea title;
+
+	private JTextArea instructions;
+	private JLabel imageModel;
+	private JTextPane libelleImage;
+
+	private SpherePanel spherePanel;
+
+	/**
+	 * Creates an affich for a sphere
+	 */
+	public Draw(Sphere s, String p_title) {
+		this.sphere = s;
+
+		// Affichage du texte
+		setLayout(new MigLayout("", "10[220px, grow 400]10",
+				"[10px][80px][300px, grow 600][14px]"));
+
+		initializeTitle(p_title);
+
+		initializeInstructions();
+
+		initializeSphere();
+
+		initializeProgressBar();
+	}
+
+	private void initializeTitle(String p_title) {
+		JPanel panelTitle = new JPanel();
+		panelTitle
+				.setLayout(new MigLayout("", "[220px, grow 400]", "[30px][]"));
+		title = new JTextArea();
+		title.setText(p_title);
+		Font font = new Font("Arial", Font.BOLD, 12);
+		title.setFont(font);
+		title.setEditable(false);
+		title.setOpaque(false);
+		panelTitle.add(title, "cell 0 0,alignx center,aligny center, span 3");
+		this.add(panelTitle, "cell 0 0,alignx center,grow");
+	}
+
+	private void initializeInstructions() {
+		JPanel panelInstructions = new JPanel();
+		panelInstructions.setBackground(Color.WHITE);
+		panelInstructions.setLayout(new MigLayout("", "[220px, grow 400]",
+				"[50px][]"));
+
+		// Première ligne : image + son libellé
+		imageModel = new JLabel();
+		imageModel.setVisible(false);
+		libelleImage = new JTextPane();
+		libelleImage.setText("But : obtenir cette image :");
+		libelleImage.setVisible(false);
+		panelInstructions.add(libelleImage, "cell 0 0,growx,aligny center");
+		panelInstructions.add(imageModel, "cell 1 0,growx,aligny center");
+
+		// 2ème ligne : "Instructions: " + les instructions qui seront modifiées
+		// au fur et à mesure
+		JTextArea libInstructions = new JTextArea();
+		libInstructions.setText("Instructions :");
+		libInstructions.setEditable(false);
+		panelInstructions.add(libInstructions,
+				"cell 0 1,growx,aligny center, span 3");
+		instructions = new JTextArea();
+		instructions.setEditable(false);
+		instructions.setLineWrap(true);
+		panelInstructions.add(instructions,
+				"cell 0 1,growx,aligny center, span 3");
+		JLabel labelPhoto = new JLabel();
+		panelInstructions.add(labelPhoto, "cell 1 1,grow");
+
+		this.add(panelInstructions, "cell 0 1,alignx right,grow");
+	}
+
+	private void initializeSphere() {
+		spherePanel = new SpherePanel(sphere);
+		this.add(spherePanel, "cell 0 2,grow");
+	}
+
+	private void initializeProgressBar() {
+		progressBar = new JProgressBar(0, 100);
+		progressBar.setVisible(false);
+		this.add(progressBar, "cell 0 3,growx,aligny top");
+	}
+
+	/**
+	 * Just repaints the canvas
+	 */
+	public void affiche() {
+		this.repaint();
+		spherePanel.repaint();
+	}
+
+	/**
+	 * Updates the sphere
+	 * 
+	 * @param radius
+	 * @param newcenter
+	 * @param windowsFirstElement
+	 *            : le premier élément de la pile de messages
+	 * @param vectorToAdd
+	 */
+	public void update(final double radius, final IVector<Double> newcenter,
+			final IVector<Double> vectorToAdd) {
+		getSphere().update(radius, newcenter, vectorToAdd);
+		spherePanel.majZone();
+		// getSphere().updateCourant(messageStackFirstVector);
+//		getSphere().updateCourant(vectorToAdd);
+		affiche();
+	}
+
+	public Sphere getSphere() {
+		return sphere;
+	}
+
+	public JTextArea getInstructions() {
+		return instructions;
+	}
+
+	public void setValueProgressBar(int value) {
+		progressBar.setValue(value);
+	}
+
+	protected JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	public void setImageModel(JLabel imageModel) {
+		this.imageModel = imageModel;
+	}
+
+	public void setLibelleImage(JTextPane libelleImage) {
+		this.libelleImage = libelleImage;
+	}
+
+	public JLabel getImageModel() {
+		return imageModel;
+	}
+
+	public JTextPane getLibelleImage() {
+		return libelleImage;
+	}
+}

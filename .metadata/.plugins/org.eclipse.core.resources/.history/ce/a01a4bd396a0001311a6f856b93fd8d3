@@ -1,0 +1,119 @@
+/** 
+ * the data package used to store the data messages gotten from the IMU client
+ */
+package data;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+
+import filtre.IVecteur;
+
+/**
+ * Class to store the data given by IMU
+ * 
+ * @author Alino�
+ * 
+ */
+public class Vecteur extends Vector3D implements IVecteur<Double> {
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * State of the vector after the filter
+	 */
+	private boolean state = false;
+
+	/**
+	 * Give the fields the values given by the IMU
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+	public Vecteur(double x, double y, double z) {
+		super(x, y, z);
+	}
+
+	/**
+	 * Give the state of the correctness of the vector
+	 * 
+	 * @return state
+	 */
+	@Deprecated
+	public boolean getState() {
+		return state;
+	}
+
+	/**
+	 * Give the state of the correctness of the vector
+	 * 
+	 * @return state
+	 */
+	public boolean isCorrect() {
+		return state;
+	}
+
+	/**
+	 * Set the state of the correctness of the vector false
+	 */
+	public void setFalse() {
+		this.state = false;
+
+	}
+
+	/**
+	 * Set the state of the correctness of the vector false
+	 */
+	public void setTrue() {
+		this.state = true;
+	}
+
+	/**
+	 * Convert to string
+	 * 
+	 * @return String
+	 */
+	public String toString() {
+
+		return super.toString() + "sate" + this.state
+				+ System.getProperty("line.separator");// "" + "state"+ " type"
+														// +"");
+
+	}
+
+	/**
+	 * Convert vector to array
+	 * 
+	 * @return the array containing the values of the vector
+	 */
+	public Collection<Double> setArray() {
+		ArrayList<Double> a = new ArrayList<Double>();
+		double[] b = super.toArray();
+		for (int i = 0; i < 3; i++) {
+			a.add(b[i]);
+		}
+		return a;
+	}
+
+	/**
+	 * Test of equality between two vectors
+	 * 
+	 * @param test
+	 * @return the result of the test
+	 */
+	public boolean equals(IVecteur<Double> test) {
+		return super.equals(test);
+	}
+
+	public boolean isEqual(IVecteur<Double> v) {
+		if (v.getX() == this.getX() && v.getY() == this.getY()
+				&& v.getZ() == this.getZ()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+}

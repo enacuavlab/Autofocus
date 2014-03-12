@@ -1,0 +1,57 @@
+package calibrate;
+
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+/**
+ * Stores the messages used during calibration.
+ * 
+ * @author Alino�
+ */
+
+public class PrintLog {
+
+	private static Logger logger = Logger.getLogger(PrintLog.class.getName());
+
+	/**
+	 * Data to store all the messages.
+	 */
+	private List<String> lines = new ArrayList<String>();
+
+	/**
+	 * Store a new line in the object.
+	 * 
+	 * @param line
+	 *            to add
+	 */
+	public final void add(final String line) {
+		lines.add(line);
+	}
+
+	public boolean hasEnoughData() {
+		return lines.size() > 3000;
+	}
+
+	/**
+	 * Creates the log file.
+	 * 
+	 * @param fileName
+	 */
+	public final void print(final String fileName) {
+		try {
+			String nl = System.getProperty("line.separator");
+			FileWriter fs = new FileWriter(fileName);
+			for (String line : lines) {
+				fs.write("11.111 ");
+				fs.write(line);
+				fs.write(nl);
+			}
+			fs.close();
+			logger.info(fileName + " created with " + lines.size() + " lines");
+		} catch (Exception e) {
+			logger.warning(e.getMessage());
+		}
+	}
+}

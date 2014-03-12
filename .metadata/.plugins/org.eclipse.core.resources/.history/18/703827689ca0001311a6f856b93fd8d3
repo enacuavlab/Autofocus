@@ -1,0 +1,60 @@
+/**Package grouping all classes used to filter data*/
+package filtre;
+
+import java.util.logging.Logger;
+
+import javax.swing.SwingUtilities;
+
+import common.TypeCalibration;
+
+import data.IVector;
+import data.Vector;
+import ellipsoide.DrawSphere;
+
+public class FilterSphere extends Filter {
+
+	private static Logger logger = Logger.getLogger(FilterSphere.class
+			.getName());
+
+	/**
+	 * Data of the sphere, max and min of each axis center, radius and the
+	 * sphere
+	 */
+	private DrawSphere drawSphere;
+
+	/**
+	 * Creates a filter who uses the plot given as an argument to plot in a two
+	 * dimensional graph (simple orthogonal projection on xy)
+	 * 
+	 * @param windowSize
+	 * @param type
+	 */
+	public FilterSphere(DrawSphere p_drawSphere, int windowSize,
+			TypeCalibration type) {
+		super(windowSize, type);
+		this.drawSphere = p_drawSphere;
+	}
+
+	/**
+	 * Add the vector given in argument to the filter and update the sphere with
+	 * new radius and center
+	 * 
+	 * @param vectorToAdd
+	 *            vector to add
+	 */
+	@Override
+	public void add(final IVector<Double> vectorToAdd) {
+		// super.add renvoie tous les vecteurs, pas de filtre à ce niveau là
+		super.add(vectorToAdd);
+		final Vector a[] = new Vector[windowSize];
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				// window.toArray(a)[0] le même plusieurs fois de suite, puis
+				// change (au bout de 40 entrées) :
+				drawSphere.update(rayon, center, 
+						vectorToAdd);
+			}
+		});
+	}
+
+}

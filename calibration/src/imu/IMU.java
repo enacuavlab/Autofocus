@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.swing.Timer;
 import javax.swing.event.EventListenerList;
@@ -16,18 +17,22 @@ import calibrate.PrintLog;
 
 import common.TypeCalibration;
 
+import data.Aircraft;
 import data.Data;
 import fr.dgac.ivy.Ivy;
 import fr.dgac.ivy.IvyClient;
 import fr.dgac.ivy.IvyException;
 import fr.dgac.ivy.IvyMessageListener;
 
-/** This class is in charge of all the communications on the ivy bus
+/**
+ * This class is in charge of all the communications on the ivy bus
  * 
  * @author alinoe
- *
+ * 
  */
 public class IMU {
+
+	private static Logger logger = Logger.getLogger(IMU.class.getName());
 
 	/** list of the names of the connected Aircraft */
 	private Set<Aircraft> acL;
@@ -36,6 +41,7 @@ public class IMU {
 	/** Listeners store */
 	private final EventListenerList listeners = new EventListenerList();
 	/** for request */
+	// FIXME : what is this variable ? why 42 ??
 	final Integer reqid = 42;
 	/** used to update the presence of any aircraft */
 	private Hashtable<Integer, Timer> timerPresence;
@@ -51,8 +57,8 @@ public class IMU {
 		return l;
 	}
 
-
-	/**adding a listener for new aircraft connecting
+	/**
+	 * adding a listener for new aircraft connecting
 	 * 
 	 * @param imuL
 	 */
@@ -60,7 +66,8 @@ public class IMU {
 		listeners.add(IMUListener.class, imuL);
 	}
 
-	/**adding a listener for new aircraft disconnecting
+	/**
+	 * adding a listener for new aircraft disconnecting
 	 * 
 	 * @param imuL
 	 */
@@ -68,14 +75,16 @@ public class IMU {
 		listeners.remove(IMUListener.class, imuL);
 	}
 
-	/**Used to send to all listeners a connection
+	/**
+	 * Used to send to all listeners a connection
 	 * 
 	 */
 	private IMUListener[] getIMUListeners() {
 		return listeners.getListeners(IMUListener.class);
 	}
 
-	/**Used to send to all listeners a connection
+	/**
+	 * Used to send to all listeners a connection
 	 * 
 	 * @param as
 	 */
@@ -86,7 +95,8 @@ public class IMU {
 		}
 	}
 
-	/**Used to send to all listeners a switch to raw mode for an aircraft
+	/**
+	 * Used to send to all listeners a switch to raw mode for an aircraft
 	 * 
 	 * @param ac
 	 */
@@ -97,7 +107,8 @@ public class IMU {
 		}
 	}
 
-	/**Used to send to all listeners that an aircraft has stopped sending raw
+	/**
+	 * Used to send to all listeners that an aircraft has stopped sending raw
 	 * 
 	 * @param ac
 	 */
@@ -108,7 +119,8 @@ public class IMU {
 		}
 	}
 
-	/**Used to send to all listeners that an aircraft has changed mode
+	/**
+	 * Used to send to all listeners that an aircraft has changed mode
 	 * 
 	 * @param ac
 	 */
@@ -118,7 +130,8 @@ public class IMU {
 		}
 	}
 
-	/**Used to send to all listeners that an aircraft has left the bus
+	/**
+	 * Used to send to all listeners that an aircraft has left the bus
 	 * 
 	 * @param ac
 	 */
@@ -129,7 +142,8 @@ public class IMU {
 		}
 	}
 
-	/**creates a new aircraft in the model
+	/**
+	 * creates a new aircraft in the model
 	 * 
 	 * @param acId
 	 * @param reqid
@@ -143,38 +157,38 @@ public class IMU {
 					new IvyMessageListener() {
 						public void receive(IvyClient arg0, String[] args) {
 							String temp[] = args[0].split(" ");
+							// Update Aircraft with informations found
+							ac.setName(temp[6]);
+							ac.setSettings(temp[4]);
 							final List<String> listMod = new ArrayList<String>();
-							int i = 0;
 							try {
 								// Detect all the available modes of the drone
-								ExtractRawData d = new ExtractRawData(String
-										.valueOf(temp[4].subSequence(7,
+								ExtractRawData allModes = new ExtractRawData(
+										String.valueOf(temp[4].subSequence(7,
 												temp[4].length())));
-								for (String s : d.extract()) {
+								for (String s : allModes.extract()) {
 									listMod.add(s);
 								}
-								i = d.getIndex();
+								ac.setModes(listMod);
+								ac.setIndexTelemetry(allModes.getIndex());
 							} catch (Exception e) {
-								System.out
-										.println("Extract mode issue, modes list probably wrong , file \""
-												+ temp[4] + "\"");
-								e.printStackTrace();
+								logger.warning("Extract mode issue, modes list probably wrong , file \""
+										+ temp[4] + "\"");
+								logger.warning(e.getMessage());
 							}
-							ac.copy(new Aircraft(temp[6], acId, temp[4], 0,
-									listMod, i));
 						}
 					});
 			Thread.sleep(20);
 			bus.sendMsg("calibrate " + reqid + " CONFIG_REQ " + acId);
 			Thread.sleep(20);
-			// Creates a timer to check presence
+
+			// Creates a timer to check if the aircraft is present
 			timerPresence.put(new Integer(acId), new Timer(2000,
 					new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							if (ac.isConnected()) {
 								fireAircraftExited(ac);
 								ac.connected(false);
-								System.out.println(ac + " has exited");
 							}
 						}
 					}));
@@ -182,38 +196,31 @@ public class IMU {
 			bus.bindMsg("^ground" + " DL_VALUES ([0-9]+) (.*)",
 					new IvyMessageListener() {
 						public void receive(IvyClient arg0, String[] args) {
+							int currMode = (Double.valueOf(args[1].split(",")[ac
+									.getIndexTelemetry()]).intValue());
 							if (Integer.valueOf(args[0]).equals(
 									Integer.valueOf(acId))
-									&& ac.getMode() != (Double.valueOf(args[1]
-											.split(",")[ac.getIndexTelemetry()])
-											.intValue())) {
-								ac.setMode(Double.valueOf(
-										args[1].split(",")[ac
-												.getIndexTelemetry()])
-										.intValue());
+									&& ac.getMode() != currMode) {
+								ac.setMode(currMode);
 								fireAircraftModChanged(ac);
 							}
 							try {
 								Thread.sleep(20);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								logger.warning(e.getMessage());
 							}
 							// it is considered that the two first DL_SETTINGS
-							// of
-							// the .XML of
-							// the drone are unused
+							// of the .XML of the drone are unused
+							// FIXME : why ??
 						}
 					});
 			// Creates timer to check raw
 			timerRaw.put(new Integer(acId), new Timer(2000,
 					new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							if (ac.getIsRawData()) {
+							if (ac.isRawData()) {
 								fireAircraftRawOff(ac);
 								ac.setRaw(false);
-								System.out.println(ac
-										+ " has stopped emit raw data");
 							}
 						}
 					}));
@@ -224,10 +231,9 @@ public class IMU {
 							try {
 								Thread.sleep(20);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								logger.warning(e.getMessage());
 							}
-							if (!ac.getIsRawData()) {
+							if (!ac.isRawData()) {
 								ac.setRaw(true);
 								fireAircraftRawOn(ac);
 							}
@@ -235,20 +241,17 @@ public class IMU {
 						}
 					});
 		} catch (InterruptedException e) {
-			System.out
-					.println("thread sleep fail in IMU, aircraft list probably incorrect");
-			e.printStackTrace();
+			logger.warning("thread sleep fail in IMU, aircraft list probably incorrect");
+			logger.warning(e.getMessage());
 		} catch (IvyException e) {
-			System.out
-					.println("Ivy reception failed in IMU, aircraft list probably incorrect");
-			e.printStackTrace();
+			logger.warning("Ivy reception failed in IMU, aircraft list probably incorrect");
+			logger.warning(e.getMessage());
 		}
-		// TODO
 		try {
 			String test = new String("^" + acId);
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-					if (!ac.isConnected()) {
+					if (!ac.isConnected() && ac.getModes().size() != 0) {
 						fireAircraftConnected(ac);
 						ac.connected(true);
 					}
@@ -256,14 +259,14 @@ public class IMU {
 				}
 			});
 		} catch (IvyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		}
-		System.out.println("new aircraft built");
+		logger.info("new aircraft built with id=" + acId);
 		return ac;
 	}
 
-	/** Delete an aircraft when necessary : disconnected or lost
+	/**
+	 * Delete an aircraft when necessary : disconnected or lost
 	 * 
 	 * @param ac
 	 */
@@ -276,20 +279,20 @@ public class IMU {
 		acL.remove(ac);
 	}
 
-	/** Method used to keep update the list of all connected aicraft */
+	/** Method used to keep up to date the list of all connected aicrafts */
 	private void refreshAllAc() {
 		try {
 			String test = new String("^ground NEW_AIRCRAFT ([0-9]*)");
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-					System.out.println("new aircraft detected");
-					acL.add(buildAc(Integer.valueOf(args[0]), reqid));
+					logger.info("new aircraft detected");
+					acL.add(buildAc(new Integer(args[0]), reqid));
 				}
 			});
 			test = new String("^ground AIRCRAFT_DIE ([0-9]*)");
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-					System.out.println("aircraft dies");
+					logger.info("aircraft dies");
 					int i = 0;
 					int res = 0;
 					for (Aircraft ac : acL) {
@@ -305,19 +308,17 @@ public class IMU {
 			Thread.sleep(20);
 			test = new String("^ground" + " DL_VALUES ([0-9]+) (.*)");
 		} catch (IvyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		}
 	}
 
-	/** Update the aircraft list at launch
+	/**
+	 * Update the aircraft list at launch
 	 * 
 	 */
 	public void getAllAc() {
-		final int reqid = 42;
 		try {
 			bus.bindMsgOnce(("^" + reqid + " " + "ground AIRCRAFTS (.*)"),
 					new IvyMessageListener() {
@@ -331,15 +332,14 @@ public class IMU {
 			Thread.sleep(20);
 			bus.sendMsg("IMU " + reqid + " AIRCRAFTS_REQ");
 		} catch (IvyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		}
 	}
 
-	/** Update the list when asked
+	/**
+	 * Update the list when asked
 	 * 
 	 */
 	public void listenAllAc() {
@@ -347,7 +347,8 @@ public class IMU {
 		refreshAllAc();
 	}
 
-	/** Delete all aircraft in the model
+	/**
+	 * Delete all aircraft in the model
 	 * 
 	 */
 	public void stopListenAllId() {
@@ -359,8 +360,9 @@ public class IMU {
 		}
 	}
 
-	/** Delete all aircraft in the model except the one given as argument
-	 * used when a calibration mode has been chosen
+	/**
+	 * Delete all aircraft in the model except the one given as argument used
+	 * when a calibration mode has been chosen
 	 * 
 	 * @param acToSave
 	 */
@@ -383,7 +385,7 @@ public class IMU {
 	 */
 	public void ListenRaw(final Data data, final TypeCalibration calibration,
 			final PrintLog log, final int idDrone) {
-		System.out.println("listenRaw for " + idDrone);
+		logger.info("listening raw datas for drone " + idDrone + "...");
 		try {
 
 			// build the regexp according to parameters
@@ -396,19 +398,25 @@ public class IMU {
 			regexp.append(" ([\\-]*[0-9]+)");
 			regexp.append(" ([\\-]*[0-9]+)");
 			String test = regexp.toString();
+
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-							data.store(Integer.valueOf(args[0]),
-									Integer.valueOf(args[1]), Integer.valueOf(args[2]));
-							log.add(idDrone
+					// logger.info("IMY mess received  "
+					// + Integer.valueOf(args[0]) + " "
+					// + Integer.valueOf(args[1]) + " "
+					// + Integer.valueOf(args[2]));
+					data.store(Integer.valueOf(args[0]),
+							Integer.valueOf(args[1]), Integer.valueOf(args[2]));
+
+					log.add(idDrone
 							+ (TypeCalibration.MAGNETOMETER.equals(calibration) ? " IMU_MAG_RAW"
 									: " IMU_ACCEL_RAW") + " " + args[0] + " "
 							+ args[1] + " " + args[2]);
 				}
 			});
 		} catch (Exception e) {
-			System.out.println("Erreur d'initialisation d'IMU");
-			e.printStackTrace();
+			logger.warning("Erreur d'initialisation d'IMU");
+			logger.warning(e.getMessage());
 		}
 	}
 
@@ -430,10 +438,12 @@ public class IMU {
 		regexp.append(" ([\\-]*[0-9]+)");
 		String test = regexp.toString();
 		bus.unBindMsg(test);
-		System.out.println("stoplistenRAW");
+
+		logger.warning("stopped listening raw datas for drone " + idDrone);
 	}
 
-	/** Return all detected aicraft
+	/**
+	 * Return all detected aicraft
 	 * 
 	 * @return list of the aircrafts
 	 */
@@ -441,7 +451,8 @@ public class IMU {
 		return acL.toArray(new Aircraft[1]);
 	}
 
-	/** Change the mode of an aircraft
+	/**
+	 * Change the mode of an aircraft
 	 * 
 	 * @param mode
 	 * @param ac
@@ -451,12 +462,13 @@ public class IMU {
 		try {
 			bus.sendMsg("calibrate DL_SETTING " + ac.getId() + " 0 " + mode);
 		} catch (IvyException e) {
-			System.out.println("failed sending new mode");
-			e.printStackTrace();
+			logger.warning("failed sending new mode");
+			logger.warning(e.getMessage());
 		}
 	}
 
-	/** the Builder
+	/**
+	 * the Builder
 	 * 
 	 */
 	public IMU() {
@@ -464,8 +476,7 @@ public class IMU {
 		try {
 			bus.start(null);
 		} catch (IvyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		}
 		acL = new HashSet<Aircraft>();
 		timerPresence = new Hashtable<Integer, Timer>();
@@ -475,16 +486,16 @@ public class IMU {
 	/** Test method */
 	public static void main(String args[]) {
 		new IMU();
+		// Permet de voir tout ce qui passe sur le bus IVY
 		String test = new String("(.*)");// + " IMU_[A-Z]+_RAW(.*)");
 		try {
 			bus.bindMsg(test, new IvyMessageListener() {
 				public void receive(IvyClient arg0, final String args[]) {
-					System.out.println(args[0]);
+					logger.info("read : " + args[0]);
 				}
 			});
 		} catch (IvyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		}
 
 	}

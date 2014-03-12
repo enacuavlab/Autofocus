@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="pde_compiler_errorwarnings_block">
+		<item value="false" key="3"/>
+		<item value="false" key="2"/>
+		<item value="false" key="1"/>
+		<item value="true" key="0"/>
+		<item value="false" key="4"/>
+	</section>
+	<section name="PluginImportWizard">
+		<item value="3" key="importType"/>
+		<item value="true" key="addFragments"/>
+		<item value="1" key="importFrom"/>
+		<item value="true" key="scanAll"/>
+		<item value="true" key="showLatestPluginsOnly"/>
+	</section>
+</section>
