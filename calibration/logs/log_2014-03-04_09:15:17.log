@@ -1,7 +1,0 @@
-2014-03-04 09:15:17 INFO ihm.Calibration : Properties : 
-autofocus_calibration_data=logs/calibration.data
-simulation_calibration_data=test/calib_prod1_3_droneId_5.data
-paparazzi_script_calibration=paparazzi_calibration/calibrate.py
-
-2014-03-04 09:15:17 WARNING ihm.Calibration : Illegal Constraint: 'cell 1 0; alignx center'
-For input string: "0;"

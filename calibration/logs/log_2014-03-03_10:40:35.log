@@ -1,9 +1,0 @@
-2014-03-03 10:40:35 INFO ihm.Calibration : Properties : 
-autofocus_calibration_data=logs/calibration.data
-simulation_calibration_data=test/calib_lisa_test_droneId_5.data
-paparazzi_script_calibration=paparazzi_calibration/calibrate.py
-
-2014-03-03 10:40:36 INFO imu.IMU : new aircraft built with id=5
-2014-03-03 10:40:36 INFO testData.Sender : starting sending IMU test data...
-2014-03-03 10:40:39 INFO ihm.MainFrame : starting calibration of accelerometer...
-2014-03-03 10:40:39 INFO imu.IMU : listening raw datas for drone 5...

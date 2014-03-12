@@ -1,9 +1,0 @@
-2014-02-28 18:39:59 INFO ihm.Calibration : Properties : 
-autofocus_calibration_data=logs/calibration.data
-simulation_calibration_data=calib_lisa_test.data
-paparazzi_script_calibration=paparazzi_calibration/calibrate.py
-
-2014-02-28 18:40:00 WARNING testData.DataReader : calib_lisa_test.data (Aucun fichier ou dossier de ce type)
-2014-02-28 18:40:00 INFO testData.Sender : starting sending IMU test data...
-2014-02-28 18:40:00 INFO testData.Sender : stopped sending IMU test data
-2014-02-28 18:40:00 INFO imu.IMU : new aircraft built with id=5

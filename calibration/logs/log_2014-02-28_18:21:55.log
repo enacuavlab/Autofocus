@@ -1,8 +1,0 @@
-2014-02-28 18:21:55 INFO ihm.Calibration : Properties : 
-autofocus_calibration_data=logs/calibration.data
-simulation_calibration_data=test/calib_prod1_3_droneId_5.data
-paparazzi_script_calibration=paparazzi_calibration/calibrate.py
-
-2014-02-28 18:21:57 INFO imu.IMU : new aircraft built with id=5
-2014-02-28 18:21:57 INFO testData.Sender : starting sending IMU test data...
-2014-02-28 18:21:57 WARNING ihm.MainFrame : setSelectedIndex: 3 out of bounds

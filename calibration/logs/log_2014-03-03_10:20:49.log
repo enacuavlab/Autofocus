@@ -1,9 +1,0 @@
-2014-03-03 10:20:49 INFO ihm.Calibration : Properties : 
-autofocus_calibration_data=logs/calibration.data
-simulation_calibration_data=test/calib_lisa_test_droneId_5.data
-paparazzi_script_calibration=paparazzi_calibration/calibrate.py
-
-2014-03-03 10:20:50 INFO testData.Sender : starting sending IMU test data...
-2014-03-03 10:20:50 INFO imu.IMU : new aircraft built with id=5
-2014-03-03 10:20:51 WARNING ihm.MainFrame : aircraftModChanged : comboBox mode vide
-2014-03-03 10:20:51 WARNING ihm.MainFrame : null

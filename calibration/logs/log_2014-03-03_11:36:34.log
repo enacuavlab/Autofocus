@@ -1,6 +1,0 @@
-2014-03-03 11:36:34 INFO ihm.Calibration : Properties : 
-autofocus_calibration_data=logs/calibration.data
-simulation_calibration_data=test/calib_lisa_test_droneId_5.data
-paparazzi_script_calibration=paparazzi_calibration/calibrate.py
-
-2014-03-03 11:36:35 WARNING ihm.Calibration : null
